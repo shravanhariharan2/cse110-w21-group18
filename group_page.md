@@ -14,6 +14,13 @@ Group punchline ? idk lol
 
 ## Team Member Profiles
 
+__Member name__
+
+  <img src="" width="" height="200"/> 
+  
+  <!--- picture of height 200 if y'all want --->
+  * Year, major, college
+  * Github:
 __Shane Benetz__
 
 <img src="https://ucsdtritons.com/images/2020/1/10/Shane_Benetz.jpg?width=300" width="135" height="200"/>
@@ -21,13 +28,7 @@ __Shane Benetz__
   * 3rd year, Computer Engineering, Warren College
   * GitHub: https://github.com/sbenetz
   
-__Member 2 name__
 
-  <img src="" width="" height="200"/> 
-  
-  <!--- picture of height 200 if y'all want --->
-  * Year, major, college
-  * Github:
 
 
 
