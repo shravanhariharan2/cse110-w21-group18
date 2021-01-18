@@ -21,6 +21,7 @@ __Member name__
   <!--- picture of height 200 if y'all want --->
   * Year, major, college
   * Github:
+  
 __Shane Benetz__
 
 <img src="https://ucsdtritons.com/images/2020/1/10/Shane_Benetz.jpg?width=300" width="135" height="200"/>
