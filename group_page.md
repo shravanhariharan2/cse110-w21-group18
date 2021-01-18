@@ -13,16 +13,19 @@ Group punchline ? idk lol
 * Shane Benetz
 
 ## Team Member Profiles
-* Shane Benetz 
+
+__Shane Benetz__
 
 <img src="https://ucsdtritons.com/images/2020/1/10/Shane_Benetz.jpg?width=300" width="135" height="200"/>
 
   * 3rd year, Computer Engineering, Warren College
   * GitHub: https://github.com/sbenetz
   
-* Member 2 name
+__Member 2 name__
 
-Picture?(maybe height of 200?)
+  <img src="" width="" height="200"/> 
+  
+  <!--- picture of height 200 if y'all want --->
   * Year, major, college
   * Github:
 
