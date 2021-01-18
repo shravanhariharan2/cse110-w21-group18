@@ -12,5 +12,6 @@
 * Work on intro video tomorrow since there's not much time today
 
 ## Action Items
-* Everyone: meet monday 1/18 @ 9pm for intro video and contract finalization
-* Everyone: send contract details in Slack 
+* Everyone: meet monday 1/18 @ 9pm for intro video, icebreakers, group page finalization, and contract finalization
+* Everyone: feel free to add suggestions to the contract doc
+* Everyone: sign the contract doc
