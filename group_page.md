@@ -3,8 +3,14 @@
 Group punchline ? idk lol
 
 ## Team Roster
-* Member 1
-* Member 2
+* Jose Cavallini
+* Keshav Mittal
+* Steven Harris
+* Trinity Pham
+* Shravan Hariharan
+* Austin Sophonsri
+* Juan Carlos Amistoso
+* Shane Benetz
 
 ## Team Member Profiles
 * Shane Benetz 
@@ -15,6 +21,8 @@ Group punchline ? idk lol
   * GitHub: https://github.com/sbenetz
   
 * Member 2 name
+
+Picture?(maybe height of 200?)
   * Year, major, college
   * Github:
 
