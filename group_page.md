@@ -43,6 +43,8 @@ __Jose Falconi-Cavallini__
 
 __Keshav Mittal__
 
+<img src="https://media-exp1.licdn.com/dms/image/C4D03AQEX33y7t12V-Q/profile-displayphoto-shrink_400_400/0/1567858995232?e=1616630400&v=beta&t=GTEvoeJlL8WAovzKTnUtPGcXjs6hnwjT3aX1ix6WsQ8" width="150" height="150" />
+
   * 3rd year, Computer Engineering, Marshall College
   * Github: https://github.com/keshav1403
 
