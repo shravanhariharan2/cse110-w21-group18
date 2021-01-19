@@ -2,17 +2,8 @@
 
 Group punchline ? idk lol
 
-## Team Roster
-* Jose Cavallini
-* Keshav Mittal
-* Steven Harris
-* Trinity Pham
-* Shravan Hariharan
-* Austin Sophonsri
-* Juan Carlos Amistoso
-* Shane Benetz
 
-## Team Member Profiles
+## Team Members
 
 __Member name__
 
@@ -50,10 +41,6 @@ __Jose Falconi-Cavallini__
 
   * 3rd year, Computer Science, Warren College
   * Github: https://github.com/jfalconi-cavallini
-
-__Keshav Mittal__
-
-  * 3rd year, Computer Engineering, Marshall College
-  * Github: https://github.com/keshav1403
+  
 
 
