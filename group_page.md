@@ -37,4 +37,13 @@ __Shravan Hariharan__
   * 2nd year, Computer Science, Sixth College
   * Github: https://github.com/shravanhariharan2
 
+__Steven Harris__
+
+<img src="https://github.com/HarrisSteven/HTMLProfile/blob/main/images/studentid2.jpg" width="150" height="150"/>
+
+  * 2nd year, Computer Science, Muir College
+  * Github: https://github.com/HarrisSteven
+  
+  
+
 
