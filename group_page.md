@@ -44,6 +44,10 @@ __Steven Harris__
   * 2nd year, Computer Science, Muir College
   * Github: https://github.com/HarrisSteven
   
+__Jose Falconi-Cavallini__
+<img src="https://media-exp1.licdn.com/dms/image/C5603AQHgatzkp6HirQ/profile-displayphoto-shrink_400_400/0/1599594206409?e=1616630400&v=beta&t=4umKKVqVuE9pmSyBpEawaB84mFHuXjRr6zWC_PtLuaQ" width="150" height="150" />
+  * 3rd year, Computer Science, Warren College
+  * Github: https://github.com/jfalconi-cavallini
   
 
 
