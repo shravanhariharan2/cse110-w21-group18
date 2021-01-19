@@ -2,17 +2,7 @@
 
 Group punchline ? idk lol
 
-## Team Roster
-* Jose Cavallini
-* Keshav Mittal
-* Steven Harris
-* Trinity Pham
-* Shravan Hariharan
-* Austin Sophonsri
-* Juan Carlos Amistoso
-* Shane Benetz
-
-## Team Member Profiles
+## Team Members
 
 __Member name__
 
