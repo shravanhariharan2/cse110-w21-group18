@@ -6,7 +6,7 @@
   - Lab Section #A50
   - Table #
   - Instructor: Professor Thomas Powell
-  - Team Name:
+  - Team Name: cSe 1!0 gRoUp i8
   - Team Member Info:
       |    Name       |    Email        |    Phone      |    Other      |
       | :-----------: | :-----------:   | :-----------: | :-----------: |
