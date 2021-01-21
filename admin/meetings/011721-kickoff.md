@@ -2,7 +2,7 @@
 
 ## Kickoff
 ### Attendees: Shravan, Shane, Steven, Trinity, Austin, Keshav, Juan, Jose
-### Details: Zoom @ 9PM Sunday 01/17/21
+### Details: Zoom @ 9PM PST Sunday 01/17/21
 
 ## General Minutes:
 * Welcome everyone to CSE 110 :^)
