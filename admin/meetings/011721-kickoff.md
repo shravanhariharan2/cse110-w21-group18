@@ -1,5 +1,8 @@
 # CSE 110 Group 18 - Meeting 1
 
+### Kickoff
+### Zoom @ 9PM Sunday 01/17/21
+
 ### Attendees: Shravan, Shane, Steven, Trinity, Austin, Keshav, Juan, Jose
 
 ## General Minutes:
