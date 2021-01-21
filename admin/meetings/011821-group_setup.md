@@ -1,9 +1,8 @@
 # CSE 110 Group 18 - Meeting 2
 
-### Group Setup
-### Zoom @ 9PM Monday 01/18/21
-
+## Group Setup
 ### Attendees: Shravan, Shane, Steven, Trinity, Austin, Keshav, Juan, Jose
+### Details: Zoom @ 9PM PST Monday 01/18/21
 
 ## General Minutes:
 * Started with some quick games to break the ice  
