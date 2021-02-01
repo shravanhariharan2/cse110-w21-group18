@@ -2,14 +2,14 @@
 
 ## Brainstorming the Pomodoro
 ### Attendees: Shravan, Shane, Steven, Trinity, Austin, Keshav, Jose
-### Details: Zoom @ 9PM PST Monday 01/24/21
+### Details: Zoom @ 9PM-10PM PST Monday 01/24/21
+### Duration: 1hr
 
 ## General Minutes:
 * Started by figuring out that we needed to make a plan and get specific, shared a miro page
 * Decided to work on researching what a pomodoro is and what are the elements for 45 mins, wrote notes on miro  
 * Proposing ideas of features that we want for ~20 mins and interspersed
 * Ended early-ish
-
 
 ## Discussion Points
 * We need to figure out what this project actually needs
