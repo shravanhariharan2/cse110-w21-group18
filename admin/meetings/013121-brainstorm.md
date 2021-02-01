@@ -25,5 +25,6 @@
 
 ## Action Items
 * Everyone: meet next week Sunday 02/06 @ 9pm
+* Everyone: meet tomorrow with TA Monday 02/01 @ 9pm
 * Ask professor if we should follow source material exactly or would some leeway be alright
 * Trinity and Steven present for discussion
