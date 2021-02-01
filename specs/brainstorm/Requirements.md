@@ -29,4 +29,4 @@
 * Users can open up an activity window to see expected vs. actual Pomdoros for each task
 * Total work time is displayed
 * Number of distractions is displayed per task
-* Total number 
+* Total number of distractions is displayed
