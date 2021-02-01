@@ -3,7 +3,7 @@
 ## Brainstorming the Pomodoro
 ### Attendees: Shravan, Shane, Steven, Trinity, Austin, Keshav, Jose, Juan
 ### Details: Zoom @ 9PM PST Sunday 01/31/21
-### Duration: 1hr 30min
+### Duration: 1hr 33min
 
 ## General Minutes:
 * Team Leader transfer: Jose -> Shravan
