@@ -7,10 +7,11 @@
 
 ## General Minutes:
 * Team Leader transfer: Jose -> Shravan
-* Roles:
+* Main Roles:
   * Team Leader: Shravan, Keshav
-  * Front-End: Juan, Austin
-  * Back-End: Steven, Trinity, Shane, Jose
+  * Design: Juan
+  * Front-End: Austin
+  * Back-End/Full Stack: Steven, Trinity, Shane, Jose
 * Picked b from 012821-checkin for workflow : when a user finishes a task, they check-off that task on the timer and move on to the next one.
 * Continue brainstorming/flesh out product vision on miro
   * Created UI layout
@@ -22,6 +23,7 @@
 
 ## Discussion Points
 * Decide if we want to follow the source material exactly for task checkoff.
+* Stand-up meetings
 
 ## Action Items
 * Everyone: meet next week Sunday 02/06 @ 9pm
