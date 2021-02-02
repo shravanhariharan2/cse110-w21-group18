@@ -17,6 +17,8 @@
     * Minimal UI, minimal distractions
 
 ## Action Items
+* Everyone: meet next week Thursday 01/04 @ 9pm
+ * Draft up some designs (preferred) or come with some designs in mind 
 * Exploratory coding
 * Create more UI designs
 * Assign roles?
