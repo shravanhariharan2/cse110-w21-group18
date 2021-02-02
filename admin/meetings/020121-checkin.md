@@ -6,11 +6,20 @@
 ### Duration: 30min
 
 ## General Minutes:
-* Discussed with Jordan our progress and our work for the next week
+* Showed Jordan out progression and ideas on Miro 
+* Asked him questions about design etc.
+* Figured out when and why to meet next
 
 ## Discussion Points
-* Come up with different designs (so we won't stuck with the first idea we have)
-* Some roles to consider -> system architect, CI, testing
+* Come up with a few differrent design concepts within the team and bring it back in and vote on ideas of design
+* Have one or two people as points for certain things
+  * System architect - how the system communication and module break down is going to look like
+  * Continuous Integration- automated build and github actions for getting site up and running
+  * Testing Overseer - in charge of getting framework up and helping people write unit tests
+* There isn't really restrictions on deployment: use chrome extension or heroku
+* Plan for upcoming week:
+  * Try to work on user stories 
+  * Figure out more ui design and maybe a road map
 * How much freedom should we give users? Should we follow source closely?
   * Recommendations:
     * How will this tool help us closely follow Pomodoro values?
