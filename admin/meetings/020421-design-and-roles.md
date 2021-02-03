@@ -38,12 +38,12 @@
       * Can be more HTML/CSS oriented or more JS oriented
       * Can also do some iterative design work on Miro if needed
     * Volunteer(s):
-  * Sprint / Standup Structure
-    * Sprints
-      * Sprint planning meeting this Sunday (2/7)
-    * Standup ideas:
-      * Slack bot that messages a #standup channel daily, where we can replying with standup details?
-      * Any others? 
+* Sprint / Standup Structure
+  * Sprints
+    * Sprint planning meeting this Sunday (2/7)
+  * Standup ideas:
+    * Slack bot that messages a #standup channel daily, where we can replying with standup details?
+    * Any others? 
 
   
 ## Action Items
