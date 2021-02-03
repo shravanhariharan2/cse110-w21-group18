@@ -23,6 +23,7 @@
     * Sets up the CI/CD pipeline with Github Actions
     * Sets up deployment onto a server (i.e. Heroku)
     * Sets up linting (ESLint + AirBnB)
+    * Sets up doc generation (JSDoc)
     * Configures pipeline to run linting, testing, and building before deploying on main branch
     * Volunteer(s):
 
@@ -42,8 +43,9 @@
   * Sprints
     * Sprint planning meeting this Sunday (2/7)
   * Standup ideas:
-    * Slack bot that messages a #standup channel daily, where we can replying with standup details?
-    * Any others? 
+    * Slack bot that messages a `#standup` channel daily, where we can replying with standup details?
+    * Any others?
+* Starting Pitch assignment
 
   
 ## Action Items
