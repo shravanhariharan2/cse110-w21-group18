@@ -5,19 +5,21 @@
 ### Details: Zoom @ 9PM PST Thursday 2/4/21
 
 ## General Minutes:
-* 
+* Assigned official roles to each team member
+* Reviewed candidate designs for UI
+* Worked on various components of Starting Pitch task
 
 ## Discussion Points
 * UI design comparison 
 * Roles and Responsibilities:
-  * Team Lead (2)
+  * Team Lead (2) (Keshav, Shravan)
   * Software Architect (1)
     * Sets up the initial codebase and filesystem structure
     * Designs how code within files should be structured
       * How should JS files be structured? 
       * Should we use classes vs objects for containerizing functionality?
       * How should the HTML interact with the JS?
-    * Volunteer(s): 
+    * Volunteer(s): Austin
 
   * Build Engineer (1)
     * Sets up the CI/CD pipeline with Github Actions
@@ -25,20 +27,20 @@
     * Sets up linting (ESLint + AirBnB)
     * Sets up doc generation (JSDoc)
     * Configures pipeline to run linting, testing, and building before deploying on main branch
-    * Volunteer(s):
+    * Volunteer(s): Juan
 
   * Test Engineer (1)
     * Sets up a testing framework for JavaScript code
     * Writes unit test suites and test cases for testing JavaScript functionality
       * Ex: checking if the timer properly resets time
       * Ex: Checking if adding a task during a Pomo session works
-    * Volunteer(s): 
+    * Volunteer(s): Steven
 
   * Product Engineer (3)
     * Writes code for the actual Pomodoro timer product
       * Can be more HTML/CSS oriented or more JS oriented
       * Can also do some iterative design work on Miro if needed
-    * Volunteer(s):
+    * Volunteer(s): Trinity, Shane, Jose
 * Sprint / Standup Structure
   * Sprints
     * Sprint planning meeting this Sunday (2/7)
@@ -49,4 +51,6 @@
 
   
 ## Action Items
-* 
+* Shravan: Setup Slackbot and `#standups` channel
+* Everyone: Finish Starting Pitch tasks
+
