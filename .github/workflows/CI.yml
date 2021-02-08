@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      working-directory: ./source\
+      working-directory: ./source
       - run: npm run build
       
   test:
