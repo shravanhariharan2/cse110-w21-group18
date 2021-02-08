@@ -1,0 +1,8 @@
+--- 
+extends: "eslint:recommended"
+rules: 
+  curly: error
+  eqeqeq: false
+  quotes: 
+    - error
+    - double
