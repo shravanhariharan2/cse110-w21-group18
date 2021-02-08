@@ -8,24 +8,22 @@ on:
 
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: source
+
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      working-directory: ./source
       - run: npm run build
       
   test:
     runs-on: ubuntu-latest
-    
     steps:
-      working-directory: ./source
       - run: npm run test
         
   lint:
     runs-on: ubuntu-latest
-    
     steps:
-      working-directory: ./source
       - run: npm run lint
