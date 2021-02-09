@@ -1,12 +1,13 @@
 {
   "name": "source",
   "version": "1.0.0",
-  "description": "blank for github repo",
+  "description": "Source code for CSE 110 Winter 2021 Group 18 Pomodoro app",
   "main": "index.js",
   "scripts": {
     "build": "echo \"No build specified\"",
     "test": "echo \"No test specified\"",
-    "lint": "echo \"No linter specified\""
+    "lint": "echo \"No linter specified\"",
+    "generate-docs": "jsdoc -c conf.json" 
   },
   "keywords": [],
   "author": "",
