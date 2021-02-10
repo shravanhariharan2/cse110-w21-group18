@@ -1,9 +1,9 @@
-body {
+body{
     background-color: #EDEAE5;
 }
 
 /*box that holds timer and start/stop buttons and pomo label */
-#timer-box {
+#timer-box{
   position: absolute;
   margin: 100px 35%;    /*not sure how to get this centered exactly */
   background: #9FEDD7;
@@ -17,7 +17,7 @@ body {
   justify-content: space-evenly;
 }
 /*holds the label for which type of timer is running */
-#which-container {
+#which-container{
   padding: 10px 0 0 0;
   color: #026670;
   font-size: 18px;
@@ -36,7 +36,7 @@ body {
 }
 
 /*the actual timer display*/
-#time {
+#time{
   position: relative;
   font-size: 70px;
   color: #026670;
