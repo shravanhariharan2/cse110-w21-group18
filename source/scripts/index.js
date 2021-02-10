@@ -5,4 +5,4 @@
  */
 const foo = (a, b) => a + b;
 
-foo(4, 5)
+foo(4, 5);
