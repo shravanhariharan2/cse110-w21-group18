@@ -1,26 +1,26 @@
 // times that we will want to count down from
 
-const pomoTime = 25;
+const POMO_TIME = 25;
 
-const shortBreak = 5;
+const SHORT_BREAK = 5;
 
-const longBreak = 15;
+const LONG_BREAK = 15;
 
 //displays time on html
-function timeSet(minutes, seconds){
+function setTime(minutes, seconds){
     //two digits nums for mins and secs
     document.getElementById("time").innerHTML = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
          + " : " + seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
 }
 
 // function to actually run the timer with input length
-function startTimer(length){
+function startTimer(durationInMinutes){
     //starting time
-    var minutes = length-1;
-    var seconds = 59;
-    var finished = false;
+    let minutes = durationInMinutes-1;
+    let seconds = 59;
+    let finished = false;
     //runs every second
-    var timer = setInterval(function() {
+    let timer = setInterval(function() {
         timeSet(minutes, seconds);
      
       if (seconds <= 0) {
@@ -39,7 +39,7 @@ function startTimer(length){
     startButton.disabled = false;
 }
 //this is what we will call for starting a pomo
-var startButton = document.getElementById("start");
+let startButton = document.getElementById("start");
 startButton.addEventListener("click", function(){
     startTimer(pomoTime);
     startButton.disabled = true;
