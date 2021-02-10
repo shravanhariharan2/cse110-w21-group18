@@ -28,7 +28,6 @@ body{
 }
 /* styles the labels for timer type */
 #pomo, #short-break, #long-break{
-
   text-decoration: underline;
   text-underline-offset: 10px;
   margin-right: 10px;
