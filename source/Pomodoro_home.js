@@ -16,8 +16,8 @@ function timeSet(minutes, seconds){
 // function to actually run the timer with input length
 function startTimer(length){
     //starting time
-    var minutes = length;
-    var seconds = 00;
+    var minutes = length-1;
+    var seconds = 59;
     var finished = false;
     //runs every second
     var timer = setInterval(function() {
@@ -38,5 +38,8 @@ function startTimer(length){
     }, 1000);
   
 }
-//thisd is what we will call for starting a pomo
-startTimer(pomoTime);
+//this is what we will call for starting a pomo
+var startButton = document.getElementById("start");
+startButton.addEventListener("click", function(){
+    startTimer(pomoTime);
+})
