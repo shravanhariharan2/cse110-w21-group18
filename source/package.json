@@ -5,11 +5,22 @@
   "main": "index.js",
   "scripts": {
     "build": "echo \"No build specified\"",
-    "test": "echo \"No test specified\"",
-    "lint": "echo \"No linter specified\"",
-    "generate-docs": "jsdoc -c conf.json" 
+    "test": "jest --config jest.config.json",
+    "lint": "eslint ./scripts --ext .js",
+    "lint:fix": "eslint ./scripts --ext .js --fix",
+    "generate-docs": "jsdoc -c conf.json"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "jest": "^26.6.3"
+  }
 }
