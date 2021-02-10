@@ -21,7 +21,7 @@ function startTimer(durationInMinutes){
     let finished = false;
     //runs every second
     let timer = setInterval(function() {
-        timeSet(minutes, seconds);
+        setTime(minutes, seconds);
      
       if (seconds <= 0) {
         minutes --;
@@ -41,6 +41,6 @@ function startTimer(durationInMinutes){
 //this is what we will call for starting a pomo
 let startButton = document.getElementById("start");
 startButton.addEventListener("click", function(){
-    startTimer(pomoTime);
+    startTimer(POMO_TIME);
     startButton.disabled = true;
 })
