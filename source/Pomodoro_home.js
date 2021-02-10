@@ -43,4 +43,4 @@ let startButton = document.getElementById("start");
 startButton.addEventListener("click", function(){
     startTimer(POMO_TIME);
     startButton.disabled = true;
-})
+});
