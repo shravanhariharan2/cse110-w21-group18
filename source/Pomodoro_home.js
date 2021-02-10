@@ -23,18 +23,18 @@ function startTimer(durationInMinutes){
     let timer = setInterval(function() {
         setTime(minutes, seconds);
      
-      if (seconds <= 0) {
-        minutes --;
-        seconds = 60;
-        if (minutes < 0) {
-          finished = true;
+        if (seconds <= 0) {
+            minutes --;
+            seconds = 60;
+            if (minutes < 0) {
+                finished = true;
+            }
         }
-      }
-      seconds--;
-      if (finished == true){
-        clearInterval(timer);
-        return;
-    }
+        seconds--;
+        if (finished == true){
+            clearInterval(timer);
+            return;
+        }
     }, 1000);
     startButton.disabled = false;
 }
