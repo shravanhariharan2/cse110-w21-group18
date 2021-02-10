@@ -3,7 +3,7 @@ body {
 }
 
 /*box that holds timer and start/stop buttons and pomo label */
-#timerbox {
+#timer-box {
   position: absolute;
   margin: 100px 35%;    /*not sure how to get this centered exactly */
   background: #9FEDD7;
@@ -17,7 +17,7 @@ body {
   justify-content: space-evenly;
 }
 /*holds the label for which type of timer is running */
-#whichContainer {
+#which-container {
   padding: 10px 0 0 0;
   color: #026670;
   font-size: 18px;
@@ -27,7 +27,7 @@ body {
   justify-content: center;
 }
 /* styles the labels for timer type */
-#pomo, #shortB, #longB{
+#pomo, #short-break, #long-break{
 
   text-decoration: underline;
   text-underline-offset: 10px;
