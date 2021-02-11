@@ -1,0 +1,58 @@
+body {
+    background-color: #EDEAE5;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*box that holds timer and start/stop buttons and pomo label */
+#timer-box {
+  position: absolute;
+  margin: 100px 35%;    /*not sure how to get this centered exactly */
+  background: #9FEDD7;
+  width: 400px;
+	height: 250px;
+  border-radius: 30px;
+  text-align: center;
+  z-index : 0;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+/*holds the label for which type of timer is running */
+#which-container {
+  padding: 10px 0 0 0;
+  color: #026670;
+  font-size: 18px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+/* styles the labels for timer type */
+#pomo, #short-break, #long-break {
+  text-decoration: underline;
+  text-underline-offset: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+/*the actual timer display*/
+#time {
+  position: relative;
+  font-size: 70px;
+  color: #026670;
+}
+
+/* start button */
+#start {
+  text-align: center;
+  font-size: 20px;
+  position: relative;
+  border-color: #026670;
+  border-radius: 5px;
+  background-color: #EDEAE5;
+  color: #026670;
+  height: 50px;
+  width: 75px;
+}
+
+
