@@ -8,8 +8,8 @@ body {
   position: absolute;
   margin: 100px 35%;    /*not sure how to get this centered exactly */
   background: #9FEDD7;
-  width: 400px;
-	height: 250px;
+  width: 550px;
+	height: 350px;
   border-radius: 30px;
   text-align: center;
   z-index : 0;
@@ -21,7 +21,7 @@ body {
 #which-container {
   padding: 10px 0 0 0;
   color: #026670;
-  font-size: 18px;
+  font-size: 20px;
   position: relative;
   z-index: 1;
   display: flex;
@@ -30,15 +30,15 @@ body {
 /* styles the labels for timer type */
 #pomo, #short-break, #long-break {
   text-decoration: underline;
-  text-underline-offset: 10px;
-  margin-right: 10px;
-  margin-left: 10px;
+  text-underline-offset: 15px;
+  margin-right: 15px;
+  margin-left: 15px;
 }
 
 /*the actual timer display*/
 #time {
   position: relative;
-  font-size: 70px;
+  font-size: 100px;
   color: #026670;
 }
 
@@ -51,8 +51,8 @@ body {
   border-radius: 5px;
   background-color: #EDEAE5;
   color: #026670;
-  height: 50px;
-  width: 75px;
+  height: 60px;
+  width: 90px;
 }
 
 
