@@ -4,23 +4,27 @@ const POMO_TIME = 25;
 
 const SHORT_BREAK = 5;
 
-const LONG_BREAK = 15;
+const LONG_BREAK = 30;
 
 const NUM_OF_SESSIONS_IN_POMO = 4;
 
+const DEFAULT_LOCALE = 'en-US';
+
+const TIMER_DISPLAY_SETTINGS = {minimumIntegerDigits: 2, useGrouping:false};
+
 let sessionNumber = 0;
 let isBreak = false;
+let timer;
 
 //listens to start initial pomo session
 let startButton = document.getElementById("start");
-startButton.addEventListener("click", startSession);
+startButton.addEventListener("click", startTimerSession);
 
 
-//displays time on html
-function setTime(minutes, seconds){
+function setTimeOnUI(minutes, seconds){
     //two digits nums for mins and secs
-    document.getElementById("time").innerHTML = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-         + " : " + seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+    document.getElementById("time").innerHTML = minutes.toLocaleString(DEFAULT_LOCALE, TIMER_DISPLAY_SETTINGS)
+         + " : " + seconds.toLocaleString(DEFAULT_LOCALE, TIMER_DISPLAY_SETTINGS);
 }
 
 // function to actually run the timer with input length
@@ -28,46 +32,33 @@ function startTimer(durationInMinutes){
     //starting time
     let minutes = durationInMinutes-1;
     let seconds = 59;
-    let finished = false;
-    let endedEarly = false;
+    let isfinished = false;
 
     //runs every second
-    let timer = setInterval(function() {
+    timer = setInterval(function() {
 
-        setTime(minutes, seconds);
-
-        //listens to end the timer
-        let eventListenerAdded = false;
-        if (!eventListenerAdded) {
-            startButton.addEventListener("click", endSession);
-            eventListenerAdded = true;
-        }
-        //function to update variables to indicate early session termination
-        function endSession() {
-            finished = true;
-            eventListenerAdded = false;
-            startButton.disabled = false;
-            endedEarly = true;
-            startButton.removeEventListener("click", endSession);
-        }
+        setTimeOnUI(minutes, seconds);
 
         //end timer
-        if (finished == true){
+        if (isfinished === true){
             clearInterval(timer);
-            //go to next session
-            if (!endedEarly) {
-                //update session indicators
-                if (isBreak) {
-                    isBreak = false;
-                }
-                else {
-                    sessionNumber++;
-                    isBreak = true;
-                }
+
+            //update session indicators
+            if (isBreak) {
+                isBreak = false;
+                startButton.removeEventListener("click", endTimerSession);
+                startButton.addEventListener("click", startTimerSession);
+
+                updateUIForSessionEnd();
             }
-            updateUIForSessionEnd();
-            document.getElementById("start").value = "Start";
-            startButton.addEventListener("click", startSession);
+            else {
+                sessionNumber++;
+                isBreak = true;
+
+                updateUIForSessionEnd();
+                //will update also update UI button
+                startTimerSession();
+            }
             return;
         }
      
@@ -75,7 +66,7 @@ function startTimer(durationInMinutes){
             minutes --;
             seconds = 60;
             if (minutes < 0) {
-                finished = true;
+                isfinished = true;
             }
         }
         seconds--;
@@ -84,11 +75,15 @@ function startTimer(durationInMinutes){
     startButton.disabled = false;
 }
 
-//this is what we will call for starting a timer session
-function startSession() {
-    startButton.removeEventListener("click", startSession);
-    document.getElementById("start").value = "End";
-    startButton.disabled = false;
+function startTimerSession() {
+    //update button values for session start
+    startButton.value = "End";
+    startButton.style.borderStyle = "inset";
+    startButton.style.top = "3px";
+    startButton.style.boxShadow = "0px 0px";
+
+    startButton.removeEventListener("click", startTimerSession);
+    startButton.addEventListener("click", endTimerSession);
 
     //start pomo session
     if (!isBreak) {
@@ -107,8 +102,26 @@ function startSession() {
     }
 };
 
-//this is what we will call for updating UI elements
+function endTimerSession() {
+    clearInterval(timer);
+
+    //go to next pomo session if break and ended break early
+    if (isBreak) {
+        isBreak = false;
+    }
+    
+    updateUIForSessionEnd();
+
+    startButton.removeEventListener("click", endTimerSession);
+    startButton.addEventListener("click", startTimerSession);
+}
+
 function updateUIForSessionEnd() {
+    startButton.value = "Start";
+    startButton.style.borderStyle = "outset";
+    startButton.style.top = "-3px";
+    startButton.style.boxShadow = "0px 3px";
+
     document.getElementById("pomo").style.textDecoration = "none";
     document.getElementById("short-break").style.textDecoration = "none";
     document.getElementById("long-break").style.textDecoration = "none";
@@ -117,20 +130,20 @@ function updateUIForSessionEnd() {
     if (!isBreak) {
         document.getElementById("timer-box").style.background = "#9FEDD7";
         document.getElementById("pomo").style.textDecoration = "underline";
-        setTime(POMO_TIME, 0);
+        setTimeOnUI(POMO_TIME, 0);
     }
     else {
         //is short break
         if (sessionNumber != NUM_OF_SESSIONS_IN_POMO) {
             document.getElementById("timer-box").style.background = "#FEF9C7";
             document.getElementById("short-break").style.textDecoration = "underline";
-            setTime(SHORT_BREAK, 0);
+            setTimeOnUI(SHORT_BREAK, 0);
         }
         //is long break
         else {
             document.getElementById("timer-box").style.background = "#FCE181";
             document.getElementById("long-break").style.textDecoration = "underline";
-            setTime(LONG_BREAK, 0);
+            setTimeOnUI(LONG_BREAK, 0);
         }
     }
 }
