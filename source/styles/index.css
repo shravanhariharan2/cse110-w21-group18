@@ -28,8 +28,15 @@ body {
   justify-content: center;
 }
 /* styles the labels for timer type */
-#pomo, #short-break, #long-break {
+#pomo {
   text-decoration: underline;
+  text-underline-offset: 15px;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+#short-break, #long-break {
+  text-decoration: none;
   text-underline-offset: 15px;
   margin-right: 15px;
   margin-left: 15px;
