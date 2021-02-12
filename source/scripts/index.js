@@ -56,7 +56,7 @@ function startTimer(durationInMinutes){
                 isBreak = true;
 
                 updateUIForSessionEnd();
-                //will update also update UI button
+                //will also update UI button
                 startTimerSession();
             }
             return;
