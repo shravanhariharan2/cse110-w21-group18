@@ -115,17 +115,20 @@ function updateUIForSessionEnd() {
     
     //is pomo session
     if (!isBreak) {
+        document.getElementById("timer-box").style.background = "#9FEDD7";
         document.getElementById("pomo").style.textDecoration = "underline";
         setTime(POMO_TIME, 0);
     }
     else {
         //is short break
         if (sessionNumber != NUM_OF_SESSIONS_IN_POMO) {
+            document.getElementById("timer-box").style.background = "#FEF9C7";
             document.getElementById("short-break").style.textDecoration = "underline";
             setTime(SHORT_BREAK, 0);
         }
         //is long break
         else {
+            document.getElementById("timer-box").style.background = "#FCE181";
             document.getElementById("long-break").style.textDecoration = "underline";
             setTime(LONG_BREAK, 0);
         }
