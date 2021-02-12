@@ -7,14 +7,14 @@ const SHORT_BREAK = 5;
 const LONG_BREAK = 15;
 
 //displays time on html
-function setTime(minutes, seconds){
+const setTime = function (minutes, seconds){
     //two digits nums for mins and secs
     document.getElementById("time").innerHTML = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
          + " : " + seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
 }
 
 // function to actually run the timer with input length
-function startTimer(durationInMinutes){
+function startTimer(durationInMinutes, setTime){
     //starting time
     let minutes = durationInMinutes-1;
     let seconds = 59;
@@ -36,11 +36,16 @@ function startTimer(durationInMinutes){
             return;
         }
     }, 1000);
-    startButton.disabled = false;
 }
-//this is what we will call for starting a pomo
-let startButton = document.getElementById("start");
-startButton.addEventListener("click", function(){
-    startTimer(POMO_TIME);
-    startButton.disabled = true;
+document.addEventListener('DOMContentLoaded', function () {
+   //this is what we will call for starting a pomo
+    let startButton = document.getElementById("start");
+    startButton.addEventListener("click", function(){
+        startButton.disabled = false;
+        startTimer(POMO_TIME, setTime);
+        startButton.disabled = true;
+    });
 });
+
+module.exports = { setTime, startTimer };
+//export default { setTime, startTimer };
