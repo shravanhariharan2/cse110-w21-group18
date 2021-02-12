@@ -42,6 +42,7 @@ function startTimer(durationInMinutes){
             startButton.addEventListener("click", endSession);
             eventListenerAdded = true;
         }
+        //function to update variables to indicate early session termination
         function endSession() {
             finished = true;
             eventListenerAdded = false;
@@ -64,7 +65,6 @@ function startTimer(durationInMinutes){
                     isBreak = true;
                 }
             }
-            console.log(sessionNumber);
             updateUIForSessionEnd();
             document.getElementById("start").value = "Start";
             startButton.addEventListener("click", startSession);
@@ -89,6 +89,7 @@ function startSession() {
     startButton.removeEventListener("click", startSession);
     document.getElementById("start").value = "End";
     startButton.disabled = false;
+
     //start pomo session
     if (!isBreak) {
         startTimer(POMO_TIME);

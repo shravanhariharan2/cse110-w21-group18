@@ -6,7 +6,7 @@ body {
 /*box that holds timer and start/stop buttons and pomo label */
 #timer-box {
   position: relative;
-  margin: 100px auto;    /*not sure how to get this centered exactly */
+  margin: 100px auto;
   background: #9FEDD7;
   width: 550px;
   height: 350px;
