@@ -66,4 +66,10 @@ body {
   width: 90px;
 }
 
+#start:active {
+  border-style: inset;
+  top: 3px;
+  box-shadow: 0px 0px;
+}
+
 

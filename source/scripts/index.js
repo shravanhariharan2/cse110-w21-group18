@@ -76,11 +76,8 @@ function startTimer(durationInMinutes){
 }
 
 function startTimerSession() {
-    //update button values for session start
+    //update button text for session start
     startButton.value = "End";
-    startButton.style.borderStyle = "inset";
-    startButton.style.top = "3px";
-    startButton.style.boxShadow = "0px 0px";
 
     startButton.removeEventListener("click", startTimerSession);
     startButton.addEventListener("click", endTimerSession);
@@ -118,9 +115,6 @@ function endTimerSession() {
 
 function updateUIForSessionEnd() {
     startButton.value = "Start";
-    startButton.style.borderStyle = "outset";
-    startButton.style.top = "-3px";
-    startButton.style.boxShadow = "0px 3px";
 
     document.getElementById("pomo").style.textDecoration = "none";
     document.getElementById("short-break").style.textDecoration = "none";
