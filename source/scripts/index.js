@@ -4,13 +4,27 @@ const POMO_TIME = 25;
 
 const SHORT_BREAK = 5;
 
-const LONG_BREAK = 15;
+const LONG_BREAK = 30;
 
-//displays time on html
-function setTime(minutes, seconds){
+const NUM_OF_SESSIONS_IN_POMO = 4;
+
+const DEFAULT_LOCALE = 'en-US';
+
+const TIMER_DISPLAY_SETTINGS = {minimumIntegerDigits: 2, useGrouping:false};
+
+let sessionNumber = 0;
+let isBreak = false;
+let timer;
+
+//listens to start initial pomo session
+let startButton = document.getElementById("start");
+startButton.addEventListener("click", startTimerSession);
+
+
+function setTimeOnUI(minutes, seconds){
     //two digits nums for mins and secs
-    document.getElementById("time").innerHTML = minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
-         + " : " + seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+    document.getElementById("time").innerHTML = minutes.toLocaleString(DEFAULT_LOCALE, TIMER_DISPLAY_SETTINGS)
+         + " : " + seconds.toLocaleString(DEFAULT_LOCALE, TIMER_DISPLAY_SETTINGS);
 }
 
 // function to actually run the timer with input length
@@ -18,29 +32,112 @@ function startTimer(durationInMinutes){
     //starting time
     let minutes = durationInMinutes-1;
     let seconds = 59;
-    let finished = false;
+    let isfinished = false;
+
     //runs every second
-    let timer = setInterval(function() {
-        setTime(minutes, seconds);
+    timer = setInterval(function() {
+
+        setTimeOnUI(minutes, seconds);
+
+        //end timer
+        if (isfinished === true){
+            clearInterval(timer);
+
+            //update session indicators
+            if (isBreak) {
+                isBreak = false;
+                startButton.removeEventListener("click", endTimerSession);
+                startButton.addEventListener("click", startTimerSession);
+
+                updateUIForSessionEnd();
+            }
+            else {
+                sessionNumber++;
+                isBreak = true;
+
+                updateUIForSessionEnd();
+                //will also update UI button
+                startTimerSession();
+            }
+            return;
+        }
      
         if (seconds <= 0) {
             minutes --;
             seconds = 60;
             if (minutes < 0) {
-                finished = true;
+                isfinished = true;
             }
         }
         seconds--;
-        if (finished == true){
-            clearInterval(timer);
-            return;
-        }
+
     }, 1000);
     startButton.disabled = false;
 }
-//this is what we will call for starting a pomo
-let startButton = document.getElementById("start");
-startButton.addEventListener("click", function(){
-    startTimer(POMO_TIME);
-    startButton.disabled = true;
-});
+
+function startTimerSession() {
+    //update button text for session start
+    startButton.value = "End";
+
+    startButton.removeEventListener("click", startTimerSession);
+    startButton.addEventListener("click", endTimerSession);
+
+    //start pomo session
+    if (!isBreak) {
+        startTimer(POMO_TIME);
+    }
+    else {
+        //start short break
+        if (sessionNumber != NUM_OF_SESSIONS_IN_POMO) {
+            startTimer(SHORT_BREAK);
+        }
+        //start long break
+        else {
+            startTimer(LONG_BREAK);
+            sessionNumber = 0;
+        }
+    }
+};
+
+function endTimerSession() {
+    clearInterval(timer);
+
+    //go to next pomo session if break and ended break early
+    if (isBreak) {
+        isBreak = false;
+    }
+    
+    updateUIForSessionEnd();
+
+    startButton.removeEventListener("click", endTimerSession);
+    startButton.addEventListener("click", startTimerSession);
+}
+
+function updateUIForSessionEnd() {
+    startButton.value = "Start";
+
+    document.getElementById("pomo").style.textDecoration = "none";
+    document.getElementById("short-break").style.textDecoration = "none";
+    document.getElementById("long-break").style.textDecoration = "none";
+    
+    //is pomo session
+    if (!isBreak) {
+        document.getElementById("timer-box").style.background = "#9FEDD7";
+        document.getElementById("pomo").style.textDecoration = "underline";
+        setTimeOnUI(POMO_TIME, 0);
+    }
+    else {
+        //is short break
+        if (sessionNumber != NUM_OF_SESSIONS_IN_POMO) {
+            document.getElementById("timer-box").style.background = "#FEF9C7";
+            document.getElementById("short-break").style.textDecoration = "underline";
+            setTimeOnUI(SHORT_BREAK, 0);
+        }
+        //is long break
+        else {
+            document.getElementById("timer-box").style.background = "#FCE181";
+            document.getElementById("long-break").style.textDecoration = "underline";
+            setTimeOnUI(LONG_BREAK, 0);
+        }
+    }
+}
