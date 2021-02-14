@@ -1,6 +1,6 @@
 body {
-    background-color: #EDEAE5;
-    font-family: 'Open Sans', sans-serif;
+  background-color: #EDEAE5;
+  font-family: 'Open Sans', sans-serif;
 }
 
 /*box that holds timer and start/stop buttons and pomo label */
@@ -71,5 +71,3 @@ body {
   top: 3px;
   box-shadow: 0px 0px;
 }
-
-
