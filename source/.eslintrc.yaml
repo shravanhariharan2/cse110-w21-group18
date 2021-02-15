@@ -7,9 +7,9 @@ extends:
 rules:
   no-use-before-define: 
     - error
-    - functions: true
-      classes: false
-      variables: false
+    - functions: false
+      classes: true
+      variables: true
   max-len:
     - error
     - code: 120
