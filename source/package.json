@@ -6,7 +6,7 @@
   "scripts": {
     "build": "echo \"No build specified\"",
     "test": "jest --config jest.config.json",
-    "lint": "eslint ./scripts --ext .js",
+    "lint": "eslint ./js --ext .js",
     "lint:fix": "eslint ./js --ext .js --fix",
     "generate-docs": "jsdoc -c conf.json"
   },
