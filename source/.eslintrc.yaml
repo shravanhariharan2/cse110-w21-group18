@@ -1,6 +1,6 @@
 ---
 env:
-  - browser: true
+  browser: true
 extends:
   - "eslint:recommended"
   - "airbnb"
@@ -8,6 +8,6 @@ rules:
   no-use-before-define: 
     - error
     - functions: true
-    - classes: false
-    - variables: false
+      classes: false
+      variables: false
   max-len: 120
