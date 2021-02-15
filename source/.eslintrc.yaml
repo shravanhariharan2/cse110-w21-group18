@@ -10,4 +10,5 @@ rules:
     - functions: true
       classes: false
       variables: false
-  max-len: 120
+  max-len:
+    - code: 120
