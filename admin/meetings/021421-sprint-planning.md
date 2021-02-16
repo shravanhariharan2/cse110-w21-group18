@@ -1,11 +1,11 @@
-#Attendees: Keshav, Shravan, Austin, Trinity, Steven, Juan
+# CSE 110 Group 18
 
-Details: Zoom @9PM Sunday, February 14 2021
+## Sprint Planning
+### Attendees: Keshav, Shravan, Austin, Trinity, Steven, Juan
+### Details: Zoom @ 9PM Sunday, February 14 2021
+### Duration: 45 minutes
 
-Duration: 45 minutes
-
-Discussion Points:
-		
+## Discussion Points:		
 * Discussing some engineering changes regarding restructuring the code from functions to classes
 * Reviewing the codes-base, assigning next tasks  
 * Having a timer class, start timer / stop 
@@ -15,6 +15,6 @@ Discussion Points:
 * Others are given on Github page 
 
 
-Action Items:
+## Action Items:
 * Continue working on the given tasks
 * Code review and approval
