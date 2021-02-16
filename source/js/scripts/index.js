@@ -1,3 +1,34 @@
+/**
+ * setTimeOnUI(minutes, seconds)
+ * startTimer(durationInMinutes) - done
+ * startTimerSession()
+ * endTimerSession()
+ * updateUIForSessionEnd()
+ *
+ * Notes:
+ * - Lots of coupling happening within these functions that make it harder to test
+ * certain assertions
+ * - UI changes are happening inside JS. Can we move them outside?
+ *  - answer: use dynamic classes in JS that are defined in the CSS
+ * - Move constants to config/index.js
+ *  Timer:
+ *  - properties:
+ *    - minutes
+ *    - seconds
+ *    - secondsPassed
+ *  - functions:
+ *    - start(durationInMinutes)
+ *    - end()
+ *
+ *  PomodoroSession:
+ *  - PomodoroSession()
+ *  - start()
+ *  - end()
+ *  - getSessionType() - 0 - working, 1 - short break, 2 - long break
+ *  - increment()
+ *  - getSessionNumber()
+ */
+
 // times that we will want to count down from
 
 const POMO_TIME = 25;
