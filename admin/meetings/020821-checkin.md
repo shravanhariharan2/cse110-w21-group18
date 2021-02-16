@@ -18,4 +18,4 @@
 ## Action Items
 * Individual tasks
 * Reply to standup bot
-* Everyone: meet Sunday 01/14 @ 9pm
+* Everyone: meet Sunday 02/14 @ 9pm
