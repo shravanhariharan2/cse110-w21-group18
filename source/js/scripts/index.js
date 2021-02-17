@@ -1,4 +1,4 @@
-/**
+ /**
  * setTimeOnUI(minutes, seconds)
  * startTimer(durationInMinutes) - done
  * startTimerSession()
@@ -98,7 +98,7 @@ function startTimer(durationInMinutes) {
       }
     }
     seconds -= 1;
-  }, 1000);
+  }, 10);
   startButton.disabled = false;
 }
 
