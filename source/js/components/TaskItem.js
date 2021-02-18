@@ -6,7 +6,7 @@ class TaskList extends HTMLElement {
   
   createList() {
     const list = document.createElement('li')
-    list.className = 'TaskList';
+    list.className = 'tasklist';
     return list;
   }
 
