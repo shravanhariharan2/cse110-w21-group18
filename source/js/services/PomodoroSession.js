@@ -1,5 +1,6 @@
 const DEBUG_POM_SESSION = true;
-const TICK_SPEED = 1000;
+const TICK_SPEED = 100;
+const DOC_TIMER_BUTTON = document.getElementById("start");
 
 /**
  * Implements the PomodoroSession class. This class is a controller for the
@@ -31,9 +32,12 @@ class PomodoroSession {
 
     // bind functions to object
     this.onClick = this.onClick.bind(this);
-    this.onEnd = this.onEnd.bind(this);
+    this.run = this.run.bind(this);
+    this.stop = this.stop.bind(this);
 
-    console.log("init finished")
+    DOC_TIMER_BUTTON.addEventListener('click', this.onClick);
+
+    this.DEBUG_PRINT("init finished");
   }
 
   // TODO: constructor(config)
@@ -51,8 +55,8 @@ class PomodoroSession {
    * Loads a placeholder config
    */
   placeholder_load_config() {
-    this.CONFIG_WORK_TIME = .083333;
-    this.CONFIG_REST_TIME = .083333;
+    this.CONFIG_WORK_TIME = .1;
+    this.CONFIG_REST_TIME = .1;
     this.CONFIG_BREAK_TIME = 30;
     this.CONFIG_SESSION_COUNT = 4;
     this.CONFIG_DISPLAY_DIGITS = 2;
@@ -73,80 +77,72 @@ class PomodoroSession {
     return state_array;
   }
 
-
   /**
-   * change the state and button label depending on current state
+   * Run the timer for t-minutes, throws an error timer is stopped midway
+   * @param  {[type]}  t [the number of minutes to run the timer]
+   * @return {Promise}   [non-deterministic state, indicating timer completion]
    */
-  onClick() {
-    switch(this.state) {
-      // start the timer and instantiate an ending transition
-      case 0:
-        this.state = 1;
-        this.watchdog = setTimeout(this.onEnd,
-            this.CONFIG_WORK_TIME*60*TICK_SPEED + 50);
-        this.timeit.run();
-        break;
-
-      // User stops the work session early. Reset to idle state and don't
-      // increment session number
-      case 1:
-        this.state = 0;
-        this.timeit.stop();
-        clearTimeout(this.watchdog);
-        this.timeit.setTime(this.CONFIG_WORK_TIME);
-        break;
-
-      // User stops resting timer early, immediatly move to idle state
-      case 2:
-        this.state = 0;
-        this.timeit.stop();
-        clearTimeout(this.watchdog);
-        this.timeit.setTime(this.CONFIG_WORK_TIME);
-        break;
-    }
-    this.Dprint(`onClick to -> ${this.info()}`);
+  async run(t) {
+    this.timeit.setTime(t);
+    await this.timeit.run();
   }
 
   /**
-   * This function is called on successful completion of a session. Change
-   * state and timer parameters based on current state.
-   * @return {[type]} [description]
+   * stops the timer
    */
-  onEnd() {
-    switch(this.state) {
-      // user sucessfully completes work session. Transition to rest state and
-      // set timer to CONFIG_REST_TIME. Automatically start the timer
-      case 1:
-        this.state = 2;
-        this.sesssion++;
-        this.timeit.stop();
-        this.timeit.setTime(this.CONFIG_REST_TIME);
-        // watchdog automatically re-calls this function after session
-        // completes
-        this.watchdog = setTimeout(this.onEnd,
-            this.CONFIG_REST_TIME*60*TICK_SPEED + 50);
-        this.timeit.run();
+  stop() { // i dunno if we need this? maybe for consistency?
+    this.timeit.stop();
+  }
+
+  /**
+   * this function links the document and the
+   * @return {Promise} [description]
+   */
+  async onClick() {
+    switch (this.state) {
+      case 0:
+        // start and try to finish work-rest sequence;
+        try {
+          DOC_TIMER_BUTTON.setAttribute('value', 'Stop');
+          this.state = 1;
+          await this.run(this.CONFIG_WORK_TIME);
+          this.DEBUG_PRINT("Work finished");
+          this.state = 2;
+          await this.run(this.CONFIG_REST_TIME);
+          this.DEBUG_PRINT("Rest finished");
+
+          // reset to idle state after sequence
+          this.state = 0;
+          DOC_TIMER_BUTTON.setAttribute('value', 'Start');
+        }
+        // if timer is stopped midway, transition to idle state
+        catch(e) {
+          this.state = 0;
+          this.stop();
+          DOC_TIMER_BUTTON.setAttribute('value', 'Start');
+          this.DEBUG_PRINT("timer stopped midway")
+          this.DEBUG_PRINT(e);
+        }
         break;
 
-      // user sucessfully completes rest session. Transition to idle state and
-      // set timer to CONFIG_WORK_TIME. User chooses when to start next cycle.
+      // move to idle state whenever timer is running
       default:
         this.state = 0;
-        this.timeit.stop();
-        this.timeit.setTime(this.CONFIG_WORK_TIME);
+        this.stop();
     }
-    this.Dprint(`On End to -> ${this.info()}`);
   }
+
+
 
 
   /**
    * Print debug statements to console based on global debug flag
    * @param {[string]} x [The statement to print]
    */
-  Dprint(x) {
+  DEBUG_PRINT(x) {
     if(DEBUG_POM_SESSION){ console.log(x); }
   }
 
 }
 
-module.exports = PomodoroSession;
+// module.exports = PomodoroSession;
