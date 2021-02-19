@@ -1,3 +1,6 @@
+/* eslint-disable */
+// FIXME: ^ delete this once starting implementation
+
 class TaskList {
   constructor() {}
 
