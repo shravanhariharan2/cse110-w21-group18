@@ -23,5 +23,24 @@ class TaskList extends HTMLElement {
     taskDuration.textContent = this.getAttribute('duration');
     return taskDuration;
   }
+  
+  createNotes(taskList) {
+    const taskNotes = taskList.appendChild(document.createElement('p')):
+    taskNotes.className = 'notes';
+    taskNotes.textContent = this.getAttribute('notes');
+    return taskNotes;
+  }
+  
+  createButton(taskList) {
+    const button = taskList.appendChild(document.createElement('button'));
+    return button;
+  }
+  
+  createPomodoroCount(taskList){
+    const pCount = taskList.appendChild(document.createElement('p'));
+    pCount.className = 'pcount';
+    pCount.textContent = this.getAttribute('pcount');
+    return pCount;
+  }
 
 }
