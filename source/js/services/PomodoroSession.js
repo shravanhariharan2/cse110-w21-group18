@@ -1,6 +1,4 @@
-const DEBUG_POM_SESSION = true;
 const TICK_SPEED = 100;
-const DOC_TIMER_BUTTON = document.getElementById("start");
 
 /**
  * Implements the PomodoroSession class. This class is a controller for the
@@ -8,14 +6,16 @@ const DOC_TIMER_BUTTON = document.getElementById("start");
 class PomodoroSession {
   constructor() {
     // initialize constants
+    this.DEBUG = true;
     // const timerButton = document.getElementById('start');
 
-    // initialize parameters
-    this.CONFIG_WORK_TIME;
-    this.CONFIG_REST_TIME;
-    this.CONFIG_BREAK_TIME;
-    this.CONFIG_SESSION_COUNT;
-    this.CONFIG_DISPLAY_DIGITS;
+    // initialize document parameters
+    this.DOC_ELEMENTS = {
+      short_break: document.getElementById('short-break'),
+      long_break: document.getElementById('long-break'),
+      pomo: document.getElementById('pomo'),
+      button: document.getElementById('start'),
+    };
 
     // initialize core objects
     this.timeit = new Timer(TICK_SPEED);
@@ -26,37 +26,28 @@ class PomodoroSession {
     this.watchdog = null;
 
     // load configs
-    this.placeholder_load_config();
+    this.loadConfig('dummy_path');
     this.timeit.setTime(this.CONFIG_WORK_TIME);
 
-
     // bind functions to object
+    this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
     this.onClick = this.onClick.bind(this);
     this.run = this.run.bind(this);
     this.stop = this.stop.bind(this);
+    this.updateDocument = this.updateDocument.bind(this);
 
-    DOC_TIMER_BUTTON.addEventListener('click', this.onClick);
+    this.DOC_ELEMENTS.button.addEventListener('click', this.onClick);
 
-    this.DEBUG_PRINT("init finished");
+    this.DEBUG_PRINT('init finished');
   }
-
-  // TODO: constructor(config)
 
   /**
    * Loads a session config
    * @param  {[string]} path the path to the config
    */
-  // TODO: this
-  load_config(path) {
-
-  }
-
-  /**
-   * Loads a placeholder config
-   */
-  placeholder_load_config() {
-    this.CONFIG_WORK_TIME = .1;
-    this.CONFIG_REST_TIME = .1;
+  loadConfig(path) {
+    this.CONFIG_WORK_TIME = 0.1;
+    this.CONFIG_REST_TIME = 0.1;
     this.CONFIG_BREAK_TIME = 30;
     this.CONFIG_SESSION_COUNT = 4;
     this.CONFIG_DISPLAY_DIGITS = 2;
@@ -67,14 +58,14 @@ class PomodoroSession {
    * @return {[array]} an array of parameters
    */
   info() {
-    let state_array = [
+    const stateArray = [
       this.state,
       this.session,
       this.timeit.getTime(),
-      this.timeit.running
+      this.timeit.running,
     ];
 
-    return state_array;
+    return stateArray;
   }
 
   /**
@@ -94,6 +85,25 @@ class PomodoroSession {
     this.timeit.stop();
   }
 
+  updateDocument() {
+    switch (this.state) {
+      case 2:
+        this.DOC_ELEMENTS.pomo.style.textDecoration = 'none';
+        this.DOC_ELEMENTS.short_break.style.textDecoration = 'underline';
+        this.DOC_ELEMENTS.long_break.style.textDecoration = 'none';
+        break;
+      case 3:
+        this.DOC_ELEMENTS.pomo.style.textDecoration = 'none';
+        this.DOC_ELEMENTS.short_break.style.textDecoration = 'none';
+        this.DOC_ELEMENTS.long_break.style.textDecoration = 'underline';
+        break;
+      default:
+        this.DOC_ELEMENTS.pomo.style.textDecoration = 'underline';
+        this.DOC_ELEMENTS.short_break.style.textDecoration = 'none';
+        this.DOC_ELEMENTS.long_break.style.textDecoration = 'none';
+    }
+  }
+
   /**
    * this function links the document and the
    * @return {Promise} [description]
@@ -103,24 +113,29 @@ class PomodoroSession {
       case 0:
         // start and try to finish work-rest sequence;
         try {
-          DOC_TIMER_BUTTON.setAttribute('value', 'Stop');
+          // run pomo sequence
           this.state = 1;
+          this.DOC_ELEMENTS.button.setAttribute('value', 'Stop');
+          this.updateDocument();
           await this.run(this.CONFIG_WORK_TIME);
-          this.DEBUG_PRINT("Work finished");
+          this.DEBUG_PRINT('Work finished');
+
+          // run rest sequence
           this.state = 2;
+          this.updateDocument();
           await this.run(this.CONFIG_REST_TIME);
-          this.DEBUG_PRINT("Rest finished");
+          this.DEBUG_PRINT('Rest finished');
 
           // reset to idle state after sequence
+          // TODO: session state change
           this.state = 0;
-          DOC_TIMER_BUTTON.setAttribute('value', 'Start');
-        }
-        // if timer is stopped midway, transition to idle state
-        catch(e) {
+          this.DOC_ELEMENTS.button.setAttribute('value', 'Start');
+          this.updateDocument();
+        } catch (e) {
           this.state = 0;
           this.stop();
-          DOC_TIMER_BUTTON.setAttribute('value', 'Start');
-          this.DEBUG_PRINT("timer stopped midway")
+          this.DOC_ELEMENTS.button.setAttribute('value', 'Start');
+          this.DEBUG_PRINT('timer stopped midway');
           this.DEBUG_PRINT(e);
         }
         break;
@@ -132,17 +147,15 @@ class PomodoroSession {
     }
   }
 
-
-
-
   /**
    * Print debug statements to console based on global debug flag
    * @param {[string]} x [The statement to print]
    */
   DEBUG_PRINT(x) {
-    if(DEBUG_POM_SESSION){ console.log(x); }
+    if (this.DEBUG) {
+      console.log(x);
+    }
   }
-
 }
 
 // module.exports = PomodoroSession;
