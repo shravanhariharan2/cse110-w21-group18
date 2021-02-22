@@ -1,46 +1,100 @@
 // TODO: Implement
-class TaskList extends HTMLElement {
+class TaskItem extends HTMLElement {
   constructor(){
     super();
   }
-  
-  createList() {
-    const list = document.createElement('li')
-    list.className = 'tasklist';
-    return list;
+
+  connectedCallback() {
+    this.isExpanded = false;
+    this.loadDOMElements();
+  }
+
+  loadDOMElements() {
+    this.attachShadow({ mode: 'open' });
+    
+    const nameElement = this.createNameElement();
+    const pomoProgressElement = this.createPomoProgressElement();
+    const notesElement = this.createNotesElement();
+    const expandButtonElement = this.createExpandButtonElement();
+    const editButtonElement = this.createEditButtonElement();
+    const removeButtonElement = this.createRemoveButtonElement();
+    const checkboxElement = this.createCheckboxElement();
+    
+    this.shadowRoot.append(nameElement,notesElement, editButtonElement, pomoProgressElement,
+        removeButtonElement, expandButtonElement,checkboxElement);
   }
   
-  createName(taskList) {
-    const taskName = taskList.appendChild(document.createElement('p'));
+  createNameElement() {
+    const taskName = this.shadowRoot.appendChild(document.createElement('p'));
     taskName.className = 'name';
     taskName.textContent = this.getAttribute('name');
     return taskName;
   }
   
-  createDuration(taskList) {
-    const taskDuration = taskList.appendChild(document.createElement('p'));
-    taskDuration.className = 'duration';
-    taskDuration.textContent = this.getAttribute('duration');
-    return taskDuration;
+  createPomoProgressElement() {
+    const taskEstimate = this.shadowRoot.appendChild(document.createElement('p'));
+    taskEstimate.className = 'pomo-progress';
+    taskEstimate.textContent = this.getAttribute('progress') + '/' + this.getAttribute('estimate');
+    return taskEstimate;
   }
   
-  createNotes(taskList) {
-    const taskNotes = taskList.appendChild(document.createElement('p')):
+  createNotesElement() {
+    const taskNotes = this.shadowRoot.appendChild(document.createElement('p'));
     taskNotes.className = 'notes';
     taskNotes.textContent = this.getAttribute('notes');
     return taskNotes;
   }
   
-  createButton(taskList) {
-    const button = taskList.appendChild(document.createElement('button'));
+  createExpandButtonElement() {
+    const button = this.shadowRoot.appendChild(document.createElement('button'));
+    button.className = 'expand-button'
+    button.onclick = () => this.displayButtons();
+    
+    return button;
+  }
+
+  displayButtons() {
+    if(this.isExpanded) {
+       this.shadowRoot.getElementByClass("edit-button").style.display = "none"; 
+       this.shadowRoot.getElementByClass("remove-button").style.display = "none";
+       this.shadowRoot.getElementByClass("notes").style.display = "none";
+       return;
+    }
+    this.shadowRoot.getElementByClass("edit-button").style.display = "inline"; 
+    this.shadowRoot.getElementByClass("remove-button").style.display = "inline";
+    this.shadowRoot.getElementByClass("notes").style.display = "inline";
+    this.isExpanded = true;
+  }
+
+  createEditButtonElement(){
+    const button = this.shadowRoot.appendChild(document.createElement('button'));
+    button.className = 'edit-button'
+    button.textContent = 'Edit';
+    return button;
+  }
+  createRemoveButtonElement(){
+    const button = this.shadowRoot.appendChild(document.createElement('button'));
+    button.className = 'remove-button'
+    button.textContent = 'Remove';
     return button;
   }
   
-  createPomodoroCount(taskList){
-    const pCount = taskList.appendChild(document.createElement('p'));
-    pCount.className = 'pcount';
-    pCount.textContent = this.getAttribute('pcount');
-    return pCount;
+  createCheckboxElement(){
+    const checkbox = this.shadowRoot.appendChild(document.createElement('input'));
+    checkbox.className = 'task-checkbox'
+    checkbox.setAttribute('type', 'checkbox');
+    checkbox.setAttribute('checked', this.isComplete);
+    checkbox.onclick = () => this.setComplete(checkbox);
+    return checkbox;
+  }
+
+  setComplete(checkbox) {
+    if(checkbox.getAttribute('isComplete') == true) {
+      this.isComplete = true;
+    } else {
+      this.isComplete = false;
+    }
   }
 
 }
+customElements.define('task-item', TaskItem);
