@@ -1,5 +1,6 @@
+import Timer from './Timer.js';
+
 const TICK_SPEED = 100;
-// const TIMER = require('./Timer.js');
 
 /**
  * Implements the PomodoroSession class. This class is a controller for the
@@ -159,4 +160,4 @@ class PomodoroSession {
   }
 }
 
-// module.exports = PomodoroSession;
+export default PomodoroSession;

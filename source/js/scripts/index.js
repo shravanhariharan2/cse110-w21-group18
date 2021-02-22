@@ -1,4 +1,4 @@
- /**
+/**
  * setTimeOnUI(minutes, seconds)
  * startTimer(durationInMinutes) - done
  * startTimerSession()
