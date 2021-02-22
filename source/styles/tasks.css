@@ -1,0 +1,291 @@
+/* styling for the tasklist */
+#task-list-header{
+    position: relative;
+    margin: 0px auto;
+    width: 400px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+  }
+  #list-title {
+    margin: 0px auto;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  
+  #add-task {
+    position: absolute;
+    text-align: center;
+    color:rgb(50, 163, 50);
+    background-color: #d2f783;
+    border-radius: 6px;
+    height: 40px;
+    width: 40px;
+    margin-right: 60px;;
+    border-width: 2px;
+    border-color: #FCE181;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1.2;
+    border-style: solid;
+    display: inline-flex;
+    justify-content: center; 
+    align-items: center; 
+    
+  }
+  
+  #task-list {
+    position: relative;
+    margin: 30px auto;
+    width: 500px;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  
+  #task-add-input {
+    position: relative;
+    margin: 0px auto;
+    width: 450px;
+    border-radius: 30px;
+    border-color:#026670;
+    border-style: solid;
+    border-width: 4px;
+    text-align: center;
+    display:grid;
+    grid-template-areas:
+      'name expect clock pomos'
+      ' notes notes notes notes'
+      'save save save save';
+    padding: 20px;
+    grid-gap: 10px;
+    background-color: #EDEAE5;
+  }
+  
+  #add-task-name{
+    grid-area: name;
+    height: 40px;
+    width: 200px;
+    border-radius:5px;
+    border-style:solid;
+    background-color: #EDEAE5;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    border-width:3px;
+  }
+  #add-task-name:focus {
+    border-color: blue;
+    outline: none;
+  }
+  
+  #expected {
+    grid-area: expect;
+    width: 40px;
+    margin: 0;
+    height: 50px;
+    text-align: center;
+  }
+  
+  #pomos {
+    text-align: center;
+    grid-area: pomos;
+    height: 45px;
+    border-radius:5px;
+    border-style:solid;
+    border-width:3px;
+    font-family: 'Open Sans', sans-serif;
+  }
+  #pomos:focus {
+    border-color: blue;
+    outline: none;
+  }
+  
+  
+  #clock-clip-art {
+    grid-area: clock;
+    margin-top: 0px;
+    text-align:center;
+    margin-left: 20px;
+    height: 20px;
+    width: 20px;
+  }
+  
+  #save-task{
+    grid-area: save;
+    margin: auto auto;
+    width: 20%;
+    height: 40px;
+    border-width:3px;
+    border-radius: 5px;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  #add-task-description{
+    grid-area: notes;
+    background-color: #EDEAE5;
+    height: 100px;
+    font-family: 'Open Sans', sans-serif;
+    resize:none;
+    border-radius: 5px;
+    border-width:3px;
+    font-size: 15px;
+    padding: 3px;
+  }
+  #add-task-description:focus {
+    border-color: blue;
+    outline: none;
+  }
+  task-item{
+    position: relative;
+    margin: 0px auto;
+    margin-top: 20px;
+    width: 450px;
+    border-radius: 30px;
+    border-color:#026670;
+    border-style: solid;
+    border-width: 2px;
+    text-align: center;
+    display:grid;
+    grid-template-areas:
+      ' check taskName pomo'
+      ' notes notes remove';
+    padding: 20px 20px 10px 20px;
+    grid-gap: 10px;
+    background-color: #EDEAE5;
+  }
+
+  .expand-button {
+      width: 20px;
+      height: 20px;
+      margin-right: 0px;
+      margin-left: 440px;
+      margin-top: 30px;
+      position: absolute;
+  }
+  .expand-button:focus {
+    outline: none;
+  }
+
+
+/* custom checkbox from https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_custom_checkbox */
+.task-checkbox {
+    display: block;
+    position: relative;
+    margin-bottom: 0px;
+    margin-top: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin-right: 42px;
+    grid-area: check;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .task-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 40px;
+    width: 40px;
+    background-color: #ccc;
+    border-radius:50%;
+    border-color: #026670;
+    border-width: 2px;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .task-checkbox input:checked ~ .checkmark {
+    background-color: #026670;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .task-checkbox .checkmark:after {
+    left: 13px;
+    top: 5px;
+    width: 25%;
+    height: 50%;
+    border: solid white;
+    border-width: 0 5px 5px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  .name {
+      font-size: 35px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-left: 0px;
+      margin-right: 0;
+      grid-area: taskName;
+      width: 250px;
+      text-align: left;
+      overflow: auto;
+      
+  }
+  .pomo-progress {
+    position:relative;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 0px;
+    margin-bottom: 0;
+    grid-area: pomo;
+    margin-right: 60px;
+    margin-left:0;
+    width:100px;
+}
+.notes{
+    width: 250px;
+    grid-area: notes;
+    text-align:left;
+    white-space:pre;
+    margin-left: 52px;
+}
+
+.edit-button {
+    position: absolute;
+    width: 35px;
+    padding: 0;
+    height: 35px;
+    margin-top: 100px;
+    margin-left: 410px;
+}
+.edit-button:focus {
+    outline:none;
+}
+.remove-button{
+    grid-area: remove;
+    position: relative;
+    width: 30px;
+    padding: 0;
+    height: 30px;
+    margin-left: 80px;
+    margin-top: 60%;
+}
+.remove-button:focus {
+    outline:none;
+}
