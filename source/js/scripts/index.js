@@ -31,11 +31,11 @@
 
 // times that we will want to count down from
 
-const POMO_TIME = 25;
+const POMO_TIME = 1;
 
-const SHORT_BREAK = 5;
+const SHORT_BREAK = 1;
 
-const LONG_BREAK = 30;
+const LONG_BREAK = 1;
 
 const NUM_OF_SESSIONS_IN_POMO = 4;
 
@@ -61,7 +61,7 @@ function setTimeOnUI(minutes, seconds) {
 function startTimer(durationInMinutes) {
   // starting time
   let minutes = durationInMinutes - 1;
-  let seconds = 59;
+  let seconds = 5;
   let isfinished = false;
 
   // runs every second
@@ -71,6 +71,8 @@ function startTimer(durationInMinutes) {
     // end timer
     if (isfinished === true) {
       clearInterval(timer);
+
+      playSound();
 
       // update session indicators
       if (isBreak) {
@@ -84,6 +86,7 @@ function startTimer(durationInMinutes) {
         isBreak = true;
 
         updateUIForSessionEnd();
+
         // will also update UI button
         startTimerSession();
       }
@@ -160,4 +163,9 @@ function updateUIForSessionEnd() {
       setTimeOnUI(LONG_BREAK, 0);
     }
   }
+}
+
+let sound = document.getElementById("timer-alarm");
+function playSound() {
+  sound.play();
 }
