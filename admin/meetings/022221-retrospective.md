@@ -18,8 +18,8 @@
     * Group programming is beneficial for touching base with what others are working on as well as improving the overall bus factor of the team. We should do more of that in the future.
     * Group member transparency is pretty good - everyone who wants to say something says that thing and no one really bashes them for it
   * What could've gone better
-    * Meeting start times started getting later and later during the weeks. We should aim to be in the meeting before 9:00pm (ideally at least 1 minute before)
-    * More people should try to attend every meeting - it's somewhat rare for all of us to be there at the same time. We should try to increase communication when we need to miss meetings
+    * Meeting start times started getting later and later during the weeks. We should all aim to be in the meeting before 9:00pm (ideally at least 1 minute before), or message the Slack if we're going to be late.
+    * More people should try to attend every meeting - it has been somewhat rare for all of us to be there at the same time. We should try to increase communication when we need to miss meetings. The current meeting schedule is at least 1 meeting on Sunday 9pm and 1 meeting on Monday 9pm. Everyone should be there for both - other meetings may be planned as seen necessary
     * Standup participation should be more consistent daily - ideally everyone replies every day before 11:59PM what they've done, what they will do, and any blockages they're dealing with
     * Harder-ish deadlines should be assigned for when tasks should be ready for review in PR. Our new "deadline" is Thursday night of that week. 
   * Any other general comments
