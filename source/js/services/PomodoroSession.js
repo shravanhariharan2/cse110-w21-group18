@@ -129,17 +129,13 @@ class PomodoroSession {
    */
   async onClick() {
     if (this.currentState === PomodoroSessionStates.IDLE) {
-      try {
-        await this.runWorkSession();
-        if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
-          await this.runShortBreak();
-        } else {
-          await this.runLongBreak();
-        }
-        this.idle();
-      } catch (error) {
-        this.resetWorkSession();
+      await this.runWorkSession();
+      if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
+        await this.runShortBreak();
+      } else {
+        await this.runLongBreak();
       }
+      this.idle();
     } else {
       this.resetWorkSession();
     }
