@@ -7,6 +7,7 @@
     justify-content: flex-end;
     align-items: center; 
   }
+
   #list-title {
     margin: 0px auto;
     text-align: center;
@@ -14,8 +15,7 @@
     font-weight: bold;
     text-decoration: underline;
   }
-  
-  
+  /* button to add new task */
   #add-task {
     position: absolute;
     text-align: center;
@@ -34,9 +34,8 @@
     display: inline-flex;
     justify-content: center; 
     align-items: center; 
-    
   }
-  
+  /* holder for all tasks */
   #task-list {
     position: relative;
     margin: 30px auto;
@@ -47,25 +46,28 @@
     justify-content: space-evenly;
   }
   
+  /* input box for new task */
   #task-add-input {
     position: relative;
     margin: 0px auto;
+    margin-top: 10px;
     width: 450px;
     border-radius: 30px;
     border-color:#026670;
     border-style: solid;
     border-width: 4px;
     text-align: center;
-    display:grid;
     grid-template-areas:
       'name expect clock pomos'
-      ' notes notes notes notes'
+      'notes notes notes notes'
+      'add add add add'
       'save save save save';
     padding: 20px;
     grid-gap: 10px;
     background-color: #EDEAE5;
+    display:none;
   }
-  
+  /* name input */
   #add-task-name{
     grid-area: name;
     height: 40px;
@@ -81,7 +83,7 @@
     border-color: blue;
     outline: none;
   }
-  
+  /* input expected number of pomos */
   #expected {
     grid-area: expect;
     width: 40px;
@@ -98,12 +100,13 @@
     border-style:solid;
     border-width:3px;
     font-family: 'Open Sans', sans-serif;
+    background-color: #EDEAE5;
   }
+
   #pomos:focus {
     border-color: blue;
     outline: none;
   }
-  
   
   #clock-clip-art {
     grid-area: clock;
@@ -123,8 +126,14 @@
     border-radius: 5px;
     font-family: 'Open Sans', sans-serif;
   }
-  
-  #add-task-description{
+/* button to add notes */
+  #add-notes {
+    margin: auto auto;
+    grid-area: add;
+    border-width:0px;
+  }
+/* add notes area */
+  #add-task-description {
     grid-area: notes;
     background-color: #EDEAE5;
     height: 100px;
@@ -134,11 +143,14 @@
     border-width:3px;
     font-size: 15px;
     padding: 3px;
+    display:none;
   }
+
   #add-task-description:focus {
     border-color: blue;
     outline: none;
   }
+  /* style for each task-item */
   task-item{
     position: relative;
     margin: 0px auto;
