@@ -55,7 +55,6 @@ class TaskItem extends HTMLElement {
     button.title = 'Expand View'
     button.src = './media/expand-icon.png';
     button.onclick = () => this.displayButtons(button);
-    
     return button;
   }
 
@@ -66,14 +65,14 @@ class TaskItem extends HTMLElement {
        this.shadowRoot.querySelector(".remove-button").style.display = "none";
        this.shadowRoot.querySelector(".notes").style.display = "none";
        this.isExpanded = false;
-       button.setAttribute('style','transform:rotate(0deg); -webkit-transform: rotate(0deg)')
+       button.setAttribute('style','transform:rotate(0deg); -webkit-transform: rotate(0deg)');
        return;
     }
     this.shadowRoot.querySelector(".edit-button").style.display = "inline"; 
     this.shadowRoot.querySelector(".remove-button").style.display = "inline";
     this.shadowRoot.querySelector(".notes").style.display = "inline";
     this.isExpanded = true;
-    button.setAttribute('style','transform:rotate(180deg); -webkit-transform: rotate(180deg)')
+    button.setAttribute('style','transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }
 
   createEditButtonElement(){
@@ -91,13 +90,15 @@ class TaskItem extends HTMLElement {
     button.textContent = 'Remove';
     button.type = 'image';
     button.src = './media/delete-icon.jpeg';
-    button.title = 'Delete Task'
+    button.title = 'Delete Task';
     button.onclick = () => this.removeTask(button);
     return button;
   }
   
   removeTask(button){
-      if(window.confirm('Delete Task?')) this.remove();
+      if (window.confirm('Delete Task?')) {
+          this.remove();
+        }
   }
   createCheckboxElement(){
     const checkbox = this.shadowRoot.appendChild(document.createElement('label'));
@@ -105,7 +106,7 @@ class TaskItem extends HTMLElement {
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.checked = false;
-    console.log(this.isComplete)
+    console.log(this.isComplete);
     this.setAttribute('isComplete', this.isComplete);
     checkbox.onclick = () => this.setComplete(input,checkbox);
     checkbox.appendChild(input);
