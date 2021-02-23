@@ -92,9 +92,13 @@ class TaskItem extends HTMLElement {
     button.type = 'image';
     button.src = './media/delete-icon.jpeg';
     button.title = 'Delete Task'
+    button.onclick = () => this.removeTask(button);
     return button;
   }
   
+  removeTask(button){
+      if(window.confirm('Delete Task?')) this.remove();
+  }
   createCheckboxElement(){
     const checkbox = this.shadowRoot.appendChild(document.createElement('label'));
     checkbox.className = 'task-checkbox';
