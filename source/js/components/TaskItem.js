@@ -7,10 +7,13 @@ class TaskItem extends HTMLElement {
     this.isExpanded = false;
     this.isComplete = false;
     this.loadDOMElements();
+    this.setAttribute('draggable', 'true');
   }
 
   loadDOMElements() {
-    this.attachShadow({ mode: 'open' });
+    if(this.shadowRoot == null){
+        this.attachShadow({ mode: 'open' });
+    }
     this.shadowRoot.innerHTML = `<link rel="stylesheet" href="styles/tasks.css">`;
     const nameElement = this.createNameElement();
     const pomoProgressElement = this.createPomoProgressElement();
@@ -106,7 +109,7 @@ class TaskItem extends HTMLElement {
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
     input.checked = false;
-    console.log(this.isComplete);
+    //console.log(this.isComplete);
     this.setAttribute('isComplete', this.isComplete);
     checkbox.onclick = () => this.setComplete(input,checkbox);
     checkbox.appendChild(input);
@@ -118,16 +121,16 @@ class TaskItem extends HTMLElement {
 // or if i prevent default it doesn't mark the box
   setComplete(input, checkbox) {
     
-    console.log('run');
+    //console.log('run');
     if(input.checked == false) {
-        console.log(input.checked);
+        //console.log(input.checked);
         this.setAttribute('isComplete', 'true');
         checkbox.title = "Unmark as Done";
         this.isComplete = true;
         input.checked = true;
     } 
     else {
-        console.log(input.checked);
+        //console.log(input.checked);
         this.setAttribute('isComplete', 'false');
         checkbox.title = "Mark as Done";
         this.isComplete = false;
