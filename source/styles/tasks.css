@@ -1,5 +1,5 @@
 /* styling for the tasklist */
-#task-list-header {
+#to-do-list-header {
     position: relative;
     margin: 0px auto;
     width: 400px;
@@ -36,7 +36,7 @@
     align-items: center; 
   }
   /* holder for all tasks */
-  #task-list {
+  #to-do-list {
     position: relative;
     margin: 30px auto;
     width: 500px;
@@ -130,7 +130,12 @@
   #add-notes {
     margin: auto;
     grid-area: add;
-    border-width:0px;
+    border-width:1px;
+    border-radius: 2px;
+    background-color: #EDEAE5;
+  }
+  #add-notes:focus {
+    outline:none;
   }
 /* add notes area */
   #add-task-description {
@@ -152,6 +157,7 @@
   }
   /* style for each task-item */
   task-item{
+      cursor:move;
     position: relative;
     margin: 0px auto;
     margin-top: 20px;
@@ -249,14 +255,12 @@
   .name {
       font-size: 35px;
       font-weight: 600;
-      margin-top: 0px;
-      margin-bottom: 0px;
-      margin-left: 0px;
-      margin-right: 0px;
+      margin: 0px;
       grid-area: taskName;
       width: 250px;
       text-align: left;
-      overflow: auto;
+      overflow-wrap: break-word;
+      white-space: initial;
       
   }
   .pomo-progress {
@@ -297,6 +301,7 @@
     height: 30px;
     margin-left: 80px;
     margin-top: 60%;
+    margin-bottom: 7px;
 }
 .remove-button:focus {
     outline:none;
