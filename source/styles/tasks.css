@@ -1,5 +1,5 @@
 /* styling for the tasklist */
-#task-list-header{
+#task-list-header {
     position: relative;
     margin: 0px auto;
     width: 400px;
@@ -87,7 +87,7 @@
   #expected {
     grid-area: expect;
     width: 40px;
-    margin: 0;
+    margin: 0px;
     height: 50px;
     text-align: center;
   }
@@ -128,7 +128,7 @@
   }
 /* button to add notes */
   #add-notes {
-    margin: auto auto;
+    margin: auto;
     grid-area: add;
     border-width:0px;
   }
@@ -202,17 +202,17 @@
   /* Hide the browser's default checkbox */
   .task-checkbox input {
     position: absolute;
-    opacity: 0;
+    opacity: 0%;
     cursor: pointer;
-    height: 0;
-    width: 0;
+    height: 0px;
+    width: 0px;
   }
   
   /* Create a custom checkbox */
   .checkmark {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0px;
+    left: 0px;
     height: 40px;
     width: 40px;
     background-color: #ccc;
@@ -240,7 +240,7 @@
     width: 25%;
     height: 50%;
     border: solid white;
-    border-width: 0 5px 5px 0;
+    border-width: 0 5px 5px 0px;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
@@ -249,10 +249,10 @@
   .name {
       font-size: 35px;
       font-weight: 600;
-      margin-top: 0;
-      margin-bottom: 0;
+      margin-top: 0px;
+      margin-bottom: 0px;
       margin-left: 0px;
-      margin-right: 0;
+      margin-right: 0px;
       grid-area: taskName;
       width: 250px;
       text-align: left;
@@ -264,7 +264,7 @@
     font-size: 18px;
     font-weight: 600;
     margin-top: 0px;
-    margin-bottom: 0;
+    margin-bottom: 0px;
     grid-area: pomo;
     margin-right: 60px;
     margin-left:0;
@@ -281,7 +281,7 @@
 .edit-button {
     position: absolute;
     width: 35px;
-    padding: 0;
+    padding: 0px;
     height: 35px;
     margin-top: 100px;
     margin-left: 410px;
@@ -293,7 +293,7 @@
     grid-area: remove;
     position: relative;
     width: 30px;
-    padding: 0;
+    padding: 0px;
     height: 30px;
     margin-left: 80px;
     margin-top: 60%;
