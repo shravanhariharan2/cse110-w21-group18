@@ -160,7 +160,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
     await this.run(this.SHORT_BREAK_DURATION);
-    this.DEBUG_PRINT('Rest finished');
+    this.DEBUG_PRINT('Short break finished');
   }
 
   /**
@@ -171,7 +171,7 @@ class PomodoroSession {
     this.updateDocument();
     await this.run(this.LONG_BREAK_DURATION);
     this.sessionNumber = 0;
-    this.DEBUG_PRINT('Rest finished');
+    this.DEBUG_PRINT('Long break finished');
   }
 
   /**
