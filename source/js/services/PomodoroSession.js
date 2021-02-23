@@ -1,58 +1,49 @@
 import Timer from './Timer.js';
+import PomodoroSessionStates from '../constants/Enums.js';
 
-const TICK_SPEED = 100;
+const TICK_SPEED = 1000;
 
 /**
- * Implements the PomodoroSession class. This class is a controller for the
+ * Implements the PomodoroSession class. This class is a controller for the timer
+ * object which keeps track of pomodoro session durations
  */
 class PomodoroSession {
   constructor() {
-    // initialize constants
     this.DEBUG = true;
-    // const timerButton = document.getElementById('start');
 
-    // initialize document parameters
-    this.DOC_ELEMENTS = {
-      short_break: document.getElementById('short-break'),
-      long_break: document.getElementById('long-break'),
-      pomo: document.getElementById('pomo'),
-      button: document.getElementById('start'),
-    };
+    this.timer = new Timer(TICK_SPEED);
+    this.currentState = PomodoroSessionStates.IDLE;
+    this.sessionNumber = 0;
 
-    // initialize core objects
-    this.timeit = new Timer(TICK_SPEED);
-    this.state = 0;
-    this.session = 0;
+    this.loadConfig();
+    this.timer.setTime(this.WORK_SESSION_DURATION);
 
-    // initialize placeholders
-    this.watchdog = null;
-
-    // load configs
-    this.loadConfig('dummy_path');
-    this.timeit.setTime(this.CONFIG_WORK_TIME);
-
-    // bind functions to object
     this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
     this.onClick = this.onClick.bind(this);
     this.run = this.run.bind(this);
     this.stop = this.stop.bind(this);
     this.updateDocument = this.updateDocument.bind(this);
 
-    this.DOC_ELEMENTS.button.addEventListener('click', this.onClick);
+    this.DOM_ELEMENTS = {
+      timer: document.getElementById('timer-box'),
+      shortBreak: document.getElementById('short-break'),
+      longBreak: document.getElementById('long-break'),
+      workSession: document.getElementById('pomo'),
+      button: document.getElementById('start'),
+    };
 
-    this.DEBUG_PRINT('init finished');
+    this.DOM_ELEMENTS.button.addEventListener('click', this.onClick);
   }
 
   /**
-   * Loads a session config
-   * @param  {[string]} path the path to the config
+   * Loads a session config. Currently loads default configs, but will
+   * take as input a path to config later on
    */
-  loadConfig(path) {
-    this.CONFIG_WORK_TIME = 0.1;
-    this.CONFIG_REST_TIME = 0.1;
-    this.CONFIG_BREAK_TIME = 30;
-    this.CONFIG_SESSION_COUNT = 4;
-    this.CONFIG_DISPLAY_DIGITS = 2;
+  loadConfig() {
+    this.WORK_SESSION_DURATION = 25;
+    this.SHORT_BREAK_DURATION = 5;
+    this.LONG_BREAK_DURATION = 30;
+    this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
   }
 
   /**
@@ -61,96 +52,153 @@ class PomodoroSession {
    */
   info() {
     const stateArray = [
-      this.state,
+      this.currentState,
       this.session,
-      this.timeit.getTime(),
-      this.timeit.running,
+      this.timer.getTime(),
+      this.timer.running,
     ];
 
     return stateArray;
   }
 
   /**
-   * Run the timer for t-minutes, throws an error timer is stopped midway
+   * Runs the timer for t-minutes, throws an error timer is stopped midway
    * @param  {[type]}  t [the number of minutes to run the timer]
    * @return {Promise}   [non-deterministic state, indicating timer completion]
    */
   async run(t) {
-    this.timeit.setTime(t);
-    await this.timeit.run();
+    this.timer.setTime(t);
+    await this.timer.run();
   }
 
   /**
-   * stops the timer
+   * Stops the timer, resetting its time to the initial work session
+   * duration
    */
-  stop() { // i dunno if we need this? maybe for consistency?
-    this.timeit.stop();
+  stop() {
+    this.timer.stop();
+    this.timer.setTime(this.WORK_SESSION_DURATION);
   }
 
+  /**
+   * Re-renders the timer DOM elements and styles
+   */
   updateDocument() {
-    switch (this.state) {
-      case 2:
-        this.DOC_ELEMENTS.pomo.style.textDecoration = 'none';
-        this.DOC_ELEMENTS.short_break.style.textDecoration = 'underline';
-        this.DOC_ELEMENTS.long_break.style.textDecoration = 'none';
-        break;
-      case 3:
-        this.DOC_ELEMENTS.pomo.style.textDecoration = 'none';
-        this.DOC_ELEMENTS.short_break.style.textDecoration = 'none';
-        this.DOC_ELEMENTS.long_break.style.textDecoration = 'underline';
-        break;
-      default:
-        this.DOC_ELEMENTS.pomo.style.textDecoration = 'underline';
-        this.DOC_ELEMENTS.short_break.style.textDecoration = 'none';
-        this.DOC_ELEMENTS.long_break.style.textDecoration = 'none';
+    if (this.currentState === PomodoroSessionStates.IDLE || this.currentState === PomodoroSessionStates.WORK_SESSION) {
+      this.styleTimerForWorkSession();
+    } else if (this.currentState === PomodoroSessionStates.SHORT_BREAK) {
+      this.styleTimerForShortBreak();
+    } else {
+      this.styleTimerForLongBreak();
     }
   }
 
   /**
-   * this function links the document and the
+   * Styles the timer for work session
+   */
+  styleTimerForWorkSession() {
+    this.DOM_ELEMENTS.workSession.style.textDecoration = 'underline';
+    this.DOM_ELEMENTS.shortBreak.style.textDecoration = 'none';
+    this.DOM_ELEMENTS.longBreak.style.textDecoration = 'none';
+    this.DOM_ELEMENTS.timer.style.background = '#9FEDD7';
+  }
+
+  /**
+   * Styles the timer for short break session
+   */
+  styleTimerForShortBreak() {
+    this.DOM_ELEMENTS.workSession.style.textDecoration = 'none';
+    this.DOM_ELEMENTS.shortBreak.style.textDecoration = 'underline';
+    this.DOM_ELEMENTS.longBreak.style.textDecoration = 'none';
+    this.DOM_ELEMENTS.timer.style.background = '#FEF9C7';
+  }
+
+  /**
+   * Styles the timer for long break session
+   */
+  styleTimerForLongBreak() {
+    this.DOM_ELEMENTS.workSession.style.textDecoration = 'none';
+    this.DOM_ELEMENTS.shortBreak.style.textDecoration = 'none';
+    this.DOM_ELEMENTS.longBreak.style.textDecoration = 'underline';
+    this.DOM_ELEMENTS.timer.style.background = '#FCE181';
+  }
+
+  /**
+   * Links the timer button to the functionality
    * @return {Promise} [description]
    */
   async onClick() {
-    switch (this.state) {
-      case 0:
-        // start and try to finish work-rest sequence;
-        try {
-          // run pomo sequence
-          this.state = 1;
-          this.DOC_ELEMENTS.button.setAttribute('value', 'Stop');
-          this.updateDocument();
-          await this.run(this.CONFIG_WORK_TIME);
-          this.DEBUG_PRINT('Work finished');
-
-          // run rest sequence
-          this.state = 2;
-          this.updateDocument();
-          await this.run(this.CONFIG_REST_TIME);
-          this.DEBUG_PRINT('Rest finished');
-
-          // reset to idle state after sequence
-          // TODO: session state change
-          this.state = 0;
-          this.DOC_ELEMENTS.button.setAttribute('value', 'Start');
-          this.updateDocument();
-        } catch (e) {
-          this.state = 0;
-          this.stop();
-          this.DOC_ELEMENTS.button.setAttribute('value', 'Start');
-          this.DEBUG_PRINT('timer stopped midway');
-          this.DEBUG_PRINT(e);
+    if (this.currentState === PomodoroSessionStates.IDLE) {
+      try {
+        await this.runWorkSession();
+        if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
+          await this.runShortBreak();
+        } else {
+          await this.runLongBreak();
         }
-        break;
-
-      // move to idle state whenever timer is running
-      default:
-        this.state = 0;
-        this.stop();
+        this.idle();
+      } catch (error) {
+        this.resetWorkSession();
+      }
+    } else {
+      this.resetWorkSession();
     }
   }
 
   /**
-   * Print debug statements to console based on global debug flag
+   * Runs a work session, incrementing the session count after completion
+   */
+  async runWorkSession() {
+    this.currentState = PomodoroSessionStates.WORK_SESSION;
+    this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
+    this.updateDocument();
+    await this.run(this.WORK_SESSION_DURATION);
+    this.sessionNumber += 1;
+    this.DEBUG_PRINT('Work finished');
+  }
+
+  /**
+   * Runs a short break session
+   */
+  async runShortBreak() {
+    this.currentState = PomodoroSessionStates.SHORT_BREAK;
+    this.updateDocument();
+    await this.run(this.SHORT_BREAK_DURATION);
+    this.DEBUG_PRINT('Rest finished');
+  }
+
+  /**
+   * Runs a long break session, resetting the session count after completion
+   */
+  async runLongBreak() {
+    this.currentState = PomodoroSessionStates.LONG_BREAK;
+    this.updateDocument();
+    await this.run(this.LONG_BREAK_DURATION);
+    this.sessionNumber = 0;
+    this.DEBUG_PRINT('Rest finished');
+  }
+
+  /**
+   * Resets the timer to the starting work session state
+   */
+  resetWorkSession() {
+    this.stop();
+    this.idle();
+  }
+
+  /**
+   * Sets the session state to idle. The session type will be on work session and
+   * the timer will be idle at the starting time
+   */
+  idle() {
+    this.currentState = PomodoroSessionStates.IDLE;
+    this.timer.setTime(this.WORK_SESSION_DURATION);
+    this.DOM_ELEMENTS.button.setAttribute('value', 'Start');
+    this.updateDocument();
+  }
+
+  /**
+   * Prints debug statements to console based on global debug flag
    * @param {[string]} x [The statement to print]
    */
   DEBUG_PRINT(x) {
