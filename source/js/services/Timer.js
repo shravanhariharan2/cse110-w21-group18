@@ -1,8 +1,6 @@
 /**
  * Implements a basic timer in javascript
  *
- * this.resolution = # of parts per second
- * this.clockSpeed = # of ticks per real-world time (s)
  */
 class Timer {
   constructor(clockSpeed) {
@@ -12,7 +10,6 @@ class Timer {
     this.seconds = 0;
     this.timeInterval = null;
     this.isRunning = false;
-    this.resolution = 10;
     this.clockSpeed = clockSpeed;
 
     this.timeDOMElement = document.getElementById('time');
