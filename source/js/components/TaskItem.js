@@ -1,5 +1,4 @@
-// TODO: Implement
-import TaskList from '../services/TaskList.js';
+
 class TaskItem extends HTMLElement {
   constructor(){
     super();
