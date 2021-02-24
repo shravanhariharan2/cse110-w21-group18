@@ -20,19 +20,20 @@
     font-size: 40px;
     font-weight: bold;
     text-decoration: underline;
+    text-underline-offset: 5px;
   }
   /* button to add new task */
   #add-task {
     position: absolute;
     text-align: center;
     color:rgb(50, 163, 50);
-    background-color: #d2f783;
+    background-color: #e2ffa4;
     border-radius: 6px;
     height: 40px;
     width: 40px;
     margin-right: 60px;;
     border-width: 2px;
-    border-color: #FCE181;
+    border-color: #fce592;
     font-size: 25px;
     font-weight: bold;
     line-height: 1.2;
@@ -40,6 +41,9 @@
     display: inline-flex;
     justify-content: center; 
     align-items: center; 
+  }
+  #add-task:focus {
+      outline:none;
   }
   /* holder for all tasks */
   #to-do-list {
