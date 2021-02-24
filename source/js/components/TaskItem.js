@@ -1,33 +1,35 @@
 // TODO: Implement
+import TaskList from '../services/TaskList.js';
 class TaskItem extends HTMLElement {
   constructor(){
     super();
-  }
-  connectedCallback() {
+
     this.isExpanded = false;
     this.isComplete = false;
-    this.loadDOMElements();
+  }
+  connectedCallback() {
     this.setAttribute('draggable', 'true');
+    this.loadDOMElements();
   }
 
   loadDOMElements() {
     if(this.shadowRoot == null){
         this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `<link rel="stylesheet" href="styles/tasks.css">`;
+        const nameElement = this.createNameElement();
+        const pomoProgressElement = this.createPomoProgressElement();
+        const notesElement = this.createNotesElement();
+        const expandButtonElement = this.createExpandButtonElement();
+        const editButtonElement = this.createEditButtonElement();
+        const removeButtonElement = this.createRemoveButtonElement();
+        const checkboxElement = this.createCheckboxElement();
+        
+        this.shadowRoot.append(checkboxElement, nameElement, pomoProgressElement,
+            expandButtonElement, notesElement, editButtonElement, removeButtonElement );
+        this.shadowRoot.querySelector(".edit-button").style.display = "none"; 
+        this.shadowRoot.querySelector(".remove-button").style.display = "none";
+        this.shadowRoot.querySelector(".notes").style.display = "none";
     }
-    this.shadowRoot.innerHTML = `<link rel="stylesheet" href="styles/tasks.css">`;
-    const nameElement = this.createNameElement();
-    const pomoProgressElement = this.createPomoProgressElement();
-    const notesElement = this.createNotesElement();
-    const expandButtonElement = this.createExpandButtonElement();
-    const editButtonElement = this.createEditButtonElement();
-    const removeButtonElement = this.createRemoveButtonElement();
-    const checkboxElement = this.createCheckboxElement();
-    
-    this.shadowRoot.append(checkboxElement, nameElement, pomoProgressElement,
-        expandButtonElement, notesElement, editButtonElement, removeButtonElement, );
-    this.shadowRoot.querySelector(".edit-button").style.display = "none"; 
-    this.shadowRoot.querySelector(".remove-button").style.display = "none";
-    this.shadowRoot.querySelector(".notes").style.display = "none";
   }
   
   createNameElement() {
@@ -94,14 +96,14 @@ class TaskItem extends HTMLElement {
     button.type = 'image';
     button.src = './media/delete-icon.jpeg';
     button.title = 'Delete Task';
-    button.onclick = () => this.removeTask(button);
+    button.onclick = () => this.removeTask();
     return button;
   }
   
-  removeTask(button){
+  removeTask(){
       if (window.confirm('Delete Task?')) {
           this.remove();
-        }
+         }
   }
   createCheckboxElement(){
     const checkbox = this.shadowRoot.appendChild(document.createElement('label'));
@@ -139,4 +141,6 @@ class TaskItem extends HTMLElement {
   }
 
 }
-customElements.define('task-item', TaskItem);
+
+window.customElements.define('task-item', TaskItem);
+
