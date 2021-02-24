@@ -11,6 +11,7 @@ class TaskList {
     this.addTask = this.addTask.bind(this);
     this.listChanged = this.listChanged.bind(this);
     this.cancelInput = this.cancelInput.bind(this);
+    this.loadTasks = this.loadTasks.bind(this)
 
     this.DOM_ELEMENTS = {
       addTaskButton: document.getElementById('add-task'),
@@ -33,6 +34,55 @@ class TaskList {
     this.makeTasksDraggable();
   }
 
+  loadTasks(){
+    for (const key in sessionStorage) {
+      if(!isNaN(key) && parseInt(Number(key)) == key && !isNaN(parseInt(key, 10)) ){
+        let taskObj = JSON.parse(sessionStorage.getItem(key));
+        const newTask = document.createElement('task-item');
+        newTask.setAttribute('name', taskObj.name);
+        newTask.setAttribute('estimate', taskObj.estimate);
+        newTask.setAttribute('progress', taskObj.progress);
+        newTask.setAttribute('notes', taskObj.notes);
+        newTask.setAttribute('isComplete', taskObj.isComplete);
+        newTask.setAttribute('class', taskObj.class);
+        newTask.setAttribute('id', taskObj.id);
+        newTask.setAttribute('draggable', taskObj.draggable);
+        this.DOM_ELEMENTS.taskList.prepend(newTask);
+      }
+    }
+    this.orderById();
+  }
+  orderById(){
+    console.log(this.numTasks);
+    for(let i = 1; i<this.numTasks;i++){
+      this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
+    }
+  }
+  /**
+   * Adds the task item to session storage in a JSON
+   * @param {*} taskName 
+   * @param {*} taskEstimate 
+   * @param {*} taskProgress 
+   * @param {*} taskNotes 
+   * @param {*} taskIscomplete 
+   * @param {*} taskClassName 
+   * @param {*} taskId 
+   * @param {*} taskDraggable 
+   */
+  storeAsJSON(taskName,taskEstimate,taskProgress,taskNotes,taskIscomplete,taskClassName,taskId,taskDraggable){
+      let taskObj = {
+        name: taskName,
+        estimate: taskEstimate,
+        progress: taskProgress,
+        notes: taskNotes,
+        isComplete: taskIscomplete,
+        class: taskClassName,
+        id: taskId,
+        draggable: taskDraggable
+      }
+      let taskJSON = JSON.stringify(taskObj);
+      sessionStorage.setItem(taskId, taskJSON);
+  }
   /**
    * Called when a Task is removed from the task-list
    * Had to be done here because the remove method is in the individual task
@@ -43,10 +93,17 @@ class TaskList {
     this.ifTasksExist();
   }
 
+  /**
+   * Cancel the input box 
+   */
   cancelInput(){
     this.DOM_ELEMENTS.inputBox.style.display = 'none';
     this.resetInputBox();
   }
+
+  /**
+   * Displays the "View Tasks Here if there are no tasks"
+   */
   ifTasksExist(){
     if(this.numTasks != 0){
       this.DOM_ELEMENTS.noTasks.style.display = "none";
@@ -80,7 +137,7 @@ class TaskList {
    * Adds new task-item to the to-do list based on whats in the input box
    */
   addTask() {
-    this.updateIds();
+    console.log(this.DOM_ELEMENTS.newTaskName.value)
       const newTask = document.createElement('task-item');
       newTask.setAttribute('name', this.DOM_ELEMENTS.newTaskName.value);
       newTask.setAttribute('estimate', this.DOM_ELEMENTS.newTaskPomos.value);
@@ -89,9 +146,13 @@ class TaskList {
       newTask.setAttribute('isComplete', false);
       newTask.setAttribute('class', 'dropzone');
       newTask.setAttribute('id', this.numTasks);
-      this.DOM_ELEMENTS.inputBox.style.display = "none";
       this.DOM_ELEMENTS.taskList.prepend(newTask);
+      this.DOM_ELEMENTS.inputBox.style.display = "none";
+      this.storeAsJSON(this.DOM_ELEMENTS.newTaskName.value,
+        this.DOM_ELEMENTS.newTaskPomos.value, '0', this.DOM_ELEMENTS.newTaskNotes.value,
+        'false', 'dropzone', this.numTasks, 'true');
       this.resetInputBox();
+      this.numTask++;
   }
 
   /**
@@ -158,7 +219,7 @@ class TaskList {
     const children = Array.from(this.DOM_ELEMENTS.taskList.children);
     children.forEach((element) => {
       element.id = this.DOM_ELEMENTS.taskList.childElementCount - Array.from(element.parentNode.children).indexOf(element);
-    }); 
+    });
   }
   markTaskAsComplete(taskId) {}
 

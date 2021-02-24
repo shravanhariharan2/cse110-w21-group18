@@ -41,9 +41,15 @@
     display: inline-flex;
     justify-content: center; 
     align-items: center; 
+    box-shadow: 0 3px #cfbd79;
   }
   #add-task:focus {
       outline:none;
+  }
+  #add-task:active {
+    background-color:  #e2ffa4;
+    box-shadow: 0 1px #cfbd79;
+    transform: translateY(4px);
   }
   /* holder for all tasks */
   #to-do-list {
@@ -138,6 +144,7 @@
       background-color:#cf3e3e;
       border-style: none;
       color: white;
+      
   }
   
   #save-task{
@@ -316,6 +323,11 @@
 .edit-button:focus {
     outline:none;
 }
+.edit-button:active {
+    height: 30px;
+    width: 30px;
+    margin-left: 412.5px;
+}
 .remove-button{
     grid-area: remove;
     position: relative;
@@ -328,4 +340,10 @@
 }
 .remove-button:focus {
     outline:none;
+}
+
+.remove-button:active {
+    height: 25px;
+    width: 25px;
+    margin-left: 82.5px;
 }
