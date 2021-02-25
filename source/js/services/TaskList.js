@@ -12,6 +12,8 @@ class TaskList {
     this.listChanged = this.listChanged.bind(this);
     this.cancelInput = this.cancelInput.bind(this);
     this.loadTasks = this.loadTasks.bind(this)
+    this.loaded = false;
+    this.updated = false;
 
     this.DOM_ELEMENTS = {
       addTaskButton: document.getElementById('add-task'),
@@ -35,8 +37,9 @@ class TaskList {
   }
 
   loadTasks(){
-    for (const key in sessionStorage) {
-      if(!isNaN(key) && parseInt(Number(key)) == key && !isNaN(parseInt(key, 10)) ){
+    this.loaded =  false;
+    for (let key in sessionStorage) {
+      if(parseInt(key) > 0 && parseInt(key) <= sessionStorage.getItem('numTasks')){
         let taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
         newTask.setAttribute('name', taskObj.name);
@@ -47,17 +50,17 @@ class TaskList {
         newTask.setAttribute('class', taskObj.class);
         newTask.setAttribute('id', taskObj.id);
         newTask.setAttribute('draggable', taskObj.draggable);
-        this.DOM_ELEMENTS.taskList.prepend(newTask);
+        this.DOM_ELEMENTS.taskList.appendChild(newTask);
       }
     }
-    this.orderById();
-  }
-  orderById(){
-    console.log(this.numTasks);
-    for(let i = 1; i<this.numTasks;i++){
+    for(let i = 1; i<=sessionStorage.getItem('numTasks');i++){
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
+    this.loaded = true;
+    this.ifTasksExist();
+    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
   }
+
   /**
    * Adds the task item to session storage in a JSON
    * @param {*} taskName 
@@ -88,9 +91,31 @@ class TaskList {
    * Had to be done here because the remove method is in the individual task
    */
   listChanged(){
-    this.updateIds();
-    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
-    this.ifTasksExist();
+    if(this.loaded){
+      this.updateIds();
+      this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+      this.ifTasksExist();
+      this.updateStorage();
+    }
+    
+  }
+  
+  updateStorage(){
+      sessionStorage.clear();
+      sessionStorage.setItem('numTasks', this.numTasks);
+      let children = Array.from(this.DOM_ELEMENTS.taskList.children);
+      children.forEach((element) => {
+        let tName = element.getAttribute('name');
+        let tEstimate = element.getAttribute('estimate');
+        let tProgress = element.getAttribute('progress');
+        let tNotes = element.getAttribute('notes');
+        let tIsComplete = element.getAttribute('isComplete');
+        let tClassName = element.getAttribute('class');
+        let tId = element.getAttribute('id');
+        let tDraggable = element.getAttribute('draggable');
+        this.storeAsJSON(tName,tEstimate,tProgress,tNotes,tIsComplete,tClassName,tId,tDraggable);
+      });
+    
   }
 
   /**
@@ -105,7 +130,7 @@ class TaskList {
    * Displays the "View Tasks Here if there are no tasks"
    */
   ifTasksExist(){
-    if(this.numTasks != 0){
+    if(sessionStorage.getItem('numTasks') != 0){
       this.DOM_ELEMENTS.noTasks.style.display = "none";
       return;
     }
@@ -137,7 +162,6 @@ class TaskList {
    * Adds new task-item to the to-do list based on whats in the input box
    */
   addTask() {
-    console.log(this.DOM_ELEMENTS.newTaskName.value)
       const newTask = document.createElement('task-item');
       newTask.setAttribute('name', this.DOM_ELEMENTS.newTaskName.value);
       newTask.setAttribute('estimate', this.DOM_ELEMENTS.newTaskPomos.value);
@@ -152,7 +176,7 @@ class TaskList {
         this.DOM_ELEMENTS.newTaskPomos.value, '0', this.DOM_ELEMENTS.newTaskNotes.value,
         'false', 'dropzone', this.numTasks, 'true');
       this.resetInputBox();
-      this.numTask++;
+      this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
   }
 
   /**
