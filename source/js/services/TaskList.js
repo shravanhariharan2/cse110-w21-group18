@@ -5,15 +5,18 @@
 class TaskList {
   constructor() {
 
-    this.numTasks = 0;
+    this.numTasks = 0; 
+    this.loaded = false; // make sure nothing else runs while loading 
+
+    //callable methods
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
     this.addTask = this.addTask.bind(this);
     this.listChanged = this.listChanged.bind(this);
     this.cancelInput = this.cancelInput.bind(this);
     this.loadTasks = this.loadTasks.bind(this)
-    this.loaded = false;
-    this.updated = false;
+
+
 
     this.DOM_ELEMENTS = {
       addTaskButton: document.getElementById('add-task'),
@@ -35,7 +38,9 @@ class TaskList {
     this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
     this.makeTasksDraggable();
   }
-
+  /**
+   * Loads the tasks saved in sessionStorage back in the order that they were in previously 
+   */
   loadTasks(){
     this.loaded =  false;
     for (let key in sessionStorage) {
@@ -89,6 +94,7 @@ class TaskList {
   /**
    * Called when a Task is removed from the task-list
    * Had to be done here because the remove method is in the individual task
+   * Does not run if the elements are being loaded in
    */
   listChanged(){
     if(this.loaded){

@@ -8,6 +8,18 @@
     align-items: center; 
   }
 
+#task-line-break {
+    border-width: 1px;
+    width:800px;
+    margin:auto;
+    margin-top: 10px;
+    background-color:#026670;
+    color:#026670;
+    border-color: #026670;
+    border-style:solid;
+    margin-bottom: 5px;
+}
+
   #no-tasks {
     text-align: center;
     margin-top: 50px;
@@ -19,8 +31,6 @@
     text-align: center;
     font-size: 40px;
     font-weight: bold;
-    text-decoration: underline;
-    text-underline-offset: 5px;
   }
   /* button to add new task */
   #add-task {
@@ -200,10 +210,11 @@
     display:grid;
     grid-template-areas:
       ' check taskName pomo'
-      ' notes notes remove';
+      ' notes notes notes'
+      ' remove remove remove';
     padding: 20px 20px 10px 20px;
-    grid-gap: 10px;
-    background-color: #EDEAE5;
+    grid-gap: 5px;
+    background-color: #edeae500;
   }
 
   .expand-button {
@@ -283,12 +294,12 @@
   }
 
   .name {
-      font-size: 35px;
+      font-size: 25px;
       font-weight: 600;
-      margin: 0px;
+      margin: auto;
       grid-area: taskName;
       width: 250px;
-      text-align: left;
+      text-align: center;
       overflow-wrap: break-word;
       white-space: initial;
       
@@ -305,11 +316,12 @@
     width:100px;
 }
 .notes{
-    width: 250px;
+    width: 300px;
     grid-area: notes;
     text-align:left;
-    white-space:pre;
+    white-space:pre-wrap;
     margin-left: 52px;
+    overflow-wrap: break-word;
 }
 
 .edit-button {
@@ -317,16 +329,16 @@
     width: 35px;
     padding: 0px;
     height: 35px;
-    margin-top: 100px;
-    margin-left: 410px;
+    margin-left: 400px;
+    margin-top: auto;
 }
 .edit-button:focus {
-    outline:none;
+    outline: none;
 }
 .edit-button:active {
     height: 30px;
     width: 30px;
-    margin-left: 412.5px;
+    margin-left: 402.5px;
 }
 .remove-button{
     grid-area: remove;
@@ -334,9 +346,8 @@
     width: 30px;
     padding: 0px;
     height: 30px;
-    margin-left: 80px;
-    margin-top: 60%;
-    margin-bottom: 7px;
+    margin: auto;
+    margin-top: -4%;
 }
 .remove-button:focus {
     outline:none;
@@ -345,5 +356,5 @@
 .remove-button:active {
     height: 25px;
     width: 25px;
-    margin-left: 82.5px;
+    margin-top: -3%;
 }
