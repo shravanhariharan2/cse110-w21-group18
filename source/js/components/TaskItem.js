@@ -1,9 +1,9 @@
-
 class TaskItem extends HTMLElement {
-  constructor(){
+  constructor() {
     super();
 
     this.isExpanded = false;
+
     this.isComplete = false;
   }
   connectedCallback() {
@@ -12,9 +12,9 @@ class TaskItem extends HTMLElement {
   }
 
   loadDOMElements() {
-    if(this.shadowRoot == null){
+    if (this.shadowRoot == null) {
         this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `<link rel="stylesheet" href="styles/tasks.css">`;
+        this.shadowRoot.innerHTML = `<link rel='stylesheet' href='styles/tasks.css'>`;
         const nameElement = this.createNameElement();
         const pomoProgressElement = this.createPomoProgressElement();
         const notesElement = this.createNotesElement();
@@ -25,9 +25,9 @@ class TaskItem extends HTMLElement {
         
         this.shadowRoot.append(checkboxElement, nameElement, pomoProgressElement,
             expandButtonElement, notesElement, editButtonElement, removeButtonElement );
-        this.shadowRoot.querySelector(".edit-button").style.display = "none"; 
-        this.shadowRoot.querySelector(".remove-button").style.display = "none";
-        this.shadowRoot.querySelector(".notes").style.display = "none";
+        this.shadowRoot.querySelector('.edit-button').style.display = 'none'; 
+        this.shadowRoot.querySelector('.remove-button').style.display = 'none';
+        this.shadowRoot.querySelector('.notes').style.display = 'none';
     }
   }
   
@@ -56,33 +56,32 @@ class TaskItem extends HTMLElement {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
     button.className = 'expand-button';
     button.type = 'image';
-    button.title = 'Expand View'
+    button.title = 'Expand View';
     button.src = './media/expand-icon.png';
     button.onclick = () => this.displayButtons(button);
     return button;
   }
 
   displayButtons(button) {
-    this.shadowRoot.querySelector(".expand-button").style.tranform = "rotate(180deg)";
-    if(this.isExpanded) {
-       this.shadowRoot.querySelector(".edit-button").style.display = "none"; 
-       this.shadowRoot.querySelector(".remove-button").style.display = "none";
-       this.shadowRoot.querySelector(".notes").style.display = "none";
+    this.shadowRoot.querySelector('.expand-button').style.tranform = 'rotate(180deg)';
+    if (this.isExpanded) {
+       this.shadowRoot.querySelector('.edit-button').style.display = 'none'; 
+       this.shadowRoot.querySelector('.remove-button').style.display = 'none';
+       this.shadowRoot.querySelector('.notes').style.display = 'none';
        this.isExpanded = false;
        button.setAttribute('style','transform:rotate(0deg); -webkit-transform: rotate(0deg)');
        return;
     }
-    this.shadowRoot.querySelector(".edit-button").style.display = "inline"; 
-    this.shadowRoot.querySelector(".remove-button").style.display = "inline";
-    this.shadowRoot.querySelector(".notes").style.display = "inline";
-    if(this.shadowRoot.querySelector(".notes").innerText == ''){
+    this.shadowRoot.querySelector('.edit-button').style.display = 'inline'; 
+    this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
+    this.shadowRoot.querySelector('.notes').style.display = 'inline';
+    if (this.shadowRoot.querySelector('.notes').innerText == '') {
         console.log('hello');
-        this.shadowRoot.querySelector(".edit-button").style.marginTop = this.offsetHeight*0.65 + 'px';
+        this.shadowRoot.querySelector('.edit-button').style.marginTop = this.offsetHeight*0.65 + 'px';
     }
-    else{
-        this.shadowRoot.querySelector(".edit-button").style.marginTop = this.offsetHeight*0.50 + 'px';
+    else {
+        this.shadowRoot.querySelector('.edit-button').style.marginTop = this.offsetHeight*0.50 + 'px';
     }
-    
     this.isExpanded = true;
     button.setAttribute('style','transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }
@@ -98,7 +97,7 @@ class TaskItem extends HTMLElement {
   }
   createRemoveButtonElement(){
     const button = this.shadowRoot.appendChild(document.createElement('input'));
-    button.className = 'remove-button'
+    button.className = 'remove-button';
     button.textContent = 'Remove';
     button.type = 'image';
     button.src = './media/delete-icon.jpeg';
@@ -113,41 +112,36 @@ class TaskItem extends HTMLElement {
         // }
   }
   createCheckboxElement(){
-    const checkbox = this.shadowRoot.appendChild(document.createElement('label'));
-    checkbox.className = 'task-checkbox';
+    const checkboxLabel = this.shadowRoot.appendChild(document.createElement('label'));
+    checkboxLabel.className = 'task-checkbox';
     const input = document.createElement('input');
     input.setAttribute('type', 'checkbox');
+    input.setAttribute('class', 'checkbox');
     input.checked = false;
-    //console.log(this.isComplete);
-    this.setAttribute('isComplete', this.isComplete);
-    checkbox.onclick = () => this.setComplete(input,checkbox);
-    checkbox.appendChild(input);
-    checkbox.innerHTML += `<span class="checkmark"></span>`;
-    checkbox.title = "Mark as Done";
-    return checkbox;
+    this.setAttribute('isComplete', false);
+    checkboxLabel.onclick = () => this.markTaskAsComplete(this.id,checkboxLabel);
+    checkboxLabel.appendChild(input);
+    checkboxLabel.innerHTML += `<span class='checkmark'></span>`;
+    checkboxLabel.title = 'Mark as Done';
+    return checkboxLabel;
   }
-// need help fixing this method, it keeps running twice on click for some reason
-// or if i prevent default it doesn't mark the box
-  setComplete(input, checkbox) {
-    
-    //console.log('run');
-    if(input.checked == false) {
-        //console.log(input.checked);
+  markTaskAsComplete(taskId,checkboxLabel) {
+    const task = document.getElementById(taskId);
+    const checkedElement = task.shadowRoot.querySelector('.checkbox');
+    const taskList = document.getElementById('to-do-list');
+    const checkedList = document.getElementById('completed-list');
+    if (checkedElement.checked == true) {
         this.setAttribute('isComplete', 'true');
-        checkbox.title = "Unmark as Done";
-        this.isComplete = true;
-        input.checked = true;
+        checkboxLabel.title = 'Unmark as Done';
+        checkedList.appendChild(this);
+        this.setAttribute('id', -checkedList.childElementCount );
     } 
     else {
-        //console.log(input.checked);
         this.setAttribute('isComplete', 'false');
-        checkbox.title = "Mark as Done";
-        this.isComplete = false;
-        input.checked = false;
+        checkboxLabel.title = 'Mark as Done';
+        taskList.appendChild(this);
         }
   }
-
 }
-
 window.customElements.define('task-item', TaskItem);
 
