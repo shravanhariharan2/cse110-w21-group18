@@ -8,11 +8,12 @@ body {
   position: relative;
   margin: 100px auto;
   background: #9FEDD7;
-  width: 550px;
+  width: 30%;
+  min-width: 450px;
+  max-width: 550px;
   height: 350px;
   border-radius: 30px;
   text-align: center;
-  z-index : 0;
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;

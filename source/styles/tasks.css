@@ -8,9 +8,11 @@
     align-items: center; 
   }
 
-#task-line-break {
+ #task-line-break {
     border-width: 1px;
-    width:800px;
+    width:50%;
+    min-width: 600px;
+    max-width: 800px;
     margin:auto;
     margin-top: 10px;
     background-color:#026670;
@@ -18,7 +20,7 @@
     border-color: #026670;
     border-style:solid;
     margin-bottom: 5px;
-}
+ }
 
   #no-tasks {
     text-align: center;
@@ -149,8 +151,8 @@
       height: 20px;
       border-radius: 50%;
       text-align: center;
-      margin-left: 500px;
-      margin-top: -20px;
+      margin-left: 235px;
+      margin-top: 165px;
       background-color:#cf3e3e;
       border-style: none;
       color: white;
@@ -165,6 +167,7 @@
     border-width:3px;
     border-radius: 5px;
     font-family: 'Open Sans', sans-serif;
+    margin-bottom: 10px;
   }
 /* button to add notes */
   #add-notes {

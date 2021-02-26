@@ -16,8 +16,6 @@ class TaskList {
     this.cancelInput = this.cancelInput.bind(this);
     this.loadTasks = this.loadTasks.bind(this)
 
-
-
     this.DOM_ELEMENTS = {
       addTaskButton: document.getElementById('add-task'),
       inputBox: document.getElementById('task-add-input'),
@@ -62,8 +60,8 @@ class TaskList {
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
     this.loaded = true;
-    this.ifTasksExist();
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+    this.ifTasksExist();
   }
 
   /**
@@ -100,12 +98,15 @@ class TaskList {
     if(this.loaded){
       this.updateIds();
       this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
-      this.ifTasksExist();
       this.updateStorage();
+      this.ifTasksExist();
     }
     
   }
   
+  /**
+   * Updates the session storage when the list changes 
+   */
   updateStorage(){
       sessionStorage.clear();
       sessionStorage.setItem('numTasks', this.numTasks);
