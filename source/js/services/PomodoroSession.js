@@ -43,7 +43,7 @@ class PomodoroSession {
    * take as input a path to config later on
    */
   loadConfig() {
-    this.WORK_SESSION_DURATION = 25;
+    this.WORK_SESSION_DURATION = 1;
     this.SHORT_BREAK_DURATION = 5;
     this.LONG_BREAK_DURATION = 30;
     this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
@@ -200,10 +200,20 @@ class PomodoroSession {
   }
 
   /**
-   * Notifies the user of session end through audio and visual notification.
+   * Notifies the user of session end through audio and browser (if allowed)
+   * notifications
    */
   notifyUser() {
     this.DOM_ELEMENTS.alarm.play();
+    if (Notification.permission === "granted") {
+      browserNotify();
+    }
+  }
+
+  /**
+   * Creates a browser notification depending on next session
+   */
+  browserNotify() {
     if (this.currentState === PomodoroSessionStates.WORK_SESSION) {
       if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
         new Notification("Completed PomoSession", {body: "time for a 5 minute short break"});
