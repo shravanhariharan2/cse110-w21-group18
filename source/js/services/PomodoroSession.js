@@ -30,9 +30,12 @@ class PomodoroSession {
       longBreak: document.getElementById('long-break'),
       workSession: document.getElementById('pomo'),
       button: document.getElementById('start'),
+      alarm: document.getElementById("timer-alarm")
     };
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.onClick);
+
+    var completeSessionNotification = "Completed ${ this.sessionNumber } PomoSession";
   }
 
   /**
@@ -150,6 +153,7 @@ class PomodoroSession {
     this.updateDocument();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
+    this.notifyUser();
     this.DEBUG_PRINT('Work finished');
   }
 
@@ -160,6 +164,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
     await this.run(this.SHORT_BREAK_DURATION);
+    this.notifyUser();
     this.DEBUG_PRINT('Short break finished');
   }
 
@@ -170,6 +175,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.LONG_BREAK;
     this.updateDocument();
     await this.run(this.LONG_BREAK_DURATION);
+    this.notifyUser();
     this.sessionNumber = 0;
     this.DEBUG_PRINT('Long break finished');
   }
@@ -191,6 +197,26 @@ class PomodoroSession {
     this.timer.setTime(this.WORK_SESSION_DURATION);
     this.DOM_ELEMENTS.button.setAttribute('value', 'Start');
     this.updateDocument();
+  }
+
+  /**
+   * Notifies the user of session end through audio and visual notification.
+   */
+  notifyUser() {
+    this.DOM_ELEMENTS.alarm.play();
+    if (this.currentState === PomodoroSessionStates.WORK_SESSION) {
+      if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
+        new Notification("Completed PomoSession", {body: "time for a 5 minute short break"});
+      } else {
+        new Notification("Completed PomoSession", {body: "time for a 30 minute long break"});
+      }
+    } else {
+      if (this.currentState === PomodoroSessionStates.SHORT_BREAK) {
+        new Notification("Completed Short Break", {body: "start your next work session"});
+      } else {
+        new Notification("Completed Long Break", {body: "start your next work session"});
+      }
+    }
   }
 
   /**
