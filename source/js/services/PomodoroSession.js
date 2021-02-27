@@ -1,5 +1,6 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
+import { createNotificationTitle, createNotificationBody } from '../constants/displayMessages.js';
 
 const TICK_SPEED = 1000;
 
@@ -34,8 +35,6 @@ class PomodoroSession {
     };
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.onClick);
-
-    var completeSessionNotification = "Completed ${ this.sessionNumber } PomoSession";
   }
 
   /**
@@ -206,7 +205,7 @@ class PomodoroSession {
   notifyUser() {
     this.DOM_ELEMENTS.alarm.play();
     if (Notification.permission === "granted") {
-      browserNotify();
+      this.browserNotify();
     }
   }
 
@@ -214,19 +213,9 @@ class PomodoroSession {
    * Creates a browser notification depending on next session
    */
   browserNotify() {
-    if (this.currentState === PomodoroSessionStates.WORK_SESSION) {
-      if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
-        new Notification("Completed PomoSession", {body: "time for a 5 minute short break"});
-      } else {
-        new Notification("Completed PomoSession", {body: "time for a 30 minute long break"});
-      }
-    } else {
-      if (this.currentState === PomodoroSessionStates.SHORT_BREAK) {
-        new Notification("Completed Short Break", {body: "start your next work session"});
-      } else {
-        new Notification("Completed Long Break", {body: "start your next work session"});
-      }
-    }
+    const notificationTitle = createNotificationTitle(this.currentState);
+    const notificationBody = createNotificationBody(this.currentState, this.sessionNumber);
+    new Notification(notificationTitle, notificationBody);
   }
 
   /**
