@@ -9,7 +9,7 @@ const TICK_SPEED = 1000;
  */
 class PomodoroSession {
   constructor() {
-    this.DEBUG = true;
+    this.DEBUG = false;
 
     this.timer = new Timer(TICK_SPEED);
     this.currentState = PomodoroSessionStates.IDLE;
