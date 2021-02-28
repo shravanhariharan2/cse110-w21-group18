@@ -1,11 +1,9 @@
-import PomodoroSession from './../js/services/PomodoroSession';
+import PomodoroSession from '../js/services/PomodoroSession';
 import PomodoroSessionStates from '../js/constants/Enums';
 
-jest.useFakeTimers();
-
-const MS_IN_WORK_SESSION = 60000 * 25;
-const MS_IN_SHORT_BREAK = 60000 * 5;
-const MS_IN_LONG_BREAK = 60000 * 30;
+const MS_IN_WORK_SESSION = 25 * 60 * 1000;
+const MS_IN_SHORT_BREAK = 5 * 60 * 1000;
+const MS_IN_LONG_BREAK = 30 * 60 * 1000;
 
 // Set up the HTML
 document.body.innerHTML = `
@@ -22,15 +20,60 @@ document.body.innerHTML = `
   </div>
 `;
 
-const PomoTest = new PomodoroSession();
-PomoTest.timer.DEBUG = false;
-PomoTest.DEBUG = false;
-
 test('Constructor initializes correct instance variables', () => {
+  const PomoTest = new PomodoroSession();
   expect(PomoTest.sessionNumber).toBe(0);
   expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
 });
 
+test('Session increases after one pomodoro work session', async () => {
+  jest.useFakeTimers();
+  const PomoTest = new PomodoroSession();
+  PomoTest.timer.DEBUG = false;
+  PomoTest.DEBUG = false;
+  const promise = PomoTest.runWorkSession();
+  jest.advanceTimersByTime(MS_IN_WORK_SESSION);
+  await promise;
+  expect(PomoTest.sessionNumber).toBe(1);
+});
+
+test('Short break runs for correct duration', async () => {
+  jest.useFakeTimers();
+  const PomoTest = new PomodoroSession();
+  PomoTest.timer.DEBUG = false;
+  PomoTest.DEBUG = false;
+  const promise = PomoTest.runShortBreak();
+  jest.advanceTimersByTime(MS_IN_SHORT_BREAK);
+  await promise;
+  expect(PomoTest.timer.isRunning).toBe(false);
+});
+
+test('Session resets to zero after long break', async () => {
+  jest.useFakeTimers();
+  const PomoTest = new PomodoroSession();
+  PomoTest.timer.DEBUG = false;
+  PomoTest.DEBUG = false;
+  PomoTest.sessionNumber = 4
+  const promise = PomoTest.runLongBreak();
+  jest.advanceTimersByTime(MS_IN_LONG_BREAK);
+  await promise;
+  expect(PomoTest.sessionNumber).toBe(0);
+});
+
+test('Stop resets the timer to the work session', () => {
+  jest.useFakeTimers();
+  const PomoTest = new PomodoroSession();
+  PomoTest.timer.DEBUG = false;
+  PomoTest.DEBUG = false;
+  PomoTest.onClick();
+  jest.advanceTimersByTime(MS_IN_WORK_SESSION/2);
+  PomoTest.onClick();
+  expect(PomoTest.sessionNumber).toBe(0);
+  expect(PomoTest.timer.minutes).toBe(25);
+  expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
+});
+
+/*
 describe('Session number and states change correctly as the timer runs', () => {
   for(let sessionNumber = 1; sessionNumber <= PomoTest.NUM_SESSIONS_BEFORE_LONG_BREAK; sessionNumber++) {
     test('Session Idle to start and after breaks', () => {
@@ -39,7 +82,7 @@ describe('Session number and states change correctly as the timer runs', () => {
       jest.advanceTimersByTime(MS_IN_WORK_SESSION);
     });
 
-    test('Session number increments', () => {
+    test('Session number increments when work session is finished', () => {
       expect(PomoTest.sessionNumber).toBe(sessionNumber);
     });
 
@@ -60,12 +103,4 @@ describe('Session number and states change correctly as the timer runs', () => {
     expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
   });
 });
-
-test('Stop resets the timer to the work session', () => {
-  PomoTest.onClick();
-  jest.advanceTimersByTime(MS_IN_WORK_SESSION/2);
-  PomoTest.onClick();
-  expect(PomoTest.sessionNumber).toBe(0);
-  expect(PomoTest.timer.minutes).toBe(25);
-  expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
-});
+*/

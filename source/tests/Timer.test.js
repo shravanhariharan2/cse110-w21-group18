@@ -1,14 +1,12 @@
-import Timer from './../js/services/Timer';
+import Timer from '../js/services/Timer';
 
-const timerTest = new Timer(1);
-
-// Mock the DOM changes 
-timerTest.updateDocument = jest.fn();
-timerTest.DEBUG = false;
-
-jest.useFakeTimers();
+// Set up the HTML
+document.body.innerHTML = `
+  <div id="time"></div>
+`;
 
 test('Constructor initializes correct instance variables', () => {
+  const timerTest = new Timer(1);
   expect(timerTest.seconds).toBe(0);
   expect(timerTest.minutes).toBe(0);
   expect(timerTest.timeInterval).toBe(null);
@@ -17,12 +15,15 @@ test('Constructor initializes correct instance variables', () => {
 });
 
 test('setTime sets the proper time', () => {
+  const timerTest = new Timer(1);
   timerTest.setTime(25); 
   expect(timerTest.minutes).toBe(25);
   expect(timerTest.seconds).toBe(0);
 });
 
 test('step decreases the timer by one second', () => {
+  const timerTest = new Timer(1);
+  timerTest.DEBUG = false;
   const mockPromise = jest.fn();
   timerTest.setTime(25); 
   timerTest.step(mockPromise);
@@ -31,6 +32,9 @@ test('step decreases the timer by one second', () => {
 });
 
 test('run properly runs the timer for the correct duration', () => {
+  const timerTest = new Timer(1);
+  timerTest.DEBUG = false;
+  jest.useFakeTimers();		
   timerTest.setTime(1);
   timerTest.run();
   for(let i = 0; i < 60; i++) {
