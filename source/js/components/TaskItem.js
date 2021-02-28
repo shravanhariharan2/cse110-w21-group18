@@ -27,8 +27,8 @@ class TaskItem extends HTMLElement {
             expandButtonElement, notesElement, editButtonElement, removeButtonElement );
         this.shadowRoot.querySelector('.edit-button').style.display = 'none'; 
         this.shadowRoot.querySelector('.remove-button').style.display = 'none';
-        this.shadowRoot.querySelector('.notes').style.display = 'none';
-    }
+        this.shadowRoot.querySelector('.notes').style.display = 'none';       
+    } 
   }
   
   createNameElement() {
@@ -76,7 +76,6 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
     if (this.shadowRoot.querySelector('.notes').innerText == '') {
-        console.log('hello');
         this.shadowRoot.querySelector('.edit-button').style.marginTop = this.offsetHeight*0.65 + 'px';
     }
     else {
@@ -118,7 +117,6 @@ class TaskItem extends HTMLElement {
     input.setAttribute('type', 'checkbox');
     input.setAttribute('class', 'checkbox');
     input.checked = false;
-    this.setAttribute('isComplete', false);
     checkboxLabel.onclick = () => this.markTaskAsComplete(this.id,checkboxLabel);
     checkboxLabel.appendChild(input);
     checkboxLabel.innerHTML += `<span class='checkmark'></span>`;
@@ -134,12 +132,17 @@ class TaskItem extends HTMLElement {
         this.setAttribute('isComplete', 'true');
         checkboxLabel.title = 'Unmark as Done';
         checkedList.appendChild(this);
-        this.setAttribute('id', -checkedList.childElementCount );
+        this.setAttribute('draggable', false);
+        this.setAttribute('class', 'none');
+        this.style.cursor = 'pointer';
     } 
     else {
         this.setAttribute('isComplete', 'false');
         checkboxLabel.title = 'Mark as Done';
         taskList.appendChild(this);
+        this.setAttribute('draggable', true);
+        this.setAttribute('class', 'dropzone');
+        this.style.cursor = 'move';
         }
   }
 }

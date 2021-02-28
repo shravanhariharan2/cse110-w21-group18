@@ -77,8 +77,7 @@
   /* input box for new task */
   #task-add-input {
     position: relative;
-    margin: 0px auto;
-    margin-top: 10px;
+    margin: 10px auto;
     width: 450px;
     border-radius: 30px;
     border-color:#026670;
@@ -200,7 +199,7 @@
   }
   /* style for each task-item */
   task-item{
-      cursor:move;
+    cursor: move;
     position: relative;
     margin: 0px auto;
     margin-top: 20px;
@@ -360,4 +359,31 @@
     height: 25px;
     width: 25px;
     margin-top: -3%;
+}
+
+/* completed list*/
+#completed-list-header {
+    position: relative;
+    margin: 0px auto;
+    width: 400px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+  }
+
+  #completed-list-title {
+    margin: 20px auto;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+  }
+ #expand-completed {
+    width: 20px;
+    height: 20px;
+    margin-right: 40px;
+    margin-top: 0px;
+    position: absolute;
+}
+#expand-completed:focus {
+  outline: none;
 }

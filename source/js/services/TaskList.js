@@ -5,6 +5,8 @@
 class TaskList {
   constructor() {
     this.numTasks = 0; 
+    this.completedTasks = 0;
+    this.completedIsExpanded = false;
     this.loaded = false; // make sure nothing else runs while loading 
     //callable methods
     this.displayInputBox = this.displayInputBox.bind(this);
@@ -13,6 +15,7 @@ class TaskList {
     this.listChanged = this.listChanged.bind(this);
     this.cancelInput = this.cancelInput.bind(this);
     this.loadTasks = this.loadTasks.bind(this);
+    this.expandCompletedTasks = this.expandCompletedTasks.bind(this);
     this.DOM_ELEMENTS = {
       addTaskButton: document.getElementById('add-task'),
       inputBox: document.getElementById('task-add-input'),
@@ -23,15 +26,21 @@ class TaskList {
       taskList: document.getElementById('to-do-list'),
       saveNewTaskButton: document.getElementById('save-task'),
       noTasks: document.getElementById('no-tasks'),
-      cancelButton: document.getElementById('cancel-input')
+      cancelButton: document.getElementById('cancel-input'),
+      completedList: document.getElementById('completed-list'),
+      completedListTitle: document.getElementById('completed-list-header'),
+      expandCompleted: document.getElementById('expand-completed')
     };
     //declaring event listeners
     this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
     this.DOM_ELEMENTS.addNotesButton.addEventListener('click', this.addNotesToTask);
     this.DOM_ELEMENTS.saveNewTaskButton.addEventListener('click', this.addTask);
     this.DOM_ELEMENTS.taskList.addEventListener('DOMSubtreeModified', this.listChanged);
+    this.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', this.listChanged);
     this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
+    this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
     this.makeTasksDraggable();
+    this.DOM_ELEMENTS.completedList.style.display = 'none';
   }
   /**
    * Loads the tasks saved in sessionStorage back in the order that they were in previously 
@@ -39,7 +48,7 @@ class TaskList {
   loadTasks() {
     this.loaded = false;
     for (const key in sessionStorage) {
-      if (parseInt(key) > 0 && parseInt(key) <= sessionStorage.getItem('numTasks')) {
+      if (parseInt(key) >= -sessionStorage.getItem('completedTasks') && parseInt(key) <= sessionStorage.getItem('numTasks')) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
         newTask.setAttribute('name', taskObj.name);
@@ -50,14 +59,25 @@ class TaskList {
         newTask.setAttribute('class', taskObj.class);
         newTask.setAttribute('id', taskObj.id);
         newTask.setAttribute('draggable', taskObj.draggable);
-        this.DOM_ELEMENTS.taskList.appendChild(newTask);
+        if (parseInt(key) > 0) {
+          this.DOM_ELEMENTS.taskList.appendChild(newTask);
+        }
+        else{
+          this.DOM_ELEMENTS.completedList.prepend(newTask);
+          newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+        }
+        
       }
     }
     for (let i = 1; i<=sessionStorage.getItem('numTasks'); i+=1) {
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
-    this.loaded = true;
+    for (let i = 1; i<=sessionStorage.getItem('completedTasks'); i+=1) {
+      this.DOM_ELEMENTS.completedList.appendChild(document.getElementById(-i));
+    }
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+    this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
+    this.loaded = true;
     this.ifTasksExist();
   }
   /**
@@ -94,6 +114,7 @@ class TaskList {
     if (this.loaded) {
       this.updateIds();
       this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+      this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
       this.updateStorage();
       this.ifTasksExist();
     };
@@ -105,8 +126,21 @@ class TaskList {
   updateStorage() {
       sessionStorage.clear();
       sessionStorage.setItem('numTasks', this.numTasks);
-      const children = Array.from(this.DOM_ELEMENTS.taskList.children);
-      children.forEach((element) => {
+      sessionStorage.setItem('completedTasks', this.completedTasks);
+      const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
+      TLChildren.forEach((element) => {
+        const tName = element.getAttribute('name');
+        const tEstimate = element.getAttribute('estimate');
+        const tProgress = element.getAttribute('progress');
+        const tNotes = element.getAttribute('notes');
+        const tIsComplete = element.getAttribute('isComplete');
+        const tClassName = element.getAttribute('class');
+        const tId = element.getAttribute('id');
+        const tDraggable = element.getAttribute('draggable');
+        this.storeAsJSON(tName,tEstimate,tProgress,tNotes,tIsComplete,tClassName,tId,tDraggable);
+      });
+      const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
+      CLChildren.forEach((element) => {
         const tName = element.getAttribute('name');
         const tEstimate = element.getAttribute('estimate');
         const tProgress = element.getAttribute('progress');
@@ -123,23 +157,32 @@ class TaskList {
    */
   cancelInput() {
     this.DOM_ELEMENTS.inputBox.style.display = 'none';
+    this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     this.resetInputBox();
   }
   /**
    * Displays the 'View Tasks Here if there are no tasks'
+   * Hides the Completed task list if there are no completed tasks
    */ 
   ifTasksExist() {
     if (sessionStorage.getItem('numTasks') != 0) {
       this.DOM_ELEMENTS.noTasks.style.display = 'none';
+    }
+    else{
+      this.DOM_ELEMENTS.noTasks.style.display = 'block';
+    }
+    if (sessionStorage.getItem('completedTasks') != 0) {
+      this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
       return;
     }
-    this.DOM_ELEMENTS.noTasks.style.display = 'block';
+    this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
   }
   /**
    *  Displays input box for user to input a task
    */
    displayInputBox() {
       this.DOM_ELEMENTS.inputBox.style.display = 'grid';
+      this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
   }
   /**
    * Add/remove notes to/from new task input
@@ -183,6 +226,7 @@ class TaskList {
     this.DOM_ELEMENTS.newTaskNotes.value = '';
     this.DOM_ELEMENTS.newTaskName.value = '';
     this.DOM_ELEMENTS.newTaskPomos.value = '?';
+    this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
   }
   /**
    * Make the tasks in the list draggable
@@ -229,12 +273,34 @@ class TaskList {
    * is the highest number ID
    */
   updateIds() {
-    const children = Array.from(this.DOM_ELEMENTS.taskList.children);
-    children.forEach((element) => {
+    const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
+    TLChildren.forEach((element) => {
       element.id = this.DOM_ELEMENTS.taskList.childElementCount - Array.from(element.parentNode.children).indexOf(element);
+    });
+    const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
+    CLChildren.forEach((element) => {
+      element.id =  - Array.from(element.parentNode.children).indexOf(element)-1;
     });
   }
 
+  /** 
+   * Expand the list of completed tasks
+  */
+ expandCompletedTasks(){
+    this.DOM_ELEMENTS.expandCompleted.style.tranform = 'rotate(180deg)';
+    if (this.completedIsExpanded) {
+      console.log(this.completedIsExpanded);
+      this.completedIsExpanded = false;
+      this.DOM_ELEMENTS.completedList.style.display = 'none';
+      this.DOM_ELEMENTS.completedList.style.marginRight = '35px';
+      this.DOM_ELEMENTS.expandCompleted.setAttribute('style','transform:rotate(0deg); -webkit-transform: rotate(0deg)');
+      return;
+   }
+   this.completedIsExpanded = true;
+   this.DOM_ELEMENTS.completedList.style.display = 'inline';
+   this.DOM_ELEMENTS.completedList.style.marginRight = '40px';
+   this.DOM_ELEMENTS.expandCompleted.setAttribute('style','transform:rotate(180deg); -webkit-transform: rotate(180deg)');
+ }
   incrementPomodoroCount(taskId) {}
 }
 export default TaskList;
