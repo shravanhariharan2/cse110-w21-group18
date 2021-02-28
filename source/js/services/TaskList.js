@@ -66,6 +66,7 @@ class TaskList {
         } else{
             this.DOM_ELEMENTS.completedList.prepend(newTask);
             newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+            newTask.style.cursor = 'pointer';
         } 
       }
     }
@@ -78,34 +79,10 @@ class TaskList {
     }
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
     this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
-    this.loaded = true;
+    this.isLoaded = true;
     this.displayMessageIfNoTasksExist();
   }
-  /**
-   * Adds the task item to session storage in a JSON
-   * @param {*} taskName
-   * @param {*} taskEstimate
-   * @param {*} taskProgress
-   * @param {*} taskNotes
-   * @param {*} taskIscomplete
-   * @param {*} taskClassName
-   * @param {*} taskId
-   * @param {*} taskDraggable
-   */
-  storeAsJSON(taskName,taskEstimate,taskProgress,taskNotes,taskIscomplete,taskClassName,taskId,taskDraggable) {
-      const taskObj = {
-        name: taskName, 
-        estimate: taskEstimate, 
-        progress: taskProgress, 
-        notes: taskNotes, 
-        isComplete: taskIscomplete, 
-        class: taskClassName, 
-        id: taskId, 
-        draggable: taskDraggable 
-      };
-      let taskJSON = JSON.stringify(taskObj);
-      sessionStorage.setItem(taskId, taskJSON);
-  }
+
 
   /**
    * Called when a Task is removed from the task-list
@@ -221,7 +198,7 @@ class TaskList {
     newTask.setAttribute('class', 'dropzone');
     newTask.setAttribute('id', this.numTasks);
 
-    this.DOM_ELEMENTS.taskList.prepend(newTask);
+    this.DOM_ELEMENTS.taskList.appendChild(newTask);
     this.DOM_ELEMENTS.inputBox.style.display = 'none';
 
     const task = {
@@ -309,7 +286,7 @@ class TaskList {
     CLChildren.forEach((element) => {
       const elementPosition = Array.from(element.parentNode.children).indexOf(element);
       const totalElementCount = this.DOM_ELEMENTS.completedList.childElementCount;
-      element.id = elementPosition -1;
+      element.id = - elementPosition - 1;
     });
   }
 
