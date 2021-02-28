@@ -4,10 +4,10 @@
  */
 class TaskList {
   constructor() {
-    this.numTasks = 0; 
+    this.numTasks = 0;
     this.completedTasks = 0;
     this.completedIsExpanded = false;
-    this.isLoaded = false; // make sure nothing else runs while loading 
+    this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
 
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
@@ -29,7 +29,7 @@ class TaskList {
       cancelButton: document.getElementById('cancel-input'),
       completedList: document.getElementById('completed-list'),
       completedListTitle: document.getElementById('completed-list-header'),
-      expandCompleted: document.getElementById('expand-completed')
+      expandCompleted: document.getElementById('expand-completed'),
     };
 
     this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
@@ -47,9 +47,9 @@ class TaskList {
    * Loads the tasks saved in sessionStorage back in the order that they were in previously
    */
   loadTasks() {
-    this.isLoaded = false;
+    this.hasLoadedIntoDOM = false;
     for (const key in sessionStorage) {
-      let isTaskItem = parseInt(key) >= -sessionStorage.getItem('completedTasks') && parseInt(key) <= sessionStorage.getItem('numTasks');
+      const isTaskItem = parseInt(key) >= -sessionStorage.getItem('completedTasks') && parseInt(key) <= sessionStorage.getItem('numTasks');
       if (isTaskItem) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
@@ -63,26 +63,25 @@ class TaskList {
         newTask.setAttribute('draggable', taskObj.draggable);
         if (parseInt(key) > 0) {
           this.DOM_ELEMENTS.taskList.appendChild(newTask);
-        } else{
-            this.DOM_ELEMENTS.completedList.prepend(newTask);
-            newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-            newTask.style.cursor = 'pointer';
-        } 
+        } else {
+          this.DOM_ELEMENTS.completedList.prepend(newTask);
+          newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+          newTask.style.cursor = 'pointer';
+        }
       }
     }
 
     for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
-    for (let i = 1; i<=sessionStorage.getItem('completedTasks'); i+=1) {
+    for (let i = 1; i <= sessionStorage.getItem('completedTasks'); i += 1) {
       this.DOM_ELEMENTS.completedList.appendChild(document.getElementById(-i));
     }
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
     this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
-    this.isLoaded = true;
+    this.hasLoadedIntoDOM = true;
     this.displayMessageIfNoTasksExist();
   }
-
 
   /**
    * Called when a Task is removed from the task-list
@@ -90,7 +89,7 @@ class TaskList {
    * Does not run if the elements are being loaded in
    */
   listChanged() {
-    if (this.isLoaded) {
+    if (this.hasLoadedIntoDOM) {
       this.refreshTaskItemIds();
       this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
       this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
@@ -103,39 +102,39 @@ class TaskList {
    * Updates the session storage when the list changes
    */
   updateStorage() {
-      sessionStorage.clear();
-      sessionStorage.setItem('numTasks', this.numTasks);
-      sessionStorage.setItem('completedTasks', this.completedTasks);
-      const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
-      TLChildren.forEach((element) => {
-        const taskObj = {
-          name: element.getAttribute('name'), 
-          estimate: element.getAttribute('estimate'),
-          progress: element.getAttribute('progress'),
-          notes: element.getAttribute('notes'),
-          isComplete: element.getAttribute('isComplete'), 
-          class: element.getAttribute('class'), 
-          id: element.getAttribute('id'), 
-          draggable: element.getAttribute('draggable') 
-        };
-        let taskJSON = JSON.stringify(taskObj);
-        sessionStorage.setItem(element.getAttribute('id'), taskJSON);
-      });
-      const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
-      CLChildren.forEach((element) => {
-        const taskObj = {
-          name: element.getAttribute('name'), 
-          estimate: element.getAttribute('estimate'),
-          progress: element.getAttribute('progress'),
-          notes: element.getAttribute('notes'),
-          isComplete: element.getAttribute('isComplete'), 
-          class: element.getAttribute('class'), 
-          id: element.getAttribute('id'), 
-          draggable: element.getAttribute('draggable') 
-        };
-        let taskJSON = JSON.stringify(taskObj);
-        sessionStorage.setItem(element.getAttribute('id'), taskJSON);
-      });
+    sessionStorage.clear();
+    sessionStorage.setItem('numTasks', this.numTasks);
+    sessionStorage.setItem('completedTasks', this.completedTasks);
+    const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
+    TLChildren.forEach((element) => {
+      const taskObj = {
+        name: element.getAttribute('name'),
+        estimate: element.getAttribute('estimate'),
+        progress: element.getAttribute('progress'),
+        notes: element.getAttribute('notes'),
+        isComplete: element.getAttribute('isComplete'),
+        class: element.getAttribute('class'),
+        id: element.getAttribute('id'),
+        draggable: element.getAttribute('draggable'),
+      };
+      const taskJSON = JSON.stringify(taskObj);
+      sessionStorage.setItem(element.getAttribute('id'), taskJSON);
+    });
+    const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
+    CLChildren.forEach((element) => {
+      const taskObj = {
+        name: element.getAttribute('name'),
+        estimate: element.getAttribute('estimate'),
+        progress: element.getAttribute('progress'),
+        notes: element.getAttribute('notes'),
+        isComplete: element.getAttribute('isComplete'),
+        class: element.getAttribute('class'),
+        id: element.getAttribute('id'),
+        draggable: element.getAttribute('draggable'),
+      };
+      const taskJSON = JSON.stringify(taskObj);
+      sessionStorage.setItem(element.getAttribute('id'), taskJSON);
+    });
   }
 
   /**
@@ -150,14 +149,16 @@ class TaskList {
   /**
    * Displays the 'View Tasks Here if there are no tasks'
    * Hides the Completed task list if there are no completed tasks
-   */ 
+   */
   displayMessageIfNoTasksExist() {
-    if (sessionStorage.getItem('numTasks') != 0) {
+    const hasTasks = sessionStorage.getItem('numTasks') && sessionStorage.getItem() > 0;
+    const hasCompletedTasks = sessionStorage.getItem('completedTasks') != 0;
+    if (hasTasks) {
       this.DOM_ELEMENTS.noTasks.style.display = 'none';
     } else {
       this.DOM_ELEMENTS.noTasks.style.display = 'block';
     }
-    if (sessionStorage.getItem('completedTasks') != 0) {
+    if (hasCompletedTasks) {
       this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
     } else {
       this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
@@ -167,9 +168,9 @@ class TaskList {
   /**
    *  Displays input box for user to input a task
    */
-   displayInputBox() {
-      this.DOM_ELEMENTS.inputBox.style.display = 'grid';
-      this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
+  displayInputBox() {
+    this.DOM_ELEMENTS.inputBox.style.display = 'grid';
+    this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
   }
 
   /**
@@ -286,27 +287,28 @@ class TaskList {
     CLChildren.forEach((element) => {
       const elementPosition = Array.from(element.parentNode.children).indexOf(element);
       const totalElementCount = this.DOM_ELEMENTS.completedList.childElementCount;
-      element.id = - elementPosition - 1;
+      element.id = -elementPosition - 1;
     });
   }
 
-  /** 
+  /**
    * Expand the list of completed tasks
   */
- expandCompletedTasks(){
+  expandCompletedTasks() {
     this.DOM_ELEMENTS.expandCompleted.style.tranform = 'rotate(180deg)';
     if (this.completedIsExpanded) {
       this.completedIsExpanded = false;
       this.DOM_ELEMENTS.completedList.style.display = 'none';
       this.DOM_ELEMENTS.completedList.style.marginRight = '35px';
-      this.DOM_ELEMENTS.expandCompleted.setAttribute('style','transform:rotate(0deg); -webkit-transform: rotate(0deg)');
+      this.DOM_ELEMENTS.expandCompleted.setAttribute('style', 'transform:rotate(0deg); -webkit-transform: rotate(0deg)');
       return;
-   }
-   this.completedIsExpanded = true;
-   this.DOM_ELEMENTS.completedList.style.display = 'inline';
-   this.DOM_ELEMENTS.completedList.style.marginRight = '40px';
-   this.DOM_ELEMENTS.expandCompleted.setAttribute('style','transform:rotate(180deg); -webkit-transform: rotate(180deg)');
- }
+    }
+    this.completedIsExpanded = true;
+    this.DOM_ELEMENTS.completedList.style.display = 'inline';
+    this.DOM_ELEMENTS.completedList.style.marginRight = '40px';
+    this.DOM_ELEMENTS.expandCompleted.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
+  }
+
   incrementPomodoroCount(taskId) {}
 }
 export default TaskList;
