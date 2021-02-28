@@ -6,52 +6,53 @@ class TaskItem extends HTMLElement {
 
     this.isComplete = false;
   }
+
   connectedCallback() {
     this.setAttribute('draggable', 'true');
     this.loadDOMElements();
   }
 
   loadDOMElements() {
-    if (this.shadowRoot == null) {
-        this.attachShadow({ mode: 'open' });
-        this.shadowRoot.innerHTML = `<link rel='stylesheet' href='styles/tasks.css'>`;
-        const nameElement = this.createNameElement();
-        const pomoProgressElement = this.createPomoProgressElement();
-        const notesElement = this.createNotesElement();
-        const expandButtonElement = this.createExpandButtonElement();
-        const editButtonElement = this.createEditButtonElement();
-        const removeButtonElement = this.createRemoveButtonElement();
-        const checkboxElement = this.createCheckboxElement();
-        
-        this.shadowRoot.append(checkboxElement, nameElement, pomoProgressElement,
-            expandButtonElement, notesElement, editButtonElement, removeButtonElement );
-        this.shadowRoot.querySelector('.edit-button').style.display = 'none'; 
-        this.shadowRoot.querySelector('.remove-button').style.display = 'none';
-        this.shadowRoot.querySelector('.notes').style.display = 'none';       
-    } 
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+      this.shadowRoot.innerHTML = '<link rel=\'stylesheet\' href=\'styles/tasks.css\'>';
+      const nameElement = this.createNameElement();
+      const pomoProgressElement = this.createPomoProgressElement();
+      const notesElement = this.createNotesElement();
+      const expandButtonElement = this.createExpandButtonElement();
+      const editButtonElement = this.createEditButtonElement();
+      const removeButtonElement = this.createRemoveButtonElement();
+      const checkboxElement = this.createCheckboxElement();
+
+      this.shadowRoot.append(checkboxElement, nameElement, pomoProgressElement,
+        expandButtonElement, notesElement, editButtonElement, removeButtonElement);
+      this.shadowRoot.querySelector('.edit-button').style.display = 'none';
+      this.shadowRoot.querySelector('.remove-button').style.display = 'none';
+      this.shadowRoot.querySelector('.notes').style.display = 'none';
+    }
   }
-  
+
   createNameElement() {
     const taskName = this.shadowRoot.appendChild(document.createElement('p'));
     taskName.className = 'name';
     taskName.textContent = this.getAttribute('name');
     return taskName;
   }
-  
+
   createPomoProgressElement() {
     const taskEstimate = this.shadowRoot.appendChild(document.createElement('p'));
     taskEstimate.className = 'pomo-progress';
-    taskEstimate.textContent = this.getAttribute('progress') + '/' + this.getAttribute('estimate') + ' Pomodoros';
+    taskEstimate.textContent = `${this.getAttribute('progress')}/${this.getAttribute('estimate')} Pomodoros`;
     return taskEstimate;
   }
-  
+
   createNotesElement() {
     const taskNotes = this.shadowRoot.appendChild(document.createElement('p'));
     taskNotes.className = 'notes';
     taskNotes.textContent = this.getAttribute('notes');
     return taskNotes;
   }
-  
+
   createExpandButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
     button.className = 'expand-button';
@@ -65,27 +66,26 @@ class TaskItem extends HTMLElement {
   displayButtons(button) {
     this.shadowRoot.querySelector('.expand-button').style.tranform = 'rotate(180deg)';
     if (this.isExpanded) {
-       this.shadowRoot.querySelector('.edit-button').style.display = 'none'; 
-       this.shadowRoot.querySelector('.remove-button').style.display = 'none';
-       this.shadowRoot.querySelector('.notes').style.display = 'none';
-       this.isExpanded = false;
-       button.setAttribute('style','transform:rotate(0deg); -webkit-transform: rotate(0deg)');
-       return;
+      this.shadowRoot.querySelector('.edit-button').style.display = 'none';
+      this.shadowRoot.querySelector('.remove-button').style.display = 'none';
+      this.shadowRoot.querySelector('.notes').style.display = 'none';
+      this.isExpanded = false;
+      button.setAttribute('style', 'transform:rotate(0deg); -webkit-transform: rotate(0deg)');
+      return;
     }
-    this.shadowRoot.querySelector('.edit-button').style.display = 'inline'; 
+    this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
     this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
-    if (this.shadowRoot.querySelector('.notes').innerText == '') {
-        this.shadowRoot.querySelector('.edit-button').style.marginTop = this.offsetHeight*0.65 + 'px';
-    }
-    else {
-        this.shadowRoot.querySelector('.edit-button').style.marginTop = this.offsetHeight*0.50 + 'px';
+    if (this.shadowRoot.querySelector('.notes').innerText === '') {
+      this.shadowRoot.querySelector('.edit-button').style.marginTop = `${this.offsetHeight * 0.65}px`;
+    } else {
+      this.shadowRoot.querySelector('.edit-button').style.marginTop = `${this.offsetHeight * 0.50}px`;
     }
     this.isExpanded = true;
-    button.setAttribute('style','transform:rotate(180deg); -webkit-transform: rotate(180deg)');
+    button.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }
 
-  createEditButtonElement(){
+  createEditButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
     button.className = 'edit-button';
     button.type = 'image';
@@ -94,7 +94,8 @@ class TaskItem extends HTMLElement {
     button.textContent = 'Edit';
     return button;
   }
-  createRemoveButtonElement(){
+
+  createRemoveButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
     button.className = 'remove-button';
     button.textContent = 'Remove';
@@ -104,13 +105,14 @@ class TaskItem extends HTMLElement {
     button.onclick = () => this.removeTask();
     return button;
   }
-  
-  removeTask(){
-      //if (window.confirm('Delete Task?')) {
-          this.remove();
-        // }
+
+  removeTask() {
+    // if (window.confirm('Delete Task?')) {
+    this.remove();
+    // }
   }
-  createCheckboxElement(){
+
+  createCheckboxElement() {
     const checkboxLabel = this.shadowRoot.appendChild(document.createElement('label'));
     checkboxLabel.className = 'task-checkbox';
     const input = document.createElement('input');
@@ -119,11 +121,12 @@ class TaskItem extends HTMLElement {
     input.checked = false;
     checkboxLabel.onclick = () => this.markTaskAsComplete(this.id,checkboxLabel);
     checkboxLabel.appendChild(input);
-    checkboxLabel.innerHTML += `<span class='checkmark'></span>`;
+    checkboxLabel.innerHTML += '<span class=\'checkmark\'></span>';
     checkboxLabel.title = 'Mark as Done';
     return checkboxLabel;
   }
-  markTaskAsComplete(taskId,checkboxLabel) {
+
+  markTaskAsComplete(taskId, checkboxLabel) {
     const task = document.getElementById(taskId);
     const checkedElement = task.shadowRoot.querySelector('.checkbox');
     const taskList = document.getElementById('to-do-list');
@@ -135,16 +138,14 @@ class TaskItem extends HTMLElement {
         this.setAttribute('draggable', false);
         this.setAttribute('class', 'none');
         this.style.cursor = 'pointer';
-    } 
-    else {
+    } else {
         this.setAttribute('isComplete', 'false');
         checkboxLabel.title = 'Mark as Done';
         taskList.appendChild(this);
         this.setAttribute('draggable', true);
         this.setAttribute('class', 'dropzone');
         this.style.cursor = 'move';
-        }
+    }
   }
 }
 window.customElements.define('task-item', TaskItem);
-

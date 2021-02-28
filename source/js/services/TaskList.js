@@ -7,8 +7,8 @@ class TaskList {
     this.numTasks = 0; 
     this.completedTasks = 0;
     this.completedIsExpanded = false;
-    this.loaded = false; // make sure nothing else runs while loading 
-    //callable methods
+    this.isLoaded = false; // make sure nothing else runs while loading 
+
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
     this.addTask = this.addTask.bind(this);
@@ -31,7 +31,7 @@ class TaskList {
       completedListTitle: document.getElementById('completed-list-header'),
       expandCompleted: document.getElementById('expand-completed')
     };
-    //declaring event listeners
+
     this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
     this.DOM_ELEMENTS.addNotesButton.addEventListener('click', this.addNotesToTask);
     this.DOM_ELEMENTS.saveNewTaskButton.addEventListener('click', this.addTask);
@@ -42,13 +42,15 @@ class TaskList {
     this.makeTasksDraggable();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
   }
+
   /**
-   * Loads the tasks saved in sessionStorage back in the order that they were in previously 
+   * Loads the tasks saved in sessionStorage back in the order that they were in previously
    */
   loadTasks() {
-    this.loaded = false;
+    this.isLoaded = false;
     for (const key in sessionStorage) {
-      if (parseInt(key) >= -sessionStorage.getItem('completedTasks') && parseInt(key) <= sessionStorage.getItem('numTasks')) {
+      let isTaskItem = parseInt(key) >= -sessionStorage.getItem('completedTasks') && parseInt(key) <= sessionStorage.getItem('numTasks');
+      if (isTaskItem) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
         newTask.setAttribute('name', taskObj.name);
@@ -61,15 +63,14 @@ class TaskList {
         newTask.setAttribute('draggable', taskObj.draggable);
         if (parseInt(key) > 0) {
           this.DOM_ELEMENTS.taskList.appendChild(newTask);
-        }
-        else{
-          this.DOM_ELEMENTS.completedList.prepend(newTask);
-          newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-        }
-        
+        } else{
+            this.DOM_ELEMENTS.completedList.prepend(newTask);
+            newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+        } 
       }
     }
-    for (let i = 1; i<=sessionStorage.getItem('numTasks'); i+=1) {
+
+    for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
     for (let i = 1; i<=sessionStorage.getItem('completedTasks'); i+=1) {
@@ -78,7 +79,7 @@ class TaskList {
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
     this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
     this.loaded = true;
-    this.ifTasksExist();
+    this.displayMessageIfNoTasksExist();
   }
   /**
    * Adds the task item to session storage in a JSON
@@ -105,23 +106,24 @@ class TaskList {
       let taskJSON = JSON.stringify(taskObj);
       sessionStorage.setItem(taskId, taskJSON);
   }
+
   /**
    * Called when a Task is removed from the task-list
    * Had to be done here because the remove method is in the individual task
    * Does not run if the elements are being loaded in
    */
   listChanged() {
-    if (this.loaded) {
-      this.updateIds();
+    if (this.isLoaded) {
+      this.refreshTaskItemIds();
       this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
       this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
       this.updateStorage();
-      this.ifTasksExist();
-    };
-    
+      this.displayMessageIfNoTasksExist();
+    }
   }
+
   /**
-   * Updates the session storage when the list changes 
+   * Updates the session storage when the list changes
    */
   updateStorage() {
       sessionStorage.clear();
@@ -129,54 +131,62 @@ class TaskList {
       sessionStorage.setItem('completedTasks', this.completedTasks);
       const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
       TLChildren.forEach((element) => {
-        const tName = element.getAttribute('name');
-        const tEstimate = element.getAttribute('estimate');
-        const tProgress = element.getAttribute('progress');
-        const tNotes = element.getAttribute('notes');
-        const tIsComplete = element.getAttribute('isComplete');
-        const tClassName = element.getAttribute('class');
-        const tId = element.getAttribute('id');
-        const tDraggable = element.getAttribute('draggable');
-        this.storeAsJSON(tName,tEstimate,tProgress,tNotes,tIsComplete,tClassName,tId,tDraggable);
+        const taskObj = {
+          name: element.getAttribute('name'), 
+          estimate: element.getAttribute('estimate'),
+          progress: element.getAttribute('progress'),
+          notes: element.getAttribute('notes'),
+          isComplete: element.getAttribute('isComplete'), 
+          class: element.getAttribute('class'), 
+          id: element.getAttribute('id'), 
+          draggable: element.getAttribute('draggable') 
+        };
+        let taskJSON = JSON.stringify(taskObj);
+        sessionStorage.setItem(element.getAttribute('id'), taskJSON);
       });
       const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
       CLChildren.forEach((element) => {
-        const tName = element.getAttribute('name');
-        const tEstimate = element.getAttribute('estimate');
-        const tProgress = element.getAttribute('progress');
-        const tNotes = element.getAttribute('notes');
-        const tIsComplete = element.getAttribute('isComplete');
-        const tClassName = element.getAttribute('class');
-        const tId = element.getAttribute('id');
-        const tDraggable = element.getAttribute('draggable');
-        this.storeAsJSON(tName,tEstimate,tProgress,tNotes,tIsComplete,tClassName,tId,tDraggable);
+        const taskObj = {
+          name: element.getAttribute('name'), 
+          estimate: element.getAttribute('estimate'),
+          progress: element.getAttribute('progress'),
+          notes: element.getAttribute('notes'),
+          isComplete: element.getAttribute('isComplete'), 
+          class: element.getAttribute('class'), 
+          id: element.getAttribute('id'), 
+          draggable: element.getAttribute('draggable') 
+        };
+        let taskJSON = JSON.stringify(taskObj);
+        sessionStorage.setItem(element.getAttribute('id'), taskJSON);
       });
   }
+
   /**
-   * Cancel the input box 
+   * Cancel the input box
    */
   cancelInput() {
     this.DOM_ELEMENTS.inputBox.style.display = 'none';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     this.resetInputBox();
   }
+
   /**
    * Displays the 'View Tasks Here if there are no tasks'
    * Hides the Completed task list if there are no completed tasks
    */ 
-  ifTasksExist() {
+  displayMessageIfNoTasksExist() {
     if (sessionStorage.getItem('numTasks') != 0) {
       this.DOM_ELEMENTS.noTasks.style.display = 'none';
-    }
-    else{
+    } else {
       this.DOM_ELEMENTS.noTasks.style.display = 'block';
     }
     if (sessionStorage.getItem('completedTasks') != 0) {
       this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
-      return;
+    } else {
+      this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
     }
-    this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
   }
+
   /**
    *  Displays input box for user to input a task
    */
@@ -184,6 +194,7 @@ class TaskList {
       this.DOM_ELEMENTS.inputBox.style.display = 'grid';
       this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
   }
+
   /**
    * Add/remove notes to/from new task input
    */
@@ -191,43 +202,57 @@ class TaskList {
     if (this.DOM_ELEMENTS.addNotesButton.value === 'Add Notes') {
       this.DOM_ELEMENTS.newTaskNotes.style.display = 'inline';
       this.DOM_ELEMENTS.addNotesButton.value = 'Remove Notes';
-    }
-    else {
+    } else {
       this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
-      this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes'; 
+      this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     }
   }
+
   /**
    * Adds new task-item to the to-do list based on whats in the input box
    */
   addTask() {
-      const newTask = document.createElement('task-item');
-      newTask.setAttribute('name', this.DOM_ELEMENTS.newTaskName.value);
-      newTask.setAttribute('estimate', this.DOM_ELEMENTS.newTaskPomos.value);
-      newTask.setAttribute('progress', '0');
-      newTask.setAttribute('notes', this.DOM_ELEMENTS.newTaskNotes.value);
-      newTask.setAttribute('isComplete', false);
-      newTask.setAttribute('class', 'dropzone');
-      newTask.setAttribute('id', this.numTasks);
-      this.DOM_ELEMENTS.taskList.prepend(newTask);
-      this.DOM_ELEMENTS.inputBox.style.display = 'none';
-      this.storeAsJSON(this.DOM_ELEMENTS.newTaskName.value,
-        this.DOM_ELEMENTS.newTaskPomos.value, '0', this.DOM_ELEMENTS.newTaskNotes.value,
-        'false', 'dropzone', this.numTasks, 'true');
-      this.resetInputBox();
-      this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+    const newTask = document.createElement('task-item');
+    newTask.setAttribute('name', this.DOM_ELEMENTS.newTaskName.value);
+    newTask.setAttribute('estimate', this.DOM_ELEMENTS.newTaskPomos.value);
+    newTask.setAttribute('progress', '0');
+    newTask.setAttribute('notes', this.DOM_ELEMENTS.newTaskNotes.value);
+    newTask.setAttribute('isComplete', false);
+    newTask.setAttribute('class', 'dropzone');
+    newTask.setAttribute('id', this.numTasks);
+
+    this.DOM_ELEMENTS.taskList.prepend(newTask);
+    this.DOM_ELEMENTS.inputBox.style.display = 'none';
+
+    const task = {
+      name: this.DOM_ELEMENTS.newTaskName.value,
+      estimate: this.DOM_ELEMENTS.newTaskPomos.value,
+      progress: 0,
+      notes: this.DOM_ELEMENTS.newTaskNotes.value,
+      isComplete: false,
+      className: 'dropzone',
+      id: this.numTasks,
+      isDraggable: true,
+    };
+
+    sessionStorage.setItem(task.id, JSON.stringify(task));
+
+    this.resetInputBox();
+    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
   }
+
   /**
    * Resets the input box back to empty
    */
   resetInputBox() {
     this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
-    this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes'; 
+    this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     this.DOM_ELEMENTS.newTaskNotes.value = '';
     this.DOM_ELEMENTS.newTaskName.value = '';
     this.DOM_ELEMENTS.newTaskPomos.value = '?';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
   }
+
   /**
    * Make the tasks in the list draggable
    * Code taken from https://jsfiddle.net/mrinex/yLpx7etg/3/
@@ -238,48 +263,53 @@ class TaskList {
     let index;
     let indexDrop;
     let list;
-      document.addEventListener('dragstart', ({target}) => {
-          dragged = target;
-          id = target.id;
-          list = target.parentNode.children;
-          for(let i = 0; i < list.length; i += 1) {
-            if(list[i] === dragged){
-              index = i;
-            }
-          }
-      });
-      document.addEventListener('dragover', (event) => {
-          event.preventDefault();
-      });
-      document.addEventListener('drop', ({target}) => {
-      if(target.className == 'dropzone' && target.id !== id) {
-          dragged.remove( dragged );
-          for(let i = 0; i < list.length; i += 1) {
-            if(list[i] === target){
-              indexDrop = i;
-            }
-          }
-          if(index > indexDrop) {
-            target.before( dragged );
-          } else {
-          target.after( dragged );
+    document.addEventListener('dragstart', ({ target }) => {
+      dragged = target;
+      id = target.id;
+      list = target.parentNode.children;
+      for (let i = 0; i < list.length; i += 1) {
+        if (list[i] === dragged) {
+          index = i;
+        }
+      }
+    });
+    document.addEventListener('dragover', (event) => {
+      event.preventDefault();
+    });
+    document.addEventListener('drop', ({ target }) => {
+      if (target.className === 'dropzone' && target.id !== id) {
+        dragged.remove(dragged);
+        for (let i = 0; i < list.length; i += 1) {
+          if (list[i] === target) {
+            indexDrop = i;
           }
         }
-        this.updateIds();
-      });   
+        if (index > indexDrop) {
+          target.before(dragged);
+        } else {
+          target.after(dragged);
+        }
+      }
+      this.refreshTaskItemIds();
+    });
   }
+
   /**
    * Change the ID's of task-items when they get dragged around so that the top
    * is the highest number ID
    */
-  updateIds() {
+  refreshTaskItemIds() {
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
-      element.id = this.DOM_ELEMENTS.taskList.childElementCount - Array.from(element.parentNode.children).indexOf(element);
+      const elementPosition = Array.from(element.parentNode.children).indexOf(element);
+      const totalElementCount = this.DOM_ELEMENTS.taskList.childElementCount;
+      element.id = totalElementCount - elementPosition;
     });
     const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
-      element.id =  - Array.from(element.parentNode.children).indexOf(element)-1;
+      const elementPosition = Array.from(element.parentNode.children).indexOf(element);
+      const totalElementCount = this.DOM_ELEMENTS.completedList.childElementCount;
+      element.id = elementPosition -1;
     });
   }
 
@@ -289,7 +319,6 @@ class TaskList {
  expandCompletedTasks(){
     this.DOM_ELEMENTS.expandCompleted.style.tranform = 'rotate(180deg)';
     if (this.completedIsExpanded) {
-      console.log(this.completedIsExpanded);
       this.completedIsExpanded = false;
       this.DOM_ELEMENTS.completedList.style.display = 'none';
       this.DOM_ELEMENTS.completedList.style.marginRight = '35px';
