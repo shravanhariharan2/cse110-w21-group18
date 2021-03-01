@@ -131,7 +131,7 @@ class TaskItem extends HTMLElement {
     const checkedElement = task.shadowRoot.querySelector('.checkbox');
     const taskList = document.getElementById('to-do-list');
     const checkedList = document.getElementById('completed-list');
-    if (checkedElement.checked == true) {
+    if (checkedElement.checked === true) {
       this.setAttribute('isComplete', 'true');
       checkboxLabel.title = 'Unmark as Done';
       checkedList.appendChild(this);

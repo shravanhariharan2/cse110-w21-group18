@@ -49,7 +49,7 @@ class TaskList {
   loadTasks() {
     this.hasLoadedIntoDOM = false;
     const keys = Object.keys(sessionStorage);
-    keys.forEach( (key) => {
+    keys.forEach((key) => {
       const numTasks = sessionStorage.getItem('numTasks');
       const completedTasks = sessionStorage.getItem('completedTasks');
       const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks);
@@ -312,6 +312,15 @@ class TaskList {
     this.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(180deg); -webkit-transform: rotate(180deg)';
   }
 
-  incrementPomodoroCount(taskId) {}
+  /**
+   * Increases the top task progress when the pomodoro session increases
+   */
+  incrementPomodoroCount() {
+    let topTask = document.getElementById('1');
+    if( topTask !== null) {
+      topTask.progress += 1;
+    }
+    this.listChanged();
+  }
 }
 export default TaskList;

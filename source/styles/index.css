@@ -74,3 +74,11 @@ body {
   top: 3px;
   box-shadow: 0px 0px;
 }
+
+#add-interruption {
+  position: absolute;
+  height: 50px;
+  width: 55px;
+  margin-left: 70px;
+  margin-top: 5px;
+}
