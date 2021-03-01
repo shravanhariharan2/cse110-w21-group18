@@ -9,7 +9,7 @@ const TICK_SPEED = 1000;
  */
 class PomodoroSession {
   constructor() {
-    this.DEBUG = true;
+    this.DEBUG = false;
 
     this.timer = new Timer(TICK_SPEED);
     this.currentState = PomodoroSessionStates.IDLE;
@@ -19,7 +19,7 @@ class PomodoroSession {
     this.timer.setTime(this.WORK_SESSION_DURATION);
 
     this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.toggleSession = this.toggleSession.bind(this);
     this.run = this.run.bind(this);
     this.stop = this.stop.bind(this);
     this.updateDocument = this.updateDocument.bind(this);
@@ -32,7 +32,7 @@ class PomodoroSession {
       button: document.getElementById('start'),
     };
 
-    this.DOM_ELEMENTS.button.addEventListener('click', this.onClick);
+    this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
   }
 
   /**
@@ -127,7 +127,7 @@ class PomodoroSession {
    * Links the timer button to the functionality
    * @return {Promise} [description]
    */
-  async onClick() {
+  async toggleSession() {
     if (this.currentState === PomodoroSessionStates.IDLE) {
       await this.runWorkSession();
       if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
