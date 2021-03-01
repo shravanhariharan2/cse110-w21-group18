@@ -151,7 +151,7 @@ class PomodoroSession {
     this.updateDocument();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
-    this.notification.notifyUser(this.sessionState, this.sessionNumber);
+    NotificationService.notifyUser(this.sessionState, this.sessionNumber);
     this.DEBUG_PRINT('Work finished');
   }
 
