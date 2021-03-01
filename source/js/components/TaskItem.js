@@ -119,7 +119,7 @@ class TaskItem extends HTMLElement {
     input.setAttribute('type', 'checkbox');
     input.setAttribute('class', 'checkbox');
     input.checked = false;
-    checkboxLabel.onclick = () => this.markTaskAsComplete(this.id,checkboxLabel);
+    checkboxLabel.onclick = () => this.markTaskAsComplete(this.id, checkboxLabel);
     checkboxLabel.appendChild(input);
     checkboxLabel.innerHTML += '<span class=\'checkmark\'></span>';
     checkboxLabel.title = 'Mark as Done';
@@ -132,19 +132,19 @@ class TaskItem extends HTMLElement {
     const taskList = document.getElementById('to-do-list');
     const checkedList = document.getElementById('completed-list');
     if (checkedElement.checked == true) {
-        this.setAttribute('isComplete', 'true');
-        checkboxLabel.title = 'Unmark as Done';
-        checkedList.appendChild(this);
-        this.setAttribute('draggable', false);
-        this.setAttribute('class', 'none');
-        this.style.cursor = 'pointer';
+      this.setAttribute('isComplete', 'true');
+      checkboxLabel.title = 'Unmark as Done';
+      checkedList.appendChild(this);
+      this.setAttribute('draggable', false);
+      this.setAttribute('class', 'none');
+      this.style.cursor = 'pointer';
     } else {
-        this.setAttribute('isComplete', 'false');
-        checkboxLabel.title = 'Mark as Done';
-        taskList.appendChild(this);
-        this.setAttribute('draggable', true);
-        this.setAttribute('class', 'dropzone');
-        this.style.cursor = 'move';
+      this.setAttribute('isComplete', 'false');
+      checkboxLabel.title = 'Mark as Done';
+      taskList.appendChild(this);
+      this.setAttribute('draggable', true);
+      this.setAttribute('class', 'dropzone');
+      this.style.cursor = 'move';
     }
   }
 }

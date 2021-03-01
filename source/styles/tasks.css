@@ -10,9 +10,7 @@
 
 #task-line-break {
   border-width: 1px;
-  width:50%;
-  min-width: 600px;
-  max-width: 800px;
+  max-width: 550px;
   margin:auto;
   margin-top: 10px;
   background-color:#026670;
@@ -78,12 +76,12 @@
 #task-add-input {
   position: relative;
   margin: 0px auto;
-  margin-top: 10px;
+  margin-top: 50px;
   width: 450px;
   border-radius: 30px;
   border-color:#026670;
   border-style: solid;
-  border-width: 4px;
+  border-width: 2.5px;
   text-align: center;
   grid-template-areas:
     'name expect clock pomos'
@@ -93,6 +91,7 @@
   padding: 20px;
   grid-gap: 10px;
   background-color: #EDEAE5;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display:none;
 }
 /* name input */
@@ -105,7 +104,8 @@
   background-color: #EDEAE5;
   font-family: 'Open Sans', sans-serif;
   font-size: 20px;
-  border-width:3px;
+  border-width:2.5px;
+  padding-left: 5px;
 }
 #add-task-name:focus {
   border-color: blue;
@@ -117,6 +117,7 @@
   width: 40px;
   margin: 0px;
   height: 50px;
+  padding-left: 5px;
   text-align: center;
 }
 
@@ -126,7 +127,7 @@
   height: 45px;
   border-radius:5px;
   border-style:solid;
-  border-width:3px;
+  border-width:2.5px;
   font-family: 'Open Sans', sans-serif;
   background-color: #EDEAE5;
 }
@@ -146,17 +147,16 @@
 }
 
 #cancel-input {
-    position:absolute;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    text-align: center;
-    margin-left: 235px;
-    margin-top: 165px;
-    background-color:#cf3e3e;
-    border-style: none;
-    color: white;
-    
+  position:absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  margin-left: 235px;
+  margin-top: 185px;
+  background-color:#cf3e3e;
+  border-style: none;
+  color: white;
 }
 
 #save-task{
@@ -164,10 +164,12 @@
   margin: auto auto;
   width: 20%;
   height: 40px;
-  border-width:3px;
+  border-width:2.5px;
   border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 /* button to add notes */
 #add-notes {
@@ -188,9 +190,11 @@
   font-family: 'Open Sans', sans-serif;
   resize:none;
   border-radius: 5px;
-  border-width:3px;
+  border-width:2.5px;
   font-size: 15px;
   padding: 3px;
+  padding-left: 5px;
+  padding-top: 5px;
   display:none;
 }
 
@@ -298,15 +302,14 @@ task-item {
 }
 
 .name {
-    font-size: 25px;
-    font-weight: 600;
-    margin: auto;
-    grid-area: taskName;
-    width: 250px;
-    text-align: center;
-    overflow-wrap: break-word;
-    white-space: initial;
-    
+  font-size: 25px;
+  font-weight: 600;
+  margin: auto;
+  grid-area: taskName;
+  width: 250px;
+  text-align: center;
+  overflow-wrap: break-word;
+  white-space: initial;
 }
 .pomo-progress {
   position:relative;
