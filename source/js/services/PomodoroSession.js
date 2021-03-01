@@ -42,9 +42,9 @@ class PomodoroSession {
    * take as input a path to config later on
    */
   loadConfig() {
-    this.WORK_SESSION_DURATION = 1;
-    this.SHORT_BREAK_DURATION = 1;
-    this.LONG_BREAK_DURATION = 1;
+    this.WORK_SESSION_DURATION = 25;
+    this.SHORT_BREAK_DURATION = 5;
+    this.LONG_BREAK_DURATION = 30;
     this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
   }
 
