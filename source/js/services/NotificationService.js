@@ -20,7 +20,7 @@ function notifyUser() {
 function browserNotify() {
   const notificationTitle = createNotificationTitle(this.currentState);
   const notificationBody = createNotificationBody(this.currentState, this.sessionNumber);
-  let notification = new Notification(notificationTitle, notificationBody);
+  const notification = new Notification(notificationTitle, notificationBody);
 }
 
 /**
@@ -47,12 +47,10 @@ function createNotificationBody(sessionState, sessionNumber) {
   if (sessionState === PomodoroSessionStates.WORK_SESSION) {
     if (sessionNumber !== NUM_SESSIONS_BEFORE_LONG_BREAK) {
       return { body: DisplayMessages.SHORT_BREAK_NEXT_NOTIFY };
-    } else {
-      return { body: DisplayMessages.LONG_BREAK_NEXT_NOTIFY };
     }
-  } else {
-    return { body: DisplayMessages.WORK_NEXT_NOTIFY };
+    return { body: DisplayMessages.LONG_BREAK_NEXT_NOTIFY };
   }
+  return { body: DisplayMessages.WORK_NEXT_NOTIFY };
 }
 
 export default { notifyUser };
