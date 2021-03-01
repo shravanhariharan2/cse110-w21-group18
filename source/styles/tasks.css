@@ -1,7 +1,7 @@
 /* styling for the tasklist */
 #to-do-list-header {
   position: relative;
-  margin: 0px auto;
+  margin: 0 auto;
   width: 400px;
   display: flex;
   justify-content: flex-end;
@@ -27,7 +27,7 @@
 }
 
 #list-title {
-  margin: 0px auto;
+  margin: 0 auto;
   text-align: center;
   font-size: 40px;
   font-weight: bold;
@@ -51,14 +51,14 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 3px #cfbd79;
+  box-shadow: 0 3px #cfbd79;
 }
 #add-task:focus {
     outline: none;
 }
 #add-task:active {
   background-color:  #e2ffa4;
-  box-shadow: 0px 1px #cfbd79;
+  box-shadow: 0 1px #cfbd79;
   transform: translateY(4px);
 }
 /* holder for all tasks */
@@ -75,7 +75,7 @@
 /* input box for new task */
 #task-add-input {
   position: relative;
-  margin: 0px auto;
+  margin: 0 auto;
   margin-top: 50px;
   width: 450px;
   border-radius: 30px;
@@ -91,7 +91,7 @@
   padding: 20px;
   grid-gap: 10px;
   background-color: #EDEAE5;
-  box-shadow: 0px 4px 8px 0px rgba(0.0, 0.0, 0.0, 0.2), 0px 6px 20px 0px rgba(0.0, 0.0, 0.0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: none;
 }
 /* name input */
@@ -115,7 +115,7 @@
 #expected {
   grid-area: expect;
   width: 40px;
-  margin: 0px;
+  margin: 0;
   height: 50px;
   padding-left: 5px;
   text-align: center;
@@ -139,7 +139,7 @@
 
 #clock-clip-art {
   grid-area: clock;
-  margin-top: 0px;
+  margin-top: 0;
   text-align: center;
   margin-left: 20px;
   height: 20px;
@@ -169,7 +169,7 @@
   font-family: 'Open Sans', sans-serif;
   margin-bottom: 15px;
   margin-top: 15px;
-  box-shadow: 0px 3px 6px 0px rgba(0.0, 0.0, 0.0, 0.2), 0px 3px 10px 0px rgba(0.0, 0.0, 0.0, 0.19);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 /* button to add notes */
 #add-notes {
@@ -206,7 +206,7 @@
 task-item {
   cursor: move;
   position: relative;
-  margin: 0px auto;
+  margin: 0 auto;
   margin-top: 20px;
   width: 450px;
   border-radius: 30px;
@@ -222,13 +222,13 @@ task-item {
   padding: 20px 20px 10px 20px;
   grid-gap: 5px;
   background-color: #edeae500;
-  box-shadow: 0px 4px 8px 0px rgba(0.0, 0.0, 0.0, 0.2), 0px 6px 20px 0px rgba(0.0, 0.0, 0.0, 0.19);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .expand-button {
     width: 20px;
     height: 20px;
-    margin-right: 0px;
+    margin-right: 0;
     margin-left: 440px;
     margin-top: 30px;
     position: absolute;
@@ -242,7 +242,7 @@ task-item {
 .task-checkbox {
   display: block;
   position: relative;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   margin-top: 5px;
   cursor: pointer;
   font-size: 22px;
@@ -259,15 +259,15 @@ task-item {
   position: absolute;
   opacity: 0%;
   cursor: pointer;
-  height: 0px;
-  width: 0px;
+  height: 0;
+  width: 0;
 }
 
 /* Create a custom checkbox */
 .checkmark {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   height: 40px;
   width: 40px;
   background-color: #ccc;
@@ -295,7 +295,7 @@ task-item {
   width: 25%;
   height: 50%;
   border: solid white;
-  border-width: 0px 5px 5px 0px;
+  border-width: 0 5px 5px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
@@ -315,8 +315,8 @@ task-item {
   position: relative;
   font-size: 18px;
   font-weight: 600;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 0;
+  margin-bottom: 0;
   grid-area: pomo;
   margin-right: 60px;
   margin-left:0;
@@ -334,7 +334,7 @@ task-item {
 .edit-button {
   position: absolute;
   width: 35px;
-  padding: 0px;
+  padding: 0;
   height: 35px;
   margin-left: 400px;
   margin-top: auto;
@@ -351,7 +351,7 @@ task-item {
   grid-area: remove;
   position: relative;
   width: 30px;
-  padding: 0px;
+  padding: 0;
   height: 30px;
   margin: auto;
   margin-top: -4%;
@@ -369,7 +369,7 @@ task-item {
 /* completed list*/
 #completed-list-header {
     position: relative;
-    margin: 0px auto;
+    margin: 0 auto;
     width: 400px;
     display: flex;
     justify-content: flex-end;
@@ -386,7 +386,7 @@ task-item {
     width: 20px;
     height: 20px;
     margin-right: 40px;
-    margin-top: 0px;
+    margin-top: 0;
     position: absolute;
 }
 #expand-completed:focus {
