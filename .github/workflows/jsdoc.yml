@@ -16,11 +16,11 @@ jobs:
         uses: andstor/jsdoc-action@v1
         with:
           source_dir: ./source/js
-          output_dir: ./source/docs
+          output_dir: ./docs
           template: minami
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./source/out
+          publish_dir: ./docs
