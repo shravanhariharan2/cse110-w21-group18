@@ -49,7 +49,7 @@ test('Timer resets and idles after a short break', async () => {
 test('Session resets to zero and timer idles after a long break', async () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
-  PomoTest.sessionNumber = 4
+  PomoTest.sessionNumber = 4;
   const promise = PomoTest.runLongBreak();
   jest.advanceTimersByTime(MS_IN_LONG_BREAK);
   await promise;
@@ -62,7 +62,7 @@ test('Stop resets the timer to the work session', () => {
   const PomoTest = new PomodoroSession();
   // Start the timer
   PomoTest.toggleSession();
-  jest.advanceTimersByTime(MS_IN_WORK_SESSION/2);
+  jest.advanceTimersByTime(MS_IN_WORK_SESSION / 2);
   // Stop the timer
   PomoTest.toggleSession();
   expect(PomoTest.sessionNumber).toBe(0);

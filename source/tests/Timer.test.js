@@ -16,7 +16,7 @@ test('Constructor initializes the correct instance variables', () => {
 
 test('setTime(time) sets the specified time', () => {
   const timerTest = new Timer(1);
-  timerTest.setTime(25); 
+  timerTest.setTime(25);
   expect(timerTest.minutes).toBe(25);
   expect(timerTest.seconds).toBe(0);
 });
@@ -24,7 +24,7 @@ test('setTime(time) sets the specified time', () => {
 test('step() decreases the timer by one second', () => {
   const timerTest = new Timer(1);
   const mockPromise = jest.fn();
-  timerTest.setTime(25); 
+  timerTest.setTime(25);
   timerTest.step(mockPromise);
   expect(timerTest.seconds).toBe(59);
   expect(timerTest.minutes).toBe(24);
@@ -32,10 +32,10 @@ test('step() decreases the timer by one second', () => {
 
 test('run() properly runs the timer for the correct duration', () => {
   const timerTest = new Timer(1);
-  jest.useFakeTimers();		
+  jest.useFakeTimers();
   timerTest.setTime(1);
   timerTest.run();
-  for(let i = 0; i < 60; i++) {
+  for (let i = 0; i < 60; i += 1) {
     expect(timerTest.isRunning).toBe(true);
     jest.advanceTimersByTime(1);
   }
