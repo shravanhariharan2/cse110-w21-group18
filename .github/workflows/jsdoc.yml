@@ -1,10 +1,9 @@
 name: jsdoc
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
