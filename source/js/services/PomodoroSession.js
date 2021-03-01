@@ -48,7 +48,7 @@ class PomodoroSession {
 
   /**
    * Get debugging indicators
-   * @return {[array]} an array of parameters
+   * @return {array} an array of parameters
    */
   info() {
     const stateArray = [
@@ -63,7 +63,7 @@ class PomodoroSession {
 
   /**
    * Runs the timer for t-minutes, throws an error timer is stopped midway
-   * @param  {[type]}  t [the number of minutes to run the timer]
+   * @param  {type}  t [the number of minutes to run the timer]
    * @return {Promise}   [non-deterministic state, indicating timer completion]
    */
   async run(t) {
@@ -196,7 +196,7 @@ class PomodoroSession {
 
   /**
    * Prints debug statements to console based on global debug flag
-   * @param {[string]} x [The statement to print]
+   * @param {string} x [The statement to print]
    */
   DEBUG_PRINT(x) {
     if (this.DEBUG) {

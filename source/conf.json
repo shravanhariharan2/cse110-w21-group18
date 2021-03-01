@@ -1,18 +1,5 @@
 {
-  "plugins": ["plugins/markdown"],
   "source": {
-      "include": ["./assets/scripts/"]
-  },
-  "sourceType": "module",
-  "tags": {
-      "allowUnknownTags": true,
-      "dictionaries": ["jsdoc","closure"]
-  },
-  "opts": {
-    "destination": "./docs" 
-  },
-  "templates": {
-      "cleverLinks": false,
-      "monospaceLinks": false
+    "include": ["./source/js/components", "./source/js/constants", "./source/js/services"]
   }
 }
