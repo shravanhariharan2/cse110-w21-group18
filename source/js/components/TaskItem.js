@@ -76,11 +76,6 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
     this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
-    if (this.shadowRoot.querySelector('.notes').innerText === '') {
-      this.shadowRoot.querySelector('.edit-button').style.marginTop = `${this.offsetHeight * 0.65}px`;
-    } else {
-      this.shadowRoot.querySelector('.edit-button').style.marginTop = `${this.offsetHeight * 0.50}px`;
-    }
     this.isExpanded = true;
     button.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }
@@ -93,6 +88,7 @@ class TaskItem extends HTMLElement {
     button.src = './media/edit-icon.png';
     button.textContent = 'Edit';
     button.onclick = () => this.allowEditing();
+    
     return button;
   }
   allowEditing(){

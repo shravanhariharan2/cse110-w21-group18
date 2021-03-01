@@ -19,20 +19,19 @@
 			<div id="time"></div>
 			<div>
 				<input type="button" id="start" value="Start" title="Start Pomodoro Session">
-				<input type="image" src="./media/thought-bubble.png" id="add-interruption" value="+1" title="Log Interruption">
 			</div>
 		</div>
 		<header id="to-do-list-header">
 			<p id="list-title">Task List</p>
-			<input type="button" id="add-task" value="+" title="Add Tasks"></input>
 		</header>
 		<hr id = "task-line-break">
+		<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
 		<form id="task-add-input">
 			<input type="text" id="add-task-name" placeholder="Task Name">
 			<p id="expected">Expected Pomodoros:</p>
 			<img src="https://p7.hiclipart.com/preview/678/807/689/clock-euclidean-vector-illustration-simple-clock-cliparts.jpg" id="clock-clip-art">
 			<select name="pomos" id="pomos">
-				<option value="?">...</option>
+				<option value="0">...</option>
 				<option value="1">1 (25 min)</option>
 				<option value="2">2 (50 min)</option>
 				<option value="3">3 (1hr 15min)</option>
@@ -47,7 +46,6 @@
 			<textarea id="add-task-description" placeholder="Add Notes"></textarea>
 			<input type="button" id="save-task" value="Save">
 		</form>
-		<p id="no-tasks" title="Your tasks will be displayed here">Add Tasks Here</p>
 		<div id="to-do-list"></div>
 		<header id="completed-list-header">
 			<p id="completed-list-title">Completed Tasks</p>

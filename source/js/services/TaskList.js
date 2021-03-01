@@ -25,7 +25,6 @@ class TaskList {
       newTaskPomos: document.getElementById('pomos'),
       taskList: document.getElementById('to-do-list'),
       saveNewTaskButton: document.getElementById('save-task'),
-      noTasks: document.getElementById('no-tasks'),
       cancelButton: document.getElementById('cancel-input'),
       completedList: document.getElementById('completed-list'),
       completedListTitle: document.getElementById('completed-list-header'),
@@ -153,13 +152,7 @@ class TaskList {
    * Hides the Completed task list if there are no completed tasks
    */
   displayMessageIfNoTasksExist() {
-    const hasTasks = sessionStorage.getItem('numTasks') > 0;
     const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
-    if (hasTasks) {
-      this.DOM_ELEMENTS.noTasks.style.display = 'none';
-    } else {
-      this.DOM_ELEMENTS.noTasks.style.display = 'block';
-    }
     if (hasCompletedTasks) {
       this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
     } else {
@@ -229,7 +222,7 @@ class TaskList {
     this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     this.DOM_ELEMENTS.newTaskNotes.value = '';
     this.DOM_ELEMENTS.newTaskName.value = '';
-    this.DOM_ELEMENTS.newTaskPomos.value = '?';
+    this.DOM_ELEMENTS.newTaskPomos.value = '0';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
   }
 

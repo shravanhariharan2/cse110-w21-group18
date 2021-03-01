@@ -34,24 +34,20 @@
 }
 /* button to add new task */
 #add-task {
-  position: absolute;
-  text-align: center;
+  position: relative;
+  height: 75px;
+  width: 500px;
+  margin: auto;
+  margin-top: 30px;
   color: rgb(50, 163, 50);
   background-color: #e2ffa4;
-  border-radius: 6px;
-  height: 40px;
-  width: 40px;
-  margin-right: 60px;
-  border-width: 2px;
-  border-color: #fce592;
   font-size: 25px;
   font-weight: bold;
-  line-height: 1.2;
-  border-style: solid;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 3px #cfbd79;
+  display: block;
+  border-style:none;
+  border-radius: 30px;
+  border-width: 2px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #add-task:focus {
     outline: none;
@@ -87,7 +83,7 @@
     'name expect clock pomos'
     'notes notes notes notes'
     'add add add add'
-    'save save cancel cancel';
+    'cancel cancel save save';
   padding: 20px;
   grid-gap: 10px;
   background-color: #EDEAE5;
@@ -150,35 +146,39 @@
   grid-area: cancel;
   position:relative;
   width: 60px;
-  height: 40px;
+  height: 35px;
   border-radius: 5px;
   text-align: center;
-  background-color:#cf3e3e;
+  background-color:#e65656ef;
   border-style: none;
   color: white;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  margin-left: 150px;
   margin-top: 5px;
-  margin-left: -30px;
+  
 }
 
 #save-task{
   grid-area: save;
   margin-left: 150px;
   width: 60px;
-  height: 40px;
+  height: 35px;
   border-width: 2.5px;
   border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
   margin-top: 5px;
+  margin-left: -30px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 /* button to add notes */
 #add-notes {
   margin: auto;
   grid-area: add;
-  border-width: 1px;
-  border-radius: 2px;
+  border-width: 2px;
+  border-radius: 5px;
   background-color: #EDEAE5;
+  height: 25px;
+  margin-bottom: 10px;
 }
 #add-notes:focus {
   outline: none;
@@ -219,7 +219,7 @@ task-item {
   grid-template-areas:
     ' check taskName pomo'
     ' notes notes notes'
-    ' remove remove remove';
+    ' remove remove edit';
   padding: 20px 20px 10px;
   grid-gap: 5px;
   background-color: #edeae500;
@@ -333,38 +333,38 @@ task-item {
 }
 
 .edit-button {
-  position: absolute;
+  grid-area: edit;
+  position: relative;
   width: 35px;
-  padding: 0;
   height: 35px;
-  margin-left: 400px;
-  margin-top: auto;
+  margin-left: -30px;
+  margin-top: 0px;
+  margin-bottom: 10px;
 }
 .edit-button:focus {
   outline: none;
 }
 .edit-button:active {
-  height: 30px;
-  width: 30px;
-  margin-left: 402.5px;
+  height: 32px;
+  width: 32px;
+  margin-left: -28.5px;
 }
 .remove-button{
   grid-area: remove;
   position: relative;
-  width: 30px;
-  padding: 0;
-  height: 30px;
-  margin: auto;
-  margin-top: -4%;
+  width: 35px;
+  height: 35px;
+  margin-left: 175px;
+  margin-bottom: 10px;
 }
 .remove-button:focus {
   outline: none;
 }
 
 .remove-button:active {
-    height: 25px;
-    width: 25px;
-    margin-top: -3%;
+    height: 32px;
+    width: 32px;
+    margin-left: 176.5px;
 }
 
 /* completed list*/
