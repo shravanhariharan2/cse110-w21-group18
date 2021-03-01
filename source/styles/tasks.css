@@ -401,3 +401,51 @@ task-item {
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+
+/* style for editing a task */
+#change-task-name{
+  grid-area: name;
+  height: 40px;
+  width: 200px;
+  border-radius:5px;
+  border-style:solid;
+  background-color: #EDEAE5;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 20px;
+  border-width:3px;
+}
+
+#change-task-description {
+  grid-area: notes;
+  background-color: #EDEAE5;
+  height: 100px;
+  font-family: 'Open Sans', sans-serif;
+  resize:none;
+  border-radius: 5px;
+  border-width:3px;
+  font-size: 15px;
+  padding: 3px;
+  display:none;
+}
+/* trying to override component but not working yet, will probably do inline css to get this to work */
+task-item::edit{
+  position: relative;
+  margin: 0px auto;
+  margin-top: 10px;
+  width: 20px;
+  border-radius: 30px;
+  border-color:#026670;
+  border-style: solid;
+  border-width: 4px;
+  text-align: center;
+  grid-template-areas:
+    'name expect clock pomos'
+    'notes notes notes notes'
+    'notes notes notes notes'
+    'remove remove remove remove'
+    'save save save save';
+  padding: 20px;
+  grid-gap: 10px;
+  background-color: #EDEAE5;
+  display:none;
+}
