@@ -151,7 +151,7 @@ class TaskList {
    * Hides the Completed task list if there are no completed tasks
    */
   displayMessageIfNoTasksExist() {
-    const hasTasks = sessionStorage.getItem('numTasks') && sessionStorage.getItem() > 0;
+    const hasTasks = sessionStorage.getItem('numTasks') > 0;
     const hasCompletedTasks = sessionStorage.getItem('completedTasks') != 0;
     if (hasTasks) {
       this.DOM_ELEMENTS.noTasks.style.display = 'none';
@@ -180,11 +180,11 @@ class TaskList {
     if (this.DOM_ELEMENTS.addNotesButton.value === 'Add Notes') {
       this.DOM_ELEMENTS.newTaskNotes.style.display = 'inline';
       this.DOM_ELEMENTS.addNotesButton.value = 'Remove Notes';
-      this.DOM_ELEMENTS.cancelButton.style.marginTop = '277px';
+      this.DOM_ELEMENTS.cancelButton.style.marginTop = '295px';
     } else {
       this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
       this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
-      this.DOM_ELEMENTS.cancelButton.style.marginTop = '165px';
+      this.DOM_ELEMENTS.cancelButton.style.marginTop = '183px';
     }
   }
 
