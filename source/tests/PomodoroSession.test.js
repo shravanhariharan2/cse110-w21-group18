@@ -30,8 +30,6 @@ test('Session number increases after one pomodoro work session', async () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
   const expectedSession = PomoTest.sessionNumber + 1;
-  PomoTest.timer.DEBUG = false;
-  PomoTest.DEBUG = false;
   const promise = PomoTest.runWorkSession();
   jest.advanceTimersByTime(MS_IN_WORK_SESSION);
   await promise;
@@ -41,8 +39,6 @@ test('Session number increases after one pomodoro work session', async () => {
 test('Timer resets and idles after a short break', async () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
-  PomoTest.timer.DEBUG = false;
-  PomoTest.DEBUG = false;
   const promise = PomoTest.runShortBreak();
   jest.advanceTimersByTime(MS_IN_SHORT_BREAK);
   await promise;
@@ -53,8 +49,6 @@ test('Timer resets and idles after a short break', async () => {
 test('Session resets to zero and timer idles after a long break', async () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
-  PomoTest.timer.DEBUG = false;
-  PomoTest.DEBUG = false;
   PomoTest.sessionNumber = 4
   const promise = PomoTest.runLongBreak();
   jest.advanceTimersByTime(MS_IN_LONG_BREAK);
@@ -66,13 +60,11 @@ test('Session resets to zero and timer idles after a long break', async () => {
 test('Stop resets the timer to the work session', () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
-  PomoTest.timer.DEBUG = false;
-  PomoTest.DEBUG = false;
   // Start the timer
-  PomoTest.onClick();
+  PomoTest.toggleSession();
   jest.advanceTimersByTime(MS_IN_WORK_SESSION/2);
   // Stop the timer
-  PomoTest.onClick();
+  PomoTest.toggleSession();
   expect(PomoTest.sessionNumber).toBe(0);
   expect(PomoTest.timer.minutes).toBe(25);
   expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);

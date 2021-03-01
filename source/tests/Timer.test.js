@@ -23,7 +23,6 @@ test('setTime(time) sets the specified time', () => {
 
 test('step() decreases the timer by one second', () => {
   const timerTest = new Timer(1);
-  timerTest.DEBUG = false;
   const mockPromise = jest.fn();
   timerTest.setTime(25); 
   timerTest.step(mockPromise);
@@ -33,7 +32,6 @@ test('step() decreases the timer by one second', () => {
 
 test('run() properly runs the timer for the correct duration', () => {
   const timerTest = new Timer(1);
-  timerTest.DEBUG = false;
   jest.useFakeTimers();		
   timerTest.setTime(1);
   timerTest.run();
