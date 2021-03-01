@@ -16,3 +16,7 @@ rules:
   import/extensions:
     - warn
     - always
+  no-new:
+    - warn
+  no-unused-expressions:
+    - warn
