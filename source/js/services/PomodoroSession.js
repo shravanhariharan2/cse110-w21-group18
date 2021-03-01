@@ -1,6 +1,6 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
-import { notifyUser } from '../services/NotificationService.js';
+import { notifyUser } from './NotificationService.js';
 
 const TICK_SPEED = 1000;
 
@@ -31,7 +31,7 @@ class PomodoroSession {
       longBreak: document.getElementById('long-break'),
       workSession: document.getElementById('pomo'),
       button: document.getElementById('start'),
-      alarm: document.getElementById("timer-alarm")
+      alarm: document.getElementById('timer-alarm'),
     };
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
