@@ -1,6 +1,6 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
-import { createNotificationTitle, createNotificationBody } from '../constants/displayMessages.js';
+import { notifyUser } from '../services/NotificationService.js';
 
 const TICK_SPEED = 1000;
 
@@ -20,7 +20,7 @@ class PomodoroSession {
     this.timer.setTime(this.WORK_SESSION_DURATION);
 
     this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.toggleSession = this.toggleSession.bind(this);
     this.run = this.run.bind(this);
     this.stop = this.stop.bind(this);
     this.updateDocument = this.updateDocument.bind(this);
@@ -34,7 +34,7 @@ class PomodoroSession {
       alarm: document.getElementById("timer-alarm")
     };
 
-    this.DOM_ELEMENTS.button.addEventListener('click', this.onClick);
+    this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
   }
 
   /**
@@ -42,9 +42,9 @@ class PomodoroSession {
    * take as input a path to config later on
    */
   loadConfig() {
-    this.WORK_SESSION_DURATION = 25;
-    this.SHORT_BREAK_DURATION = 5;
-    this.LONG_BREAK_DURATION = 30;
+    this.WORK_SESSION_DURATION = 1;
+    this.SHORT_BREAK_DURATION = 1;
+    this.LONG_BREAK_DURATION = 1;
     this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
   }
 
@@ -129,7 +129,7 @@ class PomodoroSession {
    * Links the timer button to the functionality
    * @return {Promise} [description]
    */
-  async onClick() {
+  async toggleSession() {
     if (this.currentState === PomodoroSessionStates.IDLE) {
       await this.runWorkSession();
       if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
@@ -152,7 +152,7 @@ class PomodoroSession {
     this.updateDocument();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
-    this.notifyUser();
+    notifyUser();
     this.DEBUG_PRINT('Work finished');
   }
 
@@ -163,7 +163,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
     await this.run(this.SHORT_BREAK_DURATION);
-    this.notifyUser();
+    notifyUser();
     this.DEBUG_PRINT('Short break finished');
   }
 
@@ -174,7 +174,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.LONG_BREAK;
     this.updateDocument();
     await this.run(this.LONG_BREAK_DURATION);
-    this.notifyUser();
+    notifyUser();
     this.sessionNumber = 0;
     this.DEBUG_PRINT('Long break finished');
   }
@@ -196,26 +196,6 @@ class PomodoroSession {
     this.timer.setTime(this.WORK_SESSION_DURATION);
     this.DOM_ELEMENTS.button.setAttribute('value', 'Start');
     this.updateDocument();
-  }
-
-  /**
-   * Notifies the user of session end through audio and browser (if allowed)
-   * notifications
-   */
-  notifyUser() {
-    this.DOM_ELEMENTS.alarm.play();
-    if (Notification.permission === "granted") {
-      this.browserNotify();
-    }
-  }
-
-  /**
-   * Creates a browser notification depending on next session
-   */
-  browserNotify() {
-    const notificationTitle = createNotificationTitle(this.currentState);
-    const notificationBody = createNotificationBody(this.currentState, this.sessionNumber);
-    new Notification(notificationTitle, notificationBody);
   }
 
   /**
