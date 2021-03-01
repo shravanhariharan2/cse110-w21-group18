@@ -49,7 +49,9 @@ class TaskList {
   loadTasks() {
     this.hasLoadedIntoDOM = false;
     for (const key in sessionStorage) {
-      const isTaskItem = parseInt(key) >= -sessionStorage.getItem('completedTasks') && parseInt(key) <= sessionStorage.getItem('numTasks');
+      const numTasks = sessionStorage.getItem('numTasks');
+      const completedTasks = sessionStorage.getItem('completedTasks');
+      const isTaskItem = (parseInt(key,10) >= -completedTasks) && (parseInt(key,10) <= numTasks);
       if (isTaskItem) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
@@ -61,7 +63,7 @@ class TaskList {
         newTask.setAttribute('class', taskObj.class);
         newTask.setAttribute('id', taskObj.id);
         newTask.setAttribute('draggable', taskObj.draggable);
-        if (parseInt(key) > 0) {
+        if (parseInt(key,10) > 0) {
           this.DOM_ELEMENTS.taskList.appendChild(newTask);
         } else {
           this.DOM_ELEMENTS.completedList.prepend(newTask);
@@ -112,10 +114,10 @@ class TaskList {
         estimate: element.getAttribute('estimate'),
         progress: element.getAttribute('progress'),
         notes: element.getAttribute('notes'),
-        isComplete: element.getAttribute('isComplete'),
-        class: element.getAttribute('class'),
+        isComplete: false,
+        class: 'dropzone',
         id: element.getAttribute('id'),
-        draggable: element.getAttribute('draggable'),
+        draggable: true,
       };
       const taskJSON = JSON.stringify(taskObj);
       sessionStorage.setItem(element.getAttribute('id'), taskJSON);
@@ -128,9 +130,9 @@ class TaskList {
         progress: element.getAttribute('progress'),
         notes: element.getAttribute('notes'),
         isComplete: element.getAttribute('isComplete'),
-        class: element.getAttribute('class'),
+        class: 'none',
         id: element.getAttribute('id'),
-        draggable: element.getAttribute('draggable'),
+        draggable: false,
       };
       const taskJSON = JSON.stringify(taskObj);
       sessionStorage.setItem(element.getAttribute('id'), taskJSON);
@@ -152,7 +154,7 @@ class TaskList {
    */
   displayMessageIfNoTasksExist() {
     const hasTasks = sessionStorage.getItem('numTasks') > 0;
-    const hasCompletedTasks = sessionStorage.getItem('completedTasks') != 0;
+    const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
     if (hasTasks) {
       this.DOM_ELEMENTS.noTasks.style.display = 'none';
     } else {
@@ -248,7 +250,7 @@ class TaskList {
       id = target.id;
       list = target.parentNode.children;
       for (let i = 0; i < list.length; i += 1) {
-        if (list[i] === dragged) {
+        if (list[i] == dragged) {
           index = i;
         }
       }
@@ -257,10 +259,10 @@ class TaskList {
       event.preventDefault();
     });
     document.addEventListener('drop', ({ target }) => {
-      if (target.className === 'dropzone' && target.id !== id) {
+      if (target.className == 'dropzone' && target.id != id) {
         dragged.remove(dragged);
         for (let i = 0; i < list.length; i += 1) {
-          if (list[i] === target) {
+          if (list[i] == target) {
             indexDrop = i;
           }
         }
@@ -288,7 +290,6 @@ class TaskList {
     const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
       const elementPosition = Array.from(element.parentNode.children).indexOf(element);
-      const totalElementCount = this.DOM_ELEMENTS.completedList.childElementCount;
       element.id = -elementPosition - 1;
     });
   }
@@ -302,13 +303,13 @@ class TaskList {
       this.completedIsExpanded = false;
       this.DOM_ELEMENTS.completedList.style.display = 'none';
       this.DOM_ELEMENTS.completedList.style.marginRight = '35px';
-      this.DOM_ELEMENTS.expandCompleted.setAttribute('style', 'transform:rotate(0deg); -webkit-transform: rotate(0deg)');
+      this.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(0deg); -webkit-transform: rotate(0deg)';
       return;
     }
     this.completedIsExpanded = true;
     this.DOM_ELEMENTS.completedList.style.display = 'inline';
     this.DOM_ELEMENTS.completedList.style.marginRight = '40px';
-    this.DOM_ELEMENTS.expandCompleted.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
+    this.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(180deg); -webkit-transform: rotate(180deg)';
   }
 
   incrementPomodoroCount(taskId) {}
