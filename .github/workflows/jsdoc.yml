@@ -17,6 +17,7 @@ jobs:
         with:
           source_dir: ./source/js
           output_dir: ./docs
+          config_file: conf.json
           template: minami
 
       - name: Deploy
