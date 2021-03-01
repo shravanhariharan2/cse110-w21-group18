@@ -20,12 +20,6 @@ document.body.innerHTML = `
   </div>
 `;
 
-async function sleep(ms) {
-  await new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 test('Constructor initializes correct instance variables', () => {
   const PomoTest = new PomodoroSession();
   expect(PomoTest.sessionNumber).toBe(0);
