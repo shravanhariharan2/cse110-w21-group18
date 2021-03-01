@@ -1,5 +1,6 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
+import NotificationService from './NotificationService.js';
 
 const TICK_SPEED = 1000;
 
@@ -19,7 +20,7 @@ class PomodoroSession {
     this.timer.setTime(this.WORK_SESSION_DURATION);
 
     this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.toggleSession = this.toggleSession.bind(this);
     this.run = this.run.bind(this);
     this.stop = this.stop.bind(this);
     this.updateDocument = this.updateDocument.bind(this);
@@ -32,7 +33,7 @@ class PomodoroSession {
       button: document.getElementById('start'),
     };
 
-    this.DOM_ELEMENTS.button.addEventListener('click', this.onClick);
+    this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
   }
 
   /**
@@ -127,7 +128,7 @@ class PomodoroSession {
    * Links the timer button to the functionality
    * @return {Promise} [description]
    */
-  async onClick() {
+  async toggleSession() {
     if (this.currentState === PomodoroSessionStates.IDLE) {
       await this.runWorkSession();
       if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
@@ -150,6 +151,7 @@ class PomodoroSession {
     this.updateDocument();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
+    NotificationService.notifyUser(this.currentState, this.sessionNumber);
     this.DEBUG_PRINT('Work finished');
   }
 
@@ -160,6 +162,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
     await this.run(this.SHORT_BREAK_DURATION);
+    NotificationService.notifyUser(this.currentState, this.sessionNumber);
     this.DEBUG_PRINT('Short break finished');
   }
 
@@ -170,6 +173,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.LONG_BREAK;
     this.updateDocument();
     await this.run(this.LONG_BREAK_DURATION);
+    NotificationService.notifyUser(this.currentState, this.sessionNumber);
     this.sessionNumber = 0;
     this.DEBUG_PRINT('Long break finished');
   }
