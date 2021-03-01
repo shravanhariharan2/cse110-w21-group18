@@ -20,6 +20,12 @@ document.body.innerHTML = `
   </div>
 `;
 
+async function sleep(ms) {
+  await new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 test('Constructor initializes correct instance variables', () => {
   const PomoTest = new PomodoroSession();
   expect(PomoTest.sessionNumber).toBe(0);
@@ -71,6 +77,31 @@ test('Stop resets the timer to the work session', () => {
   expect(PomoTest.sessionNumber).toBe(0);
   expect(PomoTest.timer.minutes).toBe(25);
   expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
+});
+
+// create session object -> call onClick, advance timer by durations and check to see if idle at end and session
+// number has been incremented
+test('test onClick', () => {
+  jest.useFakeTimers();
+  const PomoTest = new PomodoroSession();
+  // define relative test variables
+  const expectedSessionNumber = PomoTest.sessionNumber + 1;
+  const expectedState = 0;
+
+  // disable console logging
+  PomoTest.Timer.DEBUG = false;
+
+  // run test
+  PomoTest.onClick();
+  jest.advanceTimersByTime(MS_IN_WORK_SESSION);
+  jest.advanceTimersByTime(MS_IN_SHORT_BREAK);
+
+  // sleep for 100 ms for async
+  sleep(100);
+
+  // check
+  expect(PomoTest.sessionNumber).toBe(expectedSessionNumber);
+  expect(PomoTest.currentState).toBe(expectedState);
 });
 
 /*
