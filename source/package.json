@@ -4,7 +4,6 @@
   "description": "Source code for CSE 110 Winter 2021 Group 18 Pomodoro app",
   "main": "./js/scripts/index.js",
   "scripts": {
-    "build": "echo \"No build specified\"",
     "test": "jest --config jest.config.json",
     "lint": "eslint ./js --ext .js",
     "lint:fix": "eslint ./js --ext .js --fix",
