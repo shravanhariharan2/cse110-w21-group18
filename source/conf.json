@@ -1,5 +1,5 @@
 {
   "source": {
-    "include": ["./js/components", "./js/constants", "./js/services"]
+    "include": ["/source/js/components", "/source/js/constants", "/source/js/services"]
   }
 }
