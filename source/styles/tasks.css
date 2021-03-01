@@ -87,7 +87,7 @@
     'name expect clock pomos'
     'notes notes notes notes'
     'add add add add'
-    'save save save save';
+    'save save cancel cancel';
   padding: 20px;
   grid-gap: 10px;
   background-color: #EDEAE5;
@@ -147,28 +147,29 @@
 }
 
 #cancel-input {
-  position:absolute;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  grid-area: cancel;
+  position:relative;
+  width: 60px;
+  height: 40px;
+  border-radius: 5px;
   text-align: center;
-  margin-left: 235px;
-  margin-top: 185px;
   background-color:#cf3e3e;
   border-style: none;
   color: white;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 5px;
+  margin-left: -30px;
 }
 
 #save-task{
   grid-area: save;
-  margin: auto;
-  width: 20%;
+  margin-left: 150px;
+  width: 60px;
   height: 40px;
   border-width: 2.5px;
   border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
-  margin-bottom: 15px;
-  margin-top: 15px;
+  margin-top: 5px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 /* button to add notes */

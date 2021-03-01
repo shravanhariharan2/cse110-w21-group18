@@ -182,11 +182,9 @@ class TaskList {
     if (this.DOM_ELEMENTS.addNotesButton.value === 'Add Notes') {
       this.DOM_ELEMENTS.newTaskNotes.style.display = 'inline';
       this.DOM_ELEMENTS.addNotesButton.value = 'Remove Notes';
-      this.DOM_ELEMENTS.cancelButton.style.marginTop = '295px';
     } else {
       this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
       this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
-      this.DOM_ELEMENTS.cancelButton.style.marginTop = '183px';
     }
   }
 
