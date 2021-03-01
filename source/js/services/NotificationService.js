@@ -33,9 +33,8 @@ function createNotificationTitle(sessionState) {
   } else {
     if (sessionState === PomodoroSessionStates.SHORT_BREAK) {
       notificationTitle += DisplayMessages.SHORT_BREAK_COMPLETE;
-    } else {
-      notificationTitle += DisplayMessages.LONG_BREAK_COMPLETE;
     }
+    notificationTitle += DisplayMessages.LONG_BREAK_COMPLETE;
   }
   return notificationTitle;
 }

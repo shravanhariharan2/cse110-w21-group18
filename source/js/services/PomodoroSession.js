@@ -1,6 +1,6 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
-import { notifyUser } from './NotificationService.js';
+import notifyUser from './NotificationService.js';
 
 const TICK_SPEED = 1000;
 
