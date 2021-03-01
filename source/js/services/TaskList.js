@@ -51,7 +51,7 @@ class TaskList {
     for (const key in sessionStorage) {
       const numTasks = sessionStorage.getItem('numTasks');
       const completedTasks = sessionStorage.getItem('completedTasks');
-      const isTaskItem = (parseInt(key,10) >= -completedTasks) && (parseInt(key,10) <= numTasks);
+      const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks);
       if (isTaskItem) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
