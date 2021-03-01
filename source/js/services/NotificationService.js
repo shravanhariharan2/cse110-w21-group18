@@ -20,7 +20,8 @@ function notifyUser() {
 function browserNotify() {
   const notificationTitle = createNotificationTitle(this.currentState);
   const notificationBody = createNotificationBody(this.currentState, this.sessionNumber);
-  new Notification(notificationTitle, notificationBody);
+  const notification = new Notification(notificationTitle, notificationBody);
+  notification;
 }
 
 /**
