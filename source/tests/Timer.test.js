@@ -5,7 +5,7 @@ document.body.innerHTML = `
   <div id="time"></div>
 `;
 
-test('Constructor initializes correct instance variables', () => {
+test('Constructor initializes the correct instance variables', () => {
   const timerTest = new Timer(1);
   expect(timerTest.seconds).toBe(0);
   expect(timerTest.minutes).toBe(0);
@@ -14,14 +14,14 @@ test('Constructor initializes correct instance variables', () => {
   expect(timerTest.clockSpeed).toBe(1);
 });
 
-test('setTime sets the proper time', () => {
+test('setTime(time) sets the specified time', () => {
   const timerTest = new Timer(1);
   timerTest.setTime(25); 
   expect(timerTest.minutes).toBe(25);
   expect(timerTest.seconds).toBe(0);
 });
 
-test('step decreases the timer by one second', () => {
+test('step() decreases the timer by one second', () => {
   const timerTest = new Timer(1);
   timerTest.DEBUG = false;
   const mockPromise = jest.fn();
@@ -31,7 +31,7 @@ test('step decreases the timer by one second', () => {
   expect(timerTest.minutes).toBe(24);
 });
 
-test('run properly runs the timer for the correct duration', () => {
+test('run() properly runs the timer for the correct duration', () => {
   const timerTest = new Timer(1);
   timerTest.DEBUG = false;
   jest.useFakeTimers();		
