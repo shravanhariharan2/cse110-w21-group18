@@ -9,7 +9,7 @@ const NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
  */
 function notifyUser() {
   this.DOM_ELEMENTS.alarm.play();
-  if (Notification.permission === "granted") {
+  if (Notification.permission === 'granted') {
     browserNotify();
   }
 }
@@ -20,7 +20,7 @@ function notifyUser() {
 function browserNotify() {
   const notificationTitle = createNotificationTitle(this.currentState);
   const notificationBody = createNotificationBody(this.currentState, this.sessionNumber);
-  new Notification(notificationTitle, notificationBody);
+  let notification = new Notification(notificationTitle, notificationBody);
 }
 
 /**
@@ -46,13 +46,13 @@ function createNotificationTitle(sessionState) {
 function createNotificationBody(sessionState, sessionNumber) {
   if (sessionState === PomodoroSessionStates.WORK_SESSION) {
     if (sessionNumber !== NUM_SESSIONS_BEFORE_LONG_BREAK) {
-      return {body: DisplayMessages.SHORT_BREAK_NEXT_NOTIFY};
+      return { body: DisplayMessages.SHORT_BREAK_NEXT_NOTIFY };
     } else {
-      return {body: DisplayMessages.LONG_BREAK_NEXT_NOTIFY};
+      return { body: DisplayMessages.LONG_BREAK_NEXT_NOTIFY };
     }
   } else {
-    return {body: DisplayMessages.WORK_NEXT_NOTIFY};
+    return { body: DisplayMessages.WORK_NEXT_NOTIFY };
   }
 }
 
-export { notifyUser };
+export default { notifyUser };
