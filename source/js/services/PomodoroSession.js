@@ -1,6 +1,6 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
-import notifyUser from './NotificationService.js';
+import NotificationService from './NotificationService.js';
 
 const TICK_SPEED = 1000;
 
@@ -13,6 +13,7 @@ class PomodoroSession {
     this.DEBUG = true;
 
     this.timer = new Timer(TICK_SPEED);
+    this.notification = new NotificationService();
     this.currentState = PomodoroSessionStates.IDLE;
     this.sessionNumber = 0;
 
@@ -42,7 +43,7 @@ class PomodoroSession {
    * take as input a path to config later on
    */
   loadConfig() {
-    this.WORK_SESSION_DURATION = 25;
+    this.WORK_SESSION_DURATION = 1;
     this.SHORT_BREAK_DURATION = 5;
     this.LONG_BREAK_DURATION = 30;
     this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
@@ -152,7 +153,7 @@ class PomodoroSession {
     this.updateDocument();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
-    notifyUser();
+    this.notification.notifyUser(this.DOM_ELEMENTS.alarm, this.sessionState, this.sessionNumber);
     this.DEBUG_PRINT('Work finished');
   }
 
@@ -163,7 +164,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
     await this.run(this.SHORT_BREAK_DURATION);
-    notifyUser();
+    this.notification.notifyUser(this.DOM_ELEMENTS.alarm, this.sessionState, this.sessionNumber);
     this.DEBUG_PRINT('Short break finished');
   }
 
@@ -174,7 +175,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.LONG_BREAK;
     this.updateDocument();
     await this.run(this.LONG_BREAK_DURATION);
-    notifyUser();
+    this.notification.notifyUser(this.DOM_ELEMENTS.alarm, this.sessionState, this.sessionNumber);
     this.sessionNumber = 0;
     this.DEBUG_PRINT('Long break finished');
   }
