@@ -48,11 +48,14 @@ class TaskList {
    */
   loadTasks() {
     this.hasLoadedIntoDOM = false;
-    for (const key in sessionStorage) {
+    const keys = Object.keys(sessionStorage);
+    console.log(keys);
+    keys.forEach((key) =>{
       const numTasks = sessionStorage.getItem('numTasks');
       const completedTasks = sessionStorage.getItem('completedTasks');
       const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks);
       if (isTaskItem) {
+        console.log(key);
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
         newTask.setAttribute('name', taskObj.name);
@@ -71,8 +74,7 @@ class TaskList {
           newTask.style.cursor = 'pointer';
         }
       }
-    }
-
+    }) 
     for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }

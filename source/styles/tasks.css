@@ -16,7 +16,7 @@
   background-color:#026670;
   color:#026670;
   border-color: #026670;
-  border-style:solid;
+  border-style: solid;
   margin-bottom: 5px;
 }
 
@@ -36,7 +36,7 @@
 #add-task {
   position: absolute;
   text-align: center;
-  color:rgb(50, 163, 50);
+  color: rgb(50, 163, 50);
   background-color: #e2ffa4;
   border-radius: 6px;
   height: 40px;
@@ -54,7 +54,7 @@
   box-shadow: 0px 3px #cfbd79;
 }
 #add-task:focus {
-    outline:none;
+    outline: none;
 }
 #add-task:active {
   background-color:  #e2ffa4;
@@ -91,8 +91,8 @@
   padding: 20px;
   grid-gap: 10px;
   background-color: #EDEAE5;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2), 0px 6px 20px 0px rgba(0, 0, 0, 0.19);
-  display:none;
+  box-shadow: 0px 4px 8px 0px rgba(0.0, 0.0, 0.0, 0.2), 0px 6px 20px 0px rgba(0.0, 0.0, 0.0, 0.19);
+  display: none;
 }
 /* name input */
 #add-task-name{
@@ -125,9 +125,9 @@
   text-align: center;
   grid-area: pomos;
   height: 45px;
-  border-radius:5px;
-  border-style:solid;
-  border-width:2.5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 2.5px;
   font-family: 'Open Sans', sans-serif;
   background-color: #EDEAE5;
 }
@@ -140,7 +140,7 @@
 #clock-clip-art {
   grid-area: clock;
   margin-top: 0px;
-  text-align:center;
+  text-align: center;
   margin-left: 20px;
   height: 20px;
   width: 20px;
@@ -161,26 +161,26 @@
 
 #save-task{
   grid-area: save;
-  margin: auto auto;
+  margin: auto;
   width: 20%;
   height: 40px;
-  border-width:2.5px;
+  border-width: 2.5px;
   border-radius: 5px;
   font-family: 'Open Sans', sans-serif;
   margin-bottom: 15px;
   margin-top: 15px;
-  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2), 0px 3px 10px 0px rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 3px 6px 0px rgba(0.0, 0.0, 0.0, 0.2), 0px 3px 10px 0px rgba(0.0, 0.0, 0.0, 0.19);
 }
 /* button to add notes */
 #add-notes {
   margin: auto;
   grid-area: add;
-  border-width:1px;
+  border-width: 1px;
   border-radius: 2px;
   background-color: #EDEAE5;
 }
 #add-notes:focus {
-  outline:none;
+  outline: none;
 }
 /* add notes area */
 #add-task-description {
@@ -188,14 +188,14 @@
   background-color: #EDEAE5;
   height: 100px;
   font-family: 'Open Sans', sans-serif;
-  resize:none;
+  resize: none;
   border-radius: 5px;
-  border-width:2.5px;
+  border-width: 2.5px;
   font-size: 15px;
   padding: 3px;
   padding-left: 5px;
   padding-top: 5px;
-  display:none;
+  display: none;
 }
 
 #add-task-description:focus {
@@ -204,7 +204,7 @@
 }
 /* style for each task-item */
 task-item {
-  cursor:move;
+  cursor: move;
   position: relative;
   margin: 0px auto;
   margin-top: 20px;
@@ -214,7 +214,7 @@ task-item {
   border-style: solid;
   border-width: 2px;
   text-align: center;
-  display:grid;
+  display: grid;
   grid-template-areas:
     ' check taskName pomo'
     ' notes notes notes'
@@ -222,7 +222,7 @@ task-item {
   padding: 20px 20px 10px 20px;
   grid-gap: 5px;
   background-color: #edeae500;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2), 0px 6px 20px 0px rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 4px 8px 0px rgba(0.0, 0.0, 0.0, 0.2), 0px 6px 20px 0px rgba(0.0, 0.0, 0.0, 0.19);
 }
 
 .expand-button {
@@ -271,7 +271,7 @@ task-item {
   height: 40px;
   width: 40px;
   background-color: #ccc;
-  border-radius:50%;
+  border-radius: 50%;
   border-color: #026670;
   border-width: 2px;
 }
@@ -312,7 +312,7 @@ task-item {
   white-space: initial;
 }
 .pomo-progress {
-  position:relative;
+  position: relative;
   font-size: 18px;
   font-weight: 600;
   margin-top: 0px;
@@ -320,13 +320,13 @@ task-item {
   grid-area: pomo;
   margin-right: 60px;
   margin-left:0;
-  width:100px;
+  width: 100px;
 }
 .notes{
   width: 300px;
   grid-area: notes;
-  text-align:left;
-  white-space:pre-wrap;
+  text-align: left;
+  white-space: pre-wrap;
   margin-left: 52px;
   overflow-wrap: break-word;
 }
@@ -357,7 +357,7 @@ task-item {
   margin-top: -4%;
 }
 .remove-button:focus {
-  outline:none;
+  outline: none;
 }
 
 .remove-button:active {
@@ -373,7 +373,7 @@ task-item {
     width: 400px;
     display: flex;
     justify-content: flex-end;
-    align-items: center; 
+    align-items: center;
   }
 
   #completed-list-title {
