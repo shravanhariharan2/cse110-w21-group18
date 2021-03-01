@@ -63,7 +63,7 @@ class TaskList {
         newTask.setAttribute('class', taskObj.class);
         newTask.setAttribute('id', taskObj.id);
         newTask.setAttribute('draggable', taskObj.draggable);
-        if (parseInt(key,10) > 0) {
+        if (parseInt(key, 10) > 0) {
           this.DOM_ELEMENTS.taskList.appendChild(newTask);
         } else {
           this.DOM_ELEMENTS.completedList.prepend(newTask);
@@ -250,7 +250,7 @@ class TaskList {
       id = target.id;
       list = target.parentNode.children;
       for (let i = 0; i < list.length; i += 1) {
-        if (list[i] == dragged) {
+        if (list[i] === dragged) {
           index = i;
         }
       }
@@ -259,10 +259,10 @@ class TaskList {
       event.preventDefault();
     });
     document.addEventListener('drop', ({ target }) => {
-      if (target.className == 'dropzone' && target.id != id) {
+      if (target.className === 'dropzone' && target.id !== id) {
         dragged.remove(dragged);
         for (let i = 0; i < list.length; i += 1) {
-          if (list[i] == target) {
+          if (list[i] === target) {
             indexDrop = i;
           }
         }

@@ -5,13 +5,13 @@
   width: 400px;
   display: flex;
   justify-content: flex-end;
-  align-items: center; 
+  align-items: center;
 }
 
 #task-line-break {
   border-width: 1px;
   max-width: 550px;
-  margin:auto;
+  margin: auto;
   margin-top: 10px;
   background-color:#026670;
   color:#026670;
@@ -41,7 +41,7 @@
   border-radius: 6px;
   height: 40px;
   width: 40px;
-  margin-right: 60px;;
+  margin-right: 60px;
   border-width: 2px;
   border-color: #fce592;
   font-size: 25px;
@@ -49,16 +49,16 @@
   line-height: 1.2;
   border-style: solid;
   display: inline-flex;
-  justify-content: center; 
-  align-items: center; 
-  box-shadow: 0 3px #cfbd79;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 3px #cfbd79;
 }
 #add-task:focus {
     outline:none;
 }
 #add-task:active {
   background-color:  #e2ffa4;
-  box-shadow: 0 1px #cfbd79;
+  box-shadow: 0px 1px #cfbd79;
   transform: translateY(4px);
 }
 /* holder for all tasks */
@@ -91,7 +91,7 @@
   padding: 20px;
   grid-gap: 10px;
   background-color: #EDEAE5;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2), 0px 6px 20px 0px rgba(0, 0, 0, 0.19);
   display:none;
 }
 /* name input */
@@ -99,12 +99,12 @@
   grid-area: name;
   height: 40px;
   width: 200px;
-  border-radius:5px;
-  border-style:solid;
+  border-radius: 5px;
+  border-style: solid;
   background-color: #EDEAE5;
   font-family: 'Open Sans', sans-serif;
   font-size: 20px;
-  border-width:2.5px;
+  border-width: 2.5px;
   padding-left: 5px;
 }
 #add-task-name:focus {
@@ -169,7 +169,7 @@
   font-family: 'Open Sans', sans-serif;
   margin-bottom: 15px;
   margin-top: 15px;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.2), 0px 3px 10px 0px rgba(0, 0, 0, 0.19);
 }
 /* button to add notes */
 #add-notes {
@@ -222,7 +222,7 @@ task-item {
   padding: 20px 20px 10px 20px;
   grid-gap: 5px;
   background-color: #edeae500;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2), 0px 6px 20px 0px rgba(0, 0, 0, 0.19);
 }
 
 .expand-button {
@@ -295,7 +295,7 @@ task-item {
   width: 25%;
   height: 50%;
   border: solid white;
-  border-width: 0 5px 5px 0px;
+  border-width: 0px 5px 5px 0px;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
