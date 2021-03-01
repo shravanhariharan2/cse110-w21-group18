@@ -307,8 +307,8 @@ class TaskList {
    * Increases the top task progress when the pomodoro session increases
    */
   incrementPomodoroCount() {
-    let topTask = document.getElementById('1');
-    if( topTask !== null) {
+    const topTask = document.getElementById('1');
+    if (topTask !== null) {
       topTask.progress += 1;
     }
     this.listChanged();
