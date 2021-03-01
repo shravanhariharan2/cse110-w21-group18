@@ -2,19 +2,19 @@ import PomodoroSessionStates from '../constants/Enums.js';
 import DisplayMessages from '../constants/displayMessages.js';
 
 const NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
+const alarm = document.getElementById('timer-alarm');
 
 class NotificationService {
   /**
   * Notifies the user of session end through audio and browser (if allowed)
   * notifications
-  * @param {DOM object} alarm [DOM element reference for timer-alarm]
   * @param {int} sessionState [an integer representing the state the user is in]
   * @param {int} sessionNumber [an integer representing the worksessions finished]
   */
-  notifyUser(alarm, sessionState, sessionNumber) {
+  static notifyUser(sessionState, sessionNumber) {
     alarm.play();
     if (Notification.permission === 'granted') {
-      this.browserNotify(sessionState, sessionNumber);
+      NotificationService.browserNotify(sessionState, sessionNumber);
     }
   }
 
@@ -23,9 +23,9 @@ class NotificationService {
    * @param {int} sessionState [an integer representing the state the user is in]
    * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  browserNotify(sessionState, sessionNumber) {
-    const notificationTitle = this.createNotificationTitle(sessionState);
-    const notificationBody = this.createNotificationBody(sessionState, sessionNumber);
+  static browserNotify(sessionState, sessionNumber) {
+    const notificationTitle = NotificationService.createNotificationTitle(sessionState);
+    const notificationBody = NotificationService.createNotificationBody(sessionState, sessionNumber);
     new Notification(notificationTitle, notificationBody);
   }
 
