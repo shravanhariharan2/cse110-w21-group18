@@ -17,6 +17,7 @@ document.body.innerHTML = `
     <div>
       <input type="button" id="start" value="Start">
     </div>
+    <audio id="timer-alarm" src="media/audio/timer-alarm.mp3"></audio>
   </div>
 `;
 
@@ -29,6 +30,7 @@ test('Constructor initializes correct instance variables', () => {
 test('Session number increases after one pomodoro work session', async () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
+  PomoTest.notifications.notifyUser = jest.fn();
   const expectedSession = PomoTest.sessionNumber + 1;
   const promise = PomoTest.runWorkSession();
   jest.advanceTimersByTime(MS_IN_WORK_SESSION);
@@ -39,6 +41,7 @@ test('Session number increases after one pomodoro work session', async () => {
 test('Timer resets and idles after a short break', async () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
+  PomoTest.notifications.notifyUser = jest.fn();
   const promise = PomoTest.runShortBreak();
   jest.advanceTimersByTime(MS_IN_SHORT_BREAK);
   await promise;
@@ -49,6 +52,7 @@ test('Timer resets and idles after a short break', async () => {
 test('Session resets to zero and timer idles after a long break', async () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
+  PomoTest.notifications.notifyUser = jest.fn();
   PomoTest.sessionNumber = 4;
   const promise = PomoTest.runLongBreak();
   jest.advanceTimersByTime(MS_IN_LONG_BREAK);
