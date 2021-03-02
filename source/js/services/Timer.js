@@ -4,7 +4,7 @@
  */
 class Timer {
   constructor(clockSpeed) {
-    this.DEBUG = true;
+    this.DEBUG = false;
 
     this.minutes = 0;
     this.seconds = 0;

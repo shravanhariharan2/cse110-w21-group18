@@ -10,9 +10,10 @@ const TICK_SPEED = 1000;
  */
 class PomodoroSession {
   constructor() {
-    this.DEBUG = true;
+    this.DEBUG = false;
 
     this.timer = new Timer(TICK_SPEED);
+    this.notifications = new NotificationService();
     this.currentState = PomodoroSessionStates.IDLE;
     this.sessionNumber = 0;
 
@@ -136,7 +137,6 @@ class PomodoroSession {
       } else {
         await this.runLongBreak();
       }
-      this.idle();
     } else {
       this.resetWorkSession();
     }
@@ -151,7 +151,7 @@ class PomodoroSession {
     this.updateDocument();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
-    NotificationService.notifyUser(this.currentState, this.sessionNumber);
+    this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.DEBUG_PRINT('Work finished');
   }
 
@@ -162,7 +162,8 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
     await this.run(this.SHORT_BREAK_DURATION);
-    NotificationService.notifyUser(this.currentState, this.sessionNumber);
+    this.notifications.notifyUser(this.currentState, this.sessionNumber);
+    this.idle();
     this.DEBUG_PRINT('Short break finished');
   }
 
@@ -173,8 +174,9 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.LONG_BREAK;
     this.updateDocument();
     await this.run(this.LONG_BREAK_DURATION);
-    NotificationService.notifyUser(this.currentState, this.sessionNumber);
+    this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.sessionNumber = 0;
+    this.idle();
     this.DEBUG_PRINT('Long break finished');
   }
 
