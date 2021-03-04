@@ -62,7 +62,7 @@ class TaskItem extends HTMLElement {
     button.onclick = () => this.displayButtons(button);
     return button;
   }
-  
+
   displayButtons(button) {
     this.shadowRoot.querySelector('.expand-button').style.tranform = 'rotate(180deg)';
     if (this.isExpanded) {
@@ -79,65 +79,6 @@ class TaskItem extends HTMLElement {
     this.isExpanded = true;
     button.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }
-  
-  createEditButtonElement(){
-    const button = this.shadowRoot.appendChild(document.createElement('input'));
-    button.className = 'edit-button';
-    button.type = 'image';
-    button.title = 'Edit Task';
-    button.src = './media/edit-icon.png';
-    button.textContent = 'Edit';
-    button.onclick = () => this.allowEditing();
-    
-    return button;
-  }
-  allowEditing(){
-    var notesElement = this.shadowRoot.querySelector(".notes");
-    var notesElementText = notesElement.textContent;
-    var nameElement = this.shadowRoot.querySelector(".name");
-    var nameElementText = nameElement.textContent;
-    var pomoElement = this.shadowRoot.querySelector(".pomo-progress");
-    var originalElement = this;
-    /*create the replacement elements that are editable and replace the childs, once save is clicked,
-    take the contents and replace the child back with p element */
-    
-    //originalElement.setAttribute('id','task-edit-input');
-    
-    //update notes to be editable
-    var newNotes = document.createElement('textarea');
-    newNotes.setAttribute('id','change-task-description');
-    newNotes.className = 'notes';
-    newNotes.textContent = notesElementText;
-    notesElement.replaceWith(newNotes);
-    this.shadowRoot.querySelector(".notes").style.display = "inline";
-    
-    //update task name to be editable
-    var newName = document.createElement('textarea');
-    newName.setAttribute('id','change-task-name')
-    newName.className = 'name';
-    newName.textContent = nameElementText;
-    nameElement.replaceWith(newName);
-    this.shadowRoot.querySelector(".name").style.display = "inline";
-
-
-    this.shadowRoot.querySelector(".edit-button").style.display = "none"; 
-    this.shadowRoot.querySelector(".remove-button").style.display = "none";
-    this.shadowRoot.querySelector(".task-checkbox").style.display = "none";
-    
-    const saveButton = this.shadowRoot.appendChild(document.createElement('button'));
-    saveButton.setAttribute('id','save');
-    saveButton.className = 'save-button';
-    
-    saveButton.title = 'SaveTask';
-    saveButton.textContent = 'Save';
-    
-  }
-  /*
-  saveButton(){
-
-  }
-  */
-  
 
   createEditButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
@@ -146,8 +87,57 @@ class TaskItem extends HTMLElement {
     button.title = 'Edit Task';
     button.src = './media/edit-icon.png';
     button.textContent = 'Edit';
+    button.onclick = () => this.allowEditing();
+
     return button;
   }
+
+  allowEditing() {
+    const notesElement = this.shadowRoot.querySelector('.notes');
+    const notesElementText = notesElement.textContent;
+    const nameElement = this.shadowRoot.querySelector('.name');
+    const nameElementText = nameElement.textContent;
+    const pomoElement = this.shadowRoot.querySelector('.pomo-progress');
+    const originalElement = this;
+    console.log(pomoElement);
+    console.log(originalElement);
+    /* create the replacement elements that are editable and replace the childs, once save is clicked,
+    take the contents and replace the child back with p element */
+
+    // originalElement.setAttribute('id','task-edit-input');
+
+    // update notes to be editable
+    const newNotes = document.createElement('textarea');
+    newNotes.setAttribute('id', 'change-task-description');
+    newNotes.className = 'notes';
+    newNotes.textContent = notesElementText;
+    notesElement.replaceWith(newNotes);
+    this.shadowRoot.querySelector('.notes').style.display = 'inline';
+
+    // update task name to be editable
+    const newName = document.createElement('textarea');
+    newName.setAttribute('id', 'change-task-name');
+    newName.className = 'name';
+    newName.textContent = nameElementText;
+    nameElement.replaceWith(newName);
+    this.shadowRoot.querySelector('.name').style.display = 'inline';
+
+    this.shadowRoot.querySelector('.edit-button').style.display = 'none';
+    this.shadowRoot.querySelector('.remove-button').style.display = 'none';
+    this.shadowRoot.querySelector('.task-checkbox').style.display = 'none';
+
+    const saveButton = this.shadowRoot.appendChild(document.createElement('button'));
+    saveButton.setAttribute('id', 'save');
+    saveButton.className = 'save-button';
+
+    saveButton.title = 'SaveTask';
+    saveButton.textContent = 'Save';
+  }
+  /*
+  saveButton(){
+
+  }
+  */
 
   createRemoveButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));

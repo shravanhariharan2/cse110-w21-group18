@@ -1,5 +1,5 @@
-import PomodoroSession from '../js/services/PomodoroSession';
-import PomodoroSessionStates from '../js/constants/Enums';
+import PomodoroSession from '../js/services/PomodoroSession.js';
+import PomodoroSessionStates from '../js/constants/Enums.js';
 
 const MS_IN_WORK_SESSION = 25 * 60 * 1000;
 const MS_IN_SHORT_BREAK = 5 * 60 * 1000;
