@@ -4,22 +4,26 @@
   "description": "Source code for CSE 110 Winter 2021 Group 18 Pomodoro app",
   "main": "./js/scripts/index.js",
   "scripts": {
-    "build": "echo \"No build specified\"",
-    "test": "jest --config jest.config.json",
-    "lint": "eslint ./js --ext .js",
-    "lint:fix": "eslint ./js --ext .js --fix",
+    "test": "jest --config jest.config.json --coverage",
+    "lint": "eslint ./ --ext .js",
+    "lint:fix": "eslint ./ --ext .js --fix",
     "generate-docs": "jsdoc -c conf.json"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "^7.13.8",
+    "babel-jest": "^26.6.3",
     "eslint": "^7.19.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.5",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^26.6.3"
-  }
+  },
+  "dependencies": {}
 }

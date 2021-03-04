@@ -1,5 +1,6 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
+import NotificationService from './NotificationService.js';
 
 const TICK_SPEED = 1000;
 
@@ -12,6 +13,7 @@ class PomodoroSession {
     this.DEBUG = false;
 
     this.timer = new Timer(TICK_SPEED);
+    this.notifications = new NotificationService();
     this.currentState = PomodoroSessionStates.IDLE;
     this.sessionNumber = 0;
 
@@ -19,7 +21,7 @@ class PomodoroSession {
     this.timer.setTime(this.WORK_SESSION_DURATION);
 
     this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
-    this.onClick = this.onClick.bind(this);
+    this.toggleSession = this.toggleSession.bind(this);
     this.run = this.run.bind(this);
     this.stop = this.stop.bind(this);
     this.updateDocument = this.updateDocument.bind(this);
@@ -32,7 +34,7 @@ class PomodoroSession {
       button: document.getElementById('start'),
     };
 
-    this.DOM_ELEMENTS.button.addEventListener('click', this.onClick);
+    this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
   }
 
   /**
@@ -48,7 +50,7 @@ class PomodoroSession {
 
   /**
    * Get debugging indicators
-   * @return {[array]} an array of parameters
+   * @return {array} an array of parameters
    */
   info() {
     const stateArray = [
@@ -63,7 +65,7 @@ class PomodoroSession {
 
   /**
    * Runs the timer for t-minutes, throws an error timer is stopped midway
-   * @param  {[type]}  t [the number of minutes to run the timer]
+   * @param  {type}  t [the number of minutes to run the timer]
    * @return {Promise}   [non-deterministic state, indicating timer completion]
    */
   async run(t) {
@@ -127,7 +129,7 @@ class PomodoroSession {
    * Links the timer button to the functionality
    * @return {Promise} [description]
    */
-  async onClick() {
+  async toggleSession() {
     if (this.currentState === PomodoroSessionStates.IDLE) {
       await this.runWorkSession();
       if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
@@ -135,7 +137,6 @@ class PomodoroSession {
       } else {
         await this.runLongBreak();
       }
-      this.idle();
     } else {
       this.resetWorkSession();
     }
@@ -150,6 +151,7 @@ class PomodoroSession {
     this.updateDocument();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
+    this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.DEBUG_PRINT('Work finished');
   }
 
@@ -160,6 +162,8 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
     await this.run(this.SHORT_BREAK_DURATION);
+    this.notifications.notifyUser(this.currentState, this.sessionNumber);
+    this.idle();
     this.DEBUG_PRINT('Short break finished');
   }
 
@@ -170,7 +174,9 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.LONG_BREAK;
     this.updateDocument();
     await this.run(this.LONG_BREAK_DURATION);
+    this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.sessionNumber = 0;
+    this.idle();
     this.DEBUG_PRINT('Long break finished');
   }
 
@@ -195,7 +201,7 @@ class PomodoroSession {
 
   /**
    * Prints debug statements to console based on global debug flag
-   * @param {[string]} x [The statement to print]
+   * @param {string} x [The statement to print]
    */
   DEBUG_PRINT(x) {
     if (this.DEBUG) {

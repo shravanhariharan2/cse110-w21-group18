@@ -1,6 +1,8 @@
----
+plugins:
+  - jest
 env:
   browser: true
+  jest/globals: true
 extends:
   - "eslint:recommended"
   - "airbnb"
@@ -19,3 +21,7 @@ rules:
   no-param-reassign:
     - error
     - props: false
+  no-new:
+    - warn
+  no-unused-expressions:
+    - warn
