@@ -1,4 +1,4 @@
-import Timer from '../js/services/Timer';
+import Timer from '../js/services/Timer.js';
 
 // Set up the HTML
 document.body.innerHTML = `

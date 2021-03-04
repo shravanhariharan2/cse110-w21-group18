@@ -18,6 +18,9 @@ rules:
   import/extensions:
     - warn
     - always
+  no-param-reassign:
+    - error
+    - props: false
   no-new:
     - warn
   no-unused-expressions:

@@ -8,20 +8,21 @@ body {
   position: relative;
   margin: 100px auto;
   background: #9FEDD7;
-  width: 550px;
+  width: 30%;
+  min-width: 550px;
   height: 350px;
   border-radius: 30px;
   text-align: center;
-  z-index : 0;
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 /*holds the label for which type of timer is running */
-#which-container {
+#session-type {
   padding: 10px 0 0 0;
   color: #026670;
-  font-size: 20px;
+  font-size: 22px;
   position: relative;
   z-index: 1;
   display: flex;
@@ -33,10 +34,12 @@ body {
   text-underline-offset: 15px;
   margin-right: 15px;
   margin-left: 15px;
+  font-weight:600;
 }
 
 #short-break, #long-break {
   text-decoration: none;
+  font-weight:400;
   text-underline-offset: 15px;
   margin-right: 15px;
   margin-left: 15px;
@@ -59,7 +62,7 @@ body {
   border-radius: 5px;
   background-color: #EDEAE5;
   border-style: outset;
-  box-shadow: 0px 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   outline: none;
   color: #026670;
   height: 60px;
@@ -70,4 +73,12 @@ body {
   border-style: inset;
   top: 3px;
   box-shadow: 0px 0px;
+}
+
+#add-interruption {
+  position: absolute;
+  height: 50px;
+  width: 55px;
+  margin-left: 70px;
+  margin-top: 5px;
 }

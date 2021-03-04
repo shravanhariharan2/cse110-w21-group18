@@ -1,5 +1,5 @@
-import NotificationService from '../js/services/NotificationService';
-import PomodoroSessionStates from '../js/constants/Enums';
+import NotificationService from '../js/services/NotificationService.js';
+import PomodoroSessionStates from '../js/constants/Enums.js';
 import DisplayMessages from '../js/constants/displayMessages.js';
 
 // Set up the HTML
