@@ -21,6 +21,9 @@ document.body.innerHTML = `
   </div>
 `;
 
+const playAudio = jest.fn();
+window.HTMLMediaElement.prototype.play = () => playAudio();
+
 test('Constructor initializes correct instance variables', () => {
   const PomoTest = new PomodoroSession();
   expect(PomoTest.sessionNumber).toBe(0);
