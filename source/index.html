@@ -9,6 +9,42 @@
 	</head>
 
 	<body>
+		<div id="settings-icon">
+			<img id="settings-gear" src="media/icons/options-gear.png"></img>
+		</div>
+		<div id="settings-modal">
+			<div id="settings-box">
+				<p id="settings-text">Settings</p>
+				<form id="settings-container">
+					<label class="c1" for="pomo-duration-select" style="word-wrap:break-word">
+						Pomodoro Duration
+						<select class="c2" name="pomo-duration-select" id="pomo-duration-select"></select>
+					</label>
+					<label class="c1" for="short-duration-select" style="word-wrap:break-word">	
+						Short Break Duration
+						<select class="c2" name="short-duration-select" id="pomo-duration-select"></select>
+					</label>
+					<label class="c1" for="long-duration-select" style="word-wrap:break-word">
+						Long Break Duration
+						<select class="c2" name="long-duration-select" id="pomo-duration-select"></select>
+					</label>
+					<label class="c1" for="long-pomo-select" style="word-wrap:break-word">
+						Pomodoros Before Long Break
+						<select class="c2" name="long-pomo-select" id="pomo-duration-select"></select>
+					</label>
+					<label class="c1" for="pause-before-breaks" style="word-wrap:break-word">
+						<input id="pause-before-breaks" type="checkbox"> Pause before breaks
+					</label>
+					<label class="c1" for="pause-after-breaks" style="word-wrap:break-word">
+						<input id="pause-before-breaks" type="checkbox"> Pause after breaks
+					</label>
+				</form>
+				<div id="settings-buttons">
+					<input type="button" id="cancel" value="Cancel">
+					<input type="button" id="save" value="Save">
+				</div>
+			</div>
+		</div>
 		<div id="timer-box">
 			<div id ="which-container">
 				<div id="pomo">Pomodoro</div>
