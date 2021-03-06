@@ -38,8 +38,8 @@
   #add-task {
     position: absolute;
     text-align: center;
-    color:rgb(50, 163, 50);
-    background-color: #e2ffa4;
+    color:#026670;
+    background-color: #fef9c7;
     border-radius: 6px;
     height: 40px;
     width: 40px;
@@ -59,7 +59,6 @@
       outline:none;
   }
   #add-task:active {
-    background-color:  #e2ffa4;
     box-shadow: 0 1px #cfbd79;
     transform: translateY(4px);
   }
@@ -199,8 +198,8 @@
     outline: none;
   }
   /* style for each task-item */
-  task-item{
-      cursor:move;
+  task-item {
+    cursor:move;
     position: relative;
     margin: 0px auto;
     margin-top: 20px;
@@ -209,6 +208,8 @@
     border-color:#026670;
     border-style: solid;
     border-width: 2px;
+    /* border-style: outset; */
+    box-shadow: 0px 3px;
     text-align: center;
     display:grid;
     grid-template-areas:

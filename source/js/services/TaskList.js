@@ -5,7 +5,8 @@
 class TaskList {
   constructor() {
     this.numTasks = 0; 
-    this.loaded = false; // make sure nothing else runs while loading 
+    this.loaded = false; // make sure nothing else runs while loading
+    this.selectedTask = null; 
     //callable methods
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
@@ -51,6 +52,7 @@ class TaskList {
         newTask.setAttribute('id', taskObj.id);
         newTask.setAttribute('draggable', taskObj.draggable);
         this.DOM_ELEMENTS.taskList.appendChild(newTask);
+        newTask.addEventListener('click', this.selectTask.bind(this, newTask));
       }
     }
     for (let i = 1; i<=sessionStorage.getItem('numTasks'); i+=1) {
@@ -159,6 +161,7 @@ class TaskList {
    */
   addTask() {
       const newTask = document.createElement('task-item');
+
       newTask.setAttribute('name', this.DOM_ELEMENTS.newTaskName.value);
       newTask.setAttribute('estimate', this.DOM_ELEMENTS.newTaskPomos.value);
       newTask.setAttribute('progress', '0');
@@ -166,11 +169,13 @@ class TaskList {
       newTask.setAttribute('isComplete', false);
       newTask.setAttribute('class', 'dropzone');
       newTask.setAttribute('id', this.numTasks);
+
       this.DOM_ELEMENTS.taskList.prepend(newTask);
       this.DOM_ELEMENTS.inputBox.style.display = 'none';
-      this.storeAsJSON(this.DOM_ELEMENTS.newTaskName.value,
-        this.DOM_ELEMENTS.newTaskPomos.value, '0', this.DOM_ELEMENTS.newTaskNotes.value,
-        'false', 'dropzone', this.numTasks, 'true');
+      newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+      // this.storeAsJSON(this.DOM_ELEMENTS.newTaskName.value,
+      //   this.DOM_ELEMENTS.newTaskPomos.value, '0', this.DOM_ELEMENTS.newTaskNotes.value,
+      //   'false', 'dropzone', this.numTasks, 'true');
       this.resetInputBox();
       this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
   }
@@ -232,9 +237,29 @@ class TaskList {
     const children = Array.from(this.DOM_ELEMENTS.taskList.children);
     children.forEach((element) => {
       element.id = this.DOM_ELEMENTS.taskList.childElementCount - Array.from(element.parentNode.children).indexOf(element);
+      // console.log("id" + element.id);
     });
   }
 
   incrementPomodoroCount(taskId) {}
+
+  selectTask(taskItem) {
+    this.selectedTask = taskItem;
+    this.unselectOtherTasks();
+  }
+
+  unselectOtherTasks() {
+    const children = Array.from(this.DOM_ELEMENTS.taskList.children);
+    children.forEach((element) => {
+      if (this.selectedTask != element) {
+        if (element.isSelected) {
+          element.markTaskAsSelected();
+          console.log(element);
+          console.log(element.isSelected);
+        }
+      }
+    })
+  }
 }
+
 export default TaskList;

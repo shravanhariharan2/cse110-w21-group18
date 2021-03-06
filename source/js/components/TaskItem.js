@@ -3,8 +3,10 @@ class TaskItem extends HTMLElement {
     super();
 
     this.isExpanded = false;
-
     this.isComplete = false;
+    this.isSelected = false;
+
+    this.onclick = () => this.markTaskAsSelected();
   }
   connectedCallback() {
     this.setAttribute('draggable', 'true');
@@ -76,7 +78,6 @@ class TaskItem extends HTMLElement {
     this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
     if (this.shadowRoot.querySelector('.notes').innerText == '') {
-        console.log('hello');
         this.shadowRoot.querySelector('.edit-button').style.marginTop = this.offsetHeight*0.65 + 'px';
     }
     else {
@@ -142,6 +143,27 @@ class TaskItem extends HTMLElement {
         taskList.appendChild(this);
         }
   }
-}
-window.customElements.define('task-item', TaskItem);
 
+  markTaskAsSelected() {
+    if (this.isSelected) {
+      this.isSelected = false;
+      this.style.background = '#edeae500';
+      this.style.top = '0px';
+      this.style.boxShadow = '0px 3px';
+    }
+    else {
+      this.markTaskAsUnselected();
+    }
+  }
+
+  markTaskAsUnselected() {
+    this.isSelected = true;
+    this.style.border = '2px solid #026670';
+    this.style.borderRadius = '30px';
+    this.style.background = '#9fedd7';
+    this.style.top = '3px';
+    this.style.boxShadow = '0px 0px';
+  }
+}
+
+window.customElements.define('task-item', TaskItem);
