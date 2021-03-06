@@ -1,4 +1,4 @@
-# CSE 110 Group 18 - Meeting X
+# CSE 110 Group 18
 
 ## Topic
 ### Attendees: 

@@ -4,7 +4,7 @@
  */
 class Timer {
   constructor(clockSpeed) {
-    this.DEBUG = true;
+    this.DEBUG = false;
 
     this.minutes = 0;
     this.seconds = 0;
@@ -94,7 +94,7 @@ class Timer {
 
   /**
    * Prints debug statements to console based on global debug flag
-   * @param {[string]} x [The statement to print]
+   * @param {string} x [The statement to print]
    */
   DEBUG_PRINT(x) {
     if (this.DEBUG) { console.log(x); }

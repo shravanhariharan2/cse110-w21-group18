@@ -11,7 +11,7 @@
 
 	<body>
 		<div id="timer-box">
-			<div id ="which-container">
+			<div id ="session-type">
 				<div id="pomo">Pomodoro</div>
 				<div id="short-break">Short Break</div>
 				<div id="long-break">Long Break</div>
@@ -20,19 +20,19 @@
 			<div>
 				<input type="button" id="start" value="Start" title="Start Pomodoro Session">
 			</div>
-			<audio id="timer-alarm" src="media/alarm.m4a"></audio>
+			<audio id="timer-alarm" src="media/audio/timer-alarm.mp3"></audio>
 		</div>
 		<header id="to-do-list-header">
 			<p id="list-title">Task List</p>
-			<input type="button" id="add-task" value="+" title="Add Tasks"></input>
 		</header>
 		<hr id = "task-line-break">
+		<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
 		<form id="task-add-input">
 			<input type="text" id="add-task-name" placeholder="Task Name">
 			<p id="expected">Expected Pomodoros:</p>
 			<img src="https://p7.hiclipart.com/preview/678/807/689/clock-euclidean-vector-illustration-simple-clock-cliparts.jpg" id="clock-clip-art">
 			<select name="pomos" id="pomos">
-				<option value="?">...</option>
+				<option value="0">...</option>
 				<option value="1">1 (25 min)</option>
 				<option value="2">2 (50 min)</option>
 				<option value="3">3 (1hr 15min)</option>
@@ -42,17 +42,16 @@
 				<option value="7">7 (2hr 55min)</option>
 				<option value="8">8 (3hr 20min)</option>
 			</select>
-			<input type="button" id="cancel-input" value="X" title="Cancel Input"></input>
+			<input type="button" id="cancel-input" value="Cancel" title="Cancel Input"></input>
 			<input type="button" id="add-notes" value="Add Notes">
 			<textarea id="add-task-description" placeholder="Add Notes"></textarea>
 			<input type="button" id="save-task" value="Save">
 		</form>
-		<p id="no-tasks" title="Your tasks will be displayed here">Add Tasks Here</p>
 		<div id="to-do-list"></div>
 		<header id="completed-list-header">
-			<p id="completed-list-title">Completed List</p>
+			<p id="completed-list-title">Completed Tasks</p>
+			<input id="expand-completed" type="image" title="Expand View" src="./media/expand-icon.png">
 		</header>
-		<hr id = "task-line-break">
 		<div id="completed-list"></div>
 	</body>
 	<script type="module" src="js/services/PomodoroSession.js"></script>

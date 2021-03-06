@@ -2,7 +2,7 @@
 
 ## Retrospective
 ### Attendees: Shravan, Trinity, Shane, Jose, Steven
-### Details: Zoom @ 9PM PST Monday, 2/22/21
+### Details: Zoom @ 9:30PM PST Monday, 2/22/21
 
 ## General Minutes:
 * Check-in with Jordan. He recommended that we should

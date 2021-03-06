@@ -1,8 +1,8 @@
 import PomodoroSession from '../services/PomodoroSession.js';
 
-const SESSION = new PomodoroSession();
+const pomodoroSession = new PomodoroSession();
 
-document.getElementById('start').addEventListener('click', function() {
-    Notification.requestPermission();
-    SESSION.onClick;
+document.getElementById('start').addEventListener('click', () => {
+  Notification.requestPermission();
+  pomodoroSession.toggleSession;
 });
