@@ -5,7 +5,7 @@
 class TaskList {
   constructor() {
     this.numTasks = 0;
-    this.selectedTask = null; 
+    this.selectedTask = null;
     this.completedTasks = 0;
     this.completedIsExpanded = false;
     this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
@@ -333,7 +333,7 @@ class TaskList {
   unselectOtherTasks() {
     const children = Array.from(this.DOM_ELEMENTS.taskList.children);
     children.forEach((element) => {
-      if (this.selectedTask != element) {
+      if (this.selectedTask !== element) {
         if (element.isSelected) {
           element.markTaskAsSelected();
           console.log(element);

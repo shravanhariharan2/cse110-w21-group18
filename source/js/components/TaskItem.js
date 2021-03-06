@@ -200,8 +200,7 @@ class TaskItem extends HTMLElement {
       this.style.background = '#edeae500';
       this.style.top = '0px';
       this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
-    }
-    else {
+    } else {
       this.markTaskAsUnselected();
     }
   }
