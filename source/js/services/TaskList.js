@@ -30,7 +30,6 @@ class TaskList {
       completedListTitle: document.getElementById('completed-list-header'),
       expandCompleted: document.getElementById('expand-completed'),
     };
-
     this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
     this.DOM_ELEMENTS.addNotesButton.addEventListener('click', this.addNotesToTask);
     this.DOM_ELEMENTS.saveNewTaskButton.addEventListener('click', this.addTask);
@@ -38,8 +37,6 @@ class TaskList {
     this.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', this.listChanged);
     this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
     this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
-    sessionStorage.setItem('completedTasks', '0');
-    sessionStorage.setItem('numTasks', '0');
     this.makeTasksDraggable();
     this.displayMessageIfNoTasksExist();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
@@ -54,7 +51,7 @@ class TaskList {
     keys.forEach((key) => {
       const numTasks = sessionStorage.getItem('numTasks');
       const completedTasks = sessionStorage.getItem('completedTasks');
-      const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks);
+      const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks) && (parseInt(key, 10) !==0);
       if (isTaskItem) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
@@ -111,33 +108,37 @@ class TaskList {
     sessionStorage.setItem('completedTasks', this.completedTasks);
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
-      const taskObj = {
-        name: element.getAttribute('name'),
-        estimate: element.getAttribute('estimate'),
-        progress: element.getAttribute('progress'),
-        notes: element.getAttribute('notes'),
-        isComplete: false,
-        class: 'dropzone',
-        id: element.getAttribute('id'),
-        draggable: true,
-      };
-      const taskJSON = JSON.stringify(taskObj);
-      sessionStorage.setItem(element.getAttribute('id'), taskJSON);
+      if( element.class !== 'task-input') {
+        const taskObj = {
+          name: element.getAttribute('name'),
+          estimate: element.getAttribute('estimate'),
+          progress: element.getAttribute('progress'),
+          notes: element.getAttribute('notes'),
+          isComplete: false,
+          class: 'dropzone',
+          id: element.getAttribute('id'),
+          draggable: true,
+        };
+        const taskJSON = JSON.stringify(taskObj);
+        sessionStorage.setItem(element.getAttribute('id'), taskJSON);
+      }
     });
     const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
-      const taskObj = {
-        name: element.getAttribute('name'),
-        estimate: element.getAttribute('estimate'),
-        progress: element.getAttribute('progress'),
-        notes: element.getAttribute('notes'),
-        isComplete: element.getAttribute('isComplete'),
-        class: 'none',
-        id: element.getAttribute('id'),
-        draggable: false,
-      };
-      const taskJSON = JSON.stringify(taskObj);
-      sessionStorage.setItem(element.getAttribute('id'), taskJSON);
+      if( element.class !== 'task-input') {
+        const taskObj = {
+          name: element.getAttribute('name'),
+          estimate: element.getAttribute('estimate'),
+          progress: element.getAttribute('progress'),
+          notes: element.getAttribute('notes'),
+          isComplete: element.getAttribute('isComplete'),
+          class: 'none',
+          id: element.getAttribute('id'),
+          draggable: false,
+        };
+        const taskJSON = JSON.stringify(taskObj);
+        sessionStorage.setItem(element.getAttribute('id'), taskJSON);
+      }
     });
   }
 
@@ -213,7 +214,7 @@ class TaskList {
     sessionStorage.setItem(task.id, JSON.stringify(task));
 
     this.resetInputBox();
-    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount  ;
   }
 
   /**
@@ -252,7 +253,7 @@ class TaskList {
       event.preventDefault();
     });
     document.addEventListener('drop', ({ target }) => {
-      if (target.className === 'dropzone' && target.id !== id) {
+      if ((target.className === 'dropzone' || target.className === 'task-input dropzone') && target.id !== id) {
         dragged.remove(dragged);
         for (let i = 0; i < list.length; i += 1) {
           if (list[i] === target) {
@@ -276,14 +277,18 @@ class TaskList {
   refreshTaskItemIds() {
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
-      const elementPosition = Array.from(element.parentNode.children).indexOf(element);
-      const totalElementCount = this.DOM_ELEMENTS.taskList.childElementCount;
-      element.id = totalElementCount - elementPosition;
+      if (element.class !== 'task-input') {
+        const elementPosition = Array.from(element.parentNode.children).indexOf(element);
+        const totalElementCount = this.DOM_ELEMENTS.taskList.childElementCount;
+        element.id = totalElementCount - elementPosition;
+      }
     });
     const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
-      const elementPosition = Array.from(element.parentNode.children).indexOf(element);
-      element.id = -elementPosition - 1;
+      if (element.class !== 'task-input') {
+        const elementPosition = Array.from(element.parentNode.children).indexOf(element);
+        element.id = -elementPosition - 1;
+      }
     });
   }
 

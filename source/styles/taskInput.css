@@ -1,0 +1,139 @@
+.task-input {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 450px;
+    border-radius: 30px;
+    border-color:#026670;
+    border-style: solid;
+    border-width: 2.5px;
+    text-align: center;
+    display: grid;
+    grid-template-areas:
+      'name expect clock pomos'
+      'notes notes notes notes'
+      'add add add add'
+      'cancel cancel save save';
+    padding: 20px;
+    grid-gap: 10px;
+    background-color: #EDEAE5;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  /* name input */
+.add-task-name{
+    grid-area: name;
+    height: 40px;
+    width: 200px;
+    border-radius: 5px;
+    border-style: solid;
+    background-color: #EDEAE5;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 20px;
+    border-width: 2.5px;
+    padding-left: 5px;
+  }
+  .add-task-name:focus {
+    border-color: blue;
+    outline: none;
+    background-color: #EDEAE5;
+    font-family: 'Open Sans', sans-serif;
+  }
+  /* input expected number of pomos */
+  .expected {
+    grid-area: expect;
+    width: 40px;
+    margin: 0;
+    height: 50px;
+    padding-left: 5px;
+    text-align: center;
+  }
+  
+  .pomos {
+    text-align: center;
+    grid-area: pomos;
+    height: 45px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 2.5px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #EDEAE5;
+  }
+  
+  .pomos:focus {
+    border-color: blue;
+    outline: none;
+  }
+  
+  .clock-clip-art {
+    grid-area: clock;
+    margin-top: 0;
+    text-align: center;
+    margin-left: 20px;
+    height: 20px;
+    width: 20px;
+  }
+  
+  .cancel-input {
+    grid-area: cancel;
+    position: relative;
+    width: 60px;
+    height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    background-color:#e65656ef;
+    border-style: none;
+    color: white;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 150px;
+    margin-top: 5px;
+    font-size: 15px;
+    
+  }
+  
+  .save-task{
+    grid-area: save;
+    margin-left: 150px;
+    width: 60px;
+    height: 35px;
+    border-width: 0px;
+    border-radius: 5px;
+    color: white;
+    background-color: #4abb40ef;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    margin-top: 5px;
+    margin-left: -30px;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  }
+  /* button to add notes */
+  .add-notes {
+    margin: auto;
+    grid-area: add;
+    border-width: 2px;
+    border-radius: 5px;
+    background-color: #EDEAE5;
+    height: 25px;
+    margin-bottom: 10px;
+  }
+  .add-notes:focus {
+    outline: none;
+  }
+  /* add notes area */
+  .add-task-description {
+    grid-area: notes;
+    background-color: #EDEAE5;
+    height: 100px;
+    font-family: 'Open Sans', sans-serif;
+    resize: none;
+    border-radius: 5px;
+    border-width: 2.5px;
+    font-size: 15px;
+    padding: 3px;
+    padding-left: 5px;
+    padding-top: 5px;
+  }
+  
+  .add-task-description:focus {
+    border-color: blue;
+    outline: none;
+  }

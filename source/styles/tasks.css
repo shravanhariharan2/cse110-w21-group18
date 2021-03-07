@@ -79,6 +79,7 @@
   border-style: solid;
   border-width: 2.5px;
   text-align: center;
+  display: grid;
   grid-template-areas:
     'name expect clock pomos'
     'notes notes notes notes'

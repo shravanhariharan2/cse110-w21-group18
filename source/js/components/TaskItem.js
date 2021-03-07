@@ -92,47 +92,105 @@ class TaskItem extends HTMLElement {
     return button;
   }
 
-  allowEditing() {
-    const notesElement = this.shadowRoot.querySelector('.notes');
-    const notesElementText = notesElement.textContent;
-    const nameElement = this.shadowRoot.querySelector('.name');
-    const nameElementText = nameElement.textContent;
-    const pomoElement = this.shadowRoot.querySelector('.pomo-progress');
-    const originalElement = this;
-    console.log(pomoElement);
-    console.log(originalElement);
-    /* create the replacement elements that are editable and replace the childs, once save is clicked,
-    take the contents and replace the child back with p element */
+   allowEditing() {
+     this.style.display = 'none';
+     sessionStorage.setItem('editsOpen', parseInt(sessionStorage.getItem('editsOpen'),10) +1 );
+     const inputElement = document.createElement('task-input');
+     inputElement.setAttribute('class','task-input dropzone');
+     inputElement.id = this.id;
+     inputElement.setAttribute('name', this.getAttribute('name'));
+     inputElement.setAttribute('estimate', this.getAttribute('estimate'));
+     inputElement.setAttribute('isComplete',this.getAttribute('isComplete'));
+     inputElement.setAttribute('progress', this.getAttribute('progress'));
+     inputElement.setAttribute('notes', this.getAttribute('notes'));
+     inputElement.setAttribute('draggable', true);
+     this.after(inputElement);
+     inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
+     inputElement.shadowRoot.querySelector('.pomos').value = this.getAttribute('estimate');
+     inputElement.shadowRoot.querySelector('.add-task-description').value = this.shadowRoot.querySelector('.notes').innerText;
+     this.remove();
+     inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', () => {
+        const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
+        const newTask = document.createElement('task-item');
+        newTask.setAttribute('name', taskObj.name);
+        newTask.setAttribute('estimate', taskObj.estimate);
+        newTask.setAttribute('progress', taskObj.progress);
+        newTask.setAttribute('notes', taskObj.notes);
+        newTask.setAttribute('isComplete', taskObj.isComplete);
+        newTask.setAttribute('class', taskObj.class);
+        newTask.setAttribute('id', taskObj.id);
+        newTask.setAttribute('draggable', taskObj.draggable);
+        inputElement.remove();
+        //insert where it was before
+        if (inputElement.id !== '1') {
+          document.getElementById(inputElement.id-1).before(newTask);
+        }
+        //if its the last task
+        else {
+          document.getElementById('to-do-list').appendChild(newTask);
+        }
+     });
+     inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', () => {
+      const newTask = document.createElement('task-item');
+      newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
+      newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
+      newTask.setAttribute('progress', inputElement.getAttribute('progress'));
+      newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
+      newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
+      newTask.setAttribute('class', inputElement.getAttribute('class'));
+      newTask.setAttribute('id', inputElement.id);
+      newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
+      inputElement.remove();
+      //insert where it was before
+      if (inputElement.id !== '1') {
+        document.getElementById(inputElement.id-1).before(newTask);
+      }
+      //if its the last task
+      else {
+        document.getElementById('to-do-list').appendChild(newTask);
+      }
+   });
+    // const notesElement = this.shadowRoot.querySelector('.notes');
+    // const notesElementText = notesElement.textContent;
+    // const nameElement = this.shadowRoot.querySelector('.name');
+    // const nameElementText = nameElement.textContent;
+    // const pomoElement = this.shadowRoot.querySelector('.pomo-progress');
+    // const originalElement = this;
+    // console.log(pomoElement);
+    // console.log(originalElement);
+    // /* create the replacement elements that are editable and replace the childs, once save is clicked,
+    // take the contents and replace the child back with p element */
 
-    // originalElement.setAttribute('id','task-edit-input');
+    // // originalElement.setAttribute('id','task-edit-input');
 
-    // update notes to be editable
-    const newNotes = document.createElement('textarea');
-    newNotes.setAttribute('id', 'change-task-description');
-    newNotes.className = 'notes';
-    newNotes.textContent = notesElementText;
-    notesElement.replaceWith(newNotes);
-    this.shadowRoot.querySelector('.notes').style.display = 'inline';
+    // // update notes to be editable
+    // const newNotes = document.createElement('textarea');
+    // newNotes.setAttribute('id', 'change-task-description');
+    // newNotes.className = 'notes';
+    // newNotes.textContent = notesElementText;
+    // notesElement.replaceWith(newNotes);
+    // this.shadowRoot.querySelector('.notes').style.display = 'inline';
 
-    // update task name to be editable
-    const newName = document.createElement('textarea');
-    newName.setAttribute('id', 'change-task-name');
-    newName.className = 'name';
-    newName.textContent = nameElementText;
-    nameElement.replaceWith(newName);
-    this.shadowRoot.querySelector('.name').style.display = 'inline';
+    // // update task name to be editable
+    // const newName = document.createElement('textarea');
+    // newName.setAttribute('id', 'change-task-name');
+    // newName.className = 'name';
+    // newName.textContent = nameElementText;
+    // nameElement.replaceWith(newName);
+    // this.shadowRoot.querySelector('.name').style.display = 'inline';
 
-    this.shadowRoot.querySelector('.edit-button').style.display = 'none';
-    this.shadowRoot.querySelector('.remove-button').style.display = 'none';
-    this.shadowRoot.querySelector('.task-checkbox').style.display = 'none';
+    // this.shadowRoot.querySelector('.edit-button').style.display = 'none';
+    // this.shadowRoot.querySelector('.remove-button').style.display = 'none';
+    // this.shadowRoot.querySelector('.task-checkbox').style.display = 'none';
 
-    const saveButton = this.shadowRoot.appendChild(document.createElement('button'));
-    saveButton.setAttribute('id', 'save');
-    saveButton.className = 'save-button';
+    // const saveButton = this.shadowRoot.appendChild(document.createElement('button'));
+    // saveButton.setAttribute('id', 'save');
+    // saveButton.className = 'save-button';
 
-    saveButton.title = 'SaveTask';
-    saveButton.textContent = 'Save';
+    // saveButton.title = 'SaveTask';
+    // saveButton.textContent = 'Save';
   }
+  
   /*
   saveButton(){
 
