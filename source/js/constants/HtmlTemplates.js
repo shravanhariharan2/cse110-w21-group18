@@ -4,8 +4,10 @@ const HtmlTemplates = {
     <form class="task-input">
       <input type="text" class="add-task-name" placeholder="Task Name">
       <p class="expected">Expected Pomodoros:</p>
-      <img src="https://p7.hiclipart.com/preview/678/807/689/clock-euclidean-vector-illustration-simple-clock-cliparts.jpg"
-        class="clock-clip-art">
+      <img 
+       src="https://p7.hiclipart.com/preview/678/807/689/clock-euclidean-vector-illustration-simple-clock-cliparts.jpg"
+       class="clock-clip-art"
+      >
       <select name="pomos" class="pomos">
         <option value="0">...</option>
         <option value="1">1 (25 min)</option>
