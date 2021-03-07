@@ -1,6 +1,6 @@
 import NotificationService from '../js/services/NotificationService.js';
 import PomodoroSessionStates from '../js/constants/Enums.js';
-import DisplayMessages from '../js/constants/displayMessages.js';
+import DisplayMessages from '../js/constants/DisplayMessages.js';
 
 // Set up the HTML
 document.body.innerHTML = '<audio id="timer-alarm" src="media/audio/timer-alarm.mp3"></audio>';

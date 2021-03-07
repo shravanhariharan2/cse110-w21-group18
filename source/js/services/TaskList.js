@@ -57,7 +57,7 @@ class TaskList {
     keys.forEach((key) => {
       const numTasks = sessionStorage.getItem('numTasks');
       const completedTasks = sessionStorage.getItem('completedTasks');
-      const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks) && (parseInt(key, 10) !==0);
+      const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks) && (parseInt(key, 10) !== 0);
       if (isTaskItem) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
@@ -116,7 +116,7 @@ class TaskList {
     sessionStorage.setItem('completedTasks', this.completedTasks);
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
-      if( element.class !== 'task-input') {
+      if (element.class !== 'task-input') {
         const taskObj = {
           name: element.getAttribute('name'),
           estimate: element.getAttribute('estimate'),
@@ -133,7 +133,7 @@ class TaskList {
     });
     const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
-      if( element.class !== 'task-input') {
+      if (element.class !== 'task-input') {
         const taskObj = {
           name: element.getAttribute('name'),
           estimate: element.getAttribute('estimate'),
@@ -223,7 +223,7 @@ class TaskList {
     newTask.addEventListener('click', this.selectTask.bind(this, newTask));
 
     this.resetInputBox();
-    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount  ;
+    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
   }
 
   /**

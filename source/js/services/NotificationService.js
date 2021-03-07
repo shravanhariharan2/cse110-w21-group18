@@ -1,5 +1,5 @@
 import PomodoroSessionStates from '../constants/Enums.js';
-import DisplayMessages from '../constants/displayMessages.js';
+import DisplayMessages from '../constants/DisplayMessages.js';
 
 class NotificationService {
   /**
