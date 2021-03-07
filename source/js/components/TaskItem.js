@@ -61,11 +61,12 @@ class TaskItem extends HTMLElement {
     button.type = 'image';
     button.title = 'Expand View';
     button.src = './media/expand-icon.png';
-    button.onclick = () => this.displayButtons(button);
+    button.onclick = (event) => this.displayButtons(button, event);
     return button;
   }
 
-  displayButtons(button) {
+  displayButtons(button, event) {
+    event.stopPropagation();
     this.shadowRoot.querySelector('.expand-button').style.tranform = 'rotate(180deg)';
     if (this.isExpanded) {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
@@ -89,12 +90,13 @@ class TaskItem extends HTMLElement {
     button.title = 'Edit Task';
     button.src = './media/edit-icon.png';
     button.textContent = 'Edit';
-    button.onclick = () => this.allowEditing();
+    button.onclick = (event) => this.allowEditing(event);
 
     return button;
   }
 
-  allowEditing() {
+  allowEditing(event) {
+    event.stopPropagation();
     const notesElement = this.shadowRoot.querySelector('.notes');
     const notesElementText = notesElement.textContent;
     const nameElement = this.shadowRoot.querySelector('.name');
@@ -134,12 +136,13 @@ class TaskItem extends HTMLElement {
 
     saveButton.title = 'SaveTask';
     saveButton.textContent = 'Save';
-  }
-  /*
-  saveButton(){
 
+    saveButton.onclick = () => TaskItem.saveTaskNotes(event);
   }
-  */
+
+  static saveTaskNotes(event) {
+    event.stopPropagation();
+  }
 
   createRemoveButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
@@ -165,21 +168,22 @@ class TaskItem extends HTMLElement {
     input.setAttribute('type', 'checkbox');
     input.setAttribute('class', 'checkbox');
     input.checked = false;
-    checkboxLabel.onclick = () => this.markTaskAsComplete(this.id, checkboxLabel);
+    checkboxLabel.onclick = (event) => this.markTaskAsComplete(this.id, checkboxLabel, event);
     checkboxLabel.appendChild(input);
     checkboxLabel.innerHTML += '<span class=\'checkmark\'></span>';
     checkboxLabel.title = 'Mark as Done';
     return checkboxLabel;
   }
 
-  markTaskAsComplete(taskId, checkboxLabel) {
+  markTaskAsComplete(taskId, checkboxLabel, event) {
+    event.stopPropagation();
     const task = document.getElementById(taskId);
     const checkedElement = task.shadowRoot.querySelector('.checkbox');
     const taskList = document.getElementById('to-do-list');
     const checkedList = document.getElementById('completed-list');
     if (checkedElement.checked === true) {
       if (this.isSelected) {
-        this.toggleTaskSelection();
+        this.markTaskAsUnSelected();
       }
       this.isComplete = true;
       this.setAttribute('isComplete', 'true');
@@ -190,7 +194,6 @@ class TaskItem extends HTMLElement {
       this.style.cursor = 'pointer';
     } else {
       this.isComplete = false;
-      this.toggleTaskSelection();
       this.setAttribute('isComplete', 'false');
       checkboxLabel.title = 'Mark as Done';
       taskList.appendChild(this);
@@ -200,30 +203,53 @@ class TaskItem extends HTMLElement {
     }
   }
 
+  /**
+   * Select/unselect task
+   */
   toggleTaskSelection() {
     if (!this.isComplete) {
       if (this.isSelected) {
-        this.isSelected = false;
-        this.styleSelectedTask();
+        this.markTaskAsUnSelected();
       } else {
-        this.isSelected = true;
-        this.styleUnselectedTask();
+        this.markTaskAsSelected();
       }
     }
   }
 
-  styleSelectedTask() {
-    this.style.background = '#edeae500';
-    this.style.top = '0px';
-    this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
+  /**
+   * Set isSelected instance variable to true and update UI
+   */
+  markTaskAsSelected() {
+    this.isSelected = true;
+    this.styleSelectedTask();
   }
 
-  styleUnselectedTask() {
+  /**
+   * Set isSelected instance variable to false and update UI
+   */
+  markTaskAsUnSelected() {
+    this.isSelected = false;
+    this.styleUnselectedTask();
+  }
+
+  /**
+   * Update UI for when selecting task
+   */
+  styleSelectedTask() {
     this.style.border = '2px solid #026670';
     this.style.borderRadius = '30px';
     this.style.background = '#9fedd7';
     this.style.top = '3px';
     this.style.boxShadow = '0px 0px';
+  }
+
+  /**
+   * Update UI for when unselecting task
+   */
+  styleUnselectedTask() {
+    this.style.background = '#edeae500';
+    this.style.top = '0px';
+    this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
   }
 }
 

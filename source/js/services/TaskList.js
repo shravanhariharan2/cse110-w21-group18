@@ -2,11 +2,11 @@
  * Implements the TaskList class. This singleton class is a controller for the task list which
  * holds all the task items and the to-do lists and completed lists
  */
-let instance = null // hold singleton of TaskLIst  class
+let instance = null; // hold singleton of TaskLIst  class
 
 class TaskList {
   constructor() {
-    if(instance) return instance;
+    if (instance) return instance;
     instance = this;
     this.numTasks = 0;
     this.selectedTask = null;
@@ -330,11 +330,13 @@ class TaskList {
    * @param {TaskItem} taskItem task selected
    */
   selectTask(taskItem) {
-    if (this.selectedTask === taskItem) {
-      this.selectedTask = null;
-    } else {
-      this.selectedTask = taskItem;
-      this.unselectOtherTasks();
+    if (!taskItem.isComplete) {
+      if (this.selectedTask === taskItem) {
+        this.selectedTask = null;
+      } else {
+        this.selectedTask = taskItem;
+        this.unselectOtherTasks();
+      }
     }
   }
 

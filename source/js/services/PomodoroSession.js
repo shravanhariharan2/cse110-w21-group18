@@ -1,7 +1,7 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
 import NotificationService from './NotificationService.js';
-import TaskList from './TaskList.js'
+import TaskList from './TaskList.js';
 
 const TICK_SPEED = 1000;
 
