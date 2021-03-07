@@ -72,7 +72,7 @@ body {
   box-shadow: 0px 0px;
 }
 
-#settings-gear {
+#settings-icon {
   float: right;
   width: 40px;
   height: 40px;
@@ -80,7 +80,7 @@ body {
 }
 
 #settings-modal {
-  display: block;
+  display: none;
   position: fixed;
   margin: auto;
   z-index: 1; /* Sit on top */
@@ -140,9 +140,16 @@ body {
   margin: 0px 70px;
 }
 
+#settings-buttons input:active {
+  border-style: inset;
+  top: 3px;
+  box-shadow: 0px 0px;
+}
+
 .c2 {
   flex: 50%;
-  padding: 0px 0px 0px 
+  padding: 0px 0px 0px ;
+  width: 100px;
 }
 
 #settings-text {

@@ -1,6 +1,7 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
 import NotificationService from './NotificationService.js';
+import Options from './Options.js';
 
 const TICK_SPEED = 1000;
 
@@ -14,6 +15,7 @@ class PomodoroSession {
 
     this.timer = new Timer(TICK_SPEED);
     this.notifications = new NotificationService();
+    this.options = new Options();
     this.currentState = PomodoroSessionStates.IDLE;
     this.sessionNumber = 0;
 
