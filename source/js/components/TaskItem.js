@@ -178,6 +178,10 @@ class TaskItem extends HTMLElement {
     const taskList = document.getElementById('to-do-list');
     const checkedList = document.getElementById('completed-list');
     if (checkedElement.checked === true) {
+      if (this.isSelected) {
+        this.toggleTaskSelection();
+      }
+      this.isComplete = true;
       this.setAttribute('isComplete', 'true');
       checkboxLabel.title = 'Unmark as Done';
       checkedList.appendChild(this);
@@ -185,6 +189,8 @@ class TaskItem extends HTMLElement {
       this.setAttribute('class', 'none');
       this.style.cursor = 'pointer';
     } else {
+      this.isComplete = false;
+      this.toggleTaskSelection();
       this.setAttribute('isComplete', 'false');
       checkboxLabel.title = 'Mark as Done';
       taskList.appendChild(this);
@@ -195,12 +201,14 @@ class TaskItem extends HTMLElement {
   }
 
   toggleTaskSelection() {
-    if (this.isSelected) {
-      this.isSelected = false;
-      this.styleSelectedTask();
-    } else {
-      this.isSelected = true;
-      this.styleUnselectedTask();
+    if (!this.isComplete) {
+      if (this.isSelected) {
+        this.isSelected = false;
+        this.styleSelectedTask();
+      } else {
+        this.isSelected = true;
+        this.styleUnselectedTask();
+      }
     }
   }
 

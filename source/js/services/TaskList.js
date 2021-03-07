@@ -61,6 +61,7 @@ class TaskList {
         newTask.setAttribute('progress', taskObj.progress);
         newTask.setAttribute('notes', taskObj.notes);
         newTask.setAttribute('isComplete', taskObj.isComplete);
+        newTask.isComplete = taskObj.isComplete;
         newTask.setAttribute('class', taskObj.class);
         newTask.setAttribute('id', taskObj.id);
         newTask.setAttribute('draggable', taskObj.draggable);
