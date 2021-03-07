@@ -1,10 +1,15 @@
 /**
- * Implements the TaskList class. This class is a controller for the task list which
+ * Implements the TaskList class. This singleton class is a controller for the task list which
  * holds all the task items and the to-do lists and completed lists
  */
+let instance = null // hold singleton of TaskLIst  class
+
 class TaskList {
   constructor() {
+    if(instance) return instance;
+    instance = this;
     this.numTasks = 0;
+    this.selectedTask = null;
     this.completedTasks = 0;
     this.completedIsExpanded = false;
     this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
@@ -40,6 +45,7 @@ class TaskList {
     this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
     this.makeTasksDraggable();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
+    return instance;
   }
 
   /**
@@ -60,6 +66,7 @@ class TaskList {
         newTask.setAttribute('progress', taskObj.progress);
         newTask.setAttribute('notes', taskObj.notes);
         newTask.setAttribute('isComplete', taskObj.isComplete);
+        newTask.isComplete = taskObj.isComplete;
         newTask.setAttribute('class', taskObj.class);
         newTask.setAttribute('id', taskObj.id);
         newTask.setAttribute('draggable', taskObj.draggable);
@@ -70,6 +77,7 @@ class TaskList {
           newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
           newTask.style.cursor = 'pointer';
         }
+        newTask.addEventListener('click', this.selectTask.bind(this, newTask));
       }
     });
     for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
@@ -209,6 +217,7 @@ class TaskList {
     };
 
     sessionStorage.setItem(task.id, JSON.stringify(task));
+    newTask.addEventListener('click', this.selectTask.bind(this, newTask));
 
     this.resetInputBox();
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
@@ -314,5 +323,34 @@ class TaskList {
     }
     this.listChanged();
   }
+
+  /**
+   * Set the selected task to selectedTask instance variable and unselect other
+   * tasks
+   * @param {TaskItem} taskItem task selected
+   */
+  selectTask(taskItem) {
+    if (this.selectedTask === taskItem) {
+      this.selectedTask = null;
+    } else {
+      this.selectedTask = taskItem;
+      this.unselectOtherTasks();
+    }
+  }
+
+  /**
+   * Unselect the other tasks that is not the selectedTask
+   */
+  unselectOtherTasks() {
+    const children = Array.from(this.DOM_ELEMENTS.taskList.children);
+    children.forEach((element) => {
+      if (this.selectedTask !== element) {
+        if (element.isSelected) {
+          element.toggleTaskSelection();
+        }
+      }
+    });
+  }
 }
+
 export default TaskList;

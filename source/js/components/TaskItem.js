@@ -3,8 +3,10 @@ class TaskItem extends HTMLElement {
     super();
 
     this.isExpanded = false;
-
     this.isComplete = false;
+    this.isSelected = false;
+
+    this.onclick = () => this.toggleTaskSelection();
   }
 
   connectedCallback() {
@@ -176,6 +178,10 @@ class TaskItem extends HTMLElement {
     const taskList = document.getElementById('to-do-list');
     const checkedList = document.getElementById('completed-list');
     if (checkedElement.checked === true) {
+      if (this.isSelected) {
+        this.toggleTaskSelection();
+      }
+      this.isComplete = true;
       this.setAttribute('isComplete', 'true');
       checkboxLabel.title = 'Unmark as Done';
       checkedList.appendChild(this);
@@ -183,6 +189,8 @@ class TaskItem extends HTMLElement {
       this.setAttribute('class', 'none');
       this.style.cursor = 'pointer';
     } else {
+      this.isComplete = false;
+      this.toggleTaskSelection();
       this.setAttribute('isComplete', 'false');
       checkboxLabel.title = 'Mark as Done';
       taskList.appendChild(this);
@@ -191,5 +199,32 @@ class TaskItem extends HTMLElement {
       this.style.cursor = 'move';
     }
   }
+
+  toggleTaskSelection() {
+    if (!this.isComplete) {
+      if (this.isSelected) {
+        this.isSelected = false;
+        this.styleSelectedTask();
+      } else {
+        this.isSelected = true;
+        this.styleUnselectedTask();
+      }
+    }
+  }
+
+  styleSelectedTask() {
+    this.style.background = '#edeae500';
+    this.style.top = '0px';
+    this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
+  }
+
+  styleUnselectedTask() {
+    this.style.border = '2px solid #026670';
+    this.style.borderRadius = '30px';
+    this.style.background = '#9fedd7';
+    this.style.top = '3px';
+    this.style.boxShadow = '0px 0px';
+  }
 }
+
 window.customElements.define('task-item', TaskItem);
