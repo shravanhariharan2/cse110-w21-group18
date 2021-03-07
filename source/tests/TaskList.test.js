@@ -1,41 +1,9 @@
 import TaskList from '../js/services/TaskList.js';
+import HtmlMocks from './HtmlMocks';
 
 beforeEach(() => {
   sessionStorage.clear();
-
-  // Set up the HTML
-  document.body.innerHTML = `
-    <header id="to-do-list-header">
-      <p id="list-title">Task List</p>
-    </header>
-    <hr id = "task-line-break">
-    <input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
-    <form id="task-add-input">
-      <input type="text" id="add-task-name" placeholder="Task Name">
-      <p id="expected">Expected Pomodoros:</p>
-      <select name="pomos" id="pomos">
-        <option value="0">...</option>
-        <option value="1">1 (25 min)</option>
-        <option value="2">2 (50 min)</option>
-        <option value="3">3 (1hr 15min)</option>
-        <option value="4">4 (1hr 40min)</option>
-        <option value="5">5 (2hr 05min)</option>
-        <option value="6">6 (2hr 30min)</option>
-        <option value="7">7 (2hr 55min)</option>
-        <option value="8">8 (3hr 20min)</option>
-      </select>
-      <input type="button" id="cancel-input" value="Cancel" title="Cancel Input"></input>
-      <input type="button" id="add-notes" value="Add Notes">
-      <textarea id="add-task-description" placeholder="Add Notes"></textarea>
-      <input type="button" id="save-task" value="Save">
-    </form>
-    <div id="to-do-list"></div>
-    <header id="completed-list-header">
-      <p id="completed-list-title">Completed Tasks</p>
-      <input id="expand-completed" type="image" title="Expand View" src="./media/expand-icon.png">
-    </header>
-    <div id="completed-list"></div>
-    `;
+  document.body.innerHTML = HtmlMocks.TASK_LIST;
 });
 
 test('Constructor initializes correct instance variables', () => {
