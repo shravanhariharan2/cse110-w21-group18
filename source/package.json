@@ -25,5 +25,7 @@
     "eslint-plugin-react-hooks": "^1.7.0",
     "jest": "^26.6.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jest-localstorage-mock": "^2.4.8"
+  }
 }

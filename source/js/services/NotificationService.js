@@ -1,8 +1,6 @@
 import PomodoroSessionStates from '../constants/Enums.js';
 import DisplayMessages from '../constants/displayMessages.js';
 
-const NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
-
 class NotificationService {
   /**
   * Implements the NotificationService class. This class is a controller for browser
@@ -12,6 +10,7 @@ class NotificationService {
     this.DOM_ELEMENTS = {
       alarm: document.getElementById('timer-alarm'),
     };
+    this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
   }
 
   /**
@@ -23,7 +22,7 @@ class NotificationService {
   notifyUser(currentState, sessionNumber) {
     this.DOM_ELEMENTS.alarm.play();
     if (Notification.permission === 'granted') {
-      NotificationService.browserNotify(currentState, sessionNumber);
+      this.browserNotify(currentState, sessionNumber);
     }
   }
 
@@ -32,9 +31,9 @@ class NotificationService {
    * @param {int} currentState [an integer representing the state the user is in]
    * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  static browserNotify(currentState, sessionNumber) {
+  browserNotify(currentState, sessionNumber) {
     const notificationTitle = NotificationService.createNotificationTitle(currentState);
-    const notificationBody = NotificationService.createNotificationBody(currentState, sessionNumber);
+    const notificationBody = this.createNotificationBody(currentState, sessionNumber);
     new Notification(notificationTitle, notificationBody);
   }
 
@@ -59,9 +58,9 @@ class NotificationService {
    * @param {int} currentState [an integer representing the state the user is in]
    * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  static createNotificationBody(currentState, sessionNumber) {
+  createNotificationBody(currentState, sessionNumber) {
     if (currentState === PomodoroSessionStates.WORK_SESSION) {
-      if (sessionNumber !== NUM_SESSIONS_BEFORE_LONG_BREAK) {
+      if (sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
         return { body: DisplayMessages.SHORT_BREAK_NEXT_NOTIFY };
       }
       return { body: DisplayMessages.LONG_BREAK_NEXT_NOTIFY };

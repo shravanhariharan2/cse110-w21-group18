@@ -8,20 +8,21 @@ body {
   position: relative;
   margin: 100px auto;
   background: #9FEDD7;
-  width: 550px;
+  width: 30%;
+  min-width: 550px;
   height: 350px;
   border-radius: 30px;
   text-align: center;
-  z-index : 0;
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 /*holds the label for which type of timer is running */
-#which-container {
+#session-type {
   padding: 10px 0 0 0;
   color: #026670;
-  font-size: 20px;
+  font-size: 22px;
   position: relative;
   z-index: 1;
   display: flex;
@@ -33,10 +34,12 @@ body {
   text-underline-offset: 15px;
   margin-right: 15px;
   margin-left: 15px;
+  font-weight:600;
 }
 
 #short-break, #long-break {
   text-decoration: none;
+  font-weight:400;
   text-underline-offset: 15px;
   margin-right: 15px;
   margin-left: 15px;
@@ -59,7 +62,7 @@ body {
   border-radius: 5px;
   background-color: #EDEAE5;
   border-style: outset;
-  box-shadow: 0px 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   outline: none;
   color: #026670;
   height: 60px;
@@ -72,86 +75,10 @@ body {
   box-shadow: 0px 0px;
 }
 
-#settings-icon {
-  float: right;
-  width: 40px;
-  height: 40px;
-  margin: -80px 10px auto auto;
-}
-
-#settings-modal {
-  display: none;
-  position: fixed;
-  margin: auto;
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto; 
-  padding: 100px auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
-}
-
-#settings-box {
-  color: #3a494b;
-  margin: 100px auto;
-  background: #dee2e1;
-  width: 650px;
-  height: 550px;
-  border-radius: 30px;
-  text-align: center;
-  z-index: 0;
-  border: 1px solid rgb(0, 0, 0)
-}
-
-#settings-container {
-  grid-template-columns: 1fr 1fr;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  text-align: left;
-}
-
-.c1 {
-  flex: 50%;
-  padding: 0px 0px 30px 70px;
-  width: 75%;
-}
-
-#settings-container select {
-  float:right;
-}
-
-#settings-buttons input {
-  text-align: center;
-  font-size: 20px;
-  position: relative;
-  border-color: #026670;
-  border-radius: 5px;
-  background-color: #EDEAE5;
-  border-style: outset;
-  box-shadow: 0px 3px;
-  outline: none;
-  color: #026670;
-  height: 60px;
-  width: 90px;
-  margin: 0px 70px;
-}
-
-#settings-buttons input:active {
-  border-style: inset;
-  top: 3px;
-  box-shadow: 0px 0px;
-}
-
-.c2 {
-  flex: 50%;
-  padding: 0px 0px 0px ;
-  width: 100px;
-}
-
-#settings-text {
-  font-size: 300%;
+#add-interruption {
+  position: absolute;
+  height: 50px;
+  width: 55px;
+  margin-left: 70px;
+  margin-top: 5px;
 }

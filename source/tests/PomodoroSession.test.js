@@ -1,25 +1,16 @@
-import PomodoroSession from '../js/services/PomodoroSession';
-import PomodoroSessionStates from '../js/constants/Enums';
+import PomodoroSession from '../js/services/PomodoroSession.js';
+import PomodoroSessionStates from '../js/constants/Enums.js';
+import HtmlMocks from './HtmlMocks.js';
 
 const MS_IN_WORK_SESSION = 25 * 60 * 1000;
 const MS_IN_SHORT_BREAK = 5 * 60 * 1000;
 const MS_IN_LONG_BREAK = 30 * 60 * 1000;
 
 // Set up the HTML
-document.body.innerHTML = `
-  <div id="timer-box">
-    <div id ="which-container">
-      <div id="pomo">Pomodoro</div>
-      <div id="short-break">Short Break</div>
-      <div id="long-break">Long Break</div>
-    </div>
-    <div id="time"></div>
-    <div>
-      <input type="button" id="start" value="Start">
-    </div>
-    <audio id="timer-alarm" src="media/audio/timer-alarm.mp3"></audio>
-  </div>
-`;
+document.body.innerHTML = HtmlMocks.TIMER + HtmlMocks.TASK_LIST;
+
+const playAudio = jest.fn();
+window.HTMLMediaElement.prototype.play = () => playAudio();
 
 test('Constructor initializes correct instance variables', () => {
   const PomoTest = new PomodoroSession();
