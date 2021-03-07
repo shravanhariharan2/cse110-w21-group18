@@ -1,3 +1,5 @@
 {
-  "modulePaths": ["<rootDir>/assets/scripts"]
+  "modulePaths": ["<rootDir>/assets/scripts"],
+  "resetMocks": false,
+  "setupFiles": ["jest-localstorage-mock"]
 }

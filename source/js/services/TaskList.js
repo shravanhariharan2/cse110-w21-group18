@@ -311,7 +311,8 @@ class TaskList {
   incrementPomodoroCount() {
     const topTask = document.getElementById('1');
     if (topTask !== null) {
-      topTask.progress += 1;
+      const updatedProgress = Number(topTask.getAttribute('progress')) + 1;
+      topTask.setAttribute('progress', updatedProgress);
     }
     this.listChanged();
   }
