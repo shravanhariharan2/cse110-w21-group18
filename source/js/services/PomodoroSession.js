@@ -1,6 +1,7 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
 import NotificationService from './NotificationService.js';
+import TASK from '../scripts/tasks.js';
 
 const TICK_SPEED = 1000;
 
@@ -149,6 +150,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.WORK_SESSION;
     this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
     this.updateDocument();
+    this.autoSelectTask();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
@@ -206,6 +208,16 @@ class PomodoroSession {
   DEBUG_PRINT(x) {
     if (this.DEBUG) {
       console.log(x);
+    }
+  }
+
+  /**
+   * Selects the first task in the list if no task selected
+   */
+  autoSelectTask() {
+    if (TASK.selectedTask === null) {
+      TASK.DOM_ELEMENTS.taskList.children[0].toggleTaskSelection();
+      TASK.selectedTask = TASK.DOM_ELEMENTS.taskList.children[0];
     }
   }
 }

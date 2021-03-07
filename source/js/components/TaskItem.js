@@ -6,7 +6,7 @@ class TaskItem extends HTMLElement {
     this.isComplete = false;
     this.isSelected = false;
 
-    this.onclick = () => this.markTaskAsSelected();
+    this.onclick = () => this.toggleTaskSelection();
   }
 
   connectedCallback() {
@@ -194,19 +194,23 @@ class TaskItem extends HTMLElement {
     }
   }
 
-  markTaskAsSelected() {
+  toggleTaskSelection() {
     if (this.isSelected) {
       this.isSelected = false;
-      this.style.background = '#edeae500';
-      this.style.top = '0px';
-      this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
+      this.styleSelectedTask();
     } else {
-      this.markTaskAsUnselected();
+      this.isSelected = true;
+      this.styleUnselectedTask();
     }
   }
 
-  markTaskAsUnselected() {
-    this.isSelected = true;
+  styleSelectedTask() {
+    this.style.background = '#edeae500';
+    this.style.top = '0px';
+    this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
+  }
+
+  styleUnselectedTask() {
     this.style.border = '2px solid #026670';
     this.style.borderRadius = '30px';
     this.style.background = '#9fedd7';

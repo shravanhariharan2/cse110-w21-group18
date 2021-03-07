@@ -323,8 +323,12 @@ class TaskList {
    * @param {TaskItem} taskItem task selected
    */
   selectTask(taskItem) {
-    this.selectedTask = taskItem;
-    this.unselectOtherTasks();
+    if (this.selectedTask === taskItem) {
+      this.selectedTask = null;
+    } else {
+      this.selectedTask = taskItem;
+      this.unselectOtherTasks();
+    }
   }
 
   /**
@@ -335,9 +339,7 @@ class TaskList {
     children.forEach((element) => {
       if (this.selectedTask !== element) {
         if (element.isSelected) {
-          element.markTaskAsSelected();
-          console.log(element);
-          console.log(element.isSelected);
+          element.toggleTaskSelection();
         }
       }
     });
