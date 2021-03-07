@@ -1,4 +1,4 @@
-import TaskList from '../js/services/TaskList';
+import TaskList from '../js/services/TaskList.js';
 
 beforeEach(() => {
   sessionStorage.clear();

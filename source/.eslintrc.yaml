@@ -25,3 +25,5 @@ rules:
     - warn
   no-unused-expressions:
     - warn
+  no-underscore-dangle:
+    - warn
