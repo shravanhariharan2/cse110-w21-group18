@@ -61,12 +61,11 @@ class TaskItem extends HTMLElement {
     button.type = 'image';
     button.title = 'Expand View';
     button.src = './media/expand-icon.png';
-    button.onclick = (event) => this.displayButtons(button, event);
+    button.onclick = () => this.displayButtons(button);
     return button;
   }
 
-  displayButtons(button, event) {
-    event.stopPropagation();
+  displayButtons(button) {
     this.shadowRoot.querySelector('.expand-button').style.tranform = 'rotate(180deg)';
     if (this.isExpanded) {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
@@ -76,8 +75,24 @@ class TaskItem extends HTMLElement {
       button.setAttribute('style', 'transform:rotate(0deg); -webkit-transform: rotate(0deg)');
       return;
     }
-    this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
-    this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
+    if (this.isComplete) {
+      this.shadowRoot.querySelector('.edit-button').style.display = 'none';
+      this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
+      this.style.gridTemplateAreas = 
+      ' check taskName pomo'
+      ' notes notes notes'
+      ' remove remove remove';
+      this.shadowRoot.querySelector('.remove-button').style.marginLeft = '200px';
+    }
+    else {
+      this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
+      this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
+      this.style.gridTemplateAreas = 
+      ' check taskName pomo'
+      ' notes notes notes'
+      ' remove remove edit';
+      this.shadowRoot.querySelector('.remove-button').style.marginLeft = '175px';
+    }
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
     this.isExpanded = true;
     button.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
@@ -97,7 +112,6 @@ class TaskItem extends HTMLElement {
 
    allowEditing() {
      this.style.display = 'none';
-     sessionStorage.setItem('editsOpen', parseInt(sessionStorage.getItem('editsOpen'),10) +1 );
      const inputElement = document.createElement('task-input');
      inputElement.setAttribute('class','task-input dropzone');
      inputElement.id = this.id;
@@ -243,6 +257,7 @@ class TaskItem extends HTMLElement {
       this.setAttribute('draggable', false);
       this.setAttribute('class', 'none');
       this.style.cursor = 'pointer';
+      this.shadowRoot.querySelector('.edit-button').style.display = 'none';
     } else {
       this.isComplete = false;
       this.setAttribute('isComplete', 'false');
@@ -251,7 +266,13 @@ class TaskItem extends HTMLElement {
       this.setAttribute('draggable', true);
       this.setAttribute('class', 'dropzone');
       this.style.cursor = 'move';
+      this.shadowRoot.querySelector('.edit-button').style.display = 'none';
+      //resets it to not expanded
+      if (this.isExpanded) {
+        this.displayButtons(this.shadowRoot.querySelector('.expand-button'));
+      }
     }
+    
   }
 
   /**
