@@ -38,7 +38,10 @@ class TaskList {
     this.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', this.listChanged);
     this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
     this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
+    sessionStorage.setItem('completedTasks', '0');
+    sessionStorage.setItem('numTasks', '0');
     this.makeTasksDraggable();
+    this.displayMessageIfNoTasksExist();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
   }
 
@@ -148,7 +151,6 @@ class TaskList {
   }
 
   /**
-   * Displays the 'View Tasks Here if there are no tasks'
    * Hides the Completed task list if there are no completed tasks
    */
   displayMessageIfNoTasksExist() {
