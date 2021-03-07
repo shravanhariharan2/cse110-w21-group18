@@ -1,7 +1,7 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
 import NotificationService from './NotificationService.js';
-import TASK from '../scripts/tasks.js';
+import TaskList from './TaskList.js'
 
 const TICK_SPEED = 1000;
 
@@ -14,6 +14,7 @@ class PomodoroSession {
     this.DEBUG = false;
 
     this.timer = new Timer(TICK_SPEED);
+    this.taskList = new TaskList();
     this.notifications = new NotificationService();
     this.currentState = PomodoroSessionStates.IDLE;
     this.sessionNumber = 0;
@@ -150,7 +151,7 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.WORK_SESSION;
     this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
     this.updateDocument();
-    PomodoroSession.showCurrentTask();
+    this.showCurrentTask();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
@@ -211,19 +212,19 @@ class PomodoroSession {
     }
   }
 
-  static showCurrentTask() {
-    PomodoroSession.autoSelectTask();
+  showCurrentTask() {
+    this.autoSelectTask();
   }
 
   /**
    * Selects the first task in the list if no task selected
    */
-  static autoSelectTask() {
-    if (TASK.numTasks !== 0) {
-      if (TASK.selectedTask === null) {
-        const defaultTask = TASK.DOM_ELEMENTS.taskList.children[0];
+  autoSelectTask() {
+    if (this.taskList.numTasks !== 0) {
+      if (this.taskList.selectedTask === null) {
+        const defaultTask = this.taskList.DOM_ELEMENTS.taskList.children[0];
         defaultTask.toggleTaskSelection();
-        TASK.selectedTask = defaultTask;
+        this.taskList.selectedTask = defaultTask;
       }
     }
   }

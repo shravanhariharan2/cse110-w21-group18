@@ -2,22 +2,26 @@
  * Implements the TaskList class. This class is a controller for the task list which
  * holds all the task items and the to-do lists and completed lists
  */
+let instance = null // hold singleton of TaskLIst  class
+
 class TaskList {
   constructor() {
-    this.numTasks = 0;
-    this.selectedTask = null;
-    this.completedTasks = 0;
-    this.completedIsExpanded = false;
-    this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
+    if(instance) return;
+    instance = this;
+    instance.numTasks = 0;
+    instance.selectedTask = null;
+    instance.completedTasks = 0;
+    instance.completedIsExpanded = false;
+    instance.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
 
-    this.displayInputBox = this.displayInputBox.bind(this);
-    this.addNotesToTask = this.addNotesToTask.bind(this);
-    this.addTask = this.addTask.bind(this);
-    this.listChanged = this.listChanged.bind(this);
-    this.cancelInput = this.cancelInput.bind(this);
-    this.loadTasks = this.loadTasks.bind(this);
-    this.expandCompletedTasks = this.expandCompletedTasks.bind(this);
-    this.DOM_ELEMENTS = {
+    instance.displayInputBox = instance.displayInputBox.bind(this);
+    instance.addNotesToTask = instance.addNotesToTask.bind(this);
+    instance.addTask = instance.addTask.bind(this);
+    instance.listChanged = instance.listChanged.bind(this);
+    instance.cancelInput = instance.cancelInput.bind(this);
+    instance.loadTasks = instance.loadTasks.bind(this);
+    instance.expandCompletedTasks = instance.expandCompletedTasks.bind(this);
+    instance.DOM_ELEMENTS = {
       addTaskButton: document.getElementById('add-task'),
       inputBox: document.getElementById('task-add-input'),
       addNotesButton: document.getElementById('add-notes'),
@@ -32,22 +36,22 @@ class TaskList {
       expandCompleted: document.getElementById('expand-completed'),
     };
 
-    this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
-    this.DOM_ELEMENTS.addNotesButton.addEventListener('click', this.addNotesToTask);
-    this.DOM_ELEMENTS.saveNewTaskButton.addEventListener('click', this.addTask);
-    this.DOM_ELEMENTS.taskList.addEventListener('DOMSubtreeModified', this.listChanged);
-    this.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', this.listChanged);
-    this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
-    this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
-    this.makeTasksDraggable();
-    this.DOM_ELEMENTS.completedList.style.display = 'none';
+    instance.DOM_ELEMENTS.addTaskButton.addEventListener('click', instance.displayInputBox);
+    instance.DOM_ELEMENTS.addNotesButton.addEventListener('click', instance.addNotesToTask);
+    instance.DOM_ELEMENTS.saveNewTaskButton.addEventListener('click', instance.addTask);
+    instance.DOM_ELEMENTS.taskList.addEventListener('DOMSubtreeModified', instance.listChanged);
+    instance.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', instance.listChanged);
+    instance.DOM_ELEMENTS.cancelButton.addEventListener('click', instance.cancelInput);
+    instance.DOM_ELEMENTS.expandCompleted.addEventListener('click', instance.expandCompletedTasks);
+    instance.makeTasksDraggable();
+    instance.DOM_ELEMENTS.completedList.style.display = 'none';
   }
 
   /**
    * Loads the tasks saved in sessionStorage back in the order that they were in previously
    */
   loadTasks() {
-    this.hasLoadedIntoDOM = false;
+    instance.hasLoadedIntoDOM = false;
     const keys = Object.keys(sessionStorage);
     keys.forEach((key) => {
       const numTasks = sessionStorage.getItem('numTasks');
@@ -66,25 +70,25 @@ class TaskList {
         newTask.setAttribute('id', taskObj.id);
         newTask.setAttribute('draggable', taskObj.draggable);
         if (parseInt(key, 10) > 0) {
-          this.DOM_ELEMENTS.taskList.appendChild(newTask);
+          instance.DOM_ELEMENTS.taskList.appendChild(newTask);
         } else {
-          this.DOM_ELEMENTS.completedList.prepend(newTask);
+          instance.DOM_ELEMENTS.completedList.prepend(newTask);
           newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
           newTask.style.cursor = 'pointer';
         }
-        newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+        newTask.addEventListener('click', instance.selectTask.bind(this, newTask));
       }
     });
     for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
-      this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
+      instance.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
     for (let i = 1; i <= sessionStorage.getItem('completedTasks'); i += 1) {
-      this.DOM_ELEMENTS.completedList.appendChild(document.getElementById(-i));
+      instance.DOM_ELEMENTS.completedList.appendChild(document.getElementById(-i));
     }
-    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
-    this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
-    this.hasLoadedIntoDOM = true;
-    this.displayMessageIfNoTasksExist();
+    instance.numTasks = instance.DOM_ELEMENTS.taskList.childElementCount;
+    instance.completedTasks = instance.DOM_ELEMENTS.completedList.childElementCount;
+    instance.hasLoadedIntoDOM = true;
+    instance.displayMessageIfNoTasksExist();
   }
 
   /**
@@ -93,12 +97,12 @@ class TaskList {
    * Does not run if the elements are being loaded in
    */
   listChanged() {
-    if (this.hasLoadedIntoDOM) {
-      this.refreshTaskItemIds();
-      this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
-      this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
-      this.updateStorage();
-      this.displayMessageIfNoTasksExist();
+    if (instance.hasLoadedIntoDOM) {
+      instance.refreshTaskItemIds();
+      instance.numTasks = instance.DOM_ELEMENTS.taskList.childElementCount;
+      instance.completedTasks = instance.DOM_ELEMENTS.completedList.childElementCount;
+      instance.updateStorage();
+      instance.displayMessageIfNoTasksExist();
     }
   }
 
@@ -107,9 +111,9 @@ class TaskList {
    */
   updateStorage() {
     sessionStorage.clear();
-    sessionStorage.setItem('numTasks', this.numTasks);
-    sessionStorage.setItem('completedTasks', this.completedTasks);
-    const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
+    sessionStorage.setItem('numTasks', instance.numTasks);
+    sessionStorage.setItem('completedTasks', instance.completedTasks);
+    const TLChildren = Array.from(instance.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
       const taskObj = {
         name: element.getAttribute('name'),
@@ -124,7 +128,7 @@ class TaskList {
       const taskJSON = JSON.stringify(taskObj);
       sessionStorage.setItem(element.getAttribute('id'), taskJSON);
     });
-    const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
+    const CLChildren = Array.from(instance.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
       const taskObj = {
         name: element.getAttribute('name'),
@@ -145,9 +149,9 @@ class TaskList {
    * Cancel the input box
    */
   cancelInput() {
-    this.DOM_ELEMENTS.inputBox.style.display = 'none';
-    this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
-    this.resetInputBox();
+    instance.DOM_ELEMENTS.inputBox.style.display = 'none';
+    instance.DOM_ELEMENTS.addTaskButton.style.display = 'block';
+    instance.resetInputBox();
   }
 
   /**
@@ -157,9 +161,9 @@ class TaskList {
   displayMessageIfNoTasksExist() {
     const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
     if (hasCompletedTasks) {
-      this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
+      instance.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
     } else {
-      this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
+      instance.DOM_ELEMENTS.completedListTitle.style.display = 'none';
     }
   }
 
@@ -167,20 +171,20 @@ class TaskList {
    *  Displays input box for user to input a task
    */
   displayInputBox() {
-    this.DOM_ELEMENTS.inputBox.style.display = 'grid';
-    this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
+    instance.DOM_ELEMENTS.inputBox.style.display = 'grid';
+    instance.DOM_ELEMENTS.addTaskButton.style.display = 'none';
   }
 
   /**
    * Add/remove notes to/from new task input
    */
   addNotesToTask() {
-    if (this.DOM_ELEMENTS.addNotesButton.value === 'Add Notes') {
-      this.DOM_ELEMENTS.newTaskNotes.style.display = 'inline';
-      this.DOM_ELEMENTS.addNotesButton.value = 'Remove Notes';
+    if (instance.DOM_ELEMENTS.addNotesButton.value === 'Add Notes') {
+      instance.DOM_ELEMENTS.newTaskNotes.style.display = 'inline';
+      instance.DOM_ELEMENTS.addNotesButton.value = 'Remove Notes';
     } else {
-      this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
-      this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
+      instance.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
+      instance.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     }
   }
 
@@ -189,45 +193,45 @@ class TaskList {
    */
   addTask() {
     const newTask = document.createElement('task-item');
-    newTask.setAttribute('name', this.DOM_ELEMENTS.newTaskName.value);
-    newTask.setAttribute('estimate', this.DOM_ELEMENTS.newTaskPomos.value);
+    newTask.setAttribute('name', instance.DOM_ELEMENTS.newTaskName.value);
+    newTask.setAttribute('estimate', instance.DOM_ELEMENTS.newTaskPomos.value);
     newTask.setAttribute('progress', '0');
-    newTask.setAttribute('notes', this.DOM_ELEMENTS.newTaskNotes.value);
+    newTask.setAttribute('notes', instance.DOM_ELEMENTS.newTaskNotes.value);
     newTask.setAttribute('isComplete', false);
     newTask.setAttribute('class', 'dropzone');
-    newTask.setAttribute('id', this.numTasks);
+    newTask.setAttribute('id', instance.numTasks);
 
-    this.DOM_ELEMENTS.taskList.appendChild(newTask);
-    this.DOM_ELEMENTS.inputBox.style.display = 'none';
+    instance.DOM_ELEMENTS.taskList.appendChild(newTask);
+    instance.DOM_ELEMENTS.inputBox.style.display = 'none';
 
     const task = {
-      name: this.DOM_ELEMENTS.newTaskName.value,
-      estimate: this.DOM_ELEMENTS.newTaskPomos.value,
+      name: instance.DOM_ELEMENTS.newTaskName.value,
+      estimate: instance.DOM_ELEMENTS.newTaskPomos.value,
       progress: 0,
-      notes: this.DOM_ELEMENTS.newTaskNotes.value,
+      notes: instance.DOM_ELEMENTS.newTaskNotes.value,
       isComplete: false,
       className: 'dropzone',
-      id: this.numTasks,
+      id: instance.numTasks,
       isDraggable: true,
     };
 
     sessionStorage.setItem(task.id, JSON.stringify(task));
-    newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+    newTask.addEventListener('click', instance.selectTask.bind(this, newTask));
 
-    this.resetInputBox();
-    this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+    instance.resetInputBox();
+    instance.numTasks = instance.DOM_ELEMENTS.taskList.childElementCount;
   }
 
   /**
    * Resets the input box back to empty
    */
   resetInputBox() {
-    this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
-    this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
-    this.DOM_ELEMENTS.newTaskNotes.value = '';
-    this.DOM_ELEMENTS.newTaskName.value = '';
-    this.DOM_ELEMENTS.newTaskPomos.value = '0';
-    this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
+    instance.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
+    instance.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
+    instance.DOM_ELEMENTS.newTaskNotes.value = '';
+    instance.DOM_ELEMENTS.newTaskName.value = '';
+    instance.DOM_ELEMENTS.newTaskPomos.value = '0';
+    instance.DOM_ELEMENTS.addTaskButton.style.display = 'block';
   }
 
   /**
@@ -267,7 +271,7 @@ class TaskList {
           target.after(dragged);
         }
       }
-      this.refreshTaskItemIds();
+      instance.refreshTaskItemIds();
     });
   }
 
@@ -276,13 +280,13 @@ class TaskList {
    * is the highest number ID
    */
   refreshTaskItemIds() {
-    const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
+    const TLChildren = Array.from(instance.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
       const elementPosition = Array.from(element.parentNode.children).indexOf(element);
-      const totalElementCount = this.DOM_ELEMENTS.taskList.childElementCount;
+      const totalElementCount = instance.DOM_ELEMENTS.taskList.childElementCount;
       element.id = totalElementCount - elementPosition;
     });
-    const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
+    const CLChildren = Array.from(instance.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
       const elementPosition = Array.from(element.parentNode.children).indexOf(element);
       element.id = -elementPosition - 1;
@@ -293,18 +297,18 @@ class TaskList {
    * Expand the list of completed tasks
   */
   expandCompletedTasks() {
-    this.DOM_ELEMENTS.expandCompleted.style.tranform = 'rotate(180deg)';
-    if (this.completedIsExpanded) {
-      this.completedIsExpanded = false;
-      this.DOM_ELEMENTS.completedList.style.display = 'none';
-      this.DOM_ELEMENTS.completedList.style.marginRight = '35px';
-      this.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(0deg); -webkit-transform: rotate(0deg)';
+    instance.DOM_ELEMENTS.expandCompleted.style.tranform = 'rotate(180deg)';
+    if (instance.completedIsExpanded) {
+      instance.completedIsExpanded = false;
+      instance.DOM_ELEMENTS.completedList.style.display = 'none';
+      instance.DOM_ELEMENTS.completedList.style.marginRight = '35px';
+      instance.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(0deg); -webkit-transform: rotate(0deg)';
       return;
     }
-    this.completedIsExpanded = true;
-    this.DOM_ELEMENTS.completedList.style.display = 'inline';
-    this.DOM_ELEMENTS.completedList.style.marginRight = '40px';
-    this.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(180deg); -webkit-transform: rotate(180deg)';
+    instance.completedIsExpanded = true;
+    instance.DOM_ELEMENTS.completedList.style.display = 'inline';
+    instance.DOM_ELEMENTS.completedList.style.marginRight = '40px';
+    instance.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(180deg); -webkit-transform: rotate(180deg)';
   }
 
   /**
@@ -315,7 +319,7 @@ class TaskList {
     if (topTask !== null) {
       topTask.progress += 1;
     }
-    this.listChanged();
+    instance.listChanged();
   }
 
   /**
@@ -324,11 +328,11 @@ class TaskList {
    * @param {TaskItem} taskItem task selected
    */
   selectTask(taskItem) {
-    if (this.selectedTask === taskItem) {
-      this.selectedTask = null;
+    if (instance.selectedTask === taskItem) {
+      instance.selectedTask = null;
     } else {
-      this.selectedTask = taskItem;
-      this.unselectOtherTasks();
+      instance.selectedTask = taskItem;
+      instance.unselectOtherTasks();
     }
   }
 
@@ -336,9 +340,9 @@ class TaskList {
    * Unselect the other tasks that is not the selectedTask
    */
   unselectOtherTasks() {
-    const children = Array.from(this.DOM_ELEMENTS.taskList.children);
+    const children = Array.from(instance.DOM_ELEMENTS.taskList.children);
     children.forEach((element) => {
-      if (this.selectedTask !== element) {
+      if (instance.selectedTask !== element) {
         if (element.isSelected) {
           element.toggleTaskSelection();
         }
