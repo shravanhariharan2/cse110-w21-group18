@@ -25,7 +25,6 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.IDLE;
     this.sessionNumber = 0;
 
-    this.loadDurations();
 
     this.timer.setTime(this.workSessionDuration);
 
@@ -52,10 +51,13 @@ class PomodoroSession {
    * Loads a session config from browser storage
    */
   loadDurations() {
-    this.workSessionDuration = 25;
-    this.shortBreakDuration = 5;
-    this.longBreakDuration = 30;
-    this.numSessionsBeforeLongBreak = 4;
+    this.workSessionDuration = parseInt(localStorage.getItem('workSessionDuration'), 10);
+    this.shortBreakDuration = parseInt(localStorage.getItem('shortBreakDuration'), 10);
+    this.longBreakDuration = parseInt(localStorage.getItem('longBreakDuration'), 10);
+    this.numSessionsBeforeLongBreak = parseInt(localStorage.getItem('numSessionsBeforeLongBreak'), 10);
+    this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
+    this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
+    console.log(this.workSessionDuration)
   }
 
   /**
@@ -142,7 +144,7 @@ class PomodoroSession {
   async toggleSession() {
     if (this.currentState === PomodoroSessionStates.IDLE) {
       await this.runWorkSession();
-      if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
+      if (this.sessionNumber !== this.numSessionsBeforeLongBreak) {
         await this.runShortBreak();
       } else {
         await this.runLongBreak();

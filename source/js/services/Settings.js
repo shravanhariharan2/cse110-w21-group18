@@ -9,7 +9,8 @@ class Settings {
 
     this.pomodoroSession = new PomodoroSession();
 
-    this.setDefaultInputValues();
+    this.loadSettings();
+
     this.hasLoadedIntoDOM = true;
 
     // binding methods to objects
@@ -93,18 +94,18 @@ class Settings {
    */
   loadSettings() {
     this.hasLoadedIntoDOM = false;
+    console.log(!localStorage.getItem('workSessionDuration'))
     if(!localStorage.getItem('workSessionDuration')) {
-      this.setDefaultInputValues();
-    } else {
-      this.setStoredInputValues();
+      this.setDefaultValuesInStorage();
     }
+    this.loadStoredInputValues();
     this.hasLoadedIntoDOM = true;
   }
 
   /**
-   * Sets default values to instance variables
+   * Sets default values to local storage variables
    */
-  setDefaultStorageValues() {
+   setDefaultValuesInStorage() {
     localStorage.setItem('workSessionDuration', 25);
     localStorage.setItem('shortBreakDuration', 5);
     localStorage.setItem('longBreakDuration', 30);
@@ -114,15 +115,16 @@ class Settings {
   }
 
   /**
-   * Sets browser stored values to instance variables
+   * Loads browser stored values to instance variables
    */
-  setStoredInputValues() {
+  loadStoredInputValues() {
     this.workSessionDuration = localStorage.getItem('workSessionDuration');
     this.shortBreakDuration = localStorage.getItem('shortBreakDuration');
     this.longBreakDuration = localStorage.getItem('longBreakDuration');
     this.numSessionsBeforeLongBreak = localStorage.getItem('numSessionsBeforeLongBreak');
     this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak');
     this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak');
+    this.pomodoroSession.loadDurations();
   }
 
   /**
@@ -149,10 +151,9 @@ class Settings {
       localStorage.setItem('pauseAfterBreak', false);
       this.pauseAfterBreak = false;
     }
-    this.workSessionDuration = parseInt(localStorage.getItem('workSessionDuration'), 10);
-    this.shortBreakDuration = localStorage.getItem('shortBreakDuration');
-    this.longBreakDuration = localStorage.getItem('longBreakDuration');
-    this.numSessionsBeforeLongBreak = localStorage.getItem('numSessionsBeforeLongBreak');
+    
+    this.loadStoredInputValues();
+    this.pomodoroSession.loadDurations();
   }
 
 }

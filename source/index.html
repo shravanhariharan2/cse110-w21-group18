@@ -11,70 +11,72 @@
 	</head>
 
 	<body>
-		<div id="settings-button">
-			<img id="settings-icon" src="media/icons/settings-gear.png"></img>
-		</div>
-		<div id="settings-modal">
-			<div id="settings-box">
-				<p id="settings-text">Settings</p>
-				<form id="settings-container">
-					<label class="c1" for="pomo-duration-select" style="word-wrap:break-word">
-						Pomodoro Duration
-						<select class="c2" name="pomo-duration-select" id="pomo-duration-select">
-							<option value="25">25 min</option>
-							<option value="50">50 min</option>
-							<option value="75">1 hr 15 min</option>
-							<option value="100">1 hr 40 min</option>
-							<option value="125">2 hr 05 min</option>
-							<option value="150">2 hr 30 min</option>
-							<option value="175">2 hr 55 min</option>
-							<option value="200">3 hr 20 min</option>
-						</select>
-					</label>
-					<label class="c1" for="short-duration-select" style="word-wrap:break-word">	
-						Short Break Duration
-						<select class="c2" name="short-duration-select" id="short-duration-select">
-							<option value="5">5 min</option>
-							<option value="10">10 min</option>
-							<option value="15">15 min</option>
-							<option value="20">20 min</option>
-						</select>
-					</label>
-					<label class="c1" for="long-duration-select" style="word-wrap:break-word">
-						Long Break Duration
-						<select class="c2" name="long-duration-select" id="long-duration-select">
-							<option value="15">15 min</option>
-							<option value="20">20 min</option>
-							<option value="25">25 min</option>
-							<option value="30">30 min</option>
-							<option value="35">35 min</option>
-							<option value="40">40 min</option>
-							<option value="45">45 min</option>
-						</select>
-					</label>
-					<label class="c1" for="long-pomo-select" style="word-wrap:break-word">
-						Pomodoros Before Long Break
-						<select class="c2" name="long-pomo-select" id="long-pomo-select">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-						</select>
-					</label>
-					<label class="c1" for="pause-before-breaks" style="word-wrap:break-word">
-						<input id="pause-before-breaks" type="checkbox"> Pause timer at start of break
-					</label>
-					<label class="c1" for="pause-after-breaks" style="word-wrap:break-word">
-						<input id="pause-after-breaks" type="checkbox"> Pause timer at start of new work session
-					</label>
-				</form>
-				<div id="settings-buttons">
-					<input type="button" id="cancel-button" value="Cancel">
-					<input type="button" id="save-button" value="Save">
+		<div id="settings">
+			<div id="settings-button">
+				<img id="settings-icon" src="media/icons/settings-gear.png"></img>
+			</div>
+			<div id="settings-modal">
+				<div id="settings-box">
+					<p id="settings-text">Settings</p>
+					<form id="settings-container">
+						<label class="c1" for="pomo-duration-select" style="word-wrap:break-word">
+							Pomodoro Duration
+							<select class="c2" name="pomo-duration-select" id="pomo-duration-select">
+								<option value="25">25 min</option>
+								<option value="50">50 min</option>
+								<option value="75">1 hr 15 min</option>
+								<option value="100">1 hr 40 min</option>
+								<option value="125">2 hr 05 min</option>
+								<option value="150">2 hr 30 min</option>
+								<option value="175">2 hr 55 min</option>
+								<option value="200">3 hr 20 min</option>
+							</select>
+						</label>
+						<label class="c1" for="short-duration-select" style="word-wrap:break-word">	
+							Short Break Duration
+							<select class="c2" name="short-duration-select" id="short-duration-select">
+								<option value="5">5 min</option>
+								<option value="10">10 min</option>
+								<option value="15">15 min</option>
+								<option value="20">20 min</option>
+							</select>
+						</label>
+						<label class="c1" for="long-duration-select" style="word-wrap:break-word">
+							Long Break Duration
+							<select class="c2" name="long-duration-select" id="long-duration-select">
+								<option value="15">15 min</option>
+								<option value="20">20 min</option>
+								<option value="25">25 min</option>
+								<option value="30">30 min</option>
+								<option value="35">35 min</option>
+								<option value="40">40 min</option>
+								<option value="45">45 min</option>
+							</select>
+						</label>
+						<label class="c1" for="long-pomo-select" style="word-wrap:break-word">
+							Pomodoros Before Long Break
+							<select class="c2" name="long-pomo-select" id="long-pomo-select">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+							</select>
+						</label>
+						<label class="c1" for="pause-before-breaks" style="word-wrap:break-word">
+							<input id="pause-before-breaks" type="checkbox"> Pause timer at start of break
+						</label>
+						<label class="c1" for="pause-after-breaks" style="word-wrap:break-word">
+							<input id="pause-after-breaks" type="checkbox"> Pause timer at start of new work session
+						</label>
+					</form>
+					<div id="settings-buttons">
+						<input type="button" id="cancel-button" value="Cancel">
+						<input type="button" id="save-button" value="Save">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -128,5 +130,6 @@
 	<script type="module" src="js/constants/Enums.js"></script>
 	<script type="module" src="js/scripts/index.js"></script>
 	<script type="module" src="js/scripts/tasks.js"></script>
+	<script type="module" src="js/scripts/settings.js"></script>
 	<script type="module" src="js/components/TaskItem.js"></script>
 </html>
