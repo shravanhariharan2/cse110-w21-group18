@@ -13,6 +13,7 @@ class TaskList {
     this.completedTasks = 0;
     this.completedIsExpanded = false;
     this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
+    this.hasActiveSession = false;
 
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
@@ -22,6 +23,7 @@ class TaskList {
     this.loadTasks = this.loadTasks.bind(this);
     this.expandCompletedTasks = this.expandCompletedTasks.bind(this);
     this.DOM_ELEMENTS = {
+      taskListTitle: document.getElementById('list-title'),
       addTaskButton: document.getElementById('add-task'),
       inputBox: document.getElementById('task-add-input'),
       addNotesButton: document.getElementById('add-notes'),
@@ -104,7 +106,40 @@ class TaskList {
       this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
       this.updateStorage();
       this.displayMessageIfNoTasksExist();
+      if(this.selectedTask !== null && this.selectedTask.getAttribute('isComplete')){
+        this.selectedTask.style.display = 'grid';
+        this.selectedTask = null;
+        if (this.numTasks !== 0) {
+          if (this.selectedTask === null) {
+            const defaultTask = this.DOM_ELEMENTS.taskList.children[0];
+            defaultTask.toggleTaskSelection();
+            this.selectedTask = defaultTask;
+            this.showCurrentTask();
+          }
+        }
+        
+      }
     }
+  }
+  /**
+   * Displays only the working task
+   */
+  showCurrentTask() {
+    this.DOM_ELEMENTS.taskListTitle.innerText = 'Current Task';
+    this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
+    const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
+    TLChildren.forEach((element) => {
+        element.style.display = 'none';
+    });
+    if (this.selectedTask !== null) {
+      // removes selected style
+      this.selectedTask.style.display = 'grid';
+      this.selectedTask.styleUnselectedTask();
+      this.selectedTask.onclick = null;
+    }
+    this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
+    this.DOM_ELEMENTS.completedList.style.display = 'none';
+    
   }
 
   /**
@@ -163,12 +198,15 @@ class TaskList {
    * Hides the Completed task list if there are no completed tasks
    */
   displayMessageIfNoTasksExist() {
-    const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
-    if (hasCompletedTasks) {
-      this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
-    } else {
-      this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
+    if (!this.hasActiveSession) {
+      const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
+      if (hasCompletedTasks) {
+        this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
+      } else {
+        this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
+      }
     }
+    
   }
 
   /**
@@ -323,7 +361,7 @@ class TaskList {
    * Increases the top task progress when the pomodoro session increases
    */
   incrementPomodoroCount() {
-    const topTask = document.getElementById('1');
+    const topTask = this.selectedTask;
     if (topTask !== null) {
       const updatedProgress = Number(topTask.getAttribute('progress')) + 1;
       topTask.setAttribute('progress', updatedProgress);
@@ -337,12 +375,14 @@ class TaskList {
    * @param {TaskItem} taskItem task selected
    */
   selectTask(taskItem) {
-    if (!taskItem.isComplete) {
-      if (this.selectedTask === taskItem) {
-        this.selectedTask = null;
-      } else {
-        this.selectedTask = taskItem;
-        this.unselectOtherTasks();
+    if (!this.hasActiveSession){
+      if (!taskItem.isComplete) {
+        if (this.selectedTask === taskItem) {
+          this.selectedTask = null;
+        } else {
+          this.selectedTask = taskItem;
+          this.unselectOtherTasks();
+        }
       }
     }
   }

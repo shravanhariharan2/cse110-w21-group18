@@ -1,16 +1,27 @@
 body {
   background-color: #EDEAE5;
   font-family: 'Open Sans', sans-serif;
+  display: flex;
+}
+
+#left-half {
+  width: 50%;
+}
+#right-half {
+  width: 50%;
+  margin-top: 200px;
 }
 
 /*box that holds timer and start/stop buttons and pomo label */
 #timer-box {
-  position: relative;
-  margin: 100px auto;
+  position: fixed;
+  left: 50%;
+  top: 200px;
+  transform: translate(-120%);
   background: #9FEDD7;
   width: 30%;
   min-width: 550px;
-  height: 350px;
+  height: 450px;
   border-radius: 30px;
   text-align: center;
   display:flex;
@@ -48,7 +59,7 @@ body {
 /*the actual timer display*/
 #time {
   position: relative;
-  font-size: 100px;
+  font-size: 130px;
   color: #026670;
 }
 

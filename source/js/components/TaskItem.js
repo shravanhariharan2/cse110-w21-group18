@@ -61,11 +61,12 @@ class TaskItem extends HTMLElement {
     button.type = 'image';
     button.title = 'Expand View';
     button.src = './media/expand-icon.png';
-    button.onclick = () => this.displayButtons(button);
+    button.onclick = (event) => this.displayButtons(button,event);
     return button;
   }
 
-  displayButtons(button) {
+  displayButtons(button,event) {
+    event.stopPropagation();
     this.shadowRoot.querySelector('.expand-button').style.tranform = 'rotate(180deg)';
     if (this.isExpanded) {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
@@ -110,7 +111,8 @@ class TaskItem extends HTMLElement {
     return button;
   }
 
-   allowEditing() {
+   allowEditing(event) {
+     event.stopPropagation();
      this.style.display = 'none';
      const inputElement = document.createElement('task-input');
      inputElement.setAttribute('class','task-input dropzone');

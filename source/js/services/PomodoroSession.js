@@ -34,6 +34,7 @@ class PomodoroSession {
       longBreak: document.getElementById('long-break'),
       workSession: document.getElementById('pomo'),
       button: document.getElementById('start'),
+      taskListTitle: document.getElementById('list-title'),
     };
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
@@ -82,6 +83,10 @@ class PomodoroSession {
   stop() {
     this.timer.stop();
     this.timer.setTime(this.WORK_SESSION_DURATION);
+    this.taskList.hasActiveSession = false;
+    this.showFullTaskList();
+    this.taskList.displayMessageIfNoTasksExist();
+    this.taskList.listChanged();
   }
 
   /**
@@ -151,7 +156,8 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.WORK_SESSION;
     this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
     this.updateDocument();
-    this.showCurrentTask();
+    this.taskList.hasActiveSession = true;
+    this.taskList.showCurrentTask();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
@@ -164,6 +170,8 @@ class PomodoroSession {
   async runShortBreak() {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
+    this.taskList.hasActiveSession = false;
+    this.showFullTaskList();
     await this.run(this.SHORT_BREAK_DURATION);
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.idle();
@@ -176,13 +184,15 @@ class PomodoroSession {
   async runLongBreak() {
     this.currentState = PomodoroSessionStates.LONG_BREAK;
     this.updateDocument();
+    this.taskList.hasActiveSession = false;
+    this.showFullTaskList();
     await this.run(this.LONG_BREAK_DURATION);
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.sessionNumber = 0;
     this.idle();
     this.DEBUG_PRINT('Long break finished');
   }
-
+  
   /**
    * Resets the timer to the starting work session state
    */
@@ -212,8 +222,27 @@ class PomodoroSession {
     }
   }
 
-  showCurrentTask() {
-    this.autoSelectTask();
+   /**
+   * Displays full taskList
+   */
+  showFullTaskList() {
+    console.log(this.taskList.selectedTask);
+    this.DOM_ELEMENTS.taskListTitle.innerText = 'Task List';
+    this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
+    const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);
+    TLChildren.forEach((element) => {
+        element.style.display = 'grid';
+    });
+    if (this.taskList.selectedTask !== null) {
+      this.taskList.selectedTask.setAttribute('onclick', 'this.toggleTaskSelection()');
+      if(!this.taskList.selectedTask.getAttribute('isComplete')) {
+        this.taskList.selectedTask.styleSelectedTask();
+        this.taskList.selectedTask.style.display = 'grid';
+      }
+      this.taskList.selectedTask.isSelected = true;
+    }
+    this.taskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
+    this.taskList.DOM_ELEMENTS.completedList.style.display = 'inline';
   }
 
   /**
@@ -226,7 +255,7 @@ class PomodoroSession {
         defaultTask.toggleTaskSelection();
         this.taskList.selectedTask = defaultTask;
       }
-    }
+    } 
   }
 }
 

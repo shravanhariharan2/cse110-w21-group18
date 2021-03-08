@@ -35,19 +35,22 @@
 /* button to add new task */
 #add-task {
   position: relative;
-  height: 75px;
+  height: 88px;
   width: 500px;
   margin: auto;
   margin-top: 30px;
-  color: #4abb40ef;
-  background-color: #e2ffa4;
-  font-size: 25px;
+  color: #129b24ef;
+  background-color: #f3f59d;
+  font-size: 30px;
   font-weight: bold;
   display: block;
-  border-style:none;
+  border-style:solid;
+  border-width: 2px;
   border-radius: 30px;
   border-width: 2px;
+  border-color: #129b24ef;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
 }
 #add-task:focus {
     outline: none;
@@ -229,7 +232,7 @@ task-item {
     ' remove remove edit';
   padding: 20px 20px 10px;
   grid-gap: 5px;
-  background-color: #edeae500;
+  background-color: #fffbf6;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
