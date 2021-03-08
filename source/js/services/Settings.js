@@ -34,9 +34,6 @@ class Settings {
       pauseAfterBox: document.getElementById("pause-after-breaks"),
     };
 
-    this.DOM_ELEMENTS.saveButton.addEventListener('click', this.saveSettings);
-    this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
-    this.DOM_ELEMENTS.settingsButton.addEventListener('click', this.openSettings);
     this.DOM_ELEMENTS.settingsModal.style.display = 'none';
 
     return instance;

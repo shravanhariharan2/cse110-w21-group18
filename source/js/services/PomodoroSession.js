@@ -4,7 +4,7 @@ import NotificationService from './NotificationService.js';
 import Settings from './Settings.js';
 import TaskList from './TaskList.js';
 
-const TICK_SPEED = 1;
+const TICK_SPEED = 1000;
 
 let instance = null;
 
@@ -27,10 +27,6 @@ class PomodoroSession {
 
     this.sessionNumber = 0;
 
-    this.timer.setTime(this.workSessionDuration);
-
-    this.toggleSession = this.toggleSession.bind(this);
-
     this.DOM_ELEMENTS = {
       timer: document.getElementById('timer-box'),
       shortBreak: document.getElementById('short-break'),
@@ -39,7 +35,7 @@ class PomodoroSession {
       button: document.getElementById('start'),
     };
 
-    this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
+    this.setSessionAndTime(PomodoroSessions.WORK);
 
     instance = this;
     return instance;
@@ -103,6 +99,8 @@ class PomodoroSession {
     this.DOM_ELEMENTS.timer.style.background = '#FCE181';
   }
 
+
+
   /**
    * Links the timer button to the functionality
    */
@@ -115,35 +113,66 @@ class PomodoroSession {
     }
   }
 
+  /**
+   * Performs a pomodoro session based on the current session type. If the session
+   * is a work session, it will perform the work session and idle if needed, otherwise
+   * performing either the short or long break sessions 
+   * @returns void
+   */
   async performPomodoroSession() {
     if(this.currentSession === PomodoroSessions.WORK) {
-      await this.runWorkSession();
-      if(this.sessionNumber < this.numSessionsBeforeLongBreak) {
-        this.setSessionAndTime(PomodoroSessions.SHORT_BREAK);
-      } else {
-        this.setSessionAndTime(PomodoroSessions.LONG_BREAK);
-      }
-      if(this.pauseBeforeBreak) {
-        this.idle();
-        return;
-      }
+      await this.performWorkSession();
+      if(this.isIdle) return;
     }
     if(this.currentSession === PomodoroSessions.SHORT_BREAK) {
-      await this.runShortBreak();
-      this.setSessionAndTime(PomodoroSessions.WORK);
-      if(this.pauseAfterBreak) {
-        this.idle();
-      } else {
-        await this.performPomodoroSession();
-      }
+      await this.performShortBreakSession();
     } else {
-      await this.runLongBreak();
-      this.setSessionAndTime(PomodoroSessions.WORK);
-      if(this.pauseAfterBreak) {
-        this.idle();
-      } else {
-        await this.performPomodoroSession();
-      }
+      await this.performLongBreakSession();
+    }
+  }
+
+  /**
+   * Performs a work session. This routine runs the timer until completion,
+   * where it then sets the session to either short or long break depending
+   * on session count, and idles if requested by the user
+   */
+  async performWorkSession() {
+    await this.runWorkSession();
+    if(this.sessionNumber < this.numSessionsBeforeLongBreak) {
+      this.setSessionAndTime(PomodoroSessions.SHORT_BREAK);
+    } else {
+      this.setSessionAndTime(PomodoroSessions.LONG_BREAK);
+    }
+    if(this.pauseBeforeBreak) {
+      this.idle();
+    }
+  }
+
+  /**
+   * Performs a short break session. This routine runs the timer until completion,
+   * where it then sets the session to work, and idles if requested by the user
+   */
+  async performShortBreakSession() {
+    await this.runShortBreak();
+    this.setSessionAndTime(PomodoroSessions.WORK);
+    if(this.pauseAfterBreak) {
+      this.idle();
+    } else {
+      await this.performPomodoroSession();
+    }
+  }
+
+   /**
+   * Performs a long break session. This routine runs the timer until completion,
+   * where it then sets the session to work, and idles if requested by the user
+   */
+  async performLongBreakSession() {
+    await this.runLongBreak();
+    this.setSessionAndTime(PomodoroSessions.WORK);
+    if(this.pauseAfterBreak) {
+      this.idle();
+    } else {
+      await this.performPomodoroSession();
     }
   }
 
