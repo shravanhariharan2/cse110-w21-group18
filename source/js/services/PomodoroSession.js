@@ -151,9 +151,10 @@ class PomodoroSession {
     this.currentState = PomodoroSessionStates.WORK_SESSION;
     this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
     this.updateDocument();
-    this.showCurrentTask();
+    this.showSelectedTask();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
+    this.updateTaskList();
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.DEBUG_PRINT('Work finished');
   }
@@ -212,20 +213,19 @@ class PomodoroSession {
     }
   }
 
-  showCurrentTask() {
-    this.autoSelectTask();
+  /**
+   * Autoselect the next task when the user presses start
+   */
+  showSelectedTask() {
+    this.taskList.autoSelectTask();
   }
 
   /**
-   * Selects the first task in the list if no task selected
+   * Update the task-list if not empty
    */
-  autoSelectTask() {
-    if (this.taskList.numTasks !== 0) {
-      if (this.taskList.selectedTask === null) {
-        const defaultTask = this.taskList.DOM_ELEMENTS.taskList.children[0];
-        defaultTask.toggleTaskSelection();
-        this.taskList.selectedTask = defaultTask;
-      }
+  updateTaskList() {
+    if (this.taskList.selectedTask !== null) {
+      this.taskList.updateSelectedTaskSessionCount();
     }
   }
 }

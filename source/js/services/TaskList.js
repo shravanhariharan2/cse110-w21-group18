@@ -353,6 +353,41 @@ class TaskList {
       }
     });
   }
+
+  /**
+   * Selects the first task in the list if no task selected
+   */
+  autoSelectTask() {
+    if (this.numTasks !== 0) {
+      if (this.selectedTask === null) {
+        const defaultTask = this.DOM_ELEMENTS.taskList.children[0];
+        defaultTask.toggleTaskSelection();
+        this.selectedTask = defaultTask;
+      }
+    }
+  }
+
+  /**
+   * Update the selected task session progress count
+   * Deselects the task as selected if done
+   */
+  updateSelectedTaskSessionCount() {
+    this.selectedTask.incrementTaskProgressCount();
+    this.deselectSelectedTaskIfComplete();
+  }
+
+  /**
+   * Deselects the selected task if comeplete
+   * Autoselects the next task, set to null if no next task
+   */
+  deselectSelectedTaskIfComplete() {
+    const taskList = { selected: this.selectedTask };
+    const selectedTaskProgress = Number(taskList.selected.getAttribute('progress'));
+    const selectedTaskEstimate = Number(taskList.selected.getAttribute('estimate'));
+    if (selectedTaskProgress >= selectedTaskEstimate) {
+      this.selectedTask = null;
+    }
+  }
 }
 
 export default TaskList;
