@@ -1,11 +1,11 @@
 import PomodoroSessionStates from '../constants/Enums.js';
-import DisplayMessages from '../constants/displayMessages.js';
+import DisplayMessages from '../constants/DisplayMessages.js';
 
+/**
+* Implements the NotificationService class. This class is a controller for browser
+* and audio notifications
+*/
 class NotificationService {
-  /**
-  * Implements the NotificationService class. This class is a controller for browser
-  * and audio notifications
-  */
   constructor() {
     this.DOM_ELEMENTS = {
       alarm: document.getElementById('timer-alarm'),

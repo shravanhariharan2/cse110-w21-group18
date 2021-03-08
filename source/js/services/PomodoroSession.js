@@ -1,30 +1,34 @@
 import Timer from './Timer.js';
 import PomodoroSessionStates from '../constants/Enums.js';
 import NotificationService from './NotificationService.js';
-import Options from './Options.js';
+import Settings from './Settings.js';
 import TaskList from './TaskList.js';
 
 const TICK_SPEED = 1000;
 
+let instance = null;
+
 /**
- * Implements the PomodoroSession class. This class is a controller for the timer
+ * Implements the PomodoroSession class. This singleton class is a controller for the timer
  * object which keeps track of pomodoro session durations
  */
 class PomodoroSession {
   constructor() {
-    this.DEBUG = false;
+    if(instance) return instance;
+    instance = this;
 
     this.timer = new Timer(TICK_SPEED);
     this.taskList = new TaskList();
     this.notifications = new NotificationService();
-    this.options = new Options();
+    this.settings = new Settings();
+    
     this.currentState = PomodoroSessionStates.IDLE;
     this.sessionNumber = 0;
 
-    this.loadConfig();
-    this.timer.setTime(this.WORK_SESSION_DURATION);
+    this.loadDurations();
 
-    this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
+    this.timer.setTime(this.workSessionDuration);
+
     this.toggleSession = this.toggleSession.bind(this);
     this.run = this.run.bind(this);
     this.stop = this.stop.bind(this);
@@ -39,17 +43,19 @@ class PomodoroSession {
     };
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
+
+    instance = this;
+    return instance;
   }
 
   /**
-   * Loads a session config. Currently loads default configs, but will
-   * take as input a path to config later on
+   * Loads a session config from browser storage
    */
-  loadConfig() {
-    this.WORK_SESSION_DURATION = 25;
-    this.SHORT_BREAK_DURATION = 5;
-    this.LONG_BREAK_DURATION = 30;
-    this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
+  loadDurations() {
+    this.workSessionDuration = 25;
+    this.shortBreakDuration = 5;
+    this.longBreakDuration = 30;
+    this.numSessionsBeforeLongBreak = 4;
   }
 
   /**
@@ -83,7 +89,7 @@ class PomodoroSession {
    */
   stop() {
     this.timer.stop();
-    this.timer.setTime(this.WORK_SESSION_DURATION);
+    this.timer.setTime(this.workSessionDuration);
   }
 
   /**
@@ -154,10 +160,9 @@ class PomodoroSession {
     this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
     this.updateDocument();
     this.showCurrentTask();
-    await this.run(this.WORK_SESSION_DURATION);
+    await this.run(this.workSessionDuration);
     this.sessionNumber += 1;
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
-    this.DEBUG_PRINT('Work finished');
   }
 
   /**
@@ -166,10 +171,9 @@ class PomodoroSession {
   async runShortBreak() {
     this.currentState = PomodoroSessionStates.SHORT_BREAK;
     this.updateDocument();
-    await this.run(this.SHORT_BREAK_DURATION);
+    await this.run(this.shortBreakDuration);
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.idle();
-    this.DEBUG_PRINT('Short break finished');
   }
 
   /**
@@ -178,11 +182,10 @@ class PomodoroSession {
   async runLongBreak() {
     this.currentState = PomodoroSessionStates.LONG_BREAK;
     this.updateDocument();
-    await this.run(this.LONG_BREAK_DURATION);
+    await this.run(this.longBreakDuration);
     this.notifications.notifyUser(this.currentState, this.sessionNumber);
     this.sessionNumber = 0;
     this.idle();
-    this.DEBUG_PRINT('Long break finished');
   }
 
   /**
@@ -199,19 +202,9 @@ class PomodoroSession {
    */
   idle() {
     this.currentState = PomodoroSessionStates.IDLE;
-    this.timer.setTime(this.WORK_SESSION_DURATION);
+    this.timer.setTime(this.workSessionDuration);
     this.DOM_ELEMENTS.button.setAttribute('value', 'Start');
     this.updateDocument();
-  }
-
-  /**
-   * Prints debug statements to console based on global debug flag
-   * @param {string} x [The statement to print]
-   */
-  DEBUG_PRINT(x) {
-    if (this.DEBUG) {
-      console.log(x);
-    }
   }
 
   showCurrentTask() {

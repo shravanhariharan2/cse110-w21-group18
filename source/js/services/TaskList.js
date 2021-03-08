@@ -231,7 +231,7 @@ class TaskList {
     this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     this.DOM_ELEMENTS.newTaskNotes.value = '';
     this.DOM_ELEMENTS.newTaskName.value = '';
-    this.DOM_ELEMENTS.newTaskPomos.value = '0';
+    this.DOM_ELEMENTS.newTaskPomos.value = '1';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
   }
 
