@@ -49,7 +49,7 @@ const HtmlMocks = {
       <input type="button" id="save-button" value="Save">
     </div>
   </div>
-  `
+  `,
 };
 
 export default HtmlMocks;
