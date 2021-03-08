@@ -16,8 +16,8 @@ class NotificationService {
   /**
   * Notifies the user of session end through audio and browser (if allowed)
   * notifications
-  * @param {int} currentState [an integer representing the state the user is in]
-  * @param {int} sessionNumber [an integer representing the worksessions finished]
+  * @param {int} currentState an integer representing the state the user is in
+  * @param {int} sessionNumber an integer representing the worksessions finished
   */
   notifyUser(currentState, sessionNumber) {
     this.DOM_ELEMENTS.alarm.play();

@@ -94,7 +94,6 @@ class Settings {
    */
   loadSettings() {
     this.hasLoadedIntoDOM = false;
-    console.log(!localStorage.getItem('workSessionDuration'))
     if(!localStorage.getItem('workSessionDuration')) {
       this.setDefaultValuesInStorage();
     }
@@ -111,7 +110,7 @@ class Settings {
     localStorage.setItem('longBreakDuration', 30);
     localStorage.setItem('numSessionsBeforeLongBreak', 4);
     localStorage.setItem('pauseBeforeBreak', false);
-    localStorage.setItem('pauseAfterBreak', false);
+    localStorage.setItem('pauseAfterBreak', true);
   }
 
   /**
@@ -122,9 +121,9 @@ class Settings {
     this.shortBreakDuration = localStorage.getItem('shortBreakDuration');
     this.longBreakDuration = localStorage.getItem('longBreakDuration');
     this.numSessionsBeforeLongBreak = localStorage.getItem('numSessionsBeforeLongBreak');
-    this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak');
-    this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak');
-    this.pomodoroSession.loadDurations();
+    this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
+    this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
+    this.pomodoroSession.loadTimerSettings();
   }
 
   /**
@@ -153,7 +152,7 @@ class Settings {
     }
     
     this.loadStoredInputValues();
-    this.pomodoroSession.loadDurations();
+    this.pomodoroSession.loadTimerSettings();
   }
 
 }
