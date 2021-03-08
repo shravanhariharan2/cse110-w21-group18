@@ -157,6 +157,9 @@ class PomodoroSession {
     this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
     this.updateDocument();
     this.taskList.hasActiveSession = true;
+    if (this.taskList.selectedTask === null) {
+      this.autoSelectTask();
+    }
     this.taskList.showCurrentTask();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
@@ -231,6 +234,10 @@ class PomodoroSession {
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
+        element.style.display = 'grid';
+    });
+    const CLChildren = Array.from(this.taskList.DOM_ELEMENTS.completedList.children);
+    CLChildren.forEach((element) => {
         element.style.display = 'grid';
     });
     if (this.taskList.selectedTask !== null) {
