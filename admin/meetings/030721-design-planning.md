@@ -5,7 +5,9 @@
 ### Details: Zoom @ 10PM PST Sunday 3/7
 
 ## General Minutes:
-* 
+* Thoughts on the UI?
+  * There is a bit too much whitespace that makes it look somewhat unprofessional / unfinished
+  * The simplicity of the app is nice, but if we are concerned with white space we could reduce the margin b/w timer and task list
 
 ## Discussion Points
 * Should we change our design?
