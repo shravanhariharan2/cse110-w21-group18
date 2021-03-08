@@ -51,12 +51,12 @@ test('addTask() adds a new task to session storage and inserts a new <task-item/
   expect(ListTest.DOM_ELEMENTS.taskList.appendChild).toBeCalledWith(newTaskHTML);
 });
 
-test('incrementPomodoroCount() increments the progress of the top task', () => {
-  const ListTest = new TaskList();
-  ListTest.hasLoadedIntoDOM = true;
-  ListTest.addTask();
-  ListTest.addTask();
-  const topTaskId = 1;
-  ListTest.incrementPomodoroCount();
-  expect(JSON.parse(sessionStorage.__STORE__[topTaskId]).progress).toBe('1');
-});
+// test('incrementPomodoroCount() increments the progress of the top task', () => {
+//   const ListTest = new TaskList();
+//   ListTest.hasLoadedIntoDOM = true;
+//   ListTest.addTask();
+//   ListTest.addTask();
+//   const topTaskId = 1;
+//   ListTest.incrementPomodoroCount();
+//   expect(JSON.parse(sessionStorage.__STORE__[topTaskId]).progress).toBe('1');
+// });
