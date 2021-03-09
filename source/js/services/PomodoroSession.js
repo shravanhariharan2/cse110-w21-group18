@@ -51,8 +51,10 @@ class PomodoroSession {
     this.numSessionsBeforeLongBreak = parseInt(localStorage.getItem('numSessionsBeforeLongBreak'), 10);
     this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
     this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
+    this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
+    this.timer.loadHideSecondsBoolean();
     if (this.isIdle) {
-      this.timer.setTime(this.workSessionDuration);
+      this.setTime(this.currentSession);
     }
   }
 

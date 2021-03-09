@@ -32,6 +32,7 @@ class Settings {
       pomBeforeBreakDrop: document.getElementById('long-pomo-select'),
       pauseBeforeBox: document.getElementById('pause-before-breaks'),
       pauseAfterBox: document.getElementById('pause-after-breaks'),
+      hideSecondsBox: document.getElementById('hide-seconds'),
     };
 
     this.DOM_ELEMENTS.settingsModal.style.display = 'none';
@@ -48,17 +49,9 @@ class Settings {
     this.DOM_ELEMENTS.shortBreakDrop.value = this.shortBreakDuration;
     this.DOM_ELEMENTS.longBreakDrop.value = this.longBreakDuration;
     this.DOM_ELEMENTS.pomBeforeBreakDrop.value = this.numSessionsBeforeLongBreak;
-    if (this.pauseAfterBreak) {
-      this.DOM_ELEMENTS.pauseAfterBox.checked = true;
-    } else {
-      this.DOM_ELEMENTS.pauseAfterBox.checked = false;
-    }
-
-    if (this.pauseBeforeBreak) {
-      this.DOM_ELEMENTS.pauseBeforeBox.checked = true;
-    } else {
-      this.DOM_ELEMENTS.pauseBeforeBox.checked = false;
-    }
+    this.DOM_ELEMENTS.pauseBeforeBox.checked = this.pauseBeforeBreak;
+    this.DOM_ELEMENTS.pauseAfterBox.checked = this.pauseAfterBreak;
+    this.DOM_ELEMENTS.hideSecondsBox.checked = this.hideSeconds;
   }
 
   /**
@@ -107,6 +100,7 @@ class Settings {
     localStorage.setItem('numSessionsBeforeLongBreak', 4);
     localStorage.setItem('pauseBeforeBreak', false);
     localStorage.setItem('pauseAfterBreak', true);
+    localStorage.setItem('hideSeconds', false);
   }
 
   /**
@@ -119,6 +113,7 @@ class Settings {
     this.numSessionsBeforeLongBreak = localStorage.getItem('numSessionsBeforeLongBreak');
     this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
     this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
+    this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
     this.pomodoroSession.loadTimerSettings();
   }
 
@@ -145,6 +140,14 @@ class Settings {
     } else {
       localStorage.setItem('pauseAfterBreak', false);
       this.pauseAfterBreak = false;
+    }
+
+    if (this.DOM_ELEMENTS.hideSecondsBox.checked) {
+      localStorage.setItem('hideSeconds', true);
+      this.hideSeconds = true;
+    } else {
+      localStorage.setItem('hideSeconds', false);
+      this.hideSeconds = false;
     }
 
     this.loadStoredInputValues();
