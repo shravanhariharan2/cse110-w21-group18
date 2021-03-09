@@ -65,7 +65,7 @@ class TaskItem extends HTMLElement {
     return button;
   }
 
-  displayButtons(button,event) {
+  displayButtons(button, event) {
     event.stopPropagation();
     this.shadowRoot.querySelector('.expand-button').style.tranform = 'rotate(180deg)';
     if (this.isExpanded) {
@@ -84,8 +84,7 @@ class TaskItem extends HTMLElement {
       ' notes notes notes'
       ' remove remove remove';
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '200px';
-    }
-    else {
+    } else {
       this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
       this.style.gridTemplateAreas = 
@@ -112,73 +111,72 @@ class TaskItem extends HTMLElement {
   }
 
   allowEditing(event) {
+    event.stopPropagation();
+    const inputElement = document.createElement('task-input');
+    inputElement.setAttribute('class', 'task-input dropzone');
+    inputElement.id = this.id;
+    inputElement.setAttribute('name', this.getAttribute('name'));
+    inputElement.setAttribute('estimate', this.getAttribute('estimate'));
+    inputElement.setAttribute('isComplete', this.getAttribute('isComplete'));
+    inputElement.setAttribute('progress', this.getAttribute('progress'));
+    inputElement.setAttribute('notes', this.getAttribute('notes'));
+    inputElement.setAttribute('draggable', true);
+    this.after(inputElement);
+    inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
+    inputElement.shadowRoot.querySelector('.pomos').value = this.getAttribute('estimate');
+    inputElement.shadowRoot.querySelector('.add-task-description').value = this.shadowRoot.querySelector('.notes').innerText;
+    inputElement.shadowRoot.querySelector('.add-task-name').addEventListener('click', (event) => event.stopPropagation());
+    inputElement.shadowRoot.querySelector('.pomos').addEventListener('click', (event) => event.stopPropagation());
+    inputElement.shadowRoot.querySelector('.add-task-description').addEventListener('click', (event) => event.stopPropagation());
+    if (this.isSelected) {
+      inputElement.isSelected = true;
+      inputElement.styleSelectedTask();
+    }
+    this.remove();
+    inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', (event) => {
       event.stopPropagation();
-      const inputElement = document.createElement('task-input');
-      inputElement.setAttribute('class','task-input dropzone');
-      inputElement.id = this.id;
-      inputElement.setAttribute('name', this.getAttribute('name'));
-      inputElement.setAttribute('estimate', this.getAttribute('estimate'));
-      inputElement.setAttribute('isComplete',this.getAttribute('isComplete'));
-      inputElement.setAttribute('progress', this.getAttribute('progress'));
-      inputElement.setAttribute('notes', this.getAttribute('notes'));
-      inputElement.setAttribute('draggable', true);
-      this.after(inputElement);
-      inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
-      inputElement.shadowRoot.querySelector('.pomos').value = this.getAttribute('estimate');
-      inputElement.shadowRoot.querySelector('.add-task-description').value = this.shadowRoot.querySelector('.notes').innerText;
-      inputElement.shadowRoot.querySelector('.add-task-name').addEventListener('click', (event) => event.stopPropagation());
-      inputElement.shadowRoot.querySelector('.pomos').addEventListener('click', (event) => event.stopPropagation());
-      inputElement.shadowRoot.querySelector('.add-task-description').addEventListener('click', (event) => event.stopPropagation());
-      if (this.isSelected) {
-        inputElement.isSelected = true;
-        inputElement.styleSelectedTask();
+      const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
+      const newTask = document.createElement('task-item');
+      newTask.setAttribute('name', taskObj.name);
+      newTask.setAttribute('estimate', taskObj.estimate);
+      newTask.setAttribute('progress', taskObj.progress);
+      newTask.setAttribute('notes', taskObj.notes);
+      newTask.setAttribute('isComplete', taskObj.isComplete);
+      newTask.setAttribute('class', taskObj.class);
+      newTask.setAttribute('id', taskObj.id);
+      newTask.setAttribute('draggable', taskObj.draggable);
+      inputElement.remove();
+      // insert where it was before
+      if (inputElement.id !== '1') {
+        document.getElementById(inputElement.id - 1).before(newTask);
       }
-      this.remove();
-      inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', (event) => {
-        event.stopPropagation();
-          const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
-          const newTask = document.createElement('task-item');
-          newTask.setAttribute('name', taskObj.name);
-          newTask.setAttribute('estimate', taskObj.estimate);
-          newTask.setAttribute('progress', taskObj.progress);
-          newTask.setAttribute('notes', taskObj.notes);
-          newTask.setAttribute('isComplete', taskObj.isComplete);
-          newTask.setAttribute('class', taskObj.class);
-          newTask.setAttribute('id', taskObj.id);
-          newTask.setAttribute('draggable', taskObj.draggable);
-          inputElement.remove();
-          //insert where it was before
-          if (inputElement.id !== '1') {
-            document.getElementById(inputElement.id-1).before(newTask);
-          }
-          //if its the last task
-          else {
-            document.getElementById('to-do-list').appendChild(newTask);
-          }
-        });
-      inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (event) => {
-          event.stopPropagation();
-        const newTask = document.createElement('task-item');
-        newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
-        newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
-        newTask.setAttribute('progress', inputElement.getAttribute('progress'));
-        newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
-        newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
-        newTask.setAttribute('class', inputElement.getAttribute('class'));
-        newTask.setAttribute('id', inputElement.id);
-        newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
-        inputElement.remove();
-        //insert where it was before
-        if (inputElement.id !== '1') {
-          document.getElementById(inputElement.id-1).before(newTask);
-        }
-        //if its the last task
-        else {
-          document.getElementById('to-do-list').appendChild(newTask);
-        }
-   });
+      // if its the last task
+      else {
+        document.getElementById('to-do-list').appendChild(newTask);
+      }
+    });
+    inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (event) => {
+      event.stopPropagation();
+      const newTask = document.createElement('task-item');
+      newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
+      newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
+      newTask.setAttribute('progress', inputElement.getAttribute('progress'));
+      newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
+      newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
+      newTask.setAttribute('class', inputElement.getAttribute('class'));
+      newTask.setAttribute('id', inputElement.id);
+      newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
+      inputElement.remove();
+      // insert where it was before
+      if (inputElement.id !== '1') {
+        document.getElementById(inputElement.id - 1).before(newTask);
+      }
+      // if its the last task
+      else {
+        document.getElementById('to-do-list').appendChild(newTask);
+      }
+    });
   }
-  
 
   createRemoveButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
@@ -240,12 +238,11 @@ class TaskItem extends HTMLElement {
       this.setAttribute('class', 'dropzone');
       this.style.cursor = 'move';
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
-      //resets it to not expanded
+      // resets it to not expanded
       if (this.isExpanded) {
         this.shadowRoot.querySelector('.expand-button').click();
       }
     }
-    
   }
 
   /**
