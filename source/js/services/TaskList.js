@@ -35,6 +35,7 @@ class TaskList {
       completedList: document.getElementById('completed-list'),
       completedListTitle: document.getElementById('completed-list-header'),
       expandCompleted: document.getElementById('expand-completed'),
+      viewAll: document.getElementById('view-all'),
     };
     this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
     this.DOM_ELEMENTS.addNotesButton.addEventListener('click', this.addNotesToTask);
@@ -43,6 +44,7 @@ class TaskList {
     this.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', this.listChanged);
     this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
     this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
+    this.DOM_ELEMENTS.viewAll.style.display = 'none';
     this.makeTasksDraggable();
     this.displayMessageIfNoTasksExist();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
@@ -140,7 +142,6 @@ class TaskList {
    * Displays only the working task
    */
   showCurrentTask() {
-    console.log(this.selectedTask)
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Current Task';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
@@ -161,6 +162,7 @@ class TaskList {
     }
     this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
     this.DOM_ELEMENTS.completedList.style.display = 'none';
+    this.DOM_ELEMENTS.viewAll.style.display = 'inline';
     
   }
 
@@ -389,7 +391,6 @@ class TaskList {
    * @param {TaskItem} taskItem task selected
    */
   selectTask(taskItem) {
-    if (!this.hasActiveSession){
       if (!taskItem.isComplete) {
         if (this.selectedTask === taskItem) {
           this.selectedTask = null;
@@ -398,7 +399,6 @@ class TaskList {
           this.unselectOtherTasks();
         }
       }
-    }
   }
 
   /**

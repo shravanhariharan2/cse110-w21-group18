@@ -2,7 +2,7 @@
 #to-do-list-header {
   position: relative;
   margin: 0 auto;
-  margin-top: 25%;
+  margin-top: max(25%,225px);
   width: 400px;
   display: flex;
   justify-content: flex-end;
@@ -11,7 +11,9 @@
 
 #task-line-break {
   border-width: 1px;
-  max-width: 550px;
+  width: 70%;
+  max-width: 650px;
+  min-width: 550px;
   margin: auto;
   margin-top: 10px;
   background-color:#026670;
@@ -19,12 +21,6 @@
   border-color: #026670;
   border-style: solid;
   margin-bottom: 5px;
-}
-
-#no-tasks {
-  text-align: center;
-  margin-top: 50px;
-  font-size: 20px;
 }
 
 #list-title {
@@ -60,6 +56,21 @@
   background-color:  #e2ffa4;
   box-shadow: 0 1px #cfbd79;
   transform: translateY(4px);
+}
+#view-all {
+  position: relative;
+  margin: 20px auto;
+  border: none;
+  background-color: #fffbf6;
+  font-size: 20px;
+}
+#view-all:focus {
+  outline: none;
+}
+#view-all:active {
+  font-size: 18px;
+  margin-top: 21px;
+  margin-bottom: 21px;
 }
 /* holder for all tasks */
 #to-do-list {
@@ -397,8 +408,8 @@ task-item {
  #expand-completed {
     width: 20px;
     height: 20px;
-    margin-right: 40px;
-    margin-top: 0;
+    left: 350px;
+    top: 33px;
     position: absolute;
 }
 #expand-completed:focus {

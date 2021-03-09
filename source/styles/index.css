@@ -6,17 +6,22 @@ body {
 
 #left-half {
   width: 50%;
+  overflow: hidden;
 }
 #right-half {
   width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 }
 
 /*box that holds timer and start/stop buttons and pomo label */
 #timer-box {
   position: fixed;
   left: 50%;
-  top: 50%;
-  transform: translate(-110%, -60%);
+  top: 30%;
+  transform: translate(-100%);
   background: #9FEDD7;
   width: 30%;
   min-width: 550px;

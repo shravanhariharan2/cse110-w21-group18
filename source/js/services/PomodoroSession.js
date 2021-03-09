@@ -18,6 +18,7 @@ class PomodoroSession {
     this.notifications = new NotificationService();
     this.currentState = PomodoroSessionStates.IDLE;
     this.sessionNumber = 0;
+    this.fullListVisible = true;
 
     this.loadConfig();
     this.timer.setTime(this.WORK_SESSION_DURATION);
@@ -38,6 +39,7 @@ class PomodoroSession {
     };
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
+    this.taskList.DOM_ELEMENTS.viewAll.onclick = () => this.viewAll();
   }
 
   /**
@@ -228,6 +230,31 @@ class PomodoroSession {
       console.log(x);
     }
   }
+  /**
+   * Shows the full task list by button
+   */
+  viewAll() {
+    if (this.fullListVisible) {
+      this.showFullTaskList();
+      this.taskList.DOM_ELEMENTS.viewAll.style.display = 'inline';
+      this.fullListVisible = false;
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10134 Minimize Task List`;
+    } else {
+      this.taskList.loadTasks();
+      if(!document.body.contains(this.taskList.selectedTask)){
+        this.taskList.selectedTask = null;
+      }
+      if (this.taskList.selectedTask === null) {
+        this.autoSelectTask();
+      }
+      this.taskList.showCurrentTask();
+      this.fullListVisible = true;
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10133 Expand Task List`;
+      this.taskList.hasActiveSession = true;
+
+    }
+   
+  }
 
    /**
    * Displays full taskList
@@ -255,6 +282,7 @@ class PomodoroSession {
     if (this.taskList.completedIsExpanded){
       this.taskList.DOM_ELEMENTS.expandCompleted.click();
     }
+    this.taskList.DOM_ELEMENTS.viewAll.style.display = 'none';
   }
 
   /**
