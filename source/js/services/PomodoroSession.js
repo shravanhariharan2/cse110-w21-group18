@@ -160,6 +160,8 @@ class PomodoroSession {
     if (this.taskList.selectedTask === null) {
       this.autoSelectTask();
     }
+    this.taskList.loadTasks();
+    
     this.taskList.showCurrentTask();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
@@ -229,27 +231,29 @@ class PomodoroSession {
    * Displays full taskList
    */
   showFullTaskList() {
-    console.log(this.taskList.selectedTask);
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Task List';
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
         element.style.display = 'grid';
+        this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
+        if (this.taskList.selectedTask.isExpanded == true) {
+          this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
+        }
     });
     const CLChildren = Array.from(this.taskList.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
         element.style.display = 'grid';
     });
     if (this.taskList.selectedTask !== null) {
-      this.taskList.selectedTask.setAttribute('onclick', 'this.toggleTaskSelection()');
-      if(!this.taskList.selectedTask.getAttribute('isComplete')) {
+      this.taskList.selectedTask.onclick = () => this.toggleTaskSelection();
+      if(this.taskList.selectedTask.getAttribute('isComplete') === 'false') {
         this.taskList.selectedTask.styleSelectedTask();
         this.taskList.selectedTask.style.display = 'grid';
       }
       this.taskList.selectedTask.isSelected = true;
     }
     this.taskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
-    this.taskList.DOM_ELEMENTS.completedList.style.display = 'inline';
   }
 
   /**
@@ -257,10 +261,10 @@ class PomodoroSession {
    */
   autoSelectTask() {
     if (this.taskList.numTasks !== 0) {
+      console.log('auto');
       if (this.taskList.selectedTask === null) {
         const defaultTask = this.taskList.DOM_ELEMENTS.taskList.children[0];
-        defaultTask.toggleTaskSelection();
-        this.taskList.selectedTask = defaultTask;
+        this.taskList.selectTask(defaultTask);
       }
     } 
   }

@@ -113,7 +113,6 @@ class TaskItem extends HTMLElement {
 
    allowEditing(event) {
      event.stopPropagation();
-     this.style.display = 'none';
      const inputElement = document.createElement('task-input');
      inputElement.setAttribute('class','task-input dropzone');
      inputElement.id = this.id;
@@ -127,6 +126,11 @@ class TaskItem extends HTMLElement {
      inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
      inputElement.shadowRoot.querySelector('.pomos').value = this.getAttribute('estimate');
      inputElement.shadowRoot.querySelector('.add-task-description').value = this.shadowRoot.querySelector('.notes').innerText;
+     //inputElement.onclick = () => this.toggleTaskSelection();
+     if (this.isSelected) {
+      inputElement.isSelected = true;
+      inputElement.styleSelectedTask();
+     }
      this.remove();
      inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', () => {
         const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
@@ -169,45 +173,6 @@ class TaskItem extends HTMLElement {
         document.getElementById('to-do-list').appendChild(newTask);
       }
    });
-    // const notesElement = this.shadowRoot.querySelector('.notes');
-    // const notesElementText = notesElement.textContent;
-    // const nameElement = this.shadowRoot.querySelector('.name');
-    // const nameElementText = nameElement.textContent;
-    // const pomoElement = this.shadowRoot.querySelector('.pomo-progress');
-    // const originalElement = this;
-    // console.log(pomoElement);
-    // console.log(originalElement);
-    // /* create the replacement elements that are editable and replace the childs, once save is clicked,
-    // take the contents and replace the child back with p element */
-
-    // // originalElement.setAttribute('id','task-edit-input');
-
-    // // update notes to be editable
-    // const newNotes = document.createElement('textarea');
-    // newNotes.setAttribute('id', 'change-task-description');
-    // newNotes.className = 'notes';
-    // newNotes.textContent = notesElementText;
-    // notesElement.replaceWith(newNotes);
-    // this.shadowRoot.querySelector('.notes').style.display = 'inline';
-
-    // // update task name to be editable
-    // const newName = document.createElement('textarea');
-    // newName.setAttribute('id', 'change-task-name');
-    // newName.className = 'name';
-    // newName.textContent = nameElementText;
-    // nameElement.replaceWith(newName);
-    // this.shadowRoot.querySelector('.name').style.display = 'inline';
-
-    // this.shadowRoot.querySelector('.edit-button').style.display = 'none';
-    // this.shadowRoot.querySelector('.remove-button').style.display = 'none';
-    // this.shadowRoot.querySelector('.task-checkbox').style.display = 'none';
-
-    // const saveButton = this.shadowRoot.appendChild(document.createElement('button'));
-    // saveButton.setAttribute('id', 'save');
-    // saveButton.className = 'save-button';
-
-    // saveButton.title = 'SaveTask';
-    // saveButton.textContent = 'Save';
   }
   
 
@@ -262,6 +227,7 @@ class TaskItem extends HTMLElement {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
     } else {
       this.isComplete = false;
+      this.onclick = () => this.toggleTaskSelection();
       this.setAttribute('isComplete', 'false');
       checkboxLabel.title = 'Mark as Done';
       taskList.appendChild(this);

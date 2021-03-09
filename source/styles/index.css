@@ -9,15 +9,14 @@ body {
 }
 #right-half {
   width: 50%;
-  margin-top: 200px;
 }
 
 /*box that holds timer and start/stop buttons and pomo label */
 #timer-box {
   position: fixed;
   left: 50%;
-  top: 200px;
-  transform: translate(-120%);
+  top: 50%;
+  transform: translate(-110%, -60%);
   background: #9FEDD7;
   width: 30%;
   min-width: 550px;

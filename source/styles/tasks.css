@@ -2,6 +2,7 @@
 #to-do-list-header {
   position: relative;
   margin: 0 auto;
+  margin-top: min(225px, 25%);
   width: 400px;
   display: flex;
   justify-content: flex-end;
@@ -40,7 +41,7 @@
   margin: auto;
   margin-top: 30px;
   color: #129b24ef;
-  background-color: #f3f59d;
+  background-color: #b9fcb0;
   font-size: 30px;
   font-weight: bold;
   display: block;
