@@ -7,7 +7,7 @@ const MS_IN_SHORT_BREAK = 5 * 60 * 1000;
 const MS_IN_LONG_BREAK = 30 * 60 * 1000;
 
 // Set up the HTML
-document.body.innerHTML = HtmlMocks.TIMER + HtmlMocks.TASK_LIST;
+document.body.innerHTML = HtmlMocks.SETTINGS + HtmlMocks.TIMER + HtmlMocks.TASK_LIST;
 
 const playAudio = jest.fn();
 window.HTMLMediaElement.prototype.play = () => playAudio();
@@ -37,7 +37,7 @@ test('Timer resets and idles after a short break', async () => {
   jest.advanceTimersByTime(MS_IN_SHORT_BREAK);
   await promise;
   expect(PomoTest.timer.minutes).toBe(PomoTest.WORK_SESSION_DURATION);
-  expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
+  expect(PomoTest.currentSession).toBe(PomodoroSessionStates.IDLE);
 });
 
 test('Session resets to zero and timer idles after a long break', async () => {

@@ -3,6 +3,7 @@
 	<head>
 		<link rel="stylesheet" href="styles/index.css">
 		<link rel="stylesheet" href="styles/tasks.css">
+		<link rel="stylesheet" href="styles/settings.css">
 		<title>Pomodoro Timer</title>
 		<meta charset="UTF-8">
 		<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -10,6 +11,76 @@
 	</head>
 
 	<body>
+		<div id="settings">
+			<div id="settings-button">
+				<img id="settings-icon" src="media/icons/settings-gear.png"></img>
+			</div>
+			<div id="settings-modal">
+				<div id="settings-box">
+					<p id="settings-text">Settings</p>
+					<form id="settings-container">
+						<label class="c1" for="pomo-duration-select" style="word-wrap:break-word">
+							Pomodoro Duration
+							<select class="c2" name="pomo-duration-select" id="pomo-duration-select">
+								<option value="20">20 min</option>
+								<option value="25">25 min</option>
+								<option value="30">30 min</option>
+								<option value="35">35 min</option>
+								<option value="40">40 min</option>
+								<option value="45">45 min</option>
+							</select>
+						</label>
+						<label class="c1" for="short-duration-select" style="word-wrap:break-word">	
+							Short Break Duration
+							<select class="c2" name="short-duration-select" id="short-duration-select">
+								<option value="3">3 min</option>
+								<option value="5">5 min</option>
+								<option value="7">7 min</option>
+								<option value="10">10 min</option>
+							</select>
+						</label>
+						<label class="c1" for="long-duration-select" style="word-wrap:break-word">
+							Long Break Duration
+							<select class="c2" name="long-duration-select" id="long-duration-select">
+								<option value="15">15 min</option>
+								<option value="20">20 min</option>
+								<option value="25">25 min</option>
+								<option value="30">30 min</option>
+								<option value="35">35 min</option>
+								<option value="40">40 min</option>
+								<option value="45">45 min</option>
+							</select>
+						</label>
+						<label class="c1" for="long-pomo-select" style="word-wrap:break-word">
+							Pomodoros Before Long Break
+							<select class="c2" name="long-pomo-select" id="long-pomo-select">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+							</select>
+						</label>
+						<label class="c1" for="pause-before-breaks">
+							<input id="pause-before-breaks" type="checkbox"> Pause timer at start of break
+						</label>
+						<label class="c1" for="pause-after-breaks">
+							<input id="pause-after-breaks" type="checkbox"> Pause timer at start of new work session
+						</label>
+						<label class="c1" for="hide-seconds">
+							<input id="hide-seconds" type="checkbox">Hide seconds on timer before 1 minute
+						</label>
+					</form>
+					<div id="settings-buttons">
+						<input type="button" id="cancel-button" value="Cancel">
+						<input type="button" id="save-button" value="Save">
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="timer-box">
 			<div id ="session-type">
 				<div id="pomo">Pomodoro</div>
@@ -32,7 +103,6 @@
 			<p id="expected">Expected Pomodoros:</p>
 			<img src="https://p7.hiclipart.com/preview/678/807/689/clock-euclidean-vector-illustration-simple-clock-cliparts.jpg" id="clock-clip-art">
 			<select name="pomos" id="pomos">
-				<option value="0">...</option>
 				<option value="1">1 (25 min)</option>
 				<option value="2">2 (50 min)</option>
 				<option value="3">3 (1hr 15min)</option>
@@ -50,15 +120,17 @@
 		<div id="to-do-list"></div>
 		<header id="completed-list-header">
 			<p id="completed-list-title">Completed Tasks</p>
-			<input id="expand-completed" type="image" title="Expand View" src="./media/expand-icon.png">
+			<input id="expand-completed" type="image" title="Expand View" src="./media/icons/expand-icon.png">
 		</header>
 		<div id="completed-list"></div>
 	</body>
 	<script type="module" src="js/services/PomodoroSession.js"></script>
 	<script type="module" src="js/services/Timer.js"></script>
 	<script type="module" src="js/services/TaskList.js"></script>
+	<script type="module" src="js/services/Settings.js"></script>
 	<script type="module" src="js/constants/Enums.js"></script>
 	<script type="module" src="js/scripts/index.js"></script>
 	<script type="module" src="js/scripts/tasks.js"></script>
+	<script type="module" src="js/scripts/settings.js"></script>
 	<script type="module" src="js/components/TaskItem.js"></script>
 </html>

@@ -31,6 +31,25 @@ const HtmlMocks = {
     </header>
     <div id="completed-list"></div>
   `,
+  SETTINGS: `
+  <div id="settings-button">
+    <img id="settings-icon" src="media/icons/settings-gear.png"></img>
+  </div>
+  <div id="settings-modal">
+    <form id="settings-container">
+      <select class="c2" name="pomo-duration-select" id="pomo-duration-select"></select>
+      <select class="c2" name="short-duration-select" id="short-duration-select"></select>
+      <select class="c2" name="long-duration-select" id="long-duration-select"></select>
+      <select class="c2" name="long-pomo-select" id="long-pomo-select"></select>
+      <input id="pause-before-breaks" type="checkbox"> Pause timer at start of break
+      <input id="pause-after-breaks" type="checkbox"> Pause timer at start of new work session
+    </form>
+    <div id="settings-buttons">
+      <input type="button" id="cancel-button" value="Cancel">
+      <input type="button" id="save-button" value="Save">
+    </div>
+  </div>
+  `,
 };
 
 export default HtmlMocks;
