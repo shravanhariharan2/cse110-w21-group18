@@ -3,7 +3,7 @@ import PomodoroSessionStates from '../constants/Enums.js';
 import NotificationService from './NotificationService.js';
 import TaskList from './TaskList.js';
 
-const TICK_SPEED = 1000;
+const TICK_SPEED = 1;
 
 /**
  * Implements the PomodoroSession class. This class is a controller for the timer
@@ -44,9 +44,9 @@ class PomodoroSession {
    * take as input a path to config later on
    */
   loadConfig() {
-    this.WORK_SESSION_DURATION = 25;
-    this.SHORT_BREAK_DURATION = 5;
-    this.LONG_BREAK_DURATION = 30;
+    this.WORK_SESSION_DURATION = 1;
+    this.SHORT_BREAK_DURATION = 1;
+    this.LONG_BREAK_DURATION = 1;
     this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
   }
 
@@ -224,7 +224,7 @@ class PomodoroSession {
    * Update the task-list if not empty
    */
   updateTaskList() {
-    if (this.taskList.selectedTask !== null) {
+    if (this.taskList.selectedTask) {
       this.taskList.updateSelectedTaskSessionCount();
     }
   }

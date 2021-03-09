@@ -256,8 +256,8 @@ class TaskItem extends HTMLElement {
    * Increments the progress count of the task item
    */
   incrementTaskProgressCount() {
-    const taskProgress = Number(this.getAttribute('progress'));
-    this.setAttribute('progress', Number(taskProgress) + 1);
+    const taskProgress = parseInt(this.getAttribute('progress'), 10);
+    this.setAttribute('progress', parseInt(taskProgress, 10) + 1);
     this.updateTaskProgressUI();
   }
 
@@ -266,15 +266,11 @@ class TaskItem extends HTMLElement {
    * Updates the UI location of the task (move to completed if done)
    */
   updateTaskProgressUI() {
-    const taskProgress = Number(this.getAttribute('progress'));
-    const taskEstimate = Number(this.getAttribute('estimate'));
+    const taskProgress = parseInt(this.getAttribute('progress'), 10);
+    const taskEstimate = parseInt(this.getAttribute('estimate'), 10);
 
-    const taskSessionCountUI = `${this.getAttribute('progress')}/${this.getAttribute('estimate')} Pomodoros`;
+    const taskSessionCountUI = `${taskProgress}/${taskEstimate} Pomodoros`;
     this.shadowRoot.querySelector('.pomo-progress').textContent = taskSessionCountUI;
-
-    if (taskProgress >= taskEstimate) {
-      this.shadowRoot.querySelector('.task-checkbox').click();
-    }
   }
 }
 
