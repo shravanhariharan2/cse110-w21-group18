@@ -114,7 +114,10 @@ class PomodoroSession {
       this.stopIdling();
       await this.performPomodoroSession();
     } else {
-      this.resetToWorkSession();
+      try{
+        this.resetToWorkSession();
+      }
+      catch{}
     }
   }
 
