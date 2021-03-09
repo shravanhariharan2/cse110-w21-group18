@@ -1,3 +1,8 @@
+html {
+  overflow: -moz-scrollbars-vertical; 
+  overflow-y: scroll;
+}
+
 body {
   background-color: #fffbf6;
   font-family: 'Open Sans', sans-serif;
@@ -19,14 +24,15 @@ body {
 /*box that holds timer and start/stop buttons and pomo label */
 #timer-box {
   position: fixed;
-  left: 50%;
-  top: 30%;
+  left: 47.5%;
+  top: 22.5%;
   transform: translate(-100%);
   background: #9FEDD7;
   width: 30%;
-  min-width: 550px;
+  min-width: 575px;
   max-width: 700px;
-  height: 450px;
+  padding: 5px;
+  height: 50%;
   border-radius: 30px;
   text-align: center;
   display:flex;
@@ -38,7 +44,7 @@ body {
 #session-type {
   padding: 10px 0 0 0;
   color: #026670;
-  font-size: min(2vw,27px);
+  font-size: min(1.8vw,24px);
   position: relative;
   z-index: 1;
   display: flex;
@@ -64,7 +70,7 @@ body {
 /*the actual timer display*/
 #time {
   position: relative;
-  font-size: 130px;
+  font-size: 115px;
   color: #026670;
 }
 

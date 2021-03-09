@@ -1,7 +1,7 @@
 /* styling for the tasklist */
 #to-do-list-header {
   position: relative;
-  margin-top: max(25%,225px);
+  margin-top: max(22.5%,200px);
   width: 400px;
   display: flex;
   justify-content: flex-end;
