@@ -49,7 +49,7 @@ body {
 #session-type {
   padding: 10px 0 0 0;
   color: #026670;
-  font-size: max(1.5vw,27px);
+  font-size: clamp(27px,1.2vw,37px);
   position: relative;
   z-index: 1;
   display: flex;
