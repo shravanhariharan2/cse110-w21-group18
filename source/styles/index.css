@@ -20,6 +20,7 @@ body {
 #right-half {
   width: 50%;
   display: flex;
+  margin-right: 50px;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
@@ -29,7 +30,7 @@ body {
 #timer-box {
   overflow:auto;
   position: fixed;
-  left: 50%;
+  left: 45%;
   top: 30%;
   transform: translate(-100%);
   background: #9FEDD7;
