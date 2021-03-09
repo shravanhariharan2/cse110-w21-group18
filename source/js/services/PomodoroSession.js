@@ -37,7 +37,9 @@ class PomodoroSession {
     };
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
-    this.taskList.DOM_ELEMENTS.viewAll.onclick = () => this.viewAll();
+    if (this.taskList.DOM_ELEMENTS.viewAll !== null) {
+      this.taskList.DOM_ELEMENTS.viewAll.onclick = () => this.viewAll();
+    }
     this.setSessionAndTime(PomodoroSessions.WORK);
 
     instance = this;
@@ -299,6 +301,7 @@ class PomodoroSession {
    * Displays full taskList
    */
   showFullTaskList() {
+    this.DOM_ELEMENTS.taskListTitle.style.marginTop = 'initial';
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Task List';
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);

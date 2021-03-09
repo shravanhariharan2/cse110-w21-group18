@@ -163,7 +163,11 @@ class TaskList {
     this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
     this.DOM_ELEMENTS.completedList.style.display = 'none';
     this.DOM_ELEMENTS.viewAll.style.display = 'inline';
-    
+    let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    console.log(width);
+    if(width > 1100){
+      this.DOM_ELEMENTS.taskListTitle.style.marginTop = '30%';
+    } 
   }
 
   /**
