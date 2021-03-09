@@ -14,7 +14,6 @@ class TaskList {
     this.completedIsExpanded = false;
     this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
     this.hasActiveSession = false;
-
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
     this.addTask = this.addTask.bind(this);
@@ -56,10 +55,10 @@ class TaskList {
   loadTasks() {
     this.hasLoadedIntoDOM = false;
     let selectedID = null;
-    if (this.selectedTask !== null) {
-       selectedID = this.selectedTask.id;
-    }
     while (this.DOM_ELEMENTS.taskList.firstChild) {
+      if(this.DOM_ELEMENTS.taskList.firstChild.isSelected){
+        selectedID = this.DOM_ELEMENTS.taskList.firstChild.getAttribute('id');
+      }
       this.DOM_ELEMENTS.taskList.removeChild(this.DOM_ELEMENTS.taskList.firstChild);
     }
     while (this.DOM_ELEMENTS.completedList.firstChild) {
@@ -90,9 +89,6 @@ class TaskList {
           newTask.style.cursor = 'pointer';
         }
         newTask.addEventListener('click', this.selectTask.bind(this, newTask));
-        if (selectedID == taskObj.id){
-          this.selectedTask = newTask;
-        }
       }
     });
     for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
@@ -100,6 +96,9 @@ class TaskList {
     }
     for (let i = 1; i <= sessionStorage.getItem('completedTasks'); i += 1) {
       this.DOM_ELEMENTS.completedList.appendChild(document.getElementById(-i));
+    }
+    if (selectedID !== null) {
+      this.selectedTask = document.getElementById(selectedID);
     }
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
     this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;

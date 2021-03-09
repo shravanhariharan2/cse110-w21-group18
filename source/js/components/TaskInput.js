@@ -39,6 +39,7 @@ class TaskInput extends HTMLElement {
         `;
       }
     }
+
     /**
    * Select/unselect task
    */
@@ -83,7 +84,7 @@ class TaskInput extends HTMLElement {
    * Update UI for when unselecting task
    */
   styleUnselectedTask() {
-     this.shadowRoot.querySelector('.task-input').style.background = '#edeae500';
+     this.shadowRoot.querySelector('.task-input').style.background = '#fffbf6';
      this.shadowRoot.querySelector('.task-input').style.top = '0px';
      this.shadowRoot.querySelector('.task-input').style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
   }

@@ -157,11 +157,13 @@ class PomodoroSession {
     this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
     this.updateDocument();
     this.taskList.hasActiveSession = true;
+    this.taskList.loadTasks();
+    if(!document.body.contains(this.taskList.selectedTask)){
+      this.taskList.selectedTask = null;
+    }
     if (this.taskList.selectedTask === null) {
       this.autoSelectTask();
     }
-    this.taskList.loadTasks();
-    
     this.taskList.showCurrentTask();
     await this.run(this.WORK_SESSION_DURATION);
     this.sessionNumber += 1;
@@ -236,24 +238,23 @@ class PomodoroSession {
     const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
         element.style.display = 'grid';
-        this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
-        if (this.taskList.selectedTask.isExpanded == true) {
-          this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
+        element.onclick = () => element.toggleTaskSelection();
+        if(this.taskList.selectedTask !== null){
+          this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
+          if (this.taskList.selectedTask.isExpanded == true) {
+            this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
+          }
         }
     });
     const CLChildren = Array.from(this.taskList.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
         element.style.display = 'grid';
     });
-    if (this.taskList.selectedTask !== null) {
-      this.taskList.selectedTask.onclick = () => this.toggleTaskSelection();
-      if(this.taskList.selectedTask.getAttribute('isComplete') === 'false') {
-        this.taskList.selectedTask.styleSelectedTask();
-        this.taskList.selectedTask.style.display = 'grid';
-      }
-      this.taskList.selectedTask.isSelected = true;
-    }
+    this.taskList.selectedTask = null;
     this.taskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
+    if (this.taskList.completedIsExpanded){
+      this.taskList.DOM_ELEMENTS.expandCompleted.click();
+    }
   }
 
   /**
@@ -265,6 +266,7 @@ class PomodoroSession {
       if (this.taskList.selectedTask === null) {
         const defaultTask = this.taskList.DOM_ELEMENTS.taskList.children[0];
         this.taskList.selectTask(defaultTask);
+        this.taskList.selectedTask = defaultTask;
       }
     } 
   }

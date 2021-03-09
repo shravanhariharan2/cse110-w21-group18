@@ -16,7 +16,7 @@
       'cancel cancel save save';
     padding: 20px;
     grid-gap: 10px;
-    background-color: #EDEAE5;
+    background-color: #fffbf6;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   /* name input */
@@ -26,7 +26,7 @@
     width: 200px;
     border-radius: 5px;
     border-style: solid;
-    background-color: #EDEAE5;
+    background-color: #fffbf6;
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     border-width: 2.5px;
@@ -35,7 +35,7 @@
   .add-task-name:focus {
     border-color: blue;
     outline: none;
-    background-color: #EDEAE5;
+    background-color: #fffbf6;
     font-family: 'Open Sans', sans-serif;
   }
   /* input expected number of pomos */
@@ -56,7 +56,7 @@
     border-style: solid;
     border-width: 2.5px;
     font-family: 'Open Sans', sans-serif;
-    background-color: #EDEAE5;
+    background-color: #fffbf6;
   }
   
   .pomos:focus {
@@ -105,23 +105,14 @@
     margin-left: -30px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   }
-  /* button to add notes */
-  .add-notes {
-    margin: auto;
-    grid-area: add;
-    border-width: 2px;
-    border-radius: 5px;
-    background-color: #EDEAE5;
-    height: 25px;
-    margin-bottom: 10px;
-  }
+  
   .add-notes:focus {
     outline: none;
   }
   /* add notes area */
   .add-task-description {
     grid-area: notes;
-    background-color: #EDEAE5;
+    background-color: #fffbf6;
     height: 100px;
     font-family: 'Open Sans', sans-serif;
     resize: none;

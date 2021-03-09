@@ -2,7 +2,7 @@
 #to-do-list-header {
   position: relative;
   margin: 0 auto;
-  margin-top: min(225px, 25%);
+  margin-top: 25%;
   width: 400px;
   display: flex;
   justify-content: flex-end;
@@ -91,7 +91,7 @@
     'cancel cancel save save';
   padding: 20px;
   grid-gap: 10px;
-  background-color: #EDEAE5;
+  background-color: #fffbf6;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: none;
 }
@@ -102,7 +102,7 @@
   width: 200px;
   border-radius: 5px;
   border-style: solid;
-  background-color: #EDEAE5;
+  background-color: #fffbf6;
   font-family: 'Open Sans', sans-serif;
   font-size: 20px;
   border-width: 2.5px;
@@ -111,7 +111,7 @@
 #add-task-name:focus {
   border-color: blue;
   outline: none;
-  background-color: #EDEAE5;
+  background-color: #fffbf6;
   font-family: 'Open Sans', sans-serif;
 }
 /* input expected number of pomos */
@@ -132,7 +132,7 @@
   border-style: solid;
   border-width: 2.5px;
   font-family: 'Open Sans', sans-serif;
-  background-color: #EDEAE5;
+  background-color: #fffbf6;
 }
 
 #pomos:focus {
@@ -187,7 +187,7 @@
   grid-area: add;
   border-width: 2px;
   border-radius: 5px;
-  background-color: #EDEAE5;
+  background-color: #fffbf6;
   height: 25px;
   margin-bottom: 10px;
 }
@@ -197,7 +197,7 @@
 /* add notes area */
 #add-task-description {
   grid-area: notes;
-  background-color: #EDEAE5;
+  background-color: #fffbf6;
   height: 100px;
   font-family: 'Open Sans', sans-serif;
   resize: none;
@@ -436,27 +436,5 @@ task-item {
   border-width:3px;
   font-size: 15px;
   padding: 3px;
-  display:none;
-}
-/* trying to override component but not working yet, will probably do inline css to get this to work */
-task-item::edit{
-  position: relative;
-  margin: 0px auto;
-  margin-top: 10px;
-  width: 20px;
-  border-radius: 30px;
-  border-color:#026670;
-  border-style: solid;
-  border-width: 4px;
-  text-align: center;
-  grid-template-areas:
-    'name expect clock pomos'
-    'notes notes notes notes'
-    'notes notes notes notes'
-    'remove remove remove remove'
-    'save save save save';
-  padding: 20px;
-  grid-gap: 10px;
-  background-color: #EDEAE5;
   display:none;
 }
