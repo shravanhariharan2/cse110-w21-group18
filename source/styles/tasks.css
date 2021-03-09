@@ -1,7 +1,6 @@
 /* styling for the tasklist */
 #to-do-list-header {
   position: relative;
-  margin: 0 auto;
   margin-top: max(25%,225px);
   width: 400px;
   display: flex;
@@ -36,6 +35,7 @@
   width: 500px;
   margin: auto;
   margin-top: 30px;
+  margin-bottom: 15px;
   color: #129b24ef;
   background-color: #b9fcb0;
   font-size: 30px;
@@ -59,23 +59,23 @@
 }
 #view-all {
   position: relative;
-  margin: 20px auto;
+  margin: 30px auto;
+  margin-bottom: 0;
   border: none;
   background-color: #fffbf6;
-  font-size: 20px;
+  font-size: 25px;
 }
 #view-all:focus {
   outline: none;
 }
 #view-all:active {
-  font-size: 18px;
-  margin-top: 21px;
-  margin-bottom: 21px;
+  font-size: 24px;
+  margin-top: 31px;
 }
 /* holder for all tasks */
 #to-do-list {
   position: relative;
-  margin: 30px auto;
+  margin: 15px auto;
   width: 500px;
   text-align: center;
   display:flex;
@@ -392,12 +392,21 @@ task-item {
 /* completed list*/
 #completed-list-header {
     position: relative;
-    margin: 0 auto;
     width: 400px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
   }
+#completed-list {
+  position: relative;
+  margin: 30px;
+  margin-top: 0px;
+  width: 500px;
+  text-align: center;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
 
   #completed-list-title {
     margin: 20px auto;

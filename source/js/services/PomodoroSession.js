@@ -277,6 +277,7 @@ class PomodoroSession {
       this.taskList.DOM_ELEMENTS.viewAll.style.display = 'inline';
       this.fullListVisible = false;
       this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10134 Minimize Task List`;
+      this.taskList.DOM_ELEMENTS.addTaskButton.after(this.taskList.DOM_ELEMENTS.viewAll);
     } else {
       this.taskList.loadTasks();
       if(!document.body.contains(this.taskList.selectedTask)){
@@ -289,6 +290,8 @@ class PomodoroSession {
       this.fullListVisible = true;
       this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10133 Expand Task List`;
       this.taskList.hasActiveSession = true;
+      this.taskList.DOM_ELEMENTS.taskList.after(this.taskList.DOM_ELEMENTS.viewAll);
+      
     } 
   }
 
@@ -326,6 +329,8 @@ class PomodoroSession {
   resetToWorkSession() {
     this.timer.stop();
     this.taskList.hasActiveSession = false;
+    this.fullListVisible = false;
+    this.viewAll();
     this.showFullTaskList();
     this.idleAtWorkSession();
   }
