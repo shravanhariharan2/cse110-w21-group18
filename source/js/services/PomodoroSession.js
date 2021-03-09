@@ -1,33 +1,31 @@
 import Timer from './Timer.js';
-import PomodoroSessionStates from '../constants/Enums.js';
+import PomodoroSessions from '../constants/Enums.js';
 import NotificationService from './NotificationService.js';
+import Settings from './Settings.js';
 import TaskList from './TaskList.js';
 
 const TICK_SPEED = 1000;
 
+let instance = null;
+
 /**
- * Implements the PomodoroSession class. This class is a controller for the timer
+ * Implements the PomodoroSession class. This singleton class is a controller for the timer
  * object which keeps track of pomodoro session durations
  */
 class PomodoroSession {
   constructor() {
-    this.DEBUG = false;
+    if (instance) return instance;
+    instance = this;
 
     this.timer = new Timer(TICK_SPEED);
     this.taskList = new TaskList();
     this.notifications = new NotificationService();
-    this.currentState = PomodoroSessionStates.IDLE;
+    this.settings = new Settings();
     this.sessionNumber = 0;
     this.fullListVisible = true;
 
-    this.loadConfig();
-    this.timer.setTime(this.WORK_SESSION_DURATION);
-
-    this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
-    this.toggleSession = this.toggleSession.bind(this);
-    this.run = this.run.bind(this);
-    this.stop = this.stop.bind(this);
-    this.updateDocument = this.updateDocument.bind(this);
+    this.currentSession = PomodoroSessions.WORK;
+    this.isIdle = true;
 
     this.DOM_ELEMENTS = {
       timer: document.getElementById('timer-box'),
@@ -40,64 +38,36 @@ class PomodoroSession {
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
     this.taskList.DOM_ELEMENTS.viewAll.onclick = () => this.viewAll();
+    this.setSessionAndTime(PomodoroSessions.WORK);
+
+    instance = this;
+    return instance;
   }
 
   /**
-   * Loads a session config. Currently loads default configs, but will
-   * take as input a path to config later on
+   * Loads the session config from browser storage
    */
-  loadConfig() {
-    this.WORK_SESSION_DURATION = 25;
-    this.SHORT_BREAK_DURATION = 5;
-    this.LONG_BREAK_DURATION = 30;
-    this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
-  }
-
-  /**
-   * Get debugging indicators
-   * @return {array} an array of parameters
-   */
-  info() {
-    const stateArray = [
-      this.currentState,
-      this.session,
-      this.timer.getTime(),
-      this.timer.running,
-    ];
-
-    return stateArray;
-  }
-
-  /**
-   * Runs the timer for t-minutes, throws an error timer is stopped midway
-   * @param  {type}  t [the number of minutes to run the timer]
-   * @return {Promise}   [non-deterministic state, indicating timer completion]
-   */
-  async run(t) {
-    this.timer.setTime(t);
-    await this.timer.run();
-  }
-
-  /**
-   * Stops the timer, resetting its time to the initial work session
-   * duration
-   */
-  stop() {
-    this.timer.stop();
-    this.timer.setTime(this.WORK_SESSION_DURATION);
-    this.taskList.hasActiveSession = false;
-    this.showFullTaskList();
-    this.taskList.displayMessageIfNoTasksExist();
-    this.taskList.listChanged();
+  loadTimerSettings() {
+    this.workSessionDuration = parseInt(localStorage.getItem('workSessionDuration'), 10);
+    this.shortBreakDuration = parseInt(localStorage.getItem('shortBreakDuration'), 10);
+    this.longBreakDuration = parseInt(localStorage.getItem('longBreakDuration'), 10);
+    this.numSessionsBeforeLongBreak = parseInt(localStorage.getItem('numSessionsBeforeLongBreak'), 10);
+    this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
+    this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
+    this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
+    this.timer.loadHideSecondsBoolean();
+    if (this.isIdle) {
+      this.setTime(this.currentSession);
+    }
   }
 
   /**
    * Re-renders the timer DOM elements and styles
    */
-  updateDocument() {
-    if (this.currentState === PomodoroSessionStates.IDLE || this.currentState === PomodoroSessionStates.WORK_SESSION) {
+  styleTimerUI() {
+    if (this.currentSession === PomodoroSessions.WORK) {
       this.styleTimerForWorkSession();
-    } else if (this.currentState === PomodoroSessionStates.SHORT_BREAK) {
+    } else if (this.currentSession === PomodoroSessions.SHORT_BREAK) {
       this.styleTimerForShortBreak();
     } else {
       this.styleTimerForLongBreak();
@@ -136,18 +106,76 @@ class PomodoroSession {
 
   /**
    * Links the timer button to the functionality
-   * @return {Promise} [description]
    */
   async toggleSession() {
-    if (this.currentState === PomodoroSessionStates.IDLE) {
-      await this.runWorkSession();
-      if (this.sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
-        await this.runShortBreak();
-      } else {
-        await this.runLongBreak();
-      }
+    if (this.isIdle) {
+      this.stopIdling();
+      await this.performPomodoroSession();
     } else {
-      this.resetWorkSession();
+      this.resetToWorkSession();
+    }
+  }
+
+  /**
+   * Performs a pomodoro session based on the current session type. If the session
+   * is a work session, it will perform the work session and idle if needed, otherwise
+   * performing either the short or long break sessions
+   * @returns void
+   */
+  async performPomodoroSession() {
+    if (this.currentSession === PomodoroSessions.WORK) {
+      await this.performWorkSession();
+      if (this.isIdle) return;
+    }
+    if (this.currentSession === PomodoroSessions.SHORT_BREAK) {
+      await this.performShortBreakSession();
+    } else {
+      await this.performLongBreakSession();
+    }
+  }
+
+  /**
+   * Performs a work session. This routine runs the timer until completion,
+   * where it then sets the session to either short or long break depending
+   * on session count, and idles if requested by the user
+   */
+  async performWorkSession() {
+    await this.runWorkSession();
+    if (this.sessionNumber < this.numSessionsBeforeLongBreak) {
+      this.setSessionAndTime(PomodoroSessions.SHORT_BREAK);
+    } else {
+      this.setSessionAndTime(PomodoroSessions.LONG_BREAK);
+    }
+    if (this.pauseBeforeBreak) {
+      this.idle();
+    }
+  }
+
+  /**
+   * Performs a short break session. This routine runs the timer until completion,
+   * where it then sets the session to work, and idles if requested by the user
+   */
+  async performShortBreakSession() {
+    await this.runShortBreak();
+    this.setSessionAndTime(PomodoroSessions.WORK);
+    if (this.pauseAfterBreak) {
+      this.idle();
+    } else {
+      await this.performPomodoroSession();
+    }
+  }
+
+  /**
+   * Performs a long break session. This routine runs the timer until completion,
+   * where it then sets the session to work, and idles if requested by the user
+   */
+  async performLongBreakSession() {
+    await this.runLongBreak();
+    this.setSessionAndTime(PomodoroSessions.WORK);
+    if (this.pauseAfterBreak) {
+      this.idle();
+    } else {
+      await this.performPomodoroSession();
     }
   }
 
@@ -155,9 +183,7 @@ class PomodoroSession {
    * Runs a work session, incrementing the session count after completion
    */
   async runWorkSession() {
-    this.currentState = PomodoroSessionStates.WORK_SESSION;
-    this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
-    this.updateDocument();
+    this.setSessionAndTime(PomodoroSessions.WORK);
     this.taskList.hasActiveSession = true;
     this.taskList.loadTasks();
     if(!document.body.contains(this.taskList.selectedTask)){
@@ -167,67 +193,79 @@ class PomodoroSession {
       this.autoSelectTask();
     }
     this.taskList.showCurrentTask();
-    await this.run(this.WORK_SESSION_DURATION);
+    await this.timer.run();
     this.sessionNumber += 1;
-    this.notifications.notifyUser(this.currentState, this.sessionNumber);
-    this.DEBUG_PRINT('Work finished');
+    this.notifications.notifyUser(this.currentSession, this.sessionNumber);
   }
 
   /**
    * Runs a short break session
    */
   async runShortBreak() {
-    this.currentState = PomodoroSessionStates.SHORT_BREAK;
-    this.updateDocument();
+    this.setSessionAndTime(PomodoroSessions.SHORT_BREAK);
     this.taskList.hasActiveSession = false;
     this.showFullTaskList();
-    await this.run(this.SHORT_BREAK_DURATION);
-    this.notifications.notifyUser(this.currentState, this.sessionNumber);
-    this.idle();
-    this.DEBUG_PRINT('Short break finished');
+    await this.timer.run();
+    this.notifications.notifyUser(this.currentSession, this.sessionNumber);
   }
 
   /**
    * Runs a long break session, resetting the session count after completion
    */
   async runLongBreak() {
-    this.currentState = PomodoroSessionStates.LONG_BREAK;
-    this.updateDocument();
+    this.setSessionAndTime(PomodoroSessions.LONG_BREAK);
     this.taskList.hasActiveSession = false;
     this.showFullTaskList();
-    await this.run(this.LONG_BREAK_DURATION);
-    this.notifications.notifyUser(this.currentState, this.sessionNumber);
+    await this.timer.run();
+    this.notifications.notifyUser(this.currentSession, this.sessionNumber);
     this.sessionNumber = 0;
-    this.idle();
-    this.DEBUG_PRINT('Long break finished');
   }
   
   /**
-   * Resets the timer to the starting work session state
-   */
-  resetWorkSession() {
-    this.stop();
-    this.idle();
-  }
-
-  /**
-   * Sets the session state to idle. The session type will be on work session and
-   * the timer will be idle at the starting time
+   * Sets the timer state to idle and changes the button to 'Start'
    */
   idle() {
-    this.currentState = PomodoroSessionStates.IDLE;
-    this.timer.setTime(this.WORK_SESSION_DURATION);
+    this.isIdle = true;
     this.DOM_ELEMENTS.button.setAttribute('value', 'Start');
-    this.updateDocument();
   }
 
   /**
-   * Prints debug statements to console based on global debug flag
-   * @param {string} x [The statement to print]
+   * Sets the timer state to active and changes the button to 'Stop'
    */
-  DEBUG_PRINT(x) {
-    if (this.DEBUG) {
-      console.log(x);
+  stopIdling() {
+    this.isIdle = false;
+    this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
+  }
+
+  /**
+   * Sets the timer UI style and time based on session type
+   * @param {number} sessionType The type of session to set
+   */
+  setSessionAndTime(sessionType) {
+    this.setSession(sessionType);
+    this.setTime(sessionType);
+  }
+
+  /**
+   * Sets the session type of the timer and restyles timer
+   * @param {number} sessionType The type of session to set
+   */
+  setSession(sessionType) {
+    this.currentSession = sessionType;
+    this.styleTimerUI();
+  }
+
+  /**
+   * Sets the timer time based on the session type
+   * @param {number} sessionType The type of session to set the timer to
+   */
+  setTime(sessionType) {
+    if (sessionType === PomodoroSessions.WORK) {
+      this.timer.setTime(this.workSessionDuration);
+    } else if (sessionType === PomodoroSessions.SHORT_BREAK) {
+      this.timer.setTime(this.shortBreakDuration);
+    } else {
+      this.timer.setTime(this.longBreakDuration);
     }
   }
   /**
@@ -251,9 +289,7 @@ class PomodoroSession {
       this.fullListVisible = true;
       this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10133 Expand Task List`;
       this.taskList.hasActiveSession = true;
-
-    }
-   
+    } 
   }
 
    /**
@@ -284,13 +320,30 @@ class PomodoroSession {
     }
     this.taskList.DOM_ELEMENTS.viewAll.style.display = 'none';
   }
+  /**
+   * Resets the timer to the starting work session state
+   */
+  resetToWorkSession() {
+    this.timer.stop();
+    this.taskList.hasActiveSession = false;
+    this.showFullTaskList();
+    this.idleAtWorkSession();
+  }
+
+  /**
+   * Sets the session state to idle. The session type will be on work session and
+   * the timer will be idle at the starting time
+   */
+  idleAtWorkSession() {
+    this.idle();
+    this.setSessionAndTime(PomodoroSessions.WORK);
+  }
 
   /**
    * Selects the first task in the list if no task selected
    */
   autoSelectTask() {
     if (this.taskList.numTasks !== 0) {
-      console.log('auto');
       if (this.taskList.selectedTask === null) {
         const defaultTask = this.taskList.DOM_ELEMENTS.taskList.children[0];
         this.taskList.selectTask(defaultTask);

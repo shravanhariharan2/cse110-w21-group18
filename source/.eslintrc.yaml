@@ -27,3 +27,5 @@ rules:
     - warn
   no-underscore-dangle:
     - warn
+  import/no-cycle:
+    - warn # TODO: remove this after singleton refactor

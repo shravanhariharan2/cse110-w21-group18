@@ -60,8 +60,8 @@ class TaskItem extends HTMLElement {
     button.className = 'expand-button';
     button.type = 'image';
     button.title = 'Expand View';
-    button.src = './media/expand-icon.png';
-    button.onclick = (event) => this.displayButtons(button,event);
+    button.src = './media/icons/expand-icon.png';
+    button.onclick = (event) => this.displayButtons(button, event);
     return button;
   }
 
@@ -104,7 +104,7 @@ class TaskItem extends HTMLElement {
     button.className = 'edit-button';
     button.type = 'image';
     button.title = 'Edit Task';
-    button.src = './media/edit-icon.png';
+    button.src = './media/icons/edit-icon.png';
     button.textContent = 'Edit';
     button.onclick = (event) => this.allowEditing(event);
 
@@ -185,7 +185,7 @@ class TaskItem extends HTMLElement {
     button.className = 'remove-button';
     button.textContent = 'Remove';
     button.type = 'image';
-    button.src = './media/delete-icon.jpeg';
+    button.src = './media/icons/delete-icon.jpeg';
     button.title = 'Delete Task';
     button.onclick = (event) => this.removeTask(event);
     return button;
