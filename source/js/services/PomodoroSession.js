@@ -313,7 +313,7 @@ class PomodoroSession {
         element.onclick = () => element.toggleTaskSelection();
         if(this.taskList.selectedTask !== null){
           this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
-          if (this.taskList.selectedTask.isExpanded == true) {
+          if (this.taskList.selectedTask.isExpanded === true) {
             this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
           }
         }

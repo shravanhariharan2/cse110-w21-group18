@@ -79,18 +79,12 @@ class TaskItem extends HTMLElement {
     if (this.isComplete) {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = 
-      ' check taskName pomo'
-      ' notes notes notes'
-      ' remove remove remove';
+      this.style.gridTemplateAreas = ' check taskName pomo', ' notes notes notes', ' remove remove remove';
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '200px';
     } else {
       this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = 
-      ' check taskName pomo'
-      ' notes notes notes'
-      ' remove remove edit';
+      this.style.gridTemplateAreas = ' check taskName pomo', ' notes notes notes', ' remove remove edit';
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '175px';
     }
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
@@ -133,8 +127,8 @@ class TaskItem extends HTMLElement {
       inputElement.styleSelectedTask();
     }
     this.remove();
-    inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', (event) => {
-      event.stopPropagation();
+    inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', (ev) => {
+      ev.stopPropagation();
       const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
       const newTask = document.createElement('task-item');
       newTask.setAttribute('name', taskObj.name);

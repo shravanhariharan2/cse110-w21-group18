@@ -70,7 +70,8 @@ class TaskList {
     keys.forEach((key) => {
       const numTasks = sessionStorage.getItem('numTasks');
       const completedTasks = sessionStorage.getItem('completedTasks');
-      const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks) && (parseInt(key, 10) !== 0);
+      const keyNum = parseInt(key, 10);
+      const isTaskItem = (keyNum >= -completedTasks) && (keyNum <= numTasks) && (keyNum !== 0);
       if (isTaskItem) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
         const newTask = document.createElement('task-item');
@@ -153,7 +154,7 @@ class TaskList {
       this.selectedTask.styleUnselectedTask();
       this.selectedTask.onclick = null;
       this.selectedTask.style.display = 'grid';
-      if (this.selectedTask.isExpanded == false) {
+      if (this.selectedTask.isExpanded === false) {
         this.selectedTask.shadowRoot.querySelector('.expand-button').click();
       }
       this.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'none';
@@ -267,19 +268,7 @@ class TaskList {
 
     this.DOM_ELEMENTS.taskList.appendChild(newTask);
     this.DOM_ELEMENTS.inputBox.style.display = 'none';
-
-    const task = {
-      name: this.DOM_ELEMENTS.newTaskName.value,
-      estimate: this.DOM_ELEMENTS.newTaskPomos.value,
-      progress: 0,
-      notes: this.DOM_ELEMENTS.newTaskNotes.value,
-      isComplete: false,
-      className: 'dropzone',
-      id: this.numTasks,
-      isDraggable: true,
-    };
     this.updateStorage();
-    // sessionStorage.setItem(task.id, JSON.stringify(task));
     newTask.addEventListener('click', this.selectTask.bind(this, newTask));
 
     this.resetInputBox();

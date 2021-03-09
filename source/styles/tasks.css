@@ -44,7 +44,6 @@
   border-style:solid;
   border-width: 2px;
   border-radius: 30px;
-  border-width: 2px;
   border-color: #129b24ef;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   
@@ -94,7 +93,6 @@
   border-style: solid;
   border-width: 2.5px;
   text-align: center;
-  display: grid;
   grid-template-areas:
     'name expect clock pomos'
     'notes notes notes notes'
@@ -182,7 +180,7 @@
   margin-left: 150px;
   width: 60px;
   height: 35px;
-  border-width: 0px;
+  border-width: 0;
   border-radius: 5px;
   color: white;
   background-color: #4abb40ef;
@@ -360,7 +358,7 @@ task-item {
   width: 35px;
   height: 35px;
   margin-left: -30px;
-  margin-top: 0px;
+  margin-top: 0;
   margin-bottom: 10px;
 }
 .edit-button:focus {
