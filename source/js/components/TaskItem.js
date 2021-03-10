@@ -257,7 +257,7 @@ class TaskItem extends HTMLElement {
    */
   incrementTaskProgressCount() {
     const taskProgress = parseInt(this.getAttribute('progress'), 10);
-    this.setAttribute('progress', parseInt(taskProgress, 10) + 1);
+    this.setAttribute('progress', taskProgress + 1);
     this.updateTaskProgressUI();
   }
 
