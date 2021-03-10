@@ -102,6 +102,7 @@ class TaskList {
       this.refreshTaskItemIds();
       this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
       this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
+      this.deselectTaskIfComplete();
       this.updateStorage();
       this.displayMessageIfNoTasksExist();
     }
@@ -313,18 +314,6 @@ class TaskList {
   }
 
   /**
-   * Increases the top task progress when the pomodoro session increases
-   */
-  incrementPomodoroCount() {
-    const topTask = document.getElementById('1');
-    if (topTask !== null) {
-      const updatedProgress = Number(topTask.getAttribute('progress')) + 1;
-      topTask.setAttribute('progress', updatedProgress);
-    }
-    this.listChanged();
-  }
-
-  /**
    * Set the selected task to selectedTask instance variable and unselect other
    * tasks
    * @param {TaskItem} taskItem task selected
@@ -352,6 +341,38 @@ class TaskList {
         }
       }
     });
+  }
+
+  /**
+   * Selects the first task in the list if no task selected
+   */
+  autoSelectTask() {
+    if (this.numTasks !== 0) {
+      if (this.selectedTask === null) {
+        const defaultTask = this.DOM_ELEMENTS.taskList.children[0];
+        defaultTask.toggleTaskSelection();
+        this.selectedTask = defaultTask;
+      }
+    }
+  }
+
+  /**
+   * Update the selected task session progress count
+   */
+  updateSelectedTaskSessionCount() {
+    this.selectedTask.incrementTaskProgressCount();
+  }
+
+  /**
+   * Deselect selected task if complete
+   */
+  deselectTaskIfComplete() {
+    if (this.selectedTask) {
+      if (this.selectedTask.isComplete) {
+        this.selectedTask.markTaskAsUnSelected();
+        this.selectedTask = null;
+      }
+    }
   }
 }
 

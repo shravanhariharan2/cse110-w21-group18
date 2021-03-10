@@ -181,9 +181,10 @@ class PomodoroSession {
    */
   async runWorkSession() {
     this.setSessionAndTime(PomodoroSessions.WORK);
-    this.showCurrentTask();
+    this.showSelectedTask();
     await this.timer.run();
     this.sessionNumber += 1;
+    this.updateTaskList();
     this.notifications.notifyUser(this.currentSession, this.sessionNumber);
   }
 
@@ -272,22 +273,18 @@ class PomodoroSession {
   }
 
   /**
-   * Displays the current task on the screen
+   * Autoselect the next task when the user presses start
    */
-  showCurrentTask() {
-    this.autoSelectTask();
+  showSelectedTask() {
+    this.taskList.autoSelectTask();
   }
 
   /**
-   * Selects the first task in the list if no task selected
+   * Update the task-list if not empty
    */
-  autoSelectTask() {
-    if (this.taskList.numTasks !== 0) {
-      if (this.taskList.selectedTask === null) {
-        const defaultTask = this.taskList.DOM_ELEMENTS.taskList.children[0];
-        defaultTask.toggleTaskSelection();
-        this.taskList.selectedTask = defaultTask;
-      }
+  updateTaskList() {
+    if (this.taskList.selectedTask) {
+      this.taskList.updateSelectedTaskSessionCount();
     }
   }
 }
