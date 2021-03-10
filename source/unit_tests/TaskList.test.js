@@ -1,5 +1,5 @@
 import TaskList from '../js/services/TaskList.js';
-import HtmlMocks from './HtmlMocks';
+import HtmlMocks from './HtmlMocks.js';
 
 beforeEach(() => {
   sessionStorage.clear();

@@ -79,12 +79,12 @@ class TaskItem extends HTMLElement {
     if (this.isComplete) {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = ' check taskName pomo', ' notes notes notes', ' remove remove remove';
+      this.style.gridTemplateAreas = '"check taskName pomo" "notes notes notes" "remove remove remove"';
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '200px';
     } else {
       this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = ' check taskName pomo', ' notes notes notes', ' remove remove edit';
+      this.style.gridTemplateAreas = '"check taskName pomo" "notes notes notes" "remove remove edit"';
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '175px';
     }
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
@@ -118,10 +118,16 @@ class TaskItem extends HTMLElement {
     this.after(inputElement);
     inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
     inputElement.shadowRoot.querySelector('.pomos').value = this.getAttribute('estimate');
-    inputElement.shadowRoot.querySelector('.add-task-description').value = this.shadowRoot.querySelector('.notes').innerText;
-    inputElement.shadowRoot.querySelector('.add-task-name').addEventListener('click', (event) => event.stopPropagation());
-    inputElement.shadowRoot.querySelector('.pomos').addEventListener('click', (event) => event.stopPropagation());
-    inputElement.shadowRoot.querySelector('.add-task-description').addEventListener('click', (event) => event.stopPropagation());
+    inputElement.shadowRoot
+      .querySelector('.add-task-description')
+      .value = this.shadowRoot.querySelector('.notes').innerText;
+    inputElement.shadowRoot
+      .querySelector('.add-task-name')
+      .addEventListener('click', (e) => e.stopPropagation());
+    inputElement.shadowRoot.querySelector('.pomos').addEventListener('click', (e) => e.stopPropagation());
+    inputElement.shadowRoot
+      .querySelector('.add-task-description')
+      .addEventListener('click', (e) => e.stopPropagation());
     if (this.isSelected) {
       inputElement.isSelected = true;
       inputElement.styleSelectedTask();
@@ -143,14 +149,12 @@ class TaskItem extends HTMLElement {
       // insert where it was before
       if (inputElement.id !== '1') {
         document.getElementById(inputElement.id - 1).before(newTask);
-      }
-      // if its the last task
-      else {
+      } else {
         document.getElementById('to-do-list').appendChild(newTask);
       }
     });
-    inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (event) => {
-      event.stopPropagation();
+    inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (e) => {
+      e.stopPropagation();
       const newTask = document.createElement('task-item');
       newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
       newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
@@ -164,9 +168,7 @@ class TaskItem extends HTMLElement {
       // insert where it was before
       if (inputElement.id !== '1') {
         document.getElementById(inputElement.id - 1).before(newTask);
-      }
-      // if its the last task
-      else {
+      } else {
         document.getElementById('to-do-list').appendChild(newTask);
       }
     });

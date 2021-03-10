@@ -122,7 +122,6 @@ class TaskList {
       this.deselectTaskIfComplete();
       this.updateStorage();
       this.hideCompletedIfNoTasksExist();
-      
     }
   }
 
@@ -210,14 +209,14 @@ class TaskList {
    */
   hideCompletedIfNoTasksExist() {
     // only if its not in current task view
-    if (this.DOM_ELEMENTS.addTaskButton.style.display !== 'none'){
+    if (this.DOM_ELEMENTS.addTaskButton.style.display !== 'none') {
       const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
       if (hasCompletedTasks) {
         this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
       } else {
         this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
       }
-    }   
+    }
   }
 
   /**
@@ -412,9 +411,9 @@ class TaskList {
         this.selectedTask = null;
       }
     }
-    //shows the next task if it is marked as completed and is in session
+    // shows the next task if it is marked as completed and is in session
     if (this.selectedTask === null && this.hasActiveSession) {
-      if (this.DOM_ELEMENTS.addTaskButton.style.display === 'none'){
+      if (this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
         this.autoSelectTask();
         this.showSelectedTask();
       }

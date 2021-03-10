@@ -22,7 +22,7 @@ class PomodoroSession {
     this.notifications = new NotificationService();
     this.settings = new Settings();
     this.sessionNumber = 0;
-    this.fullListVisible = true;
+    this.isFullListVisible = true;
 
     this.currentSession = PomodoroSessions.WORK;
     this.isIdle = true;
@@ -114,10 +114,11 @@ class PomodoroSession {
       this.stopIdling();
       await this.performPomodoroSession();
     } else {
-      try{
+      try {
         this.resetToWorkSession();
+      } catch (error) {
+        console.log(error);
       }
-      catch{}
     }
   }
 
@@ -191,7 +192,7 @@ class PomodoroSession {
     this.setSessionAndTime(PomodoroSessions.WORK);
     this.taskList.hasActiveSession = true;
     this.taskList.loadTasks();
-    if(!document.body.contains(this.taskList.selectedTask)){
+    if (!document.body.contains(this.taskList.selectedTask)) {
       this.taskList.selectedTask = null;
     }
     if (this.taskList.selectedTask === null) {
@@ -226,7 +227,7 @@ class PomodoroSession {
     this.notifications.notifyUser(this.currentSession, this.sessionNumber);
     this.sessionNumber = 0;
   }
-  
+
   /**
    * Sets the timer state to idle and changes the button to 'Start'
    */
@@ -274,32 +275,33 @@ class PomodoroSession {
       this.timer.setTime(this.longBreakDuration);
     }
   }
+
   /**
    * Shows the full task list by button
    */
   viewAll() {
-    if (this.fullListVisible) {
+    if (this.isFullListVisible) {
       this.showFullTaskList();
       this.taskList.DOM_ELEMENTS.viewAll.style.display = 'inline';
-      this.fullListVisible = false;
-      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10134 Minimize Task List`;
+      this.isFullListVisible = false;
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10134 Minimize Task List';
       this.taskList.DOM_ELEMENTS.addTaskButton.after(this.taskList.DOM_ELEMENTS.viewAll);
     } else {
       this.taskList.loadTasks();
-      if(!document.body.contains(this.taskList.selectedTask)){
+      if (!document.body.contains(this.taskList.selectedTask)) {
         this.taskList.selectedTask = null;
       }
       if (this.taskList.selectedTask === null) {
         this.taskList.autoSelectTask();
       }
       this.taskList.showSelectedTask();
-      this.fullListVisible = true;
-      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10133 Expand Task List`;
+      this.isFullListVisible = true;
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10133 Expand Task List';
       this.taskList.DOM_ELEMENTS.taskList.after(this.taskList.DOM_ELEMENTS.viewAll);
-    } 
+    }
   }
 
-   /**
+  /**
    * Displays full taskList
    */
   showFullTaskList() {
@@ -308,34 +310,35 @@ class PomodoroSession {
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
-        element.style.display = 'grid';
-        element.onclick = () => element.toggleTaskSelection();
-        if(this.taskList.selectedTask !== null){
-          this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
-          if (this.taskList.selectedTask.isExpanded === true) {
-            this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
-          }
+      element.style.display = 'grid';
+      element.onclick = () => element.toggleTaskSelection();
+      if (this.taskList.selectedTask !== null) {
+        this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
+        if (this.taskList.selectedTask.isExpanded === true) {
+          this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
         }
+      }
     });
     const CLChildren = Array.from(this.taskList.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
-        element.style.display = 'grid';
+      element.style.display = 'grid';
     });
     this.taskList.selectedTask = null;
     this.taskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
-    if (this.taskList.completedIsExpanded){
+    if (this.taskList.completedIsExpanded) {
       this.taskList.DOM_ELEMENTS.expandCompleted.click();
     }
     this.taskList.DOM_ELEMENTS.viewAll.style.display = 'none';
     this.taskList.hideCompletedIfNoTasksExist();
   }
+
   /**
    * Resets the timer to the starting work session state
    */
   resetToWorkSession() {
     this.timer.stop();
     this.taskList.hasActiveSession = false;
-    this.fullListVisible = false;
+    this.isFullListVisible = false;
     this.viewAll();
     this.showFullTaskList();
     this.idleAtWorkSession();
