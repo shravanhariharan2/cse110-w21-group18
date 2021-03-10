@@ -4,7 +4,7 @@ import NotificationService from './NotificationService.js';
 import Settings from './Settings.js';
 import TaskList from './TaskList.js';
 
-const TICK_SPEED = 1000;
+const TICK_SPEED = 1;
 
 let instance = null;
 
@@ -295,7 +295,6 @@ class PomodoroSession {
       this.taskList.showSelectedTask();
       this.fullListVisible = true;
       this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10133 Expand Task List`;
-      this.taskList.hasActiveSession = true;
       this.taskList.DOM_ELEMENTS.taskList.after(this.taskList.DOM_ELEMENTS.viewAll);
     } 
   }

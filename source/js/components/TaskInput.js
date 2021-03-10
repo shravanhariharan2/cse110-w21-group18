@@ -44,7 +44,6 @@ class TaskInput extends HTMLElement {
    * Select/unselect task
    */
   toggleTaskSelection() {
-    console.log('hello');
     if (this.isSelected) {
       this.markTaskAsUnSelected();
     } else {
