@@ -66,34 +66,43 @@ class TaskList {
     while (this.DOM_ELEMENTS.completedList.firstChild) {
       this.DOM_ELEMENTS.completedList.removeChild(this.DOM_ELEMENTS.completedList.firstChild);
     }
+    let sessionNumTasks = 0;
+    let sessionCompletedTasks = 0;
     const keys = Object.keys(sessionStorage);
     keys.forEach((key) => {
-      const numTasks = sessionStorage.getItem('numTasks');
-      const completedTasks = sessionStorage.getItem('completedTasks');
       const keyNum = parseInt(key, 10);
-      const isTaskItem = (keyNum >= -completedTasks) && (keyNum <= numTasks) && (keyNum !== 0);
-      if (isTaskItem) {
-        const taskObj = JSON.parse(sessionStorage.getItem(key));
-        const newTask = document.createElement('task-item');
-        newTask.setAttribute('name', taskObj.name);
-        newTask.setAttribute('estimate', taskObj.estimate);
-        newTask.setAttribute('progress', taskObj.progress);
-        newTask.setAttribute('notes', taskObj.notes);
-        newTask.setAttribute('isComplete', taskObj.isComplete);
-        newTask.isComplete = taskObj.isComplete;
-        newTask.setAttribute('class', taskObj.class);
-        newTask.setAttribute('id', taskObj.id);
-        newTask.setAttribute('draggable', taskObj.draggable);
-        if (parseInt(key, 10) > 0) {
-          this.DOM_ELEMENTS.taskList.appendChild(newTask);
-        } else {
-          this.DOM_ELEMENTS.completedList.prepend(newTask);
-          newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-          newTask.style.cursor = 'pointer';
-        }
-        newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+      const isTaskItem = (keyNum > -100) && (keyNum < 100) && (keyNum !== 0);
+      try{
+        if (isTaskItem) {
+          const taskObj = JSON.parse(sessionStorage.getItem(key));
+          const newTask = document.createElement('task-item');
+          newTask.setAttribute('name', taskObj.name);
+          newTask.setAttribute('estimate', taskObj.estimate);
+          newTask.setAttribute('progress', taskObj.progress);
+          newTask.setAttribute('notes', taskObj.notes);
+          newTask.setAttribute('isComplete', taskObj.isComplete);
+          newTask.isComplete = taskObj.isComplete;
+          newTask.setAttribute('class', taskObj.class);
+          newTask.setAttribute('id', taskObj.id);
+          newTask.setAttribute('draggable', taskObj.draggable);
+          if (parseInt(key, 10) > 0) {
+            this.DOM_ELEMENTS.taskList.appendChild(newTask);
+            sessionNumTasks++;
+          } else {
+            this.DOM_ELEMENTS.completedList.prepend(newTask);
+            newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+            newTask.style.cursor = 'pointer';
+            sessionCompletedTasks++;
+          }
+          newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+      }
+    }
+      catch{
+        console.log('Trouble Loading Task')
       }
     });
+    sessionStorage.setItem('numTasks', sessionNumTasks);
+    sessionStorage.setItem('completedTasks', sessionCompletedTasks);
     for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
