@@ -195,11 +195,12 @@ class PomodoroSession {
       this.taskList.selectedTask = null;
     }
     if (this.taskList.selectedTask === null) {
-      this.autoSelectTask();
+      this.taskList.autoSelectTask();
     }
-    this.taskList.showCurrentTask();
+    this.taskList.showSelectedTask();
     await this.timer.run();
     this.sessionNumber += 1;
+    this.updateTaskList();
     this.notifications.notifyUser(this.currentSession, this.sessionNumber);
   }
 
@@ -289,14 +290,13 @@ class PomodoroSession {
         this.taskList.selectedTask = null;
       }
       if (this.taskList.selectedTask === null) {
-        this.autoSelectTask();
+        this.taskList.autoSelectTask();
       }
-      this.taskList.showCurrentTask();
+      this.taskList.showSelectedTask();
       this.fullListVisible = true;
       this.taskList.DOM_ELEMENTS.viewAll.innerHTML = `&#10133 Expand Task List`;
       this.taskList.hasActiveSession = true;
       this.taskList.DOM_ELEMENTS.taskList.after(this.taskList.DOM_ELEMENTS.viewAll);
-      
     } 
   }
 
@@ -328,7 +328,7 @@ class PomodoroSession {
       this.taskList.DOM_ELEMENTS.expandCompleted.click();
     }
     this.taskList.DOM_ELEMENTS.viewAll.style.display = 'none';
-    this.taskList.displayMessageIfNoTasksExist();
+    this.taskList.hideCompletedIfNoTasksExist();
   }
   /**
    * Resets the timer to the starting work session state
@@ -351,17 +351,10 @@ class PomodoroSession {
     this.setSessionAndTime(PomodoroSessions.WORK);
   }
 
-  /**
-   * Selects the first task in the list if no task selected
-   */
-  autoSelectTask() {
-    if (this.taskList.numTasks !== 0) {
-      if (this.taskList.selectedTask === null) {
-        const defaultTask = this.taskList.DOM_ELEMENTS.taskList.children[0];
-        this.taskList.selectTask(defaultTask);
-        this.taskList.selectedTask = defaultTask;
-      }
-    } 
+  updateTaskList() {
+    if (this.taskList.selectedTask) {
+      this.taskList.updateSelectedTaskSessionCount();
+    }
   }
 }
 

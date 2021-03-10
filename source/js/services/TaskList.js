@@ -46,7 +46,7 @@ class TaskList {
     this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
     this.DOM_ELEMENTS.viewAll.style.display = 'none';
     this.makeTasksDraggable();
-    this.displayMessageIfNoTasksExist();
+    this.hideCompletedIfNoTasksExist();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
     return instance;
   }
@@ -106,7 +106,7 @@ class TaskList {
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
     this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
     this.hasLoadedIntoDOM = true;
-    this.displayMessageIfNoTasksExist();
+    this.hideCompletedIfNoTasksExist();
   }
 
   /**
@@ -119,23 +119,9 @@ class TaskList {
       this.refreshTaskItemIds();
       this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
       this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
+      this.deselectTaskIfComplete();
       this.updateStorage();
-      // if we need a new selected task
-      if ((this.selectedTask !== null) && (this.selectedTask.getAttribute('isComplete') === 'true')) {
-        this.selectedTask.style.display = 'grid';
-        this.selectedTask = null;
-        if (this.numTasks !== 0) {
-          if (this.selectedTask === null) {
-            const defaultTask = this.DOM_ELEMENTS.taskList.children[0];
-            defaultTask.toggleTaskSelection();
-            this.selectedTask = defaultTask;
-            if (this.hasActiveSession) {
-              this.showCurrentTask();
-            }
-          }
-        }
-      }
-      this.displayMessageIfNoTasksExist();
+      this.hideCompletedIfNoTasksExist();
       
     }
   }
@@ -143,14 +129,14 @@ class TaskList {
   /**
    * Displays only the working task
    */
-  showCurrentTask() {
+  showSelectedTask() {
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Current Task';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
       element.style.display = 'none';
     });
-    if (this.selectedTask !== null) {
+    if (this.selectedTask) {
       // removes selected style
       this.selectedTask.styleUnselectedTask();
       this.selectedTask.onclick = null;
@@ -222,7 +208,7 @@ class TaskList {
   /**
    * Hides the Completed task list if there are no completed tasks
    */
-  displayMessageIfNoTasksExist() {
+  hideCompletedIfNoTasksExist() {
     // only if its not in current task view
     if (this.DOM_ELEMENTS.addTaskButton.style.display !== 'none'){
       const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
@@ -367,18 +353,6 @@ class TaskList {
   }
 
   /**
-   * Increases the top task progress when the pomodoro session increases
-   */
-  incrementPomodoroCount() {
-    const topTask = this.selectedTask;
-    if (topTask !== null) {
-      const updatedProgress = Number(topTask.getAttribute('progress')) + 1;
-      topTask.setAttribute('progress', updatedProgress);
-    }
-    this.listChanged();
-  }
-
-  /**
    * Set the selected task to selectedTask instance variable and unselect other
    * tasks
    * @param {TaskItem} taskItem task selected
@@ -406,6 +380,45 @@ class TaskList {
         }
       }
     });
+  }
+
+  /**
+   * Selects the first task in the list if no task selected
+   */
+  autoSelectTask() {
+    if (this.numTasks !== 0) {
+      if (this.selectedTask === null) {
+        const defaultTask = this.DOM_ELEMENTS.taskList.children[0];
+        defaultTask.toggleTaskSelection();
+        this.selectTask(defaultTask);
+      }
+    }
+  }
+
+  /**
+   * Update the selected task session progress count
+   */
+  updateSelectedTaskSessionCount() {
+    this.selectedTask.incrementTaskProgressCount();
+  }
+
+  /**
+   * Deselect selected task if complete
+   */
+  deselectTaskIfComplete() {
+    if (this.selectedTask) {
+      if (this.selectedTask.isComplete) {
+        this.selectedTask.markTaskAsUnSelected();
+        this.selectedTask = null;
+      }
+    }
+    //shows the next task if it is marked as completed and is in session
+    if (this.selectedTask === null && this.hasActiveSession) {
+      if (this.DOM_ELEMENTS.addTaskButton.style.display === 'none'){
+        this.autoSelectTask();
+        this.showSelectedTask();
+      }
+    }
   }
 }
 

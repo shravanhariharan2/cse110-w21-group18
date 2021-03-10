@@ -287,6 +287,27 @@ class TaskItem extends HTMLElement {
     this.style.top = '0px';
     this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
   }
+
+  /**
+   * Increments the progress count of the task item
+   */
+  incrementTaskProgressCount() {
+    const taskProgress = parseInt(this.getAttribute('progress'), 10);
+    this.setAttribute('progress', parseInt(taskProgress, 10) + 1);
+    this.updateTaskProgressUI();
+  }
+
+  /**
+   * Updates the UI count of the task
+   * Updates the UI location of the task (move to completed if done)
+   */
+  updateTaskProgressUI() {
+    const taskProgress = parseInt(this.getAttribute('progress'), 10);
+    const taskEstimate = parseInt(this.getAttribute('estimate'), 10);
+
+    const taskSessionCountUI = `${taskProgress}/${taskEstimate} Pomodoros`;
+    this.shadowRoot.querySelector('.pomo-progress').textContent = taskSessionCountUI;
+  }
 }
 
 window.customElements.define('task-item', TaskItem);
