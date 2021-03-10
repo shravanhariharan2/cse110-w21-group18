@@ -76,38 +76,42 @@ class TaskList {
       try{
         if (isTaskItem) {
           const taskObj = JSON.parse(sessionStorage.getItem(key));
-          const newTask = document.createElement('task-item');
-          newTask.setAttribute('name', taskObj.name);
-          newTask.setAttribute('estimate', taskObj.estimate);
-          newTask.setAttribute('progress', taskObj.progress);
-          newTask.setAttribute('notes', taskObj.notes);
-          newTask.setAttribute('isComplete', taskObj.isComplete);
-          newTask.isComplete = taskObj.isComplete;
-          newTask.setAttribute('class', taskObj.class);
-          newTask.setAttribute('id', taskObj.id);
-          newTask.setAttribute('draggable', taskObj.draggable);
-          if (parseInt(key, 10) > 0) {
-            this.DOM_ELEMENTS.taskList.appendChild(newTask);
-            sessionNumTasks++;
-          } else {
-            this.DOM_ELEMENTS.completedList.prepend(newTask);
-            newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-            newTask.style.cursor = 'pointer';
-            sessionCompletedTasks++;
+          if (typeof taskObj.name !== "undefined" && typeof taskObj.estimate !== "undefined" && 
+           typeof taskObj.progress !== "undefined" && typeof taskObj.isComplete !== "undefined" &&
+            typeof taskObj.class !== "undefined" && typeof taskObj.id !== "undefined" && typeof taskObj.draggable !== "undefined") {
+            const newTask = document.createElement('task-item');
+            newTask.setAttribute('name', taskObj.name);
+            newTask.setAttribute('estimate', taskObj.estimate);
+            newTask.setAttribute('progress', taskObj.progress);
+            newTask.setAttribute('notes', taskObj.notes);
+            newTask.setAttribute('isComplete', taskObj.isComplete);
+            newTask.isComplete = taskObj.isComplete;
+            newTask.setAttribute('class', taskObj.class);
+            newTask.setAttribute('id', taskObj.id);
+            newTask.setAttribute('draggable', taskObj.draggable);
+            if (parseInt(key, 10) > 0) {
+              this.DOM_ELEMENTS.taskList.appendChild(newTask);
+              sessionNumTasks++;
+            } else {
+              this.DOM_ELEMENTS.completedList.prepend(newTask);
+              newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+              newTask.style.cursor = 'pointer';
+              sessionCompletedTasks++;
+            }
+            newTask.addEventListener('click', this.selectTask.bind(this, newTask));
           }
-          newTask.addEventListener('click', this.selectTask.bind(this, newTask));
       }
     }
-      catch{
-        console.log('Trouble Loading Task')
+      catch(error){
+        console.log(error);
       }
     });
     sessionStorage.setItem('numTasks', sessionNumTasks);
     sessionStorage.setItem('completedTasks', sessionCompletedTasks);
-    for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
+    for (let i = 1; i <= sessionNumTasks; i += 1) {
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
-    for (let i = 1; i <= sessionStorage.getItem('completedTasks'); i += 1) {
+    for (let i = 1; i <= sessionCompletedTasks; i += 1) {
       this.DOM_ELEMENTS.completedList.appendChild(document.getElementById(-i));
     }
     if (selectedID !== null) {
@@ -117,6 +121,7 @@ class TaskList {
     this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
     this.hasLoadedIntoDOM = true;
     this.hideCompletedIfNoTasksExist();
+    this.updateStorage();
   }
 
   /**
@@ -173,6 +178,11 @@ class TaskList {
     sessionStorage.clear();
     sessionStorage.setItem('numTasks', this.numTasks);
     sessionStorage.setItem('completedTasks', this.completedTasks);
+    // gets rid of null items 
+    if(this.DOM_ELEMENTS.taskList.innerHTML.includes('null')) {
+      this.DOM_ELEMENTS.taskList.innerHTML = this.DOM_ELEMENTS.taskList.innerHTML.replace("null", "");
+      console.log(this.DOM_ELEMENTS.taskList.innerHTML);
+    }
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
       const taskObj = {

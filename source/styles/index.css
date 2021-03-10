@@ -116,12 +116,12 @@ body {
 }
 
 @media all and (max-width:1300px) {
-  body { 
+  body {
     background-color: #fffbf6;
     font-family: 'Open Sans', sans-serif;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
   }
   #timer-box {
     position: relative;
