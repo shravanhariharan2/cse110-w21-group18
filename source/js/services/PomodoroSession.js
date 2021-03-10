@@ -4,7 +4,7 @@ import NotificationService from './NotificationService.js';
 import Settings from './Settings.js';
 import TaskList from './TaskList.js';
 
-const TICK_SPEED = 1;
+const TICK_SPEED = 1000;
 
 let instance = null;
 
