@@ -71,7 +71,8 @@ class TaskList {
     const keys = Object.keys(sessionStorage);
     keys.forEach((key) => {
       const keyNum = parseInt(key, 10);
-      const isTaskItem = (keyNum > -100) && (keyNum < 100) && (keyNum !== 0);
+      // maximum of 1000 tasks in both lists
+      const isTaskItem = (keyNum > -1000) && (keyNum < 1000) && (keyNum !== 0);
       try{
         if (isTaskItem) {
           const taskObj = JSON.parse(sessionStorage.getItem(key));
