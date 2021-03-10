@@ -353,6 +353,9 @@ class PomodoroSession {
     this.setSessionAndTime(PomodoroSessions.WORK);
   }
 
+  /**
+   * Update the task-list if not empty
+   */
   updateTaskList() {
     if (this.taskList.selectedTask) {
       this.taskList.updateSelectedTaskSessionCount();
