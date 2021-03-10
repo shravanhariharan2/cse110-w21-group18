@@ -120,7 +120,6 @@ class TaskList {
       this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
       this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
       this.updateStorage();
-      this.displayMessageIfNoTasksExist();
       // if we need a new selected task
       if ((this.selectedTask !== null) && (this.selectedTask.getAttribute('isComplete') === 'true')) {
         this.selectedTask.style.display = 'grid';
@@ -136,6 +135,8 @@ class TaskList {
           }
         }
       }
+      this.displayMessageIfNoTasksExist();
+      
     }
   }
 
@@ -165,7 +166,7 @@ class TaskList {
     this.DOM_ELEMENTS.completedList.style.display = 'none';
     this.DOM_ELEMENTS.viewAll.style.display = 'inline';
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    if (width > 1100) {
+    if (width > 1300) {
       this.DOM_ELEMENTS.taskListTitle.style.marginTop = '30%';
     }
   }
@@ -222,14 +223,15 @@ class TaskList {
    * Hides the Completed task list if there are no completed tasks
    */
   displayMessageIfNoTasksExist() {
-    if (!this.hasActiveSession) {
+    // only if its not in current task view
+    if (this.DOM_ELEMENTS.addTaskButton.style.display !== 'none'){
       const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
       if (hasCompletedTasks) {
         this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
       } else {
         this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
       }
-    }
+    }   
   }
 
   /**

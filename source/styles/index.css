@@ -1,12 +1,17 @@
 html{
-  min-width: 475px;
+  min-width: 675px;
+  top: 0;
+  left:0;
+  right:0;
+  bottom:0;
   
 }
 body {
+  position: relative;
   background-color: #fffbf6;
   font-family: 'Open Sans', sans-serif;
   display: flex;
-  min-width: 475px;
+  min-width: 675px;
   top: 0;
   left:0;
   right:0;
@@ -20,7 +25,7 @@ body {
 #right-half {
   width: 50%;
   display: flex;
-  margin-right: 50px;
+  margin-right: 100px;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
@@ -31,7 +36,7 @@ body {
   overflow:auto;
   position: fixed;
   left: 45%;
-  top: 30%;
+  top: max(22.5%,200px);
   transform: translate(-100%);
   background: #9FEDD7;
   width: 30%;
@@ -49,7 +54,7 @@ body {
 #session-type {
   padding: 10px 0 0 0;
   color: #026670;
-  font-size: clamp(27px,1.2vw,37px);
+  font-size: clamp(22px,1.2vw,37px);
   position: relative;
   z-index: 1;
   display: flex;
@@ -110,7 +115,7 @@ body {
   margin-top: 5px;
 }
 
-@media all and (max-width:1100px) {
+@media all and (max-width:1300px) {
   body { 
     background-color: #fffbf6;
     font-family: 'Open Sans', sans-serif;

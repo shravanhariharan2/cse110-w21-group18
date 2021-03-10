@@ -457,7 +457,7 @@ task-item {
   display:none;
 }
 
-@media all and (max-width:1100px) {
+@media all and (max-width:1300px) {
 #to-do-list-header {
   margin-top: 50px;
 }

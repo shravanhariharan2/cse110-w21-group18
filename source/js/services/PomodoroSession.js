@@ -328,6 +328,7 @@ class PomodoroSession {
       this.taskList.DOM_ELEMENTS.expandCompleted.click();
     }
     this.taskList.DOM_ELEMENTS.viewAll.style.display = 'none';
+    this.taskList.displayMessageIfNoTasksExist();
   }
   /**
    * Resets the timer to the starting work session state
