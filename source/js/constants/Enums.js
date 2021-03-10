@@ -1,8 +1,7 @@
-const PomodoroSessionStates = {
-  IDLE: 0,
-  WORK_SESSION: 1,
+const PomodoroSessions = {
+  WORK: 1,
   SHORT_BREAK: 2,
   LONG_BREAK: 3,
 };
 
-export default PomodoroSessionStates;
+export default PomodoroSessions;

@@ -1,11 +1,11 @@
 import PomodoroSessionStates from '../constants/Enums.js';
-import DisplayMessages from '../constants/displayMessages.js';
+import DisplayMessages from '../constants/DisplayMessages.js';
 
+/**
+* Implements the NotificationService class. This class is a controller for browser
+* and audio notifications
+*/
 class NotificationService {
-  /**
-  * Implements the NotificationService class. This class is a controller for browser
-  * and audio notifications
-  */
   constructor() {
     this.DOM_ELEMENTS = {
       alarm: document.getElementById('timer-alarm'),
@@ -16,8 +16,8 @@ class NotificationService {
   /**
   * Notifies the user of session end through audio and browser (if allowed)
   * notifications
-  * @param {int} currentState [an integer representing the state the user is in]
-  * @param {int} sessionNumber [an integer representing the worksessions finished]
+  * @param {int} currentState an integer representing the state the user is in
+  * @param {int} sessionNumber an integer representing the worksessions finished
   */
   notifyUser(currentState, sessionNumber) {
     this.DOM_ELEMENTS.alarm.play();
