@@ -4,22 +4,25 @@
  */
 class Timer {
   constructor(clockSpeed) {
-    this.DEBUG = false;
-
     this.minutes = 0;
     this.seconds = 0;
     this.timeInterval = null;
     this.isRunning = false;
+    this.loadHideSecondsBoolean();
+
     this.clockSpeed = clockSpeed;
 
     this.timeDOMElement = document.getElementById('time');
 
     // bind functions to instance
-    this.DEBUG_PRINT = this.DEBUG_PRINT.bind(this);
     this.step = this.step.bind(this);
     this.stop = this.stop.bind(this);
     this.run = this.run.bind(this);
     this.updateDocument = this.updateDocument.bind(this);
+  }
+
+  loadHideSecondsBoolean() {
+    this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
   }
 
   /**
@@ -38,7 +41,12 @@ class Timer {
   updateDocument() {
     const paddedMinuteString = this.minutes.toString().padStart(2, '0');
     const paddedSecondString = this.seconds.toString().padStart(2, '0');
-    const timeString = `${paddedMinuteString} : ${paddedSecondString}`;
+    let timeString;
+    if (this.hideSeconds && this.minutes > 0) {
+      timeString = `${paddedMinuteString} m`;
+    } else {
+      timeString = `${paddedMinuteString} : ${paddedSecondString}`;
+    }
     this.timeDOMElement.innerHTML = timeString;
   }
 
@@ -64,9 +72,7 @@ class Timer {
    */
   async run() {
     this.prepareTimerForStart();
-
     const self = this;
-
     return new Promise((resolve) => {
       this.timeInterval = setInterval(() => {
         self.step(resolve);
@@ -90,14 +96,6 @@ class Timer {
   stop() {
     this.isRunning = false;
     clearInterval(this.timeInterval);
-  }
-
-  /**
-   * Prints debug statements to console based on global debug flag
-   * @param {string} x [The statement to print]
-   */
-  DEBUG_PRINT(x) {
-    if (this.DEBUG) { console.log(x); }
   }
 }
 
