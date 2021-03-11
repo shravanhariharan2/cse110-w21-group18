@@ -301,6 +301,9 @@ task-item {
 .task-checkbox input:checked ~ .checkmark {
   background-color: #026670;
 }
+.checkmark:active {
+  background-color: #026670;
+}
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {

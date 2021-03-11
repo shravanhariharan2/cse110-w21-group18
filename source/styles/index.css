@@ -4,11 +4,9 @@ html{
   left:0;
   right:0;
   bottom:0;
-  
 }
 body {
   position: relative;
-  background-color: #fffbf6;
   font-family: 'Open Sans', sans-serif;
   display: flex;
   min-width: 675px;

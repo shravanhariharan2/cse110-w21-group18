@@ -256,6 +256,7 @@ class TaskList {
       this.DOM_ELEMENTS.addNotesButton.value = 'Remove Notes';
     } else {
       this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
+      this.DOM_ELEMENTS.newTaskNotes.value = '';
       this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     }
   }
