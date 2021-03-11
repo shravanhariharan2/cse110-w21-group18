@@ -1,5 +1,6 @@
 html{
   min-width: 675px;
+  min-height: 620px;
   top: 0;
   left:0;
   right:0;
@@ -10,6 +11,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   display: flex;
   min-width: 675px;
+  min-height: 620px;
   top: 0;
   left:0;
   right:0;
@@ -34,7 +36,7 @@ body {
   overflow:auto;
   position: fixed;
   left: 45%;
-  top: max(22.5%,200px);
+  top: min(22.5%,200px);
   transform: translate(-100%);
   background: #9FEDD7;
   width: 30%;
