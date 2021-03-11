@@ -13,7 +13,7 @@ class TaskList {
     this.completedTasks = 0;
     this.completedIsExpanded = false;
     this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
-
+    this.hasActiveSession = false;
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
     this.addTask = this.addTask.bind(this);
@@ -22,6 +22,7 @@ class TaskList {
     this.loadTasks = this.loadTasks.bind(this);
     this.expandCompletedTasks = this.expandCompletedTasks.bind(this);
     this.DOM_ELEMENTS = {
+      taskListTitle: document.getElementById('list-title'),
       addTaskButton: document.getElementById('add-task'),
       inputBox: document.getElementById('task-add-input'),
       addNotesButton: document.getElementById('add-notes'),
@@ -34,8 +35,8 @@ class TaskList {
       completedList: document.getElementById('completed-list'),
       completedListTitle: document.getElementById('completed-list-header'),
       expandCompleted: document.getElementById('expand-completed'),
+      viewAll: document.getElementById('view-all'),
     };
-
     this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
     this.DOM_ELEMENTS.addNotesButton.addEventListener('click', this.addNotesToTask);
     this.DOM_ELEMENTS.saveNewTaskButton.addEventListener('click', this.addTask);
@@ -43,7 +44,9 @@ class TaskList {
     this.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', this.listChanged);
     this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
     this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
+    this.DOM_ELEMENTS.viewAll.style.display = 'none';
     this.makeTasksDraggable();
+    this.hideCompletedIfNoTasksExist();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
     return instance;
   }
@@ -53,43 +56,72 @@ class TaskList {
    */
   loadTasks() {
     this.hasLoadedIntoDOM = false;
+    let selectedID = null;
+    while (this.DOM_ELEMENTS.taskList.firstChild) {
+      if (this.DOM_ELEMENTS.taskList.firstChild.isSelected) {
+        selectedID = this.DOM_ELEMENTS.taskList.firstChild.getAttribute('id');
+      }
+      this.DOM_ELEMENTS.taskList.removeChild(this.DOM_ELEMENTS.taskList.firstChild);
+    }
+    while (this.DOM_ELEMENTS.completedList.firstChild) {
+      this.DOM_ELEMENTS.completedList.removeChild(this.DOM_ELEMENTS.completedList.firstChild);
+    }
+    let sessionNumTasks = 0;
+    let sessionCompletedTasks = 0;
     const keys = Object.keys(sessionStorage);
     keys.forEach((key) => {
-      const numTasks = sessionStorage.getItem('numTasks');
-      const completedTasks = sessionStorage.getItem('completedTasks');
-      const isTaskItem = (parseInt(key, 10) >= -completedTasks) && (parseInt(key, 10) <= numTasks);
-      if (isTaskItem) {
-        const taskObj = JSON.parse(sessionStorage.getItem(key));
-        const newTask = document.createElement('task-item');
-        newTask.setAttribute('name', taskObj.name);
-        newTask.setAttribute('estimate', taskObj.estimate);
-        newTask.setAttribute('progress', taskObj.progress);
-        newTask.setAttribute('notes', taskObj.notes);
-        newTask.setAttribute('isComplete', taskObj.isComplete);
-        newTask.isComplete = taskObj.isComplete;
-        newTask.setAttribute('class', taskObj.class);
-        newTask.setAttribute('id', taskObj.id);
-        newTask.setAttribute('draggable', taskObj.draggable);
-        if (parseInt(key, 10) > 0) {
-          this.DOM_ELEMENTS.taskList.appendChild(newTask);
-        } else {
-          this.DOM_ELEMENTS.completedList.prepend(newTask);
-          newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-          newTask.style.cursor = 'pointer';
-        }
-        newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+      const keyNum = parseInt(key, 10);
+      // maximum of 1000 tasks in both lists
+      const isTaskItem = (keyNum > -1000) && (keyNum < 1000) && (keyNum !== 0);
+      try{
+        if (isTaskItem) {
+          const taskObj = JSON.parse(sessionStorage.getItem(key));
+          if (typeof taskObj.name !== "undefined" && typeof taskObj.estimate !== "undefined" && 
+           typeof taskObj.progress !== "undefined" && typeof taskObj.isComplete !== "undefined" &&
+            typeof taskObj.class !== "undefined" && typeof taskObj.id !== "undefined" && typeof taskObj.draggable !== "undefined") {
+            const newTask = document.createElement('task-item');
+            newTask.setAttribute('name', taskObj.name);
+            newTask.setAttribute('estimate', taskObj.estimate);
+            newTask.setAttribute('progress', taskObj.progress);
+            newTask.setAttribute('notes', taskObj.notes);
+            newTask.setAttribute('isComplete', taskObj.isComplete);
+            newTask.isComplete = taskObj.isComplete;
+            newTask.setAttribute('class', taskObj.class);
+            newTask.setAttribute('id', taskObj.id);
+            newTask.setAttribute('draggable', taskObj.draggable);
+            if (parseInt(key, 10) > 0) {
+              this.DOM_ELEMENTS.taskList.appendChild(newTask);
+              sessionNumTasks++;
+            } else {
+              this.DOM_ELEMENTS.completedList.prepend(newTask);
+              newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+              newTask.style.cursor = 'pointer';
+              sessionCompletedTasks++;
+            }
+            newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+          }
+      }
+    }
+      catch(error){
+        console.log(error);
       }
     });
-    for (let i = 1; i <= sessionStorage.getItem('numTasks'); i += 1) {
+    sessionStorage.setItem('numTasks', sessionNumTasks);
+    sessionStorage.setItem('completedTasks', sessionCompletedTasks);
+    for (let i = 1; i <= sessionNumTasks; i += 1) {
       this.DOM_ELEMENTS.taskList.prepend(document.getElementById(i));
     }
-    for (let i = 1; i <= sessionStorage.getItem('completedTasks'); i += 1) {
+    for (let i = 1; i <= sessionCompletedTasks; i += 1) {
       this.DOM_ELEMENTS.completedList.appendChild(document.getElementById(-i));
+    }
+    if (selectedID !== null) {
+      this.selectTask(document.getElementById(selectedID));
     }
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
     this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
     this.hasLoadedIntoDOM = true;
-    this.displayMessageIfNoTasksExist();
+    this.hideCompletedIfNoTasksExist();
+    this.updateStorage();
   }
 
   /**
@@ -104,7 +136,38 @@ class TaskList {
       this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
       this.deselectTaskIfComplete();
       this.updateStorage();
-      this.displayMessageIfNoTasksExist();
+      this.hideCompletedIfNoTasksExist();
+    }
+  }
+
+  /**
+   * Displays only the working task
+   */
+  showSelectedTask() {
+    this.DOM_ELEMENTS.taskListTitle.innerText = 'Current Task';
+    this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
+    const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
+    TLChildren.forEach((element) => {
+      element.style.display = 'none';
+    });
+    if (this.selectedTask) {
+      // removes selected style
+      this.selectedTask.styleUnselectedTask();
+      this.selectedTask.onclick = null;
+      this.selectedTask.style.display = 'grid';
+      if (this.selectedTask.isExpanded === false) {
+        this.selectedTask.shadowRoot.querySelector('.expand-button').click();
+      }
+      this.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'none';
+      this.selectedTask.shadowRoot.querySelector('.edit-button').style.display = 'none';
+      this.selectedTask.shadowRoot.querySelector('.remove-button').style.display = 'none';
+    }
+    this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
+    this.DOM_ELEMENTS.completedList.style.display = 'none';
+    this.DOM_ELEMENTS.viewAll.style.display = 'inline';
+    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if (width > 1300) {
+      this.DOM_ELEMENTS.taskListTitle.style.marginTop = '30%';
     }
   }
 
@@ -115,6 +178,10 @@ class TaskList {
     sessionStorage.clear();
     sessionStorage.setItem('numTasks', this.numTasks);
     sessionStorage.setItem('completedTasks', this.completedTasks);
+    // gets rid of null items 
+    if(this.DOM_ELEMENTS.taskList.innerHTML.includes('null')) {
+      this.DOM_ELEMENTS.taskList.innerHTML = this.DOM_ELEMENTS.taskList.innerHTML.replace("null", "");
+    }
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
       const taskObj = {
@@ -157,15 +224,17 @@ class TaskList {
   }
 
   /**
-   * Displays the 'View Tasks Here if there are no tasks'
    * Hides the Completed task list if there are no completed tasks
    */
-  displayMessageIfNoTasksExist() {
-    const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
-    if (hasCompletedTasks) {
-      this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
-    } else {
-      this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
+  hideCompletedIfNoTasksExist() {
+    // only if its not in current task view
+    if (this.DOM_ELEMENTS.addTaskButton.style.display !== 'none') {
+      const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
+      if (hasCompletedTasks) {
+        this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
+      } else {
+        this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
+      }
     }
   }
 
@@ -186,6 +255,7 @@ class TaskList {
       this.DOM_ELEMENTS.addNotesButton.value = 'Remove Notes';
     } else {
       this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
+      this.DOM_ELEMENTS.newTaskNotes.value = '';
       this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     }
   }
@@ -205,19 +275,7 @@ class TaskList {
 
     this.DOM_ELEMENTS.taskList.appendChild(newTask);
     this.DOM_ELEMENTS.inputBox.style.display = 'none';
-
-    const task = {
-      name: this.DOM_ELEMENTS.newTaskName.value,
-      estimate: this.DOM_ELEMENTS.newTaskPomos.value,
-      progress: 0,
-      notes: this.DOM_ELEMENTS.newTaskNotes.value,
-      isComplete: false,
-      className: 'dropzone',
-      id: this.numTasks,
-      isDraggable: true,
-    };
-
-    sessionStorage.setItem(task.id, JSON.stringify(task));
+    this.updateStorage();
     newTask.addEventListener('click', this.selectTask.bind(this, newTask));
 
     this.resetInputBox();
@@ -260,7 +318,7 @@ class TaskList {
       event.preventDefault();
     });
     document.addEventListener('drop', ({ target }) => {
-      if (target.className === 'dropzone' && target.id !== id) {
+      if ((target.className === 'dropzone' || target.className === 'task-input dropzone') && target.id !== id) {
         dragged.remove(dragged);
         for (let i = 0; i < list.length; i += 1) {
           if (list[i] === target) {
@@ -324,6 +382,7 @@ class TaskList {
         this.selectedTask = null;
       } else {
         this.selectedTask = taskItem;
+        this.selectedTask.isSelected = true;
         this.unselectOtherTasks();
       }
     }
@@ -351,7 +410,7 @@ class TaskList {
       if (this.selectedTask === null) {
         const defaultTask = this.DOM_ELEMENTS.taskList.children[0];
         defaultTask.toggleTaskSelection();
-        this.selectedTask = defaultTask;
+        this.selectTask(defaultTask);
       }
     }
   }
@@ -371,6 +430,13 @@ class TaskList {
       if (this.selectedTask.isComplete) {
         this.selectedTask.markTaskAsUnSelected();
         this.selectedTask = null;
+      }
+    }
+    // shows the next task if it is marked as completed and is in session
+    if (this.selectedTask === null && this.hasActiveSession) {
+      if (this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
+        this.autoSelectTask();
+        this.showSelectedTask();
       }
     }
   }
