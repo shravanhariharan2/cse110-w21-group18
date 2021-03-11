@@ -181,7 +181,6 @@ class TaskList {
     // gets rid of null items 
     if(this.DOM_ELEMENTS.taskList.innerHTML.includes('null')) {
       this.DOM_ELEMENTS.taskList.innerHTML = this.DOM_ELEMENTS.taskList.innerHTML.replace("null", "");
-      console.log(this.DOM_ELEMENTS.taskList.innerHTML);
     }
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {

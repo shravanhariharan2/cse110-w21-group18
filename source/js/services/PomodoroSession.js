@@ -302,7 +302,6 @@ class PomodoroSession {
    * Displays full taskList
    */
   showFullTaskList() {
-    console.log(this.taskList.selectedTask);
     this.DOM_ELEMENTS.taskListTitle.style.marginTop = 'initial';
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Task List';
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
