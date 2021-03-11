@@ -1,3 +1,5 @@
+import { TaskStyles } from "../constants/Styles";
+
 class TaskItem extends HTMLElement {
   constructor() {
     super();
@@ -274,20 +276,20 @@ class TaskItem extends HTMLElement {
    * Update UI for when selecting task
    */
   styleSelectedTask() {
-    this.style.border = '2px solid #026670';
-    this.style.borderRadius = '30px';
-    this.style.background = '#9fedd7';
-    this.style.top = '3px';
-    this.style.boxShadow = '0px 0px';
+    this.style.border = TaskStyles.SELECTED_TASK_BORDER;
+    this.style.borderRadius = TaskStyles.SELECTED_TASK_BORDER_RADIUS;
+    this.style.background = TaskStyles.SELECTED_TASK_BACKGROUND;
+    this.style.top = TaskStyles.SELECTED_TASK_TOP_OFFSET;
+    this.style.boxShadow = TaskStyles.NO_BOX_SHADOW;
   }
 
   /**
    * Update UI for when unselecting task
    */
   styleUnselectedTask() {
-    this.style.background = '#fffbf6';
-    this.style.top = '0px';
-    this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
+    this.style.background = TaskStyles.UNSELECTED_TASK_BACKGROUND;
+    this.style.top = TaskStyles.UNSELECTED_TASK_TOP_OFFSET;
+    this.style.boxShadow = TaskStyles.BOX_SHADOW;
   }
 
   /**

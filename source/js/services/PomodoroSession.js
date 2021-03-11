@@ -3,6 +3,7 @@ import PomodoroSessions from '../constants/Enums.js';
 import NotificationService from './NotificationService.js';
 import Settings from './Settings.js';
 import TaskList from './TaskList.js';
+import { TimerStyles } from '../constants/Styles.js';
 
 const TICK_SPEED = 1000;
 
@@ -83,7 +84,7 @@ class PomodoroSession {
     this.DOM_ELEMENTS.workSession.style.textDecoration = 'underline';
     this.DOM_ELEMENTS.shortBreak.style.textDecoration = 'none';
     this.DOM_ELEMENTS.longBreak.style.textDecoration = 'none';
-    this.DOM_ELEMENTS.timer.style.background = '#9FEDD7';
+    this.DOM_ELEMENTS.timer.style.background = TimerStyles.WORK_SESSION_BACKGROUND;
   }
 
   /**
@@ -93,7 +94,7 @@ class PomodoroSession {
     this.DOM_ELEMENTS.workSession.style.textDecoration = 'none';
     this.DOM_ELEMENTS.shortBreak.style.textDecoration = 'underline';
     this.DOM_ELEMENTS.longBreak.style.textDecoration = 'none';
-    this.DOM_ELEMENTS.timer.style.background = '#FEF9C7';
+    this.DOM_ELEMENTS.timer.style.background = TimerStyles.SHORT_BREAK_BACKGROUND;
   }
 
   /**
@@ -103,7 +104,7 @@ class PomodoroSession {
     this.DOM_ELEMENTS.workSession.style.textDecoration = 'none';
     this.DOM_ELEMENTS.shortBreak.style.textDecoration = 'none';
     this.DOM_ELEMENTS.longBreak.style.textDecoration = 'underline';
-    this.DOM_ELEMENTS.timer.style.background = '#FCE181';
+    this.DOM_ELEMENTS.timer.style.background = TimerStyles.LONG_BREAK_BACKGROUND;
   }
 
   /**
