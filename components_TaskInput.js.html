@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>services/Settings.js - Documentation</title>
+    <title>components/TaskInput.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">services/Settings.js</h1>
+    <h1 class="page-title">components/TaskInput.js</h1>
     
 
     
@@ -39,164 +39,81 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import PomodoroSession from './PomodoroSession.js';
+            <pre class="prettyprint source linenums"><code>import HtmlTemplates from '../constants/HtmlTemplates.js';
+import TaskList from '../services/TaskList.js';
 
-let instance = null;
-
-class Settings {
+class TaskInput extends HTMLElement {
   constructor() {
-    if (instance) return instance;
-    instance = this;
-
-    this.pomodoroSession = new PomodoroSession();
-
-    this.loadSettings();
-
-    this.hasLoadedIntoDOM = true;
-
-    // binding methods to objects
-    this.saveSettings = this.saveSettings.bind(this);
-    this.cancelInput = this.cancelInput.bind(this);
-    this.openSettings = this.openSettings.bind(this);
-    this.closeSettings = this.closeSettings.bind(this);
-    this.loadSettings = this.loadSettings.bind(this);
-    this.updateSettings = this.updateSettings.bind(this);
-
-    this.DOM_ELEMENTS = {
-      settingsButton: document.getElementById('settings-button'),
-      settingsModal: document.getElementById('settings-modal'),
-      cancelButton: document.getElementById('cancel-button'),
-      saveButton: document.getElementById('save-button'),
-      pomDurationDrop: document.getElementById('pomo-duration-select'),
-      shortBreakDrop: document.getElementById('short-duration-select'),
-      longBreakDrop: document.getElementById('long-duration-select'),
-      pomBeforeBreakDrop: document.getElementById('long-pomo-select'),
-      pauseBeforeBox: document.getElementById('pause-before-breaks'),
-      pauseAfterBox: document.getElementById('pause-after-breaks'),
-      hideSecondsBox: document.getElementById('hide-seconds'),
-    };
-
-    this.DOM_ELEMENTS.settingsModal.style.display = 'none';
-
-    return instance;
+    super();
+    this.isSelected = false;
+    this.taskList = new TaskList();
+    this.onclick = () => this.toggleTaskSelection();
   }
 
-  /**
-   * Opens settings box UI
-   */
-  openSettings() {
-    this.DOM_ELEMENTS.settingsModal.style.display = 'block';
-    this.DOM_ELEMENTS.pomDurationDrop.value = this.workSessionDuration;
-    this.DOM_ELEMENTS.shortBreakDrop.value = this.shortBreakDuration;
-    this.DOM_ELEMENTS.longBreakDrop.value = this.longBreakDuration;
-    this.DOM_ELEMENTS.pomBeforeBreakDrop.value = this.numSessionsBeforeLongBreak;
-    this.DOM_ELEMENTS.pauseBeforeBox.checked = this.pauseBeforeBreak;
-    this.DOM_ELEMENTS.pauseAfterBox.checked = this.pauseAfterBreak;
-    this.DOM_ELEMENTS.hideSecondsBox.checked = this.hideSeconds;
+  connectedCallback() {
+    this.loadDOMElements();
   }
 
-  /**
-   * Closes settings box UI
-   */
-  closeSettings() {
-    this.DOM_ELEMENTS.settingsModal.style.display = 'none';
-  }
-
-  /**
-   * Cancel the input box
-   */
-  cancelInput() {
-    this.closeSettings();
-  }
-
-  /**
-   * Saves settings currently in settings boxes
-   */
-  saveSettings() {
-    if (this.hasLoadedIntoDOM) {
-      this.updateSettings();
+  loadDOMElements() {
+    if (!this.shadowRoot) {
+      this.attachShadow({ mode: 'open' });
+      this.class = 'task-input dropzone';
+      this.shadowRoot.innerHTML = HtmlTemplates.TASK_INPUT;
     }
-    this.closeSettings();
   }
 
   /**
-   * Loads settings from localStorage
+   * Select/unselect task
    */
-  loadSettings() {
-    this.hasLoadedIntoDOM = false;
-    if (!localStorage.getItem('workSessionDuration')) {
-      Settings.setDefaultValuesInStorage();
-    }
-    this.loadStoredInputValues();
-    this.hasLoadedIntoDOM = true;
-  }
-
-  /**
-   * Sets default values to local storage variables
-   */
-  static setDefaultValuesInStorage() {
-    localStorage.setItem('workSessionDuration', 25);
-    localStorage.setItem('shortBreakDuration', 5);
-    localStorage.setItem('longBreakDuration', 30);
-    localStorage.setItem('numSessionsBeforeLongBreak', 4);
-    localStorage.setItem('pauseBeforeBreak', false);
-    localStorage.setItem('pauseAfterBreak', true);
-    localStorage.setItem('hideSeconds', false);
-  }
-
-  /**
-   * Loads browser stored values to instance variables
-   */
-  loadStoredInputValues() {
-    this.workSessionDuration = localStorage.getItem('workSessionDuration');
-    this.shortBreakDuration = localStorage.getItem('shortBreakDuration');
-    this.longBreakDuration = localStorage.getItem('longBreakDuration');
-    this.numSessionsBeforeLongBreak = localStorage.getItem('numSessionsBeforeLongBreak');
-    this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
-    this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
-    this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
-    this.pomodoroSession.loadTimerSettings();
-  }
-
-  /**
-   * Updates settings currently in storage
-   */
-  updateSettings() {
-    localStorage.clear();
-    localStorage.setItem('workSessionDuration', this.DOM_ELEMENTS.pomDurationDrop.value);
-    localStorage.setItem('shortBreakDuration', this.DOM_ELEMENTS.shortBreakDrop.value);
-    localStorage.setItem('longBreakDuration', this.DOM_ELEMENTS.longBreakDrop.value);
-    localStorage.setItem('numSessionsBeforeLongBreak', this.DOM_ELEMENTS.pomBeforeBreakDrop.value);
-    if (this.DOM_ELEMENTS.pauseBeforeBox.checked) {
-      localStorage.setItem('pauseBeforeBreak', true);
-      this.pauseBeforeBreak = true;
+  toggleTaskSelection() {
+    if (this.isSelected) {
+      this.markTaskAsUnSelected();
     } else {
-      localStorage.setItem('pauseBeforeBreak', false);
-      this.pauseBeforeBreak = false;
+      this.markTaskAsSelected();
     }
+  }
 
-    if (this.DOM_ELEMENTS.pauseAfterBox.checked) {
-      localStorage.setItem('pauseAfterBreak', true);
-      this.pauseAfterBreak = true;
-    } else {
-      localStorage.setItem('pauseAfterBreak', false);
-      this.pauseAfterBreak = false;
-    }
+  /**
+   * Set isSelected instance variable to true and update UI
+   */
+  markTaskAsSelected() {
+    this.styleSelectedTask();
+    this.taskList.selectTask(this);
+    this.isSelected = true;
+  }
 
-    if (this.DOM_ELEMENTS.hideSecondsBox.checked) {
-      localStorage.setItem('hideSeconds', true);
-      this.hideSeconds = true;
-    } else {
-      localStorage.setItem('hideSeconds', false);
-      this.hideSeconds = false;
-    }
+  /**
+   * Set isSelected instance variable to false and update UI
+   */
+  markTaskAsUnSelected() {
+    this.isSelected = false;
+    this.styleUnselectedTask();
+  }
 
-    this.loadStoredInputValues();
-    this.pomodoroSession.loadTimerSettings();
+  /**
+   * Update UI for when selecting task
+   */
+  styleSelectedTask() {
+    this.shadowRoot.querySelector('.task-input').style.border = '2px solid #026670';
+    this.shadowRoot.querySelector('.task-input').style.borderRadius = '30px';
+    this.shadowRoot.querySelector('.task-input').style.background = '#9fedd7';
+    this.shadowRoot.querySelector('.task-input').style.top = '3px';
+    this.shadowRoot.querySelector('.task-input').style.boxShadow = '0px 0px';
+  }
+
+  /**
+   * Update UI for when unselecting task
+   */
+  styleUnselectedTask() {
+    this.shadowRoot.querySelector('.task-input').style.background = '#fffbf6';
+    this.shadowRoot.querySelector('.task-input').style.top = '0px';
+    this.shadowRoot
+      .querySelector('.task-input')
+      .style
+      .boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
   }
 }
-
-export default Settings;
+window.customElements.define('task-input', TaskInput);
 </code></pre>
         </article>
     </section>
