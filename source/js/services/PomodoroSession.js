@@ -358,6 +358,7 @@ class PomodoroSession {
   updateTaskList() {
     if (this.taskList.selectedTask) {
       this.taskList.updateSelectedTaskSessionCount();
+      this.taskList.updateStorage();
     }
   }
 }
