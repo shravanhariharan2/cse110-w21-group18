@@ -115,7 +115,7 @@ class TaskList {
       this.DOM_ELEMENTS.completedList.appendChild(document.getElementById(-i));
     }
     if (selectedID !== null) {
-      this.selectedTask = document.getElementById(selectedID);
+      this.selectTask(document.getElementById(selectedID));
     }
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
     this.completedTasks = this.DOM_ELEMENTS.completedList.childElementCount;
@@ -383,6 +383,7 @@ class TaskList {
         this.selectedTask = null;
       } else {
         this.selectedTask = taskItem;
+        this.selectedTask.isSelected = true;
         this.unselectOtherTasks();
       }
     }

@@ -4,7 +4,7 @@ import NotificationService from './NotificationService.js';
 import Settings from './Settings.js';
 import TaskList from './TaskList.js';
 
-const TICK_SPEED = 1000;
+const TICK_SPEED = 1;
 
 let instance = null;
 
@@ -288,9 +288,6 @@ class PomodoroSession {
       this.taskList.DOM_ELEMENTS.addTaskButton.after(this.taskList.DOM_ELEMENTS.viewAll);
     } else {
       this.taskList.loadTasks();
-      if (!document.body.contains(this.taskList.selectedTask)) {
-        this.taskList.selectedTask = null;
-      }
       if (this.taskList.selectedTask === null) {
         this.taskList.autoSelectTask();
       }
@@ -305,6 +302,7 @@ class PomodoroSession {
    * Displays full taskList
    */
   showFullTaskList() {
+    console.log(this.taskList.selectedTask);
     this.DOM_ELEMENTS.taskListTitle.style.marginTop = 'initial';
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Task List';
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
@@ -323,7 +321,9 @@ class PomodoroSession {
     CLChildren.forEach((element) => {
       element.style.display = 'grid';
     });
-    this.taskList.selectedTask = null;
+    if (this.taskList.selectedTask) {
+      this.taskList.selectedTask.styleSelectedTask();
+    }
     this.taskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
     if (this.taskList.completedIsExpanded) {
       this.taskList.DOM_ELEMENTS.expandCompleted.click();
