@@ -1,4 +1,4 @@
-import { TaskStyles } from "../constants/Styles";
+import { TaskStyles } from "../constants/Styles.js";
 
 class TaskItem extends HTMLElement {
   constructor() {
