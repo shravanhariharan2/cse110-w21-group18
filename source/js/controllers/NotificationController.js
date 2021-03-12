@@ -5,7 +5,7 @@ import DisplayMessages from '../constants/DisplayMessages.js';
 * Implements the NotificationService class. This class is a controller for browser
 * and audio notifications
 */
-class NotificationController {
+export default class NotificationController {
   constructor() {
     this.DOM_ELEMENTS = {
       alarm: document.getElementById('timer-alarm'),
@@ -32,7 +32,7 @@ class NotificationController {
    * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
   browserNotify(currentState, sessionNumber) {
-    const notificationTitle = NotificationService.createNotificationTitle(currentState);
+    const notificationTitle = NotificationController.createNotificationTitle(currentState);
     const notificationBody = this.createNotificationBody(currentState, sessionNumber);
     new Notification(notificationTitle, notificationBody);
   }
@@ -68,5 +68,3 @@ class NotificationController {
     return { body: DisplayMessages.WORK_NEXT_NOTIFY };
   }
 }
-
-export default NotificationController;

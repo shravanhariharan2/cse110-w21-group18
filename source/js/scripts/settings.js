@@ -1,4 +1,6 @@
-import { Settings } from "../index.js";
+import Controllers from '../index.js';
+
+const Settings = Controllers.settings();
 
 document.getElementById('settings-button').addEventListener('click', Settings.openSettings);
 document.getElementById('save-button').addEventListener('click', Settings.saveSettings);

@@ -2,7 +2,7 @@ export const TimerStyles = {
   WORK_SESSION_BACKGROUND: '#9FEDD7',
   SHORT_BREAK_BACKGROUND: '#FEF9C7',
   LONG_BREAK_BACKGROUND: '#FCE181',
-}
+};
 
 export const TaskStyles = {
   SELECTED_TASK_BACKGROUND: '#9FEDD7',
@@ -13,4 +13,4 @@ export const TaskStyles = {
   UNSELECTED_TASK_TOP_OFFSET: '0px',
   BOX_SHADOW: '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)',
   NO_BOX_SHADOW: '0px 0px',
-}
+};

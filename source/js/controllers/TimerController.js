@@ -1,20 +1,18 @@
 /**
  * Implements a basic timer with start and end capabilities
  */
-const CLOCK_SPEED = 1000;
-
-class TimerController {
-  constructor() {
+export default class TimerController {
+  constructor(clockSpeed) {
     this.minutes = 0;
     this.seconds = 0;
     this.timeInterval = null;
     this.isRunning = false;
-    this.clockSpeed = CLOCK_SPEED;
+    this.clockSpeed = clockSpeed;
     this.loadHideSecondsBoolean();
 
     this.DOM_ELEMENTS = {
       time: document.getElementById('time'),
-    }
+    };
 
     // bind functions to instance
     this.step = this.step.bind(this);
@@ -99,5 +97,3 @@ class TimerController {
     clearInterval(this.timeInterval);
   }
 }
-
-export default TimerController;

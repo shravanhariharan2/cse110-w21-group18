@@ -1,7 +1,7 @@
-import { PomodoroSession } from "../index.js";
+export default class SettingsController {
+  constructor(pomodoroSession) {
+    this.pomodoroSession = pomodoroSession;
 
-class SettingsController {
-  constructor() {
     this.loadSettings();
 
     this.hasLoadedIntoDOM = true;
@@ -75,7 +75,7 @@ class SettingsController {
   loadSettings() {
     this.hasLoadedIntoDOM = false;
     if (!localStorage.getItem('workSessionDuration')) {
-      Settings.setDefaultValuesInStorage();
+      SettingsController.setDefaultValuesInStorage();
     }
     this.loadStoredInputValues();
     this.hasLoadedIntoDOM = true;
@@ -105,7 +105,7 @@ class SettingsController {
     this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
     this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
     this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
-    PomodoroSession.loadTimerSettings();
+    this.pomodoroSession.loadTimerSettings();
   }
 
   /**
@@ -142,8 +142,6 @@ class SettingsController {
     }
 
     this.loadStoredInputValues();
-    PomodoroSession.loadTimerSettings();
+    this.pomodoroSession.loadTimerSettings();
   }
 }
-
-export default SettingsController;

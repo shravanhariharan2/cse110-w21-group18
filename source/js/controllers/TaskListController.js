@@ -2,8 +2,7 @@
  * Implements the TaskList class. This class is a controller for the task list which
  * holds all the task items and the to-do lists and completed lists
  */
-
-class TaskListController {
+export default class TaskListController {
   constructor() {
     this.numTasks = 0;
     this.selectedTask = null;
@@ -34,17 +33,6 @@ class TaskListController {
       expandCompleted: document.getElementById('expand-completed'),
       viewAll: document.getElementById('view-all'),
     };
-    this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
-    this.DOM_ELEMENTS.addNotesButton.addEventListener('click', this.addNotesToTask);
-    this.DOM_ELEMENTS.saveNewTaskButton.addEventListener('click', this.addTask);
-    this.DOM_ELEMENTS.taskList.addEventListener('DOMSubtreeModified', this.listChanged);
-    this.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', this.listChanged);
-    this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
-    this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
-    this.DOM_ELEMENTS.viewAll.style.display = 'none';
-    this.makeTasksDraggable();
-    this.hideCompletedIfNoTasksExist();
-    this.DOM_ELEMENTS.completedList.style.display = 'none';
   }
 
   /**
@@ -69,12 +57,12 @@ class TaskListController {
       const keyNum = parseInt(key, 10);
       // maximum of 1000 tasks in both lists
       const isTaskItem = (keyNum > -1000) && (keyNum < 1000) && (keyNum !== 0);
-      try{
+      try {
         if (isTaskItem) {
           const taskObj = JSON.parse(sessionStorage.getItem(key));
-          if (typeof taskObj.name !== "undefined" && typeof taskObj.estimate !== "undefined" && 
-           typeof taskObj.progress !== "undefined" && typeof taskObj.isComplete !== "undefined" &&
-            typeof taskObj.class !== "undefined" && typeof taskObj.id !== "undefined" && typeof taskObj.draggable !== "undefined") {
+          if (typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
+           && typeof taskObj.progress !== 'undefined' && typeof taskObj.isComplete !== 'undefined'
+            && typeof taskObj.class !== 'undefined' && typeof taskObj.id !== 'undefined' && typeof taskObj.isDraggable !== 'undefined') {
             const newTask = document.createElement('task-item');
             newTask.setAttribute('name', taskObj.name);
             newTask.setAttribute('estimate', taskObj.estimate);
@@ -84,7 +72,7 @@ class TaskListController {
             newTask.isComplete = taskObj.isComplete;
             newTask.setAttribute('class', taskObj.class);
             newTask.setAttribute('id', taskObj.id);
-            newTask.setAttribute('draggable', taskObj.draggable);
+            newTask.setAttribute('isDraggable', taskObj.isDraggable);
             if (parseInt(key, 10) > 0) {
               this.DOM_ELEMENTS.taskList.appendChild(newTask);
               sessionNumTasks++;
@@ -96,9 +84,8 @@ class TaskListController {
             }
             newTask.addEventListener('click', this.selectTask.bind(this, newTask));
           }
-      }
-    }
-      catch(error){
+        }
+      } catch (error) {
         console.log(error);
       }
     });
@@ -174,9 +161,9 @@ class TaskListController {
     sessionStorage.clear();
     sessionStorage.setItem('numTasks', this.numTasks);
     sessionStorage.setItem('completedTasks', this.completedTasks);
-    // gets rid of null items 
-    if(this.DOM_ELEMENTS.taskList.innerHTML.includes('null')) {
-      this.DOM_ELEMENTS.taskList.innerHTML = this.DOM_ELEMENTS.taskList.innerHTML.replace("null", "");
+    // gets rid of null items
+    if (this.DOM_ELEMENTS.taskList.innerHTML.includes('null')) {
+      this.DOM_ELEMENTS.taskList.innerHTML = this.DOM_ELEMENTS.taskList.innerHTML.replace('null', '');
     }
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
@@ -188,7 +175,7 @@ class TaskListController {
         isComplete: false,
         class: 'dropzone',
         id: element.getAttribute('id'),
-        draggable: true,
+        isDraggable: true,
       };
       const taskJSON = JSON.stringify(taskObj);
       sessionStorage.setItem(element.getAttribute('id'), taskJSON);
@@ -203,7 +190,7 @@ class TaskListController {
         isComplete: element.getAttribute('isComplete'),
         class: 'none',
         id: element.getAttribute('id'),
-        draggable: false,
+        isDraggable: false,
       };
       const taskJSON = JSON.stringify(taskObj);
       sessionStorage.setItem(element.getAttribute('id'), taskJSON);
@@ -291,7 +278,7 @@ class TaskListController {
   }
 
   /**
-   * Make the tasks in the list draggable
+   * Make the tasks in the list isDraggable
    * Code taken from https://jsfiddle.net/mrinex/yLpx7etg/3/
    */
   makeTasksDraggable() {
@@ -314,7 +301,7 @@ class TaskListController {
       event.preventDefault();
     });
     document.addEventListener('drop', ({ target }) => {
-      if ((target.className === 'dropzone' || target.className === 'task-input dropzone') && target.id !== id) {
+      if ((target.class === 'dropzone' || target.class === 'task-input dropzone') && target.id !== id) {
         dragged.remove(dragged);
         for (let i = 0; i < list.length; i += 1) {
           if (list[i] === target) {
@@ -437,5 +424,3 @@ class TaskListController {
     }
   }
 }
-
-export default TaskListController;

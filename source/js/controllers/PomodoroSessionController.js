@@ -1,13 +1,16 @@
 import PomodoroSessions from '../constants/Enums.js';
 import { TimerStyles } from '../constants/Styles.js';
-import { Timer, TaskList, Notifications } from '../index.js';
 
 /**
- * Implements the PomodoroSessionController class. This singleton class is a controller for the timer
+ * Implements the PomodoroSessionController class. This class is a controller for the timer
  * object which keeps track of pomodoro session durations
  */
-class PomodoroSessionController {
-  constructor() {
+export default class PomodoroSessionController {
+  constructor(timer, taskList, notifications) {
+    this.timer = timer;
+    this.taskList = taskList;
+    this.notifications = notifications;
+
     this.sessionNumber = 0;
     this.isFullListVisible = true;
 
@@ -23,9 +26,8 @@ class PomodoroSessionController {
       taskListTitle: document.getElementById('list-title'),
     };
 
-    this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
-    if (TaskList.DOM_ELEMENTS.viewAll) {
-      TaskList.DOM_ELEMENTS.viewAll.onclick = () => this.viewAll();
+    if (this.taskList.DOM_ELEMENTS.viewAll) {
+      this.taskList.DOM_ELEMENTS.viewAll.onclick = () => this.viewAll();
     }
     this.loadTimerSettings();
   }
@@ -41,7 +43,7 @@ class PomodoroSessionController {
     this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
     this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
     this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
-    Timer.loadHideSecondsBoolean();
+    this.timer.loadHideSecondsBoolean();
     if (this.isIdle) {
       this.setTime(this.currentSession);
     }
@@ -174,19 +176,19 @@ class PomodoroSessionController {
    */
   async runWorkSession() {
     this.setSessionAndTime(PomodoroSessions.WORK);
-    TaskList.hasActiveSession = true;
-    TaskList.loadTasks();
-    if (!document.body.contains(TaskList.selectedTask)) {
-      TaskList.selectedTask = null;
+    this.taskList.hasActiveSession = true;
+    this.taskList.loadTasks();
+    if (!document.body.contains(this.taskList.selectedTask)) {
+      this.taskList.selectedTask = null;
     }
-    if (TaskList.selectedTask === null) {
-      TaskList.autoSelectTask();
+    if (this.taskList.selectedTask === null) {
+      this.taskList.autoSelectTask();
     }
-    TaskList.showSelectedTask();
-    await Timer.run();
+    this.taskList.showSelectedTask();
+    await this.timer.run();
     this.sessionNumber += 1;
     this.updateTaskList();
-    Notifications.notifyUser(this.currentSession, this.sessionNumber);
+    this.notifications.notifyUser(this.currentSession, this.sessionNumber);
   }
 
   /**
@@ -194,10 +196,10 @@ class PomodoroSessionController {
    */
   async runShortBreak() {
     this.setSessionAndTime(PomodoroSessions.SHORT_BREAK);
-    TaskList.hasActiveSession = false;
+    this.taskList.hasActiveSession = false;
     this.showFullTaskList();
-    await Timer.run();
-    Notifications.notifyUser(this.currentSession, this.sessionNumber);
+    await this.timer.run();
+    this.notifications.notifyUser(this.currentSession, this.sessionNumber);
   }
 
   /**
@@ -205,10 +207,10 @@ class PomodoroSessionController {
    */
   async runLongBreak() {
     this.setSessionAndTime(PomodoroSessions.LONG_BREAK);
-    TaskList.hasActiveSession = false;
+    this.taskList.hasActiveSession = false;
     this.showFullTaskList();
-    await Timer.run();
-    Notifications.notifyUser(this.currentSession, this.sessionNumber);
+    await this.timer.run();
+    this.notifications.notifyUser(this.currentSession, this.sessionNumber);
     this.sessionNumber = 0;
   }
 
@@ -252,11 +254,11 @@ class PomodoroSessionController {
    */
   setTime(sessionType) {
     if (sessionType === PomodoroSessions.WORK) {
-      Timer.setTime(this.workSessionDuration);
+      this.timer.setTime(this.workSessionDuration);
     } else if (sessionType === PomodoroSessions.SHORT_BREAK) {
-      Timer.setTime(this.shortBreakDuration);
+      this.timer.setTime(this.shortBreakDuration);
     } else {
-      Timer.setTime(this.longBreakDuration);
+      this.timer.setTime(this.longBreakDuration);
     }
   }
 
@@ -266,19 +268,19 @@ class PomodoroSessionController {
   viewAll() {
     if (this.isFullListVisible) {
       this.showFullTaskList();
-      TaskList.DOM_ELEMENTS.viewAll.style.display = 'inline';
+      this.taskList.DOM_ELEMENTS.viewAll.style.display = 'inline';
       this.isFullListVisible = false;
-      TaskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10134 Minimize Task List';
-      TaskList.DOM_ELEMENTS.addTaskButton.after(TaskList.DOM_ELEMENTS.viewAll);
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10134 Minimize Task List';
+      this.taskList.DOM_ELEMENTS.addTaskButton.after(this.taskList.DOM_ELEMENTS.viewAll);
     } else {
-      TaskList.loadTasks();
-      if (TaskList.selectedTask === null) {
-        TaskList.autoSelectTask();
+      this.taskList.loadTasks();
+      if (this.taskList.selectedTask === null) {
+        this.taskList.autoSelectTask();
       }
-      TaskList.showSelectedTask();
+      this.taskList.showSelectedTask();
       this.isFullListVisible = true;
-      TaskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10133 Expand Task List';
-      TaskList.DOM_ELEMENTS.taskList.after(TaskList.DOM_ELEMENTS.viewAll);
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10133 Expand Task List';
+      this.taskList.DOM_ELEMENTS.taskList.after(this.taskList.DOM_ELEMENTS.viewAll);
     }
   }
 
@@ -288,39 +290,39 @@ class PomodoroSessionController {
   showFullTaskList() {
     this.DOM_ELEMENTS.taskListTitle.style.marginTop = 'initial';
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Task List';
-    TaskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
-    const TLChildren = Array.from(TaskList.DOM_ELEMENTS.taskList.children);
+    this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
+    const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
       element.style.display = 'grid';
       element.onclick = () => element.toggleTaskSelection();
-      if (TaskList.selectedTask !== null) {
-        TaskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
-        if (TaskList.selectedTask.isExpanded === true) {
-          TaskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
+      if (this.taskList.selectedTask !== null) {
+        this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
+        if (this.taskList.selectedTask.isExpanded === true) {
+          this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
         }
       }
     });
-    const CLChildren = Array.from(TaskList.DOM_ELEMENTS.completedList.children);
+    const CLChildren = Array.from(this.taskList.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
       element.style.display = 'grid';
     });
-    if (TaskList.selectedTask) {
-      TaskList.selectedTask.styleSelectedTask();
+    if (this.taskList.selectedTask) {
+      this.taskList.selectedTask.styleSelectedTask();
     }
-    TaskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
-    if (TaskList.completedIsExpanded) {
-      TaskList.DOM_ELEMENTS.expandCompleted.click();
+    this.taskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
+    if (this.taskList.completedIsExpanded) {
+      this.taskList.DOM_ELEMENTS.expandCompleted.click();
     }
-    TaskList.DOM_ELEMENTS.viewAll.style.display = 'none';
-    TaskList.hideCompletedIfNoTasksExist();
+    this.taskList.DOM_ELEMENTS.viewAll.style.display = 'none';
+    this.taskList.hideCompletedIfNoTasksExist();
   }
 
   /**
    * Resets the timer to the starting work session state
    */
   resetToWorkSession() {
-    Timer.stop();
-    TaskList.hasActiveSession = false;
+    this.timer.stop();
+    this.taskList.hasActiveSession = false;
     this.isFullListVisible = false;
     this.viewAll();
     this.showFullTaskList();
@@ -340,11 +342,9 @@ class PomodoroSessionController {
    * Update the task-list if not empty
    */
   updateTaskList() {
-    if (TaskList.selectedTask) {
-      TaskList.updateSelectedTaskSessionCount();
-      TaskList.updateStorage();
+    if (this.taskList.selectedTask) {
+      this.taskList.updateSelectedTaskSessionCount();
+      this.taskList.updateStorage();
     }
   }
 }
-
-export default PomodoroSessionController;
