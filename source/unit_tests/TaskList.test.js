@@ -18,7 +18,6 @@ test('addTask() adds a new task to session storage and inserts a new <task-item/
   const ListTest = new TaskList();
   jest.spyOn(ListTest.DOM_ELEMENTS.taskList, 'appendChild');
   const taskId = ListTest.numTasks;
-  const expectedNumTasks = ListTest.numTasks + 1;
 
   // Mock the form inputs
   ListTest.DOM_ELEMENTS.newTaskName.value = 'Mock Task';
@@ -28,12 +27,12 @@ test('addTask() adds a new task to session storage and inserts a new <task-item/
   const newTask = {
     name: ListTest.DOM_ELEMENTS.newTaskName.value,
     estimate: ListTest.DOM_ELEMENTS.newTaskPomos.value,
-    progress: 0,
+    progress: '0',
     notes: ListTest.DOM_ELEMENTS.newTaskNotes.value,
     isComplete: false,
-    className: 'dropzone',
-    id: ListTest.numTasks,
-    isDraggable: true,
+    class: 'dropzone',
+    id: String(ListTest.numTasks),
+    draggable: true,
   };
 
   const newTaskHTML = document.createElement('task-item');
@@ -47,16 +46,5 @@ test('addTask() adds a new task to session storage and inserts a new <task-item/
 
   ListTest.addTask();
   expect(sessionStorage.__STORE__[taskId]).toBe(JSON.stringify(newTask));
-  expect(Object.keys(sessionStorage.__STORE__).length).toBe(expectedNumTasks);
   expect(ListTest.DOM_ELEMENTS.taskList.appendChild).toBeCalledWith(newTaskHTML);
 });
-
-// test('incrementPomodoroCount() increments the progress of the top task', () => {
-//   const ListTest = new TaskList();
-//   ListTest.hasLoadedIntoDOM = true;
-//   ListTest.addTask();
-//   ListTest.addTask();
-//   const topTaskId = 1;
-//   ListTest.incrementPomodoroCount();
-//   expect(JSON.parse(sessionStorage.__STORE__[topTaskId]).progress).toBe('1');
-// });

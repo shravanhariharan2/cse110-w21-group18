@@ -4,7 +4,7 @@
   "description": "Source code for CSE 110 Winter 2021 Group 18 Pomodoro app",
   "main": "./js/scripts/index.js",
   "scripts": {
-    "test": "jest --config jest.config.json --coverage",
+    "test": "jest --config jest.config.json",
     "cypress": "./node_modules/.bin/cypress run",
     "lint": "eslint ./ --ext .js",
     "lint:fix": "eslint ./ --ext .js --fix",
