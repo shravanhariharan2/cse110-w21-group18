@@ -15,6 +15,9 @@ const HtmlMocks = {
    `,
 
   TASK_LIST: `
+    <header id="to-do-list-header">
+      <p id="list-title">Task List</p>
+    </header>
     <input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
     <form id="task-add-input">
       <input type="text" id="add-task-name" placeholder="Task Name">
@@ -26,6 +29,7 @@ const HtmlMocks = {
       <input type="button" id="save-task" value="Save">
     </form>
     <div id="to-do-list"></div>
+    <button type="button" id="view-all">&#10133 Expand Task List</button>
     <header id="completed-list-header">
       <input id="expand-completed" type="image" title="Expand View" src="./media/expand-icon.png">
     </header>

@@ -1,16 +1,48 @@
+html{
+  min-width: 675px;
+  min-height: 620px;
+  top: 0;
+  left:0;
+  right:0;
+  bottom:0;
+}
 body {
-  background-color: #EDEAE5;
+  position: relative;
   font-family: 'Open Sans', sans-serif;
+  display: flex;
+  min-width: 675px;
+  min-height: 620px;
+  top: 0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+
+#left-half {
+  width: 50%;
+  overflow: hidden;
+}
+#right-half {
+  width: 50%;
+  display: flex;
+  margin-right: 100px;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 }
 
 /*box that holds timer and start/stop buttons and pomo label */
 #timer-box {
-  position: relative;
-  margin: 100px auto;
+  overflow:auto;
+  position: fixed;
+  left: 45%;
+  top: min(22.5%,200px);
+  transform: translate(-100%);
   background: #9FEDD7;
   width: 30%;
   min-width: 550px;
-  height: 350px;
+  max-width: 700px;
+  height: 400px;
   border-radius: 30px;
   text-align: center;
   display:flex;
@@ -22,7 +54,7 @@ body {
 #session-type {
   padding: 10px 0 0 0;
   color: #026670;
-  font-size: 22px;
+  font-size: clamp(22px,1.2vw,37px);
   position: relative;
   z-index: 1;
   display: flex;
@@ -48,7 +80,7 @@ body {
 /*the actual timer display*/
 #time {
   position: relative;
-  font-size: 100px;
+  font-size: 130px;
   color: #026670;
 }
 
@@ -66,7 +98,7 @@ body {
   outline: none;
   color: #026670;
   height: 60px;
-  width: 90px;
+  width: 100px;
 }
 
 #start:active {
@@ -82,3 +114,44 @@ body {
   margin-left: 70px;
   margin-top: 5px;
 }
+
+@media all and (max-width:1300px) {
+  body {
+    background-color: #fffbf6;
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  #timer-box {
+    position: relative;
+    transform: none;
+    left: auto;
+    top: auto;
+    background: #9FEDD7;
+    margin: 50px auto;
+    width: 30%;
+    min-width: 550px;
+    max-width: 700px;
+    height: 400px;
+    border-radius: 30px;
+    text-align: center;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  #settings-icon {
+    float: right;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    display: inline;
+    top: none;
+    right: none;
+  }
+  #left-half { width: 100%;}
+  #right-half { width: 100%;}
+}
+

@@ -21,11 +21,11 @@ class PomodoroSession {
     this.taskList = new TaskList();
     this.notifications = new NotificationService();
     this.settings = new Settings();
+    this.sessionNumber = 0;
+    this.isFullListVisible = true;
 
     this.currentSession = PomodoroSessions.WORK;
     this.isIdle = true;
-
-    this.sessionNumber = 0;
 
     this.DOM_ELEMENTS = {
       timer: document.getElementById('timer-box'),
@@ -33,8 +33,13 @@ class PomodoroSession {
       longBreak: document.getElementById('long-break'),
       workSession: document.getElementById('pomo'),
       button: document.getElementById('start'),
+      taskListTitle: document.getElementById('list-title'),
     };
 
+    this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
+    if (this.taskList.DOM_ELEMENTS.viewAll !== null) {
+      this.taskList.DOM_ELEMENTS.viewAll.onclick = () => this.viewAll();
+    }
     this.setSessionAndTime(PomodoroSessions.WORK);
 
     instance = this;
@@ -109,7 +114,11 @@ class PomodoroSession {
       this.stopIdling();
       await this.performPomodoroSession();
     } else {
-      this.resetToWorkSession();
+      try {
+        this.resetToWorkSession();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }
 
@@ -181,9 +190,18 @@ class PomodoroSession {
    */
   async runWorkSession() {
     this.setSessionAndTime(PomodoroSessions.WORK);
-    this.showCurrentTask();
+    this.taskList.hasActiveSession = true;
+    this.taskList.loadTasks();
+    if (!document.body.contains(this.taskList.selectedTask)) {
+      this.taskList.selectedTask = null;
+    }
+    if (this.taskList.selectedTask === null) {
+      this.taskList.autoSelectTask();
+    }
+    this.taskList.showSelectedTask();
     await this.timer.run();
     this.sessionNumber += 1;
+    this.updateTaskList();
     this.notifications.notifyUser(this.currentSession, this.sessionNumber);
   }
 
@@ -192,6 +210,8 @@ class PomodoroSession {
    */
   async runShortBreak() {
     this.setSessionAndTime(PomodoroSessions.SHORT_BREAK);
+    this.taskList.hasActiveSession = false;
+    this.showFullTaskList();
     await this.timer.run();
     this.notifications.notifyUser(this.currentSession, this.sessionNumber);
   }
@@ -201,6 +221,8 @@ class PomodoroSession {
    */
   async runLongBreak() {
     this.setSessionAndTime(PomodoroSessions.LONG_BREAK);
+    this.taskList.hasActiveSession = false;
+    this.showFullTaskList();
     await this.timer.run();
     this.notifications.notifyUser(this.currentSession, this.sessionNumber);
     this.sessionNumber = 0;
@@ -255,10 +277,69 @@ class PomodoroSession {
   }
 
   /**
+   * Shows the full task list by button
+   */
+  viewAll() {
+    if (this.isFullListVisible) {
+      this.showFullTaskList();
+      this.taskList.DOM_ELEMENTS.viewAll.style.display = 'inline';
+      this.isFullListVisible = false;
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10134 Minimize Task List';
+      this.taskList.DOM_ELEMENTS.addTaskButton.after(this.taskList.DOM_ELEMENTS.viewAll);
+    } else {
+      this.taskList.loadTasks();
+      if (this.taskList.selectedTask === null) {
+        this.taskList.autoSelectTask();
+      }
+      this.taskList.showSelectedTask();
+      this.isFullListVisible = true;
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10133 Expand Task List';
+      this.taskList.DOM_ELEMENTS.taskList.after(this.taskList.DOM_ELEMENTS.viewAll);
+    }
+  }
+
+  /**
+   * Displays full taskList
+   */
+  showFullTaskList() {
+    this.DOM_ELEMENTS.taskListTitle.style.marginTop = 'initial';
+    this.DOM_ELEMENTS.taskListTitle.innerText = 'Task List';
+    this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
+    const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);
+    TLChildren.forEach((element) => {
+      element.style.display = 'grid';
+      element.onclick = () => element.toggleTaskSelection();
+      if (this.taskList.selectedTask !== null) {
+        this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
+        if (this.taskList.selectedTask.isExpanded === true) {
+          this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
+        }
+      }
+    });
+    const CLChildren = Array.from(this.taskList.DOM_ELEMENTS.completedList.children);
+    CLChildren.forEach((element) => {
+      element.style.display = 'grid';
+    });
+    if (this.taskList.selectedTask) {
+      this.taskList.selectedTask.styleSelectedTask();
+    }
+    this.taskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
+    if (this.taskList.completedIsExpanded) {
+      this.taskList.DOM_ELEMENTS.expandCompleted.click();
+    }
+    this.taskList.DOM_ELEMENTS.viewAll.style.display = 'none';
+    this.taskList.hideCompletedIfNoTasksExist();
+  }
+
+  /**
    * Resets the timer to the starting work session state
    */
   resetToWorkSession() {
     this.timer.stop();
+    this.taskList.hasActiveSession = false;
+    this.isFullListVisible = false;
+    this.viewAll();
+    this.showFullTaskList();
     this.idleAtWorkSession();
   }
 
@@ -272,22 +353,12 @@ class PomodoroSession {
   }
 
   /**
-   * Displays the current task on the screen
+   * Update the task-list if not empty
    */
-  showCurrentTask() {
-    this.autoSelectTask();
-  }
-
-  /**
-   * Selects the first task in the list if no task selected
-   */
-  autoSelectTask() {
-    if (this.taskList.numTasks !== 0) {
-      if (this.taskList.selectedTask === null) {
-        const defaultTask = this.taskList.DOM_ELEMENTS.taskList.children[0];
-        defaultTask.toggleTaskSelection();
-        this.taskList.selectedTask = defaultTask;
-      }
+  updateTaskList() {
+    if (this.taskList.selectedTask) {
+      this.taskList.updateSelectedTaskSessionCount();
+      this.taskList.updateStorage();
     }
   }
 }
