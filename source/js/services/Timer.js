@@ -64,7 +64,6 @@ class Timer {
     }
     this.seconds -= 1;
     this.updateDocument();
-    // this.DEBUG_PRINT(`${this.minutes}:${this.seconds}`);
   }
 
   /**

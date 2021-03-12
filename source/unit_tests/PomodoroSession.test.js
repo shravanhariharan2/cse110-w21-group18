@@ -15,7 +15,8 @@ window.HTMLMediaElement.prototype.play = () => playAudio();
 test('Constructor initializes correct instance variables', () => {
   const PomoTest = new PomodoroSession();
   expect(PomoTest.sessionNumber).toBe(0);
-  expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
+  PomoTest.currentSession = PomodoroSessionStates.WORK;
+  expect(PomoTest.isIdle).toBe(true);
 });
 
 test('Session number increases after one pomodoro work session', async () => {
@@ -33,11 +34,11 @@ test('Timer resets and idles after a short break', async () => {
   jest.useFakeTimers();
   const PomoTest = new PomodoroSession();
   PomoTest.notifications.notifyUser = jest.fn();
-  const promise = PomoTest.runShortBreak();
+  const promise = PomoTest.performShortBreakSession();
   jest.advanceTimersByTime(MS_IN_SHORT_BREAK);
   await promise;
-  expect(PomoTest.timer.minutes).toBe(PomoTest.WORK_SESSION_DURATION);
-  expect(PomoTest.currentSession).toBe(PomodoroSessionStates.IDLE);
+  expect(PomoTest.timer.minutes).toBe(PomoTest.workSessionDuration);
+  expect(PomoTest.isIdle).toBe(true);
 });
 
 test('Session resets to zero and timer idles after a long break', async () => {
@@ -49,7 +50,7 @@ test('Session resets to zero and timer idles after a long break', async () => {
   jest.advanceTimersByTime(MS_IN_LONG_BREAK);
   await promise;
   expect(PomoTest.sessionNumber).toBe(0);
-  expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
+  expect(PomoTest.isIdle).toBe(true);
 });
 
 test('Stop resets the timer to the work session', () => {
@@ -62,5 +63,5 @@ test('Stop resets the timer to the work session', () => {
   PomoTest.toggleSession();
   expect(PomoTest.sessionNumber).toBe(0);
   expect(PomoTest.timer.minutes).toBe(25);
-  expect(PomoTest.currentState).toBe(PomodoroSessionStates.IDLE);
+  expect(PomoTest.isIdle).toBe(true);
 });
