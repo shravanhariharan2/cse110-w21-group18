@@ -4,6 +4,7 @@ import HtmlMocks from './HtmlMocks.js';
 import TimerController from '../js/controllers/TimerController.js';
 import TaskListController from '../js/controllers/TaskListController.js';
 import NotificationController from '../js/controllers/NotificationController.js';
+import SettingsController from '../js/controllers/SettingsController.js';
 
 const MS_IN_WORK_SESSION = 25 * 60 * 1000;
 const MS_IN_SHORT_BREAK = 5 * 60 * 1000;
@@ -18,9 +19,14 @@ const getNewPomodoroInstance = () => {
   const timerController = new TimerController(1000);
   const taskListController = new TaskListController();
   const notificationController = new NotificationController();
+  notificationController.notifyUser = jest.fn();
   return new PomodoroSessionController(timerController, taskListController, notificationController);
-}
+};
 
+beforeEach(() => {
+  localStorage.clear();
+  SettingsController.setDefaultValuesInStorage();
+});
 
 test('Constructor initializes correct instance variables', () => {
   const pomoTest = getNewPomodoroInstance();
@@ -32,7 +38,6 @@ test('Constructor initializes correct instance variables', () => {
 test('Session number increases after one pomodoro work session', async () => {
   jest.useFakeTimers();
   const pomoTest = getNewPomodoroInstance();
-  pomoTest.notifications.notifyUser = jest.fn();
   const expectedSession = pomoTest.sessionNumber + 1;
   const promise = pomoTest.runWorkSession();
   jest.advanceTimersByTime(MS_IN_WORK_SESSION);
@@ -43,7 +48,6 @@ test('Session number increases after one pomodoro work session', async () => {
 test('Timer resets and idles after a short break', async () => {
   jest.useFakeTimers();
   const pomoTest = getNewPomodoroInstance();
-  pomoTest.notifications.notifyUser = jest.fn();
   const promise = pomoTest.performShortBreakSession();
   jest.advanceTimersByTime(MS_IN_SHORT_BREAK);
   await promise;

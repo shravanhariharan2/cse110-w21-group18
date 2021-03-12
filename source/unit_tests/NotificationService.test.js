@@ -7,12 +7,12 @@ import NotificationController from '../js/controllers/NotificationController.js'
 document.body.innerHTML = HtmlMocks.AUDIO;
 
 test('notifyUser() plays an audio notification', () => {
-  const notificationController = new NotificationController();
+  const notificationTest = new NotificationController();
   const playAudio = jest.fn();
   window.HTMLMediaElement.prototype.play = () => playAudio();
   window.Notification = { permission: 'granted' };
-  notificationController.browserNotify = jest.fn();
-  notificationController.notifyUser();
+  notificationTest.browserNotify = jest.fn();
+  notificationTest.notifyUser();
   expect(playAudio).toHaveBeenCalled();
 });
 
@@ -27,12 +27,12 @@ test('createNotificationTitle() creates the correct title based on the current s
 });
 
 test('createNotificationBody() creates the correct body based on the current session type and number', () => {
-  const notificationController = new NotificationController();
-  const totalSessions = notificationController.NUM_SESSIONS_BEFORE_LONG_BREAK;
-  const shortBreakToWork = notificationController.createNotificationBody(PomodoroSessionStates.SHORT_BREAK, 1);
-  const longBreakToWork = notificationController.createNotificationBody(PomodoroSessionStates.LONG_BREAK, 1);
-  const workToShortBreak = notificationController.createNotificationBody(PomodoroSessionStates.WORK_SESSION, 1);
-  const workToLongBreak = notificationController.createNotificationBody(PomodoroSessionStates.WORK_SESSION, totalSessions);
+  const notificationTest = new NotificationController();
+  const totalSessions = notificationTest.NUM_SESSIONS_BEFORE_LONG_BREAK;
+  const shortBreakToWork = notificationTest.createNotificationBody(PomodoroSessionStates.SHORT_BREAK, 1);
+  const longBreakToWork = notificationTest.createNotificationBody(PomodoroSessionStates.LONG_BREAK, 1);
+  const workToShortBreak = notificationTest.createNotificationBody(PomodoroSessionStates.WORK_SESSION, 1);
+  const workToLongBreak = notificationTest.createNotificationBody(PomodoroSessionStates.WORK_SESSION, totalSessions);
   expect(shortBreakToWork.body).toBe(DisplayMessages.WORK_NEXT_NOTIFY);
   expect(longBreakToWork.body).toBe(DisplayMessages.WORK_NEXT_NOTIFY);
   expect(workToShortBreak.body).toBe(DisplayMessages.SHORT_BREAK_NEXT_NOTIFY);

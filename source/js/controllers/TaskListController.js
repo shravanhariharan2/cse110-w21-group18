@@ -60,9 +60,11 @@ export default class TaskListController {
       try {
         if (isTaskItem) {
           const taskObj = JSON.parse(sessionStorage.getItem(key));
-          if (typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
-           && typeof taskObj.progress !== 'undefined' && typeof taskObj.isComplete !== 'undefined'
-            && typeof taskObj.class !== 'undefined' && typeof taskObj.id !== 'undefined' && typeof taskObj.isDraggable !== 'undefined') {
+          const hasNoNullFields = typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
+            && typeof taskObj.progress !== 'undefined' && typeof taskObj.isComplete !== 'undefined'
+            && typeof taskObj.class !== 'undefined' && typeof taskObj.id !== 'undefined'
+            && typeof taskObj.isDraggable !== 'undefined';
+          if (hasNoNullFields) {
             const newTask = document.createElement('task-item');
             newTask.setAttribute('name', taskObj.name);
             newTask.setAttribute('estimate', taskObj.estimate);
@@ -75,12 +77,12 @@ export default class TaskListController {
             newTask.setAttribute('isDraggable', taskObj.isDraggable);
             if (parseInt(key, 10) > 0) {
               this.DOM_ELEMENTS.taskList.appendChild(newTask);
-              sessionNumTasks++;
+              sessionNumTasks += 1;
             } else {
               this.DOM_ELEMENTS.completedList.prepend(newTask);
               newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
               newTask.style.cursor = 'pointer';
-              sessionCompletedTasks++;
+              sessionCompletedTasks += 1;
             }
             newTask.addEventListener('click', this.selectTask.bind(this, newTask));
           }
