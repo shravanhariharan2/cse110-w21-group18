@@ -1,13 +1,10 @@
 /**
- * Implements the TaskList class. This singleton class is a controller for the task list which
+ * Implements the TaskList class. This class is a controller for the task list which
  * holds all the task items and the to-do lists and completed lists
  */
-let instance = null; // hold singleton of TaskLIst  class
 
-class TaskList {
+class TaskListController {
   constructor() {
-    if (instance) return instance;
-    instance = this;
     this.numTasks = 0;
     this.selectedTask = null;
     this.completedTasks = 0;
@@ -48,7 +45,6 @@ class TaskList {
     this.makeTasksDraggable();
     this.hideCompletedIfNoTasksExist();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
-    return instance;
   }
 
   /**
@@ -442,4 +438,4 @@ class TaskList {
   }
 }
 
-export default TaskList;
+export default TaskListController;

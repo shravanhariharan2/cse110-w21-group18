@@ -1,12 +1,12 @@
 import HtmlTemplates from '../constants/HtmlTemplates.js';
 import { TaskStyles } from '../constants/Styles.js';
-import TaskList from '../services/TaskList.js';
+import TaskListController from '../controllers/TaskListController.js';
 
 class TaskInput extends HTMLElement {
   constructor() {
     super();
     this.isSelected = false;
-    this.taskList = new TaskList();
+    this.taskList = new TaskListController();
     this.onclick = () => this.toggleTaskSelection();
   }
 

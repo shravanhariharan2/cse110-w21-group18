@@ -1,18 +1,20 @@
 /**
- * Implements a basic timer in javascript
- *
+ * Implements a basic timer with start and end capabilities
  */
-class Timer {
-  constructor(clockSpeed) {
+const CLOCK_SPEED = 1000;
+
+class TimerController {
+  constructor() {
     this.minutes = 0;
     this.seconds = 0;
     this.timeInterval = null;
     this.isRunning = false;
+    this.clockSpeed = CLOCK_SPEED;
     this.loadHideSecondsBoolean();
 
-    this.clockSpeed = clockSpeed;
-
-    this.timeDOMElement = document.getElementById('time');
+    this.DOM_ELEMENTS = {
+      time: document.getElementById('time'),
+    }
 
     // bind functions to instance
     this.step = this.step.bind(this);
@@ -47,7 +49,7 @@ class Timer {
     } else {
       timeString = `${paddedMinuteString} : ${paddedSecondString}`;
     }
-    this.timeDOMElement.innerHTML = timeString;
+    this.DOM_ELEMENTS.time.innerHTML = timeString;
   }
 
   /**
@@ -99,4 +101,4 @@ class Timer {
   }
 }
 
-export default Timer;
+export default TimerController;
