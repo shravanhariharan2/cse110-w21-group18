@@ -32,27 +32,26 @@
 #add-task {
   position: relative;
   height: 88px;
-  width: 500px;
+  width: 515px;
   margin: auto;
   margin-top: 30px;
   margin-bottom: 15px;
-  color: #129b24ef;
-  background-color: #b9fcb0;
+  left: 7.5px;
+  color: #f5f4f4;
+  background-color: #0badf8;
   font-size: 30px;
   font-weight: bold;
   display: block;
-  border-style:solid;
+  border-style: none;
   border-width: 2px;
   border-radius: 30px;
-  border-color: #129b24ef;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
   
 }
 #add-task:focus {
-    outline: none;
+  outline: none;
 }
 #add-task:active {
-  background-color:  #e2ffa4;
   box-shadow: 0 1px #cfbd79;
   transform: translateY(4px);
 }
@@ -87,10 +86,10 @@
   position: relative;
   margin: 0 auto;
   margin-top: 50px;
-  width: 450px;
+  width: 475px;
+  min-height: 200px;
   border-radius: 30px;
-  border-color:#026670;
-  border-style: solid;
+  border-style: none;
   border-width: 2.5px;
   text-align: center;
   grid-template-areas:
@@ -98,24 +97,26 @@
     'notes notes notes notes'
     'add add add add'
     'cancel cancel save save';
-  padding: 20px;
+  padding: 25px;
   grid-gap: 10px;
   background-color: #fffbf6;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
+  font-family: 'Open Sans', sans-serif;
   display: none;
 }
 /* name input */
 #add-task-name{
   grid-area: name;
-  height: 40px;
+  height: 35px;
   width: 200px;
   border-radius: 5px;
   border-style: solid;
   background-color: #fffbf6;
   font-family: 'Open Sans', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   border-width: 2.5px;
-  padding-left: 5px;
+  padding-left: 12.5px;
+  margin-top: 5px;
 }
 #add-task-name:focus {
   border-color: blue;
@@ -128,6 +129,7 @@
   grid-area: expect;
   width: 40px;
   margin: 0;
+  margin-top: 5px;
   height: 50px;
   padding-left: 5px;
   text-align: center;
@@ -136,7 +138,9 @@
 #pomos {
   text-align: center;
   grid-area: pomos;
-  height: 45px;
+  margin-top: 5px;
+  padding-right: 12.5px;
+  height: 40px;
   border-radius: 5px;
   border-style: solid;
   border-width: 2.5px;
@@ -151,7 +155,7 @@
 
 #clock-clip-art {
   grid-area: clock;
-  margin-top: 0;
+  margin-top: 5px;
   text-align: center;
   margin-left: 20px;
   height: 20px;
@@ -161,8 +165,8 @@
 #cancel-input {
   grid-area: cancel;
   position: relative;
-  width: 60px;
-  height: 35px;
+  width: 70px;
+  height: 40px;
   border-radius: 5px;
   text-align: center;
   background-color:#e65656ef;
@@ -171,23 +175,24 @@
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
   margin-left: 150px;
   margin-top: 5px;
-  font-size: 15px;
+  font-size: 16px;
   
 }
 
 #save-task{
   grid-area: save;
   margin-left: 150px;
-  width: 60px;
-  height: 35px;
+  width: 70px;
+  height: 40px;
   border-width: 0;
   border-radius: 5px;
   color: white;
   background-color: #4abb40ef;
   font-family: 'Open Sans', sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   margin-top: 5px;
   margin-left: -30px;
+  padding: 5;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 /* button to add notes */
@@ -197,8 +202,12 @@
   border-width: 2px;
   border-radius: 5px;
   background-color: #fffbf6;
-  height: 25px;
+  border-style: solid;
+  font-family: 'Open Sans', sans-serif;
+  height: 35px;
   margin-bottom: 10px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+
 }
 #add-notes:focus {
   outline: none;
@@ -212,9 +221,9 @@
   resize: none;
   border-radius: 5px;
   border-width: 2.5px;
-  font-size: 15px;
+  font-size: 16px;
   padding: 3px;
-  padding-left: 5px;
+  padding-left: 10px;
   padding-top: 5px;
   display: none;
 }
@@ -229,10 +238,9 @@ task-item {
   position: relative;
   margin: 0 auto;
   margin-top: 20px;
-  width: 450px;
+  width: 475px;
   border-radius: 30px;
-  border-color:#026670;
-  border-style: solid;
+  border-style: none;
   border-width: 2px;
   text-align: center;
   display: grid;
@@ -243,7 +251,7 @@ task-item {
   padding: 20px 20px 10px;
   grid-gap: 5px;
   background-color: #fffbf6;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
 }
 
 .expand-button {
@@ -437,7 +445,7 @@ task-item {
 /* style for editing a task */
 #change-task-name{
   grid-area: name;
-  height: 40px;
+  height: 35px;
   width: 200px;
   border-radius:5px;
   border-style:solid;

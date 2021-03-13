@@ -1,6 +1,18 @@
+:root {
+  --main-bg-color: #f5eadb;
+  --main-timer-bg-color: #ffffff;
+  --main-border-color: #208FF3;
+  --main-text-color: #000000;
+  --main-timer-bg-color: #63d5e7;
+  --short-break-bg-color: #FEF9C7;
+  --long-break-bg-color: #FCE181;
+  --main-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.20), 0 12px 40px 0 rgba(0, 0, 0, 0.20);
+}
+
 html{
   min-width: 675px;
   min-height: 620px;
+  background-color: var(--main-bg-color);
   top: 0;
   left:0;
   right:0;
@@ -38,7 +50,7 @@ body {
   left: 45%;
   top: min(22.5%,200px);
   transform: translate(-100%);
-  background: #9FEDD7;
+  background: #ffffff;
   width: 30%;
   min-width: 550px;
   max-width: 700px;
@@ -48,12 +60,12 @@ body {
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
 }
 /*holds the label for which type of timer is running */
 #session-type {
   padding: 10px 0 0 0;
-  color: #026670;
+  color: var(--main-text-color);
   font-size: clamp(22px,1.2vw,37px);
   position: relative;
   z-index: 1;
@@ -81,7 +93,7 @@ body {
 #time {
   position: relative;
   font-size: 130px;
-  color: #026670;
+  color: var(--main-text-color);
 }
 
 /* start button */
@@ -90,13 +102,13 @@ body {
   font-size: 20px;
   position: relative;
   top: -3px;
-  border-color: #026670;
+  border-color: var(--main-text-color);
   border-radius: 5px;
-  background-color: #EDEAE5;
-  border-style: outset;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: var(--main-bg-color);
+  border-style: solid;
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
   outline: none;
-  color: #026670;
+  color: var(--main-text-color);
   height: 60px;
   width: 100px;
 }
@@ -139,7 +151,7 @@ body {
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
   }
   #settings-icon {
     float: right;
