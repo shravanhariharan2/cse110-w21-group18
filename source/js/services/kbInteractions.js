@@ -29,7 +29,7 @@ class keyboardInteractions {
         this.dprint = this.dprint.bind(this);
 
         // add event listeners
-        document.addEventListener("keyup", this.onKeyUp);
+        document.addEventListener("keyup", this.onKeyUp, false);
        
     }
 
@@ -60,6 +60,8 @@ class keyboardInteractions {
 
             // non-cased keys
             default: 
+                if(this.kbMutex)
+                    return;
                 this.dprint(`key: ${event.keyCode} is not implemented`);
         }
     }
@@ -129,16 +131,21 @@ class keyboardInteractions {
         if(mutex)
             return;
 
-        event.preventDefault();
+        event.stopImmediatePropagation();
         // handle enter on <add-task-button>
         if(this.focusIdx === 0) {
             this.dprint(`form display value: ${this.DOM_ELEMENTS.inputBox.style.display}`);
             if(this.DOM_ELEMENTS.inputBox.style.display == 'none' || 
                 this.DOM_ELEMENTS.inputBox.style.display === undefined) {
                this.DOM_ELEMENTS.addTaskButton.click();
+               this.DOM_ELEMENTS.inputTextField.focus();
             }
             else {
-                this.DOM_ELEMENTS.cancelInput.click();
+                // if task text box is non-empty then add task
+                if(this.DOM_ELEMENTS.inputTextField.value.length === 0)
+                    this.DOM_ELEMENTS.cancelInput.click();
+                else
+                    this.DOM_ELEMENTS.acceptInput.click();
             }
         }
         // handle enter on <task>
