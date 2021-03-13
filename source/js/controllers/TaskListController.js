@@ -62,7 +62,7 @@ export default class TaskListController {
         const hasNoNullFields = typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
           && typeof taskObj.progress !== 'undefined' && typeof taskObj.isComplete !== 'undefined'
           && typeof taskObj.class !== 'undefined' && typeof taskObj.id !== 'undefined'
-          && typeof taskObj.isDraggable !== 'undefined';
+          && typeof taskObj.draggable !== 'undefined';
         if (hasNoNullFields) {
           const newTask = document.createElement('task-item');
           newTask.setAttribute('name', taskObj.name);
@@ -73,7 +73,7 @@ export default class TaskListController {
           newTask.isComplete = taskObj.isComplete;
           newTask.setAttribute('class', taskObj.class);
           newTask.setAttribute('id', taskObj.id);
-          newTask.setAttribute('isDraggable', taskObj.isDraggable);
+          newTask.setAttribute('draggable', taskObj.draggable);
           if (parseInt(key, 10) > 0) {
             this.DOM_ELEMENTS.taskList.appendChild(newTask);
             sessionNumTasks += 1;
@@ -173,7 +173,7 @@ export default class TaskListController {
         isComplete: false,
         class: 'dropzone',
         id: element.getAttribute('id'),
-        isDraggable: true,
+        draggable: true,
       };
       const taskJSON = JSON.stringify(taskObj);
       sessionStorage.setItem(element.getAttribute('id'), taskJSON);
@@ -188,7 +188,7 @@ export default class TaskListController {
         isComplete: element.getAttribute('isComplete'),
         class: 'none',
         id: element.getAttribute('id'),
-        isDraggable: false,
+        draggable: false,
       };
       const taskJSON = JSON.stringify(taskObj);
       sessionStorage.setItem(element.getAttribute('id'), taskJSON);
@@ -276,7 +276,7 @@ export default class TaskListController {
   }
 
   /**
-   * Make the tasks in the list isDraggable
+   * Make the tasks in the list draggable
    * Code taken from https://jsfiddle.net/mrinex/yLpx7etg/3/
    */
   makeTasksDraggable() {
@@ -299,7 +299,7 @@ export default class TaskListController {
       event.preventDefault();
     });
     document.addEventListener('drop', ({ target }) => {
-      if ((target.class === 'dropzone' || target.class === 'task-input dropzone') && target.id !== id) {
+      if ((target.className === 'dropzone' || target.className === 'task-input dropzone') && target.id !== id) {
         dragged.remove(dragged);
         for (let i = 0; i < list.length; i += 1) {
           if (list[i] === target) {

@@ -33,7 +33,7 @@ test('addTask() adds a new task to session storage and inserts a new <task-item/
     isComplete: false,
     class: 'dropzone',
     id: taskListController.numTasks.toString(),
-    isDraggable: true,
+    draggable: true,
   };
 
   const newTaskHTML = document.createElement('task-item');

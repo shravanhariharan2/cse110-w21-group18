@@ -12,7 +12,7 @@ class TaskItem extends HTMLElement {
   }
 
   connectedCallback() {
-    this.setAttribute('isDraggable', 'true');
+    this.setAttribute('draggable', 'true');
     this.loadDOMElements();
   }
 
@@ -116,7 +116,7 @@ class TaskItem extends HTMLElement {
     inputElement.setAttribute('isComplete', this.getAttribute('isComplete'));
     inputElement.setAttribute('progress', this.getAttribute('progress'));
     inputElement.setAttribute('notes', this.getAttribute('notes'));
-    inputElement.setAttribute('isDraggable', true);
+    inputElement.setAttribute('draggable', true);
     this.after(inputElement);
     inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
     inputElement.shadowRoot.querySelector('.pomos').value = this.getAttribute('estimate');
@@ -146,7 +146,7 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('isComplete', taskObj.isComplete);
       newTask.setAttribute('class', taskObj.class);
       newTask.setAttribute('id', taskObj.id);
-      newTask.setAttribute('isDraggable', taskObj.isDraggable);
+      newTask.setAttribute('draggable', taskObj.draggable);
       inputElement.remove();
       // insert where it was before
       if (inputElement.id !== '1') {
@@ -165,7 +165,7 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
       newTask.setAttribute('class', inputElement.getAttribute('class'));
       newTask.setAttribute('id', inputElement.id);
-      newTask.setAttribute('isDraggable', inputElement.getAttribute('isDraggable'));
+      newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
       inputElement.remove();
       // insert where it was before
       if (inputElement.id !== '1') {
@@ -222,7 +222,7 @@ class TaskItem extends HTMLElement {
       this.setAttribute('isComplete', 'true');
       checkboxLabel.title = 'Unmark as Done';
       checkedList.appendChild(this);
-      this.setAttribute('isDraggable', false);
+      this.setAttribute('draggable', false);
       this.setAttribute('class', 'none');
       this.style.cursor = 'pointer';
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
@@ -232,7 +232,7 @@ class TaskItem extends HTMLElement {
       this.setAttribute('isComplete', 'false');
       checkboxLabel.title = 'Mark as Done';
       taskList.appendChild(this);
-      this.setAttribute('isDraggable', true);
+      this.setAttribute('draggable', true);
       this.setAttribute('class', 'dropzone');
       this.style.cursor = 'move';
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
