@@ -15,6 +15,7 @@ class keyboardInteractions {
             confirmTaskButton: document.getElementById('save-task'),
             inputBox: document.getElementById('task-add-input'),
             inputTextField: document.getElementById('add-task-name'),
+            inputMultiField: document.getElementById('pomos'),
             notesTextField: document.getElementById('add-task-description'),
             cancelInput: document.getElementById('cancel-input'),
             acceptInput: document.getElementById('save-task'),
@@ -27,6 +28,7 @@ class keyboardInteractions {
         // bind functions 
         this.onKeyUp = this.onKeyUp.bind(this);
         this.dprint = this.dprint.bind(this);
+        this.incrementIdx = this.incrementIdx.bind(this);
 
         // add event listeners
         document.addEventListener("keyup", this.onKeyUp, false);
@@ -96,7 +98,7 @@ class keyboardInteractions {
             this.incrementIdx();
 
             // if the current focus is not a task then it must be the add task button
-            if(this.focusIdx === 0) {
+            if(this.focusIdx === 0 ) {
                 this.DOM_ELEMENTS.inputBox.focus();
                 // unclick the last task (so it's not highlighted)
                 try {
