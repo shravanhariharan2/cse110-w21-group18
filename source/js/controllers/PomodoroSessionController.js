@@ -100,11 +100,7 @@ export default class PomodoroSessionController {
       this.stopIdling();
       await this.performPomodoroSession();
     } else {
-      try {
-        this.resetToWorkSession();
-      } catch (error) {
-        console.log(error);
-      }
+      this.resetToWorkSession();
     }
   }
 

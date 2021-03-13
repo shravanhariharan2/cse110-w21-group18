@@ -57,38 +57,34 @@ export default class TaskListController {
       const keyNum = parseInt(key, 10);
       // maximum of 1000 tasks in both lists
       const isTaskItem = (keyNum > -1000) && (keyNum < 1000) && (keyNum !== 0);
-      try {
-        if (isTaskItem) {
-          const taskObj = JSON.parse(sessionStorage.getItem(key));
-          const hasNoNullFields = typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
-            && typeof taskObj.progress !== 'undefined' && typeof taskObj.isComplete !== 'undefined'
-            && typeof taskObj.class !== 'undefined' && typeof taskObj.id !== 'undefined'
-            && typeof taskObj.isDraggable !== 'undefined';
-          if (hasNoNullFields) {
-            const newTask = document.createElement('task-item');
-            newTask.setAttribute('name', taskObj.name);
-            newTask.setAttribute('estimate', taskObj.estimate);
-            newTask.setAttribute('progress', taskObj.progress);
-            newTask.setAttribute('notes', taskObj.notes);
-            newTask.setAttribute('isComplete', taskObj.isComplete);
-            newTask.isComplete = taskObj.isComplete;
-            newTask.setAttribute('class', taskObj.class);
-            newTask.setAttribute('id', taskObj.id);
-            newTask.setAttribute('isDraggable', taskObj.isDraggable);
-            if (parseInt(key, 10) > 0) {
-              this.DOM_ELEMENTS.taskList.appendChild(newTask);
-              sessionNumTasks += 1;
-            } else {
-              this.DOM_ELEMENTS.completedList.prepend(newTask);
-              newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-              newTask.style.cursor = 'pointer';
-              sessionCompletedTasks += 1;
-            }
-            newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+      if (isTaskItem) {
+        const taskObj = JSON.parse(sessionStorage.getItem(key));
+        const hasNoNullFields = typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
+          && typeof taskObj.progress !== 'undefined' && typeof taskObj.isComplete !== 'undefined'
+          && typeof taskObj.class !== 'undefined' && typeof taskObj.id !== 'undefined'
+          && typeof taskObj.isDraggable !== 'undefined';
+        if (hasNoNullFields) {
+          const newTask = document.createElement('task-item');
+          newTask.setAttribute('name', taskObj.name);
+          newTask.setAttribute('estimate', taskObj.estimate);
+          newTask.setAttribute('progress', taskObj.progress);
+          newTask.setAttribute('notes', taskObj.notes);
+          newTask.setAttribute('isComplete', taskObj.isComplete);
+          newTask.isComplete = taskObj.isComplete;
+          newTask.setAttribute('class', taskObj.class);
+          newTask.setAttribute('id', taskObj.id);
+          newTask.setAttribute('isDraggable', taskObj.isDraggable);
+          if (parseInt(key, 10) > 0) {
+            this.DOM_ELEMENTS.taskList.appendChild(newTask);
+            sessionNumTasks += 1;
+          } else {
+            this.DOM_ELEMENTS.completedList.prepend(newTask);
+            newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+            newTask.style.cursor = 'pointer';
+            sessionCompletedTasks += 1;
           }
+          newTask.addEventListener('click', this.selectTask.bind(this, newTask));
         }
-      } catch (error) {
-        console.log(error);
       }
     });
     sessionStorage.setItem('numTasks', sessionNumTasks);
