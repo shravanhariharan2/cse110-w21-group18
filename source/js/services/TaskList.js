@@ -48,6 +48,7 @@ class TaskList {
     this.makeTasksDraggable();
     this.hideCompletedIfNoTasksExist();
     this.DOM_ELEMENTS.completedList.style.display = 'none';
+    this.DOM_ELEMENTS.inputBox.style.display = 'none';
     return instance;
   }
 

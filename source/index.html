@@ -100,8 +100,8 @@
 				<p id="list-title">Task List</p>
 			</header>
 			<hr id="task-line-break">
-			<input type="button" id="add-task" value="Add Task" tabindex="10" title="Add Tasks"></input>
-			<form id="task-add-input">
+			<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
+			<form id="task-add-input" tabindex="10">
 				<input type="text" id="add-task-name" placeholder="Task Name">
 				<p id="expected">Expected Pomodoros:</p>
 				<img src="./media/icons/clock.jpg" id="clock-clip-art">
@@ -141,4 +141,6 @@
 	<script type="module" src="js/scripts/kb.js"></script>
 	<script type="module" src="js/components/TaskItem.js"></script>
 	<script type="module" src="js/components/TaskInput.js"></script>
+	<!-- focus onto the first element -->
+	<script>document.getElementById('task-add-input').focus();</script>
 </html>
