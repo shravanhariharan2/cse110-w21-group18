@@ -20,10 +20,20 @@ export default class NotificationController {
   * @param {int} sessionNumber an integer representing the worksessions finished
   */
   notifyUser(currentState, sessionNumber) {
-    this.DOM_ELEMENTS.alarm.play();
+    if (!NotificationController.hasAudioMuted()) {
+      this.audioNotify();
+    }
     if (Notification.permission === 'granted') {
       this.browserNotify(currentState, sessionNumber);
     }
+  }
+
+  static hasAudioMuted() {
+    return localStorage.getItem('muteAudio') === 'true';
+  }
+
+  audioNotify() {
+    this.DOM_ELEMENTS.alarm.play();
   }
 
   /**

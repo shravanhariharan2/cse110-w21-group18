@@ -26,6 +26,7 @@ export default class SettingsController {
       pauseBeforeBox: document.getElementById('pause-before-breaks'),
       pauseAfterBox: document.getElementById('pause-after-breaks'),
       hideSecondsBox: document.getElementById('hide-seconds'),
+      muteAudioBox: document.getElementById('mute-audio'),
     };
 
     this.DOM_ELEMENTS.settingsModal.style.display = 'none';
@@ -43,6 +44,7 @@ export default class SettingsController {
     this.DOM_ELEMENTS.pauseBeforeBox.checked = this.pauseBeforeBreak;
     this.DOM_ELEMENTS.pauseAfterBox.checked = this.pauseAfterBreak;
     this.DOM_ELEMENTS.hideSecondsBox.checked = this.hideSeconds;
+    this.DOM_ELEMENTS.muteAudioBox.checked = this.muteAudio;
   }
 
   /**
@@ -92,6 +94,7 @@ export default class SettingsController {
     localStorage.setItem('pauseBeforeBreak', false);
     localStorage.setItem('pauseAfterBreak', true);
     localStorage.setItem('hideSeconds', false);
+    localStorage.setItem('muteAudio', false);
   }
 
   /**
@@ -105,6 +108,7 @@ export default class SettingsController {
     this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
     this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
     this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
+    this.muteAudio = localStorage.getItem('muteAudio') === 'true';
     this.pomodoroSession.loadTimerSettings();
   }
 
@@ -139,6 +143,14 @@ export default class SettingsController {
     } else {
       localStorage.setItem('hideSeconds', false);
       this.hideSeconds = false;
+    }
+
+    if (this.DOM_ELEMENTS.muteAudioBox.checked) {
+      localStorage.setItem('muteAudio', true);
+      this.muteAudio = true;
+    } else {
+      localStorage.setItem('muteAudio', false);
+      this.muteAudio = false;
     }
 
     this.loadStoredInputValues();
