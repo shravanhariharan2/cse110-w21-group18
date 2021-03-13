@@ -89,6 +89,7 @@ class TaskList {
             newTask.setAttribute('class', taskObj.class);
             newTask.setAttribute('id', taskObj.id);
             newTask.setAttribute('draggable', taskObj.draggable);
+            newTask.setAttribute('tabindex', 10);
             if (parseInt(key, 10) > 0) {
               this.DOM_ELEMENTS.taskList.appendChild(newTask);
               sessionNumTasks++;
@@ -272,6 +273,7 @@ class TaskList {
     newTask.setAttribute('isComplete', false);
     newTask.setAttribute('class', 'dropzone');
     newTask.setAttribute('id', this.numTasks);
+    newTask.setAttribute('tabindex', 10);
 
     this.DOM_ELEMENTS.taskList.appendChild(newTask);
     this.DOM_ELEMENTS.inputBox.style.display = 'none';

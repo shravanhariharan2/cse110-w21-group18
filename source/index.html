@@ -100,7 +100,7 @@
 				<p id="list-title">Task List</p>
 			</header>
 			<hr id="task-line-break">
-			<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
+			<input type="button" id="add-task" value="Add Task" tabindex="10" title="Add Tasks"></input>
 			<form id="task-add-input">
 				<input type="text" id="add-task-name" placeholder="Task Name">
 				<p id="expected">Expected Pomodoros:</p>
@@ -133,10 +133,12 @@
 	<script type="module" src="js/services/Timer.js"></script>
 	<script type="module" src="js/services/TaskList.js"></script>
 	<script type="module" src="js/services/Settings.js"></script>
+	<script type="module" src="js/services/kbInteractions.js"></script>
 	<script type="module" src="js/constants/Enums.js"></script>
 	<script type="module" src="js/scripts/index.js"></script>
 	<script type="module" src="js/scripts/tasks.js"></script>
 	<script type="module" src="js/scripts/settings.js"></script>
+	<script type="module" src="js/scripts/kb.js"></script>
 	<script type="module" src="js/components/TaskItem.js"></script>
 	<script type="module" src="js/components/TaskInput.js"></script>
 </html>
