@@ -1,3 +1,5 @@
+import Constants from "../constants/Constants.js";
+
 /**
  * Implements a basic timer with start and end capabilities
  */
@@ -12,13 +14,14 @@ export default class TimerController {
 
     this.DOM_ELEMENTS = {
       time: document.getElementById('time'),
+      title: document.getElementById('title'),
     };
 
     // bind functions to instance
     this.step = this.step.bind(this);
     this.stop = this.stop.bind(this);
     this.run = this.run.bind(this);
-    this.updateDocument = this.updateDocument.bind(this);
+    this.updateTimeUI = this.updateTimeUI.bind(this);
   }
 
   loadHideSecondsBoolean() {
@@ -32,13 +35,26 @@ export default class TimerController {
   setTime(timeInMinutes) {
     this.minutes = timeInMinutes;
     this.seconds = 0;
-    this.updateDocument();
+    this.updateTimeUI();
+  }
+
+  updateTimeUI() {
+    this.updateTimerTime();
+    this.updateTitleTime();
   }
 
   /**
    * Re-renders the timer time display
    */
-  updateDocument() {
+  updateTimerTime() {
+    this.DOM_ELEMENTS.time.innerHTML = this.getTimerTimeString();
+  }
+
+  updateTitleTime() {
+    this.DOM_ELEMENTS.title.innerHTML = this.getTitleTimeString();
+  }
+
+  getTimerTimeString() {
     const paddedMinuteString = this.minutes.toString().padStart(2, '0');
     const paddedSecondString = this.seconds.toString().padStart(2, '0');
     let timeString;
@@ -47,8 +63,23 @@ export default class TimerController {
     } else {
       timeString = `${paddedMinuteString} : ${paddedSecondString}`;
     }
-    this.DOM_ELEMENTS.time.innerHTML = timeString;
+    return timeString;
   }
+
+  getTitleTimeString() {
+    const paddedMinuteString = this.minutes.toString().padStart(2, '0');
+    const paddedSecondString = this.seconds.toString().padStart(2, '0');
+    let timeString;
+    if (this.hideSeconds && this.minutes > 0) {
+      timeString = `${paddedMinuteString}m`;
+    } else {
+      timeString = `${paddedMinuteString}:${paddedSecondString}`;
+    }
+    const currentTitleString = this.DOM_ELEMENTS.title.innerHTML;
+    const titleTimeString =  timeString + ' - ' + currentTitleString.slice(Constants.TIME_PAD_SIZE);
+    return titleTimeString;
+  }
+
 
   /**
    * Performs a single timer counting operation
@@ -63,7 +94,7 @@ export default class TimerController {
       }
     }
     this.seconds -= 1;
-    this.updateDocument();
+    this.updateTimeUI();
   }
 
   /**
@@ -86,7 +117,7 @@ export default class TimerController {
     this.isRunning = true;
     this.minutes -= 1;
     this.seconds = 59;
-    this.updateDocument();
+    this.updateTimeUI();
   }
 
   /**
@@ -95,5 +126,6 @@ export default class TimerController {
   stop() {
     this.isRunning = false;
     clearInterval(this.timeInterval);
+    this.updateTimeUI();
   }
 }

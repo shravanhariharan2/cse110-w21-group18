@@ -1,3 +1,4 @@
+import Constants from '../constants/Constants.js';
 import PomodoroSessions from '../constants/Enums.js';
 import { TimerStyles } from '../constants/Styles.js';
 
@@ -19,6 +20,7 @@ export default class PomodoroSessionController {
 
     this.DOM_ELEMENTS = {
       timer: document.getElementById('timer-box'),
+      title: document.getElementById('title'),
       shortBreak: document.getElementById('short-break'),
       longBreak: document.getElementById('long-break'),
       workSession: document.getElementById('pomo'),
@@ -130,9 +132,9 @@ export default class PomodoroSessionController {
   async performWorkSession() {
     await this.runWorkSession();
     if (this.sessionNumber < this.numSessionsBeforeLongBreak) {
-      this.setSessionAndTime(PomodoroSessions.SHORT_BREAK);
+      this.setSessionTimeAndTitle(PomodoroSessions.SHORT_BREAK);
     } else {
-      this.setSessionAndTime(PomodoroSessions.LONG_BREAK);
+      this.setSessionTimeAndTitle(PomodoroSessions.LONG_BREAK);
     }
     if (this.pauseBeforeBreak) {
       this.idle();
@@ -145,7 +147,7 @@ export default class PomodoroSessionController {
    */
   async performShortBreakSession() {
     await this.runShortBreak();
-    this.setSessionAndTime(PomodoroSessions.WORK);
+    this.setSessionTimeAndTitle(PomodoroSessions.WORK);
     if (this.pauseAfterBreak) {
       this.idle();
     } else {
@@ -159,7 +161,7 @@ export default class PomodoroSessionController {
    */
   async performLongBreakSession() {
     await this.runLongBreak();
-    this.setSessionAndTime(PomodoroSessions.WORK);
+    this.setSessionTimeAndTitle(PomodoroSessions.WORK);
     if (this.pauseAfterBreak) {
       this.idle();
     } else {
@@ -171,7 +173,7 @@ export default class PomodoroSessionController {
    * Runs a work session, incrementing the session count after completion
    */
   async runWorkSession() {
-    this.setSessionAndTime(PomodoroSessions.WORK);
+    this.setSessionTimeAndTitle(PomodoroSessions.WORK);
     this.taskList.hasActiveSession = true;
     this.taskList.loadTasks();
     if (!document.body.contains(this.taskList.selectedTask)) {
@@ -191,7 +193,7 @@ export default class PomodoroSessionController {
    * Runs a short break session
    */
   async runShortBreak() {
-    this.setSessionAndTime(PomodoroSessions.SHORT_BREAK);
+    this.setSessionTimeAndTitle(PomodoroSessions.SHORT_BREAK);
     this.taskList.hasActiveSession = false;
     this.showFullTaskList();
     await this.timer.run();
@@ -202,7 +204,7 @@ export default class PomodoroSessionController {
    * Runs a long break session, resetting the session count after completion
    */
   async runLongBreak() {
-    this.setSessionAndTime(PomodoroSessions.LONG_BREAK);
+    this.setSessionTimeAndTitle(PomodoroSessions.LONG_BREAK);
     this.taskList.hasActiveSession = false;
     this.showFullTaskList();
     await this.timer.run();
@@ -230,9 +232,10 @@ export default class PomodoroSessionController {
    * Sets the timer UI style and time based on session type
    * @param {number} sessionType The type of session to set
    */
-  setSessionAndTime(sessionType) {
+  setSessionTimeAndTitle(sessionType) {
     this.setSession(sessionType);
     this.setTime(sessionType);
+    this.setTitle(sessionType);
   }
 
   /**
@@ -255,6 +258,20 @@ export default class PomodoroSessionController {
       this.timer.setTime(this.shortBreakDuration);
     } else {
       this.timer.setTime(this.longBreakDuration);
+    }
+  }
+
+  /**
+   * Sets the title text based on session type
+   * @param {number} sessionType The type of session to be displayed on the title
+   */
+  setTitle(sessionType) {
+    if (sessionType === PomodoroSessions.WORK) {
+      this.DOM_ELEMENTS.title.innerHTML = ' '.repeat(Constants.TIME_PAD_SIZE) + 'Work Session'
+    } else if (sessionType === PomodoroSessions.SHORT_BREAK) {
+      this.DOM_ELEMENTS.title.innerHTML = ' '.repeat(Constants.TIME_PAD_SIZE) + 'Short Break'
+    } else {
+      this.DOM_ELEMENTS.title.innerHTML = ' '.repeat(Constants.TIME_PAD_SIZE) + 'Long Break'
     }
   }
 
@@ -331,7 +348,7 @@ export default class PomodoroSessionController {
    */
   idleAtWorkSession() {
     this.idle();
-    this.setSessionAndTime(PomodoroSessions.WORK);
+    this.setSessionTimeAndTitle(PomodoroSessions.WORK);
   }
 
   /**
