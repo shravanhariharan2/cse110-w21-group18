@@ -372,7 +372,7 @@ class PomodoroSession {
    */
   disableDistractionMarker() {
     this.DOM_ELEMENTS.distraction.onclick = () => null;
-    this.DOM_ELEMENTS.distraction.className = "disabled";
+    this.DOM_ELEMENTS.distraction.className = 'disabled';
   }
 
   /**
@@ -380,7 +380,7 @@ class PomodoroSession {
    */
   enableDistractionMarker() {
     this.DOM_ELEMENTS.distraction.onclick = () => this.incrementDistraction();
-    this.DOM_ELEMENTS.distraction.className = "enabled";
+    this.DOM_ELEMENTS.distraction.className = 'enabled';
   }
 
   /**
