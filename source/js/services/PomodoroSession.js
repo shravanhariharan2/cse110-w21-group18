@@ -132,6 +132,7 @@ class PomodoroSession {
    * @returns void
    */
   async performPomodoroSession() {
+    this.sessionDistraction = 0;
     if (this.currentSession === PomodoroSessions.WORK) {
       await this.performWorkSession();
       if (this.isIdle) return;
