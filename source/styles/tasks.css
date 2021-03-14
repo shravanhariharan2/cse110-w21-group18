@@ -1,7 +1,7 @@
 /* styling for the tasklist */
 #to-do-list-header {
   position: relative;
-  margin-top: min(30%,200px);
+  margin-top: 122.5px;
   width: 400px;
   display: flex;
   justify-content: flex-end;
@@ -15,9 +15,7 @@
   min-width: 550px;
   margin: auto;
   margin-top: 10px;
-  background-color:#026670;
-  color:#026670;
-  border-color: #026670;
+  color:black;
   border-style: solid;
   margin-bottom: 5px;
 }
@@ -37,10 +35,10 @@
   margin-top: 30px;
   margin-bottom: 15px;
   left: 7.5px;
-  color: #f5f4f4;
-  background-color: #6c00b4;
+  color: black;
+  background-color: #8febd4;
   font-size: 30px;
-  font-weight: bold;
+  font-weight: 500;
   display: block;
   border-style: none;
   border-width: 2px;
@@ -390,11 +388,11 @@ task-item {
   margin-left: -30px;
   margin-top: 0;
   margin-bottom: 10px;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
-  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);  border-radius: 5px;
   border-style: none;
   font-size: 14px;
   background-color: #00a2e2;
+  color: white;
 }
 
 .remove-button{
@@ -404,11 +402,11 @@ task-item {
   height: 40px;
   padding: 5px;
   margin-bottom: 10px;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
-  border-radius: 5px;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);  border-radius: 5px;
   border-style: none;
   font-size: 14px;
   background-color: #e65656ef;
+  color: white;
 }
 
 /* completed list*/
