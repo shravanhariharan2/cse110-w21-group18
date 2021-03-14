@@ -42,7 +42,8 @@ export default class NotificationController {
    */
   static browserNotify(currentState, sessionNumber, numSessionsBeforeLongBreak) {
     const notificationTitle = NotificationController.createNotificationTitle(currentState);
-    const notificationBody = NotificationController.createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak);
+    const notificationBody = NotificationController
+      .createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak);
     new Notification(notificationTitle, notificationBody);
   }
 

@@ -110,7 +110,7 @@ class TaskItem extends HTMLElement {
     event.stopPropagation();
     const inputElement = this.createAndStyleEditInputElement();
     this.remove();
-    this.addEventListenersToEditInput(inputElement);
+    TaskItem.addEventListenersToEditInput(inputElement);
   }
 
   createAndStyleEditInputElement() {
@@ -144,12 +144,18 @@ class TaskItem extends HTMLElement {
     return inputElement;
   }
 
-  addEventListenersToEditInput(inputElement) {
-    inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', (ev) => this.cancelEditInput(inputElement, ev));
-    inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (ev) => this.saveEditInput(inputElement, ev));
+  static addEventListenersToEditInput(inputElement) {
+    inputElement
+      .shadowRoot
+      .querySelector('.cancel-input')
+      .addEventListener('click', (ev) => TaskItem.cancelEditInput(inputElement, ev));
+    inputElement
+      .shadowRoot
+      .querySelector('.save-task')
+      .addEventListener('click', (ev) => TaskItem.saveEditInput(inputElement, ev));
   }
 
-  cancelEditInput(inputElement, event) {
+  static cancelEditInput(inputElement, event) {
     event.stopPropagation();
     const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
     const newTask = document.createElement('task-item');
@@ -170,7 +176,7 @@ class TaskItem extends HTMLElement {
     }
   }
 
-  saveEditInput(inputElement, event) {
+  static saveEditInput(inputElement, event) {
     event.stopPropagation();
     const newTask = document.createElement('task-item');
     newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
