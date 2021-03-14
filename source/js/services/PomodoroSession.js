@@ -22,6 +22,7 @@ class PomodoroSession {
     this.notifications = new NotificationService();
     this.settings = new Settings();
     this.sessionNumber = 0;
+    this.sessionDistraction = 0;
     this.isFullListVisible = true;
 
     this.currentSession = PomodoroSessions.WORK;
@@ -34,8 +35,10 @@ class PomodoroSession {
       workSession: document.getElementById('pomo'),
       button: document.getElementById('start'),
       taskListTitle: document.getElementById('list-title'),
+      distraction: document.getElementById('distraction-icon'),
     };
 
+    this.DOM_ELEMENTS.distraction.onclick = () => this.incrementDistraction();
     this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
     if (this.taskList.DOM_ELEMENTS.viewAll !== null) {
       this.taskList.DOM_ELEMENTS.viewAll.onclick = () => this.viewAll();
@@ -360,6 +363,26 @@ class PomodoroSession {
       this.taskList.updateSelectedTaskSessionCount();
       this.taskList.updateStorage();
     }
+  }
+
+  /**
+   * Increment distractions for the session and selected task
+   */
+  incrementDistraction() {
+    this.sessionDistraction += 1;
+
+    if (this.taskList.selectedTask) {
+      const taskDistraction = this.taskList.selectedTask.getAttribute('distraction');
+      this.taskList.selectedTask.setAttribute('distraction', parseInt(taskDistraction, 10) + 1);
+      this.updateDistractionUI();
+    }
+  }
+
+  /**
+   * Update the UI when distraction is incremented
+   */
+  updateDistractionUI() {
+    this.taskList.selectedTask.updateTaskDistractionUI();
   }
 }
 

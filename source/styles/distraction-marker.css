@@ -1,0 +1,7 @@
+#distraction-icon {
+  filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.2));
+}
+
+#distraction-icon:active {
+  filter: none;
+}
