@@ -9,6 +9,10 @@
   --main-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.20), 0 12px 40px 0 rgba(0, 0, 0, 0.20);
 }
 
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
 html{
   min-width: 675px;
   min-height: 620px;
@@ -21,7 +25,6 @@ html{
 }
 body {
   position: relative;
-  font-family: 'Open Sans', sans-serif;
   display: flex;
   min-width: 675px;
   min-height: 620px;

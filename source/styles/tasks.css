@@ -37,14 +37,13 @@
   left: 7.5px;
   color: black;
   background-color: #8febd4;
-  font-size: 30px;
-  font-weight: 500;
+  font-size: 25px;
+  font-weight: 600;
   display: block;
   border-style: none;
   border-width: 2px;
   border-radius: 30px;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.25), 0 12px 40px 0 rgba(0, 0, 0, 0.25);
-  
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.25), 0 12px 40px 0 rgba(0, 0, 0, 0.25);  
 }
 #add-task:focus {
   outline: none;
@@ -105,7 +104,6 @@
   grid-gap: 10px;
   background-color: #fffbf6;
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
-  font-family: 'Open Sans', sans-serif;
   display: none;
 }
 /* name input */
@@ -116,7 +114,6 @@
   border-radius: 5px;
   border-style: solid;
   background-color: #fffbf6;
-  font-family: 'Open Sans', sans-serif;
   font-size: 18px;
   border-width: 2.5px;
   padding-left: 12.5px;
@@ -126,7 +123,6 @@
   border-color: #208FF3;
   outline: none;
   background-color: #fffbf6;
-  font-family: 'Open Sans', sans-serif;
 }
 /* input expected number of pomos */
 #expected {
@@ -148,7 +144,6 @@
   border-radius: 5px;
   border-style: solid;
   border-width: 2.5px;
-  font-family: 'Open Sans', sans-serif;
   background-color: #fffbf6;
 }
 
@@ -191,7 +186,6 @@
   border-radius: 5px;
   color: white;
   background-color: #4abb40ef;
-  font-family: 'Open Sans', sans-serif;
   font-size: 16px;
   margin-top: 5px;
   margin-left: -30px;
@@ -222,7 +216,6 @@
   border-radius: 5px;
   background-color: #fffbf6;
   border-style: solid;
-  font-family: 'Open Sans', sans-serif;
   height: 35px;
   margin-bottom: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
@@ -236,7 +229,6 @@
   grid-area: notes;
   background-color: #fffbf6;
   height: 100px;
-  font-family: 'Open Sans', sans-serif;
   resize: none;
   border-radius: 5px;
   border-width: 2.5px;
@@ -461,7 +453,6 @@ task-item {
   border-radius:5px;
   border-style:solid;
   background-color: #EDEAE5;
-  font-family: 'Open Sans', sans-serif;
   font-size: 20px;
   border-width:3px;
 }
@@ -470,7 +461,6 @@ task-item {
   grid-area: notes;
   background-color: #EDEAE5;
   height: 100px;
-  font-family: 'Open Sans', sans-serif;
   resize:none;
   border-radius: 5px;
   border-width:3px;
