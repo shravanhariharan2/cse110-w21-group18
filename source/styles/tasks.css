@@ -32,20 +32,20 @@
 #add-task {
   position: relative;
   height: 88px;
-  width: 515px;
+  width: 300px;
   margin: auto;
   margin-top: 30px;
   margin-bottom: 15px;
   left: 7.5px;
   color: #f5f4f4;
-  background-color: #0badf8;
+  background-color: #6c00b4;
   font-size: 30px;
   font-weight: bold;
   display: block;
   border-style: none;
   border-width: 2px;
   border-radius: 30px;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.25), 0 12px 40px 0 rgba(0, 0, 0, 0.25);
   
 }
 #add-task:focus {
@@ -58,18 +58,24 @@
 #view-all {
   position: relative;
   margin: 30px auto;
-  margin-bottom: 0;
-  border: none;
-  background-color: #fffbf6;
-  font-size: 25px;
+  margin-bottom: 10;
+  padding: 15px 25px;
+  border-radius: 15px;
+  background-color: #00a2e2;
+  border-style: none;
+  /* color: white; */
+  font-size: 20px;
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22)
 }
+
+#view-all:hover {
+  cursor: pointer;
+}
+
 #view-all:focus {
   outline: none;
 }
-#view-all:active {
-  font-size: 24px;
-  margin-top: 31px;
-}
+
 /* holder for all tasks */
 #to-do-list {
   position: relative;
@@ -100,7 +106,7 @@
   padding: 25px;
   grid-gap: 10px;
   background-color: #fffbf6;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
   font-family: 'Open Sans', sans-serif;
   display: none;
 }
@@ -119,7 +125,7 @@
   margin-top: 5px;
 }
 #add-task-name:focus {
-  border-color: blue;
+  border-color: #208FF3;
   outline: none;
   background-color: #fffbf6;
   font-family: 'Open Sans', sans-serif;
@@ -149,7 +155,7 @@
 }
 
 #pomos:focus {
-  border-color: blue;
+  border-color: #208FF3;
   outline: none;
 }
 
@@ -176,7 +182,6 @@
   margin-left: 150px;
   margin-top: 5px;
   font-size: 16px;
-  
 }
 
 #save-task{
@@ -194,6 +199,22 @@
   margin-left: -30px;
   padding: 5;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+
+#delete-task {
+  grid-area: cancel;
+  position: relative;
+  width: 70px;
+  height: 40px;
+  border-radius: 5px;
+  text-align: center;
+  background-color:#e65656ef;
+  border-style: none;
+  color: white;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  margin-left: 150px;
+  margin-top: 5px;
+  font-size: 16px;
 }
 /* button to add notes */
 #add-notes {
@@ -229,7 +250,7 @@
 }
 
 #add-task-description:focus {
-  border-color: blue;
+  border-color: #208FF3;
   outline: none;
 }
 /* style for each task-item */
@@ -251,16 +272,16 @@ task-item {
   padding: 20px 20px 10px;
   grid-gap: 5px;
   background-color: #fffbf6;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
 }
 
 .expand-button {
-    width: 20px;
-    height: 20px;
-    margin-right: 0;
-    margin-left: 440px;
-    margin-top: 30px;
-    position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-right: 0;
+  margin-left: 440px;
+  margin-top: 30px;
+  position: absolute;
 }
 .expand-button:focus {
   outline: none;
@@ -301,17 +322,14 @@ task-item {
   width: 40px;
   background-color: #ccc;
   border-radius: 50%;
-  border-color: #026670;
   border-width: 2px;
 }
 
 /* When the checkbox is checked, add a blue background */
 .task-checkbox input:checked ~ .checkmark {
-  background-color: #026670;
+  background-color: #4abb40ef;
 }
-.checkmark:active {
-  background-color: #026670;
-}
+
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
@@ -366,46 +384,41 @@ task-item {
 .edit-button {
   grid-area: edit;
   position: relative;
-  width: 35px;
-  height: 35px;
+  width: 70px;
+  height: 40px;
+  padding: 5px;
   margin-left: -30px;
   margin-top: 0;
   margin-bottom: 10px;
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
+  border-radius: 5px;
+  border-style: none;
+  font-size: 14px;
+  background-color: #00a2e2;
 }
-.edit-button:focus {
-  outline: none;
-}
-.edit-button:active {
-  height: 32px;
-  width: 32px;
-  margin-left: -28.5px;
-}
+
 .remove-button{
   grid-area: remove;
   position: relative;
-  width: 35px;
-  height: 35px;
-  margin-left: 175px;
+  width: 70px;
+  height: 40px;
+  padding: 5px;
   margin-bottom: 10px;
-}
-.remove-button:focus {
-  outline: none;
-}
-
-.remove-button:active {
-    height: 32px;
-    width: 32px;
-    margin-left: 176.5px;
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
+  border-radius: 5px;
+  border-style: none;
+  font-size: 14px;
+  background-color: #e65656ef;
 }
 
 /* completed list*/
 #completed-list-header {
-    position: relative;
-    width: 400px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
+  position: relative;
+  width: 400px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 #completed-list {
   position: relative;
   margin: 35px;

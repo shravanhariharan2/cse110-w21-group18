@@ -87,7 +87,7 @@ class TaskItem extends HTMLElement {
       this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
       this.style.gridTemplateAreas = '"check taskName pomo" "notes notes notes" "remove remove edit"';
-      this.shadowRoot.querySelector('.remove-button').style.marginLeft = '175px';
+      this.shadowRoot.querySelector('.remove-button').style.marginLeft = '145px';
     }
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
     this.isExpanded = true;
@@ -95,14 +95,11 @@ class TaskItem extends HTMLElement {
   }
 
   createEditButtonElement() {
-    const button = this.shadowRoot.appendChild(document.createElement('input'));
+    const button = this.shadowRoot.appendChild(document.createElement('button'));
     button.className = 'edit-button';
-    button.type = 'image';
     button.title = 'Edit Task';
-    button.src = './media/icons/edit-icon.png';
     button.textContent = 'Edit';
     button.onclick = (event) => this.allowEditing(event);
-
     return button;
   }
 
@@ -177,11 +174,9 @@ class TaskItem extends HTMLElement {
   }
 
   createRemoveButtonElement() {
-    const button = this.shadowRoot.appendChild(document.createElement('input'));
+    const button = this.shadowRoot.appendChild(document.createElement('button'));
     button.className = 'remove-button';
     button.textContent = 'Remove';
-    button.type = 'image';
-    button.src = './media/icons/delete-icon.jpeg';
     button.title = 'Delete Task';
     button.onclick = (event) => this.removeTask(event);
     return button;
@@ -189,9 +184,9 @@ class TaskItem extends HTMLElement {
 
   removeTask(event) {
     event.stopPropagation();
-    // if (window.confirm('Delete Task?')) {
-    this.remove();
-    // }
+    if (window.confirm('Delete Task?')) {
+      this.remove();
+    }
   }
 
   createCheckboxElement() {
@@ -278,7 +273,6 @@ class TaskItem extends HTMLElement {
   styleSelectedTask() {
     this.style.border = TaskStyles.SELECTED_TASK_BORDER;
     this.style.borderRadius = TaskStyles.SELECTED_TASK_BORDER_RADIUS;
-    this.style.background = TaskStyles.SELECTED_TASK_BACKGROUND;
     this.style.top = TaskStyles.SELECTED_TASK_TOP_OFFSET;
     this.style.boxShadow = TaskStyles.NO_BOX_SHADOW;
   }
@@ -287,6 +281,7 @@ class TaskItem extends HTMLElement {
    * Update UI for when unselecting task
    */
   styleUnselectedTask() {
+    this.style.border = TaskStyles.UNSELECTED_TASK_BORDER;
     this.style.background = TaskStyles.UNSELECTED_TASK_BACKGROUND;
     this.style.top = TaskStyles.UNSELECTED_TASK_TOP_OFFSET;
     this.style.boxShadow = TaskStyles.BOX_SHADOW;

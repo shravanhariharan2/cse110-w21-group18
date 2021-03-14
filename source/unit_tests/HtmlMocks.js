@@ -39,7 +39,7 @@ const HtmlMocks = {
       <input type="button" id="save-task" value="Save">
     </form>
     <div id="to-do-list"></div>
-    <button type="button" id="view-all">&#10133 Expand Task List</button>
+    <button type="button" id="view-all">&#10133 View All Tasks</button>
     <header id="completed-list-header">
       <p id="completed-list-title">Completed Tasks</p>
       <input id="expand-completed" type="image" title="Expand View" src="./media/icons/expand-icon.png">

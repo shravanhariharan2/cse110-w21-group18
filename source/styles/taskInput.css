@@ -1,23 +1,22 @@
 .task-input {
+    display: grid;
     position: relative;
     margin: 0 auto;
     margin-top: 50px;
     width: 450px;
     border-radius: 30px;
-    border-color:#026670;
-    border-style: solid;
+    border-style: none;
     border-width: 2.5px;
     text-align: center;
-    display: grid;
     grid-template-areas:
       'name expect clock pomos'
       'notes notes notes notes'
       'add add add add'
       'cancel cancel save save';
-    padding: 20px;
+    padding: 25px;
     grid-gap: 10px;
     background-color: #fffbf6;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
   }
   /* name input */
 .add-task-name{

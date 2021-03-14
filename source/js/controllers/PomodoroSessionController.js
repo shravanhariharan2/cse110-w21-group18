@@ -266,7 +266,7 @@ export default class PomodoroSessionController {
       this.showFullTaskList();
       this.taskList.DOM_ELEMENTS.viewAll.style.display = 'inline';
       this.isFullListVisible = false;
-      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10134 Minimize Task List';
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = 'Hide Remaining Tasks';
       this.taskList.DOM_ELEMENTS.addTaskButton.after(this.taskList.DOM_ELEMENTS.viewAll);
     } else {
       this.taskList.loadTasks();
@@ -275,7 +275,7 @@ export default class PomodoroSessionController {
       }
       this.taskList.showSelectedTask();
       this.isFullListVisible = true;
-      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = '&#10133 Expand Task List';
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = 'View All Tasks';
       this.taskList.DOM_ELEMENTS.taskList.after(this.taskList.DOM_ELEMENTS.viewAll);
     }
   }

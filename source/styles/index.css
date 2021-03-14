@@ -1,9 +1,9 @@
 :root {
   --main-bg-color: #f5eadb;
   --main-timer-bg-color: #ffffff;
-  --main-border-color: #208FF3;
+  --main-border-color: #8e17dd;
   --main-text-color: #000000;
-  --main-timer-bg-color: #63d5e7;
+  --main-timer-bg-color: #03abee;
   --short-break-bg-color: #FEF9C7;
   --long-break-bg-color: #FCE181;
   --main-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.20), 0 12px 40px 0 rgba(0, 0, 0, 0.20);
@@ -17,6 +17,7 @@ html{
   left:0;
   right:0;
   bottom:0;
+  overflow-y: scroll;
 }
 body {
   position: relative;
@@ -60,7 +61,7 @@ body {
   display:flex;
   flex-direction: column;
   justify-content: space-evenly;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
 }
 /*holds the label for which type of timer is running */
 #session-type {
@@ -106,7 +107,7 @@ body {
   border-radius: 5px;
   background-color: var(--main-bg-color);
   border-style: solid;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
   outline: none;
   color: var(--main-text-color);
   height: 60px;
@@ -151,7 +152,7 @@ body {
     display:flex;
     flex-direction: column;
     justify-content: space-evenly;
-    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
+    box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
   }
   #settings-icon {
     float: right;
