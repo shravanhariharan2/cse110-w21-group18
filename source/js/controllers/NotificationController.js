@@ -10,7 +10,6 @@ export default class NotificationController {
     this.DOM_ELEMENTS = {
       alarm: document.getElementById('timer-alarm'),
     };
-    this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
   }
 
   /**
@@ -19,12 +18,12 @@ export default class NotificationController {
   * @param {int} currentState an integer representing the state the user is in
   * @param {int} sessionNumber an integer representing the worksessions finished
   */
-  notifyUser(currentState, sessionNumber) {
+  notifyUser(currentState, sessionNumber, numSessionsBeforeLongBreak) {
     if (!NotificationController.hasAudioMuted()) {
       this.audioNotify();
     }
     if (Notification.permission === 'granted') {
-      this.browserNotify(currentState, sessionNumber);
+      NotificationController.browserNotify(currentState, sessionNumber, numSessionsBeforeLongBreak);
     }
   }
 
@@ -41,9 +40,9 @@ export default class NotificationController {
    * @param {int} currentState [an integer representing the state the user is in]
    * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  browserNotify(currentState, sessionNumber) {
+  static browserNotify(currentState, sessionNumber, numSessionsBeforeLongBreak) {
     const notificationTitle = NotificationController.createNotificationTitle(currentState);
-    const notificationBody = this.createNotificationBody(currentState, sessionNumber);
+    const notificationBody = NotificationController.createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak);
     new Notification(notificationTitle, notificationBody);
   }
 
@@ -53,7 +52,7 @@ export default class NotificationController {
    */
   static createNotificationTitle(currentState) {
     let notificationTitle = DisplayMessages.NOTIFICATION_HEADER;
-    if (currentState === PomodoroSessionStates.WORK_SESSION) {
+    if (currentState === PomodoroSessionStates.WORK) {
       notificationTitle += DisplayMessages.WORK_SESSION_COMPLETE;
     } else if (currentState === PomodoroSessionStates.SHORT_BREAK) {
       notificationTitle += DisplayMessages.SHORT_BREAK_COMPLETE;
@@ -68,9 +67,9 @@ export default class NotificationController {
    * @param {int} currentState [an integer representing the state the user is in]
    * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  createNotificationBody(currentState, sessionNumber) {
-    if (currentState === PomodoroSessionStates.WORK_SESSION) {
-      if (sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
+  static createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak) {
+    if (currentState === PomodoroSessionStates.WORK) {
+      if (sessionNumber !== numSessionsBeforeLongBreak) {
         return { body: DisplayMessages.SHORT_BREAK_NEXT_NOTIFY };
       }
       return { body: DisplayMessages.LONG_BREAK_NEXT_NOTIFY };

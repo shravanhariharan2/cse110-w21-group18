@@ -11,14 +11,14 @@ test('notifyUser() plays an audio notification', () => {
   const playAudio = jest.fn();
   window.HTMLMediaElement.prototype.play = () => playAudio();
   window.Notification = { permission: 'granted' };
-  notificationTest.browserNotify = jest.fn();
+  NotificationController.browserNotify = jest.fn();
   notificationTest.notifyUser();
   expect(playAudio).toHaveBeenCalled();
 });
 
 test('createNotificationTitle() creates the correct title based on the current session type', () => {
   const notificationHeader = DisplayMessages.NOTIFICATION_HEADER;
-  const workTitle = NotificationController.createNotificationTitle(PomodoroSessionStates.WORK_SESSION);
+  const workTitle = NotificationController.createNotificationTitle(PomodoroSessionStates.WORK);
   const shortBreakTitle = NotificationController.createNotificationTitle(PomodoroSessionStates.SHORT_BREAK);
   const longBreakTitle = NotificationController.createNotificationTitle(PomodoroSessionStates.LONG_BREAK);
   expect(workTitle).toBe(notificationHeader + DisplayMessages.WORK_SESSION_COMPLETE);
@@ -27,12 +27,10 @@ test('createNotificationTitle() creates the correct title based on the current s
 });
 
 test('createNotificationBody() creates the correct body based on the current session type and number', () => {
-  const notificationTest = new NotificationController();
-  const totalSessions = notificationTest.NUM_SESSIONS_BEFORE_LONG_BREAK;
-  const shortBreakToWork = notificationTest.createNotificationBody(PomodoroSessionStates.SHORT_BREAK, 1);
-  const longBreakToWork = notificationTest.createNotificationBody(PomodoroSessionStates.LONG_BREAK, 1);
-  const workToShortBreak = notificationTest.createNotificationBody(PomodoroSessionStates.WORK_SESSION, 1);
-  const workToLongBreak = notificationTest.createNotificationBody(PomodoroSessionStates.WORK_SESSION, totalSessions);
+  const shortBreakToWork = NotificationController.createNotificationBody(PomodoroSessionStates.SHORT_BREAK, 1, 4);
+  const longBreakToWork = NotificationController.createNotificationBody(PomodoroSessionStates.LONG_BREAK, 1, 4);
+  const workToShortBreak = NotificationController.createNotificationBody(PomodoroSessionStates.WORK, 1, 4);
+  const workToLongBreak = NotificationController.createNotificationBody(PomodoroSessionStates.WORK, 4, 4);
   expect(shortBreakToWork.body).toBe(DisplayMessages.WORK_NEXT_NOTIFY);
   expect(longBreakToWork.body).toBe(DisplayMessages.WORK_NEXT_NOTIFY);
   expect(workToShortBreak.body).toBe(DisplayMessages.SHORT_BREAK_NEXT_NOTIFY);
