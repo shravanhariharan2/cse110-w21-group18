@@ -7,7 +7,7 @@
 }
 
 #distraction-icon.disabled {
-    filter: none;
+    display: none;
 }
 
 #distraction-icon:active {

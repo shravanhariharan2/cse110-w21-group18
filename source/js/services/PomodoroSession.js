@@ -390,17 +390,8 @@ class PomodoroSession {
     this.numDistraction += 1;
 
     if (this.taskList.selectedTask) {
-      const taskDistraction = this.taskList.selectedTask.getAttribute('distraction');
-      this.taskList.selectedTask.setAttribute('distraction', parseInt(taskDistraction, 10) + 1);
-      this.updateDistractionUI();
+      this.taskList.selectedTask.incrementTaskDistraction();
     }
-  }
-
-  /**
-   * Update the UI when distraction is incremented
-   */
-  updateDistractionUI() {
-    this.taskList.selectedTask.updateTaskDistractionUI();
   }
 }
 

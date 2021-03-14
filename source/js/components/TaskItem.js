@@ -329,6 +329,15 @@ class TaskItem extends HTMLElement {
   }
 
   /**
+   * Increment task distraction attribute
+   */
+  incrementTaskDistraction() {
+    const taskDistraction = this.getAttribute('distraction');
+    this.setAttribute('distraction', parseInt(taskDistraction, 10) + 1);
+    this.updateTaskDistractionUI();
+  }
+
+  /**
    * Update the task UI when distraction is logged
    */
   updateTaskDistractionUI() {
