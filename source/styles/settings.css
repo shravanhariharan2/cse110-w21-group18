@@ -1,12 +1,12 @@
 #settings-icon {
   float: right;
   cursor: pointer;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   position: absolute;
   display: inline;
-  top: 3%;
-  right: 1%;
+  top: 1%;
+  right: 0.5%;
 }
 
 #settings-modal {
@@ -20,14 +20,12 @@
   height: 100%;
   overflow: auto; 
   padding: 100px auto;
-  background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
 }
 
 #settings-box {
-  color: #3a494b;
   margin: 100px auto;
-  background: #dee2e1;
+  background-color: #fbf6ef;
   width: 650px;
   min-height: 600px;
   border-radius: 40px;

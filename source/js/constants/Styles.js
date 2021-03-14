@@ -5,8 +5,8 @@ export const TimerStyles = {
 };
 
 export const TaskStyles = {
-  UNSELECTED_TASK_BACKGROUND: '#FFFBF6',
-  SELECTED_TASK_BORDER: '3px solid #03abee',
+  UNSELECTED_TASK_BACKGROUND: '#FFFFFF',
+  SELECTED_TASK_BORDER: '3px solid #5007c5',
   UNSELECTED_TASK_BORDER: 'none',
   SELECTED_TASK_BORDER_RADIUS: '30px',
   SELECTED_TASK_TOP_OFFSET: '3px',

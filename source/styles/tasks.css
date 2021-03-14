@@ -36,7 +36,7 @@
   margin-bottom: 15px;
   left: 7.5px;
   color: black;
-  background-color: #8febd4;
+  background-color: #eaffa3;
   font-size: 25px;
   font-weight: 600;
   display: block;
@@ -55,12 +55,12 @@
 #view-all {
   position: relative;
   margin: 30px auto;
-  margin-bottom: 10;
+  margin-bottom: 20px;
   padding: 15px 25px;
+  left: 5px;
   border-radius: 15px;
-  background-color: #00a2e2;
+  background-color: #c6fb94;
   border-style: none;
-  /* color: white; */
   font-size: 20px;
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22)
 }
@@ -102,7 +102,7 @@
     'cancel cancel save save';
   padding: 25px;
   grid-gap: 10px;
-  background-color: #fffbf6;
+  background-color: #FFFFFF;
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
   display: none;
 }
@@ -113,7 +113,7 @@
   width: 200px;
   border-radius: 5px;
   border-style: solid;
-  background-color: #fffbf6;
+  background-color: #FFFFFF;
   font-size: 18px;
   border-width: 2.5px;
   padding-left: 12.5px;
@@ -122,7 +122,7 @@
 #add-task-name:focus {
   border-color: #208FF3;
   outline: none;
-  background-color: #fffbf6;
+  background-color: #FFFFFF;
 }
 /* input expected number of pomos */
 #expected {
@@ -144,7 +144,7 @@
   border-radius: 5px;
   border-style: solid;
   border-width: 2.5px;
-  background-color: #fffbf6;
+  background-color: #FFFFFF;
 }
 
 #pomos:focus {
@@ -214,8 +214,8 @@
   grid-area: add;
   border-width: 2px;
   border-radius: 5px;
-  background-color: #fffbf6;
-  border-style: solid;
+  background-color: #eaffa3;
+  border-style: none;
   height: 35px;
   margin-bottom: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
@@ -227,7 +227,7 @@
 /* add notes area */
 #add-task-description {
   grid-area: notes;
-  background-color: #fffbf6;
+  background-color: #FFFFFF;
   height: 100px;
   resize: none;
   border-radius: 5px;
@@ -261,7 +261,7 @@ task-item {
     ' remove remove edit';
   padding: 20px 20px 10px;
   grid-gap: 5px;
-  background-color: #fffbf6;
+  background-color: #FFFFFF;
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
 }
 

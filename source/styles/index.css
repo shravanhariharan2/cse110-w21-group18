@@ -34,6 +34,10 @@ body {
   bottom:0;
 }
 
+input[type=button], button {
+  cursor: pointer;
+}
+
 input[type=button]:active, button:active {
   border-style: inset;
   top: 2px;
@@ -141,7 +145,7 @@ input[type=button]:active, button:active {
 
 @media all and (max-width:1300px) {
   body {
-    background-color: #fffbf6;
+    background-color: #FFFFFF;
     font-family: 'Open Sans', sans-serif;
     display: flex;
     flex-direction: column;

@@ -246,7 +246,7 @@ class TaskItem extends HTMLElement {
       taskList.appendChild(this);
       this.setAttribute('draggable', true);
       this.setAttribute('class', 'dropzone');
-      this.style.cursor = 'move';
+      this.style.cursor = 'pointer';
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       // resets it to not expanded
       if (this.isExpanded) {
