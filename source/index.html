@@ -4,6 +4,7 @@
 		<link rel="stylesheet" href="styles/index.css">
 		<link rel="stylesheet" href="styles/tasks.css">
 		<link rel="stylesheet" href="styles/settings.css">
+		<link rel="stylesheet" href="styles/info.css">
 		<title>Pomodoro Timer</title>
 		<meta charset="UTF-8">
 		<link rel="preconnect" href="https://fonts.gstatic.com">
@@ -11,6 +12,87 @@
 	</head>
 
 	<body>
+		<div id="settings">
+			<div id="settings-button">
+				<img id="settings-icon" src="media/icons/settings-gear.png"></img>
+			</div>
+			<div id="settings-modal">
+				<div id="settings-box">
+					<p id="settings-text">Settings</p>
+					<form id="settings-container">
+						<label class="c1" for="pomo-duration-select" style="word-wrap:break-word">
+							Pomodoro Duration
+							<select class="c2" name="pomo-duration-select" id="pomo-duration-select">
+								<option value="20">20 min</option>
+								<option value="25">25 min</option>
+								<option value="30">30 min</option>
+								<option value="35">35 min</option>
+								<option value="40">40 min</option>
+								<option value="45">45 min</option>
+							</select>
+						</label>
+						<label class="c1" for="short-duration-select" style="word-wrap:break-word">	
+							Short Break Duration
+							<select class="c2" name="short-duration-select" id="short-duration-select">
+								<option value="3">3 min</option>
+								<option value="5">5 min</option>
+								<option value="7">7 min</option>
+								<option value="10">10 min</option>
+							</select>
+						</label>
+						<label class="c1" for="long-duration-select" style="word-wrap:break-word">
+							Long Break Duration
+							<select class="c2" name="long-duration-select" id="long-duration-select">
+								<option value="15">15 min</option>
+								<option value="20">20 min</option>
+								<option value="25">25 min</option>
+								<option value="30">30 min</option>
+								<option value="35">35 min</option>
+								<option value="40">40 min</option>
+								<option value="45">45 min</option>
+							</select>
+						</label>
+						<label class="c1" for="long-pomo-select" style="word-wrap:break-word">
+							Pomodoros Before Long Break
+							<select class="c2" name="long-pomo-select" id="long-pomo-select">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+							</select>
+						</label>
+						<label class="c1" for="pause-before-breaks">
+							<input id="pause-before-breaks" type="checkbox"> Pause timer at start of break
+						</label>
+						<label class="c1" for="pause-after-breaks">
+							<input id="pause-after-breaks" type="checkbox"> Pause timer at start of new work session
+						</label>
+						<label class="c1" for="hide-seconds">
+							<input id="hide-seconds" type="checkbox">Hide seconds on timer before 1 minute
+						</label>
+					</form>
+					<div id="settings-buttons">
+						<input type="button" id="cancel-button" value="Cancel">
+						<input type="button" id="save-button" value="Save">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="info">
+			<div id="info-button">
+				<img id="info-icon" src="media/icons/info-icon.png"></img>
+			</div>
+			<div id="info-modal">
+				<div id="info-box">
+					<input type="button" id="close-info" value="X">
+					<p id="info-text">What is Pomodoro?</p>
+				</div>
+			</div>	
+		</div>
 		<div id="left-half">
 			<div id="timer-box">
 				<div id ="session-type">
@@ -23,76 +105,6 @@
 					<input type="button" id="start" value="Start" title="Start Pomodoro Session">
 				</div>
 				<audio id="timer-alarm" src="media/audio/timer-alarm.mp3"></audio>
-				</div>
-		</div>
-		<div id="settings">
-				<div id="settings-button">
-					<img id="settings-icon" src="media/icons/settings-gear.png"></img>
-				</div>
-				<div id="settings-modal">
-					<div id="settings-box">
-						<p id="settings-text">Settings</p>
-						<form id="settings-container">
-							<label class="c1" for="pomo-duration-select" style="word-wrap:break-word">
-								Pomodoro Duration
-								<select class="c2" name="pomo-duration-select" id="pomo-duration-select">
-									<option value="20">20 min</option>
-									<option value="25">25 min</option>
-									<option value="30">30 min</option>
-									<option value="35">35 min</option>
-									<option value="40">40 min</option>
-									<option value="45">45 min</option>
-								</select>
-							</label>
-							<label class="c1" for="short-duration-select" style="word-wrap:break-word">	
-								Short Break Duration
-								<select class="c2" name="short-duration-select" id="short-duration-select">
-									<option value="3">3 min</option>
-									<option value="5">5 min</option>
-									<option value="7">7 min</option>
-									<option value="10">10 min</option>
-								</select>
-							</label>
-							<label class="c1" for="long-duration-select" style="word-wrap:break-word">
-								Long Break Duration
-								<select class="c2" name="long-duration-select" id="long-duration-select">
-									<option value="15">15 min</option>
-									<option value="20">20 min</option>
-									<option value="25">25 min</option>
-									<option value="30">30 min</option>
-									<option value="35">35 min</option>
-									<option value="40">40 min</option>
-									<option value="45">45 min</option>
-								</select>
-							</label>
-							<label class="c1" for="long-pomo-select" style="word-wrap:break-word">
-								Pomodoros Before Long Break
-								<select class="c2" name="long-pomo-select" id="long-pomo-select">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-								</select>
-							</label>
-							<label class="c1" for="pause-before-breaks">
-								<input id="pause-before-breaks" type="checkbox"> Pause timer at start of break
-							</label>
-							<label class="c1" for="pause-after-breaks">
-								<input id="pause-after-breaks" type="checkbox"> Pause timer at start of new work session
-							</label>
-							<label class="c1" for="hide-seconds">
-								<input id="hide-seconds" type="checkbox">Hide seconds on timer before 1 minute
-							</label>
-						</form>
-						<div id="settings-buttons">
-							<input type="button" id="cancel-button" value="Cancel">
-							<input type="button" id="save-button" value="Save">
-						</div>
-					</div>
 				</div>
 		</div>
 		<div id="right-half">
@@ -115,9 +127,9 @@
 					<option value="7">7 (2hr 55min)</option>
 					<option value="8">8 (3hr 20min)</option>
 				</select>
-				<input type="button" id="cancel-input" value="Cancel" title="Cancel Input"></input>
-				<input type="button" id="add-notes" value="Add Notes">
 				<textarea id="add-task-description" placeholder="Add Notes"></textarea>
+				<input type="button" id="add-notes" value="Add Notes">
+				<input type="button" id="cancel-input" value="Cancel" title="Cancel Input"></input>
 				<input type="button" id="save-task" value="Save">
 			</form>
 			<div id="to-do-list"></div>
@@ -133,10 +145,12 @@
 	<script type="module" src="js/services/Timer.js"></script>
 	<script type="module" src="js/services/TaskList.js"></script>
 	<script type="module" src="js/services/Settings.js"></script>
+	<script type="module" src="js/services/Info.js"></script>
 	<script type="module" src="js/constants/Enums.js"></script>
 	<script type="module" src="js/scripts/index.js"></script>
 	<script type="module" src="js/scripts/tasks.js"></script>
 	<script type="module" src="js/scripts/settings.js"></script>
+	<script type="module" src="js/scripts/info.js"></script>
 	<script type="module" src="js/components/TaskItem.js"></script>
 	<script type="module" src="js/components/TaskInput.js"></script>
 </html>
