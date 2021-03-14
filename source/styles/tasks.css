@@ -222,6 +222,7 @@
 
 }
 #add-notes:focus {
+  border-color: blue;
   outline: none;
 }
 /* add notes area */
