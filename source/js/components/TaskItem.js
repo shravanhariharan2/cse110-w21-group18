@@ -329,7 +329,7 @@ class TaskItem extends HTMLElement {
   }
 
   /**
-   * Update the task UI when distraction
+   * Update the task UI when distraction is logged
    */
   updateTaskDistractionUI() {
     const taskDistractionHTML = this.shadowRoot.querySelector('.distraction');
