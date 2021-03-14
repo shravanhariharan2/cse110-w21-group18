@@ -19,7 +19,10 @@ class TaskItem extends HTMLElement {
   loadDOMElements() {
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
-      this.shadowRoot.innerHTML = '<link rel=\'stylesheet\' href=\'styles/tasks.css\'>';
+      this.shadowRoot.innerHTML = `
+        <link rel='stylesheet' href='styles/tasks.css'>
+        <link rel='stylesheet' href='styles/index.css'>
+        `;
       const nameElement = this.createNameElement();
       const pomoProgressElement = this.createPomoProgressElement();
       const notesElement = this.createNotesElement();
@@ -105,6 +108,12 @@ class TaskItem extends HTMLElement {
 
   allowEditing(event) {
     event.stopPropagation();
+    const inputElement = this.createAndStyleEditInputElement();
+    this.remove();
+    this.addEventListenersToEditInput(inputElement);
+  }
+
+  createAndStyleEditInputElement() {
     const inputElement = document.createElement('task-input');
     inputElement.setAttribute('class', 'task-input dropzone');
     inputElement.id = this.id;
@@ -114,6 +123,7 @@ class TaskItem extends HTMLElement {
     inputElement.setAttribute('progress', this.getAttribute('progress'));
     inputElement.setAttribute('notes', this.getAttribute('notes'));
     inputElement.setAttribute('draggable', true);
+
     this.after(inputElement);
     inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
     inputElement.shadowRoot.querySelector('.pomos').value = this.getAttribute('estimate');
@@ -131,46 +141,53 @@ class TaskItem extends HTMLElement {
       inputElement.isSelected = true;
       inputElement.styleSelectedTask();
     }
-    this.remove();
-    inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', (ev) => {
-      ev.stopPropagation();
-      const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
-      const newTask = document.createElement('task-item');
-      newTask.setAttribute('name', taskObj.name);
-      newTask.setAttribute('estimate', taskObj.estimate);
-      newTask.setAttribute('progress', taskObj.progress);
-      newTask.setAttribute('notes', taskObj.notes);
-      newTask.setAttribute('isComplete', taskObj.isComplete);
-      newTask.setAttribute('class', taskObj.class);
-      newTask.setAttribute('id', taskObj.id);
-      newTask.setAttribute('draggable', taskObj.draggable);
-      inputElement.remove();
-      // insert where it was before
-      if (inputElement.id !== '1') {
-        document.getElementById(inputElement.id - 1).before(newTask);
-      } else {
-        document.getElementById('to-do-list').appendChild(newTask);
-      }
-    });
-    inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (e) => {
-      e.stopPropagation();
-      const newTask = document.createElement('task-item');
-      newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
-      newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
-      newTask.setAttribute('progress', inputElement.getAttribute('progress'));
-      newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
-      newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
-      newTask.setAttribute('class', inputElement.getAttribute('class'));
-      newTask.setAttribute('id', inputElement.id);
-      newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
-      inputElement.remove();
-      // insert where it was before
-      if (inputElement.id !== '1') {
-        document.getElementById(inputElement.id - 1).before(newTask);
-      } else {
-        document.getElementById('to-do-list').appendChild(newTask);
-      }
-    });
+    return inputElement;
+  }
+
+  addEventListenersToEditInput(inputElement) {
+    inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', (ev) => this.cancelEditInput(inputElement, ev));
+    inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (ev) => this.saveEditInput(inputElement, ev));
+  }
+
+  cancelEditInput(inputElement, event) {
+    event.stopPropagation();
+    const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
+    const newTask = document.createElement('task-item');
+    newTask.setAttribute('name', taskObj.name);
+    newTask.setAttribute('estimate', taskObj.estimate);
+    newTask.setAttribute('progress', taskObj.progress);
+    newTask.setAttribute('notes', taskObj.notes);
+    newTask.setAttribute('isComplete', taskObj.isComplete);
+    newTask.setAttribute('class', taskObj.class);
+    newTask.setAttribute('id', taskObj.id);
+    newTask.setAttribute('draggable', taskObj.draggable);
+    inputElement.remove();
+    // insert where it was before
+    if (inputElement.id !== '1') {
+      document.getElementById(inputElement.id - 1).before(newTask);
+    } else {
+      document.getElementById('to-do-list').appendChild(newTask);
+    }
+  }
+
+  saveEditInput(inputElement, event) {
+    event.stopPropagation();
+    const newTask = document.createElement('task-item');
+    newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
+    newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
+    newTask.setAttribute('progress', inputElement.getAttribute('progress'));
+    newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
+    newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
+    newTask.setAttribute('class', inputElement.getAttribute('class'));
+    newTask.setAttribute('id', inputElement.id);
+    newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
+    inputElement.remove();
+    // insert where it was before
+    if (inputElement.id !== '1') {
+      document.getElementById(inputElement.id - 1).before(newTask);
+    } else {
+      document.getElementById('to-do-list').appendChild(newTask);
+    }
   }
 
   createRemoveButtonElement() {

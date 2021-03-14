@@ -199,7 +199,6 @@ export default class TaskListController {
    * Cancel the input box
    */
   cancelInput() {
-    this.DOM_ELEMENTS.inputBox.style.display = 'none';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     this.resetInputBox();
   }
@@ -253,20 +252,21 @@ export default class TaskListController {
     newTask.setAttribute('isComplete', false);
     newTask.setAttribute('class', 'dropzone');
     newTask.setAttribute('id', this.numTasks);
-
-    this.DOM_ELEMENTS.taskList.appendChild(newTask);
-    this.DOM_ELEMENTS.inputBox.style.display = 'none';
-    this.updateStorage();
     newTask.addEventListener('click', this.selectTask.bind(this, newTask));
 
-    this.resetInputBox();
+    this.DOM_ELEMENTS.taskList.style.display = 'none';
+    this.DOM_ELEMENTS.taskList.appendChild(newTask);
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+    this.updateStorage();
+    this.resetInputBox();
+    this.DOM_ELEMENTS.taskList.style.display = 'initial';
   }
 
   /**
    * Resets the input box back to empty
    */
   resetInputBox() {
+    this.DOM_ELEMENTS.inputBox.style.display = 'none';
     this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
     this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     this.DOM_ELEMENTS.newTaskNotes.value = '';

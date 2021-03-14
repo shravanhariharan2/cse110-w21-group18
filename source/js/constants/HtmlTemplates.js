@@ -1,6 +1,7 @@
 const HtmlTemplates = {
   TASK_INPUT: `
     <link rel='stylesheet' href='styles/taskInput.css'>
+    <link rel='stylesheet' href='styles/index.css'>
     <form class="task-input">
       <input type="text" class="add-task-name" placeholder="Task Name">
       <p class="expected">Expected Pomodoros:</p>
