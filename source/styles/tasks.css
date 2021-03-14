@@ -219,21 +219,6 @@
   display: none;
 }
 
-#add-task-description {
-  grid-area: distraction;
-  background-color: #fffbf6;
-  height: 100px;
-  font-family: 'Open Sans', sans-serif;
-  resize: none;
-  border-radius: 5px;
-  border-width: 2.5px;
-  font-size: 15px;
-  padding: 3px;
-  padding-left: 5px;
-  padding-top: 5px;
-  display: none;
-}
-
 #add-task-description:focus {
   border-color: blue;
   outline: none;
