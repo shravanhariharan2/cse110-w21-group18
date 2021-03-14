@@ -1,8 +1,12 @@
 # Product Info
 
-This product is a Pomodoro timer with the ability to easily structure, control, and automate users' productivity sessions at their will. The application is built to be intuitive, customizable, and efficient to integrate into any user’s workflows. It includes features such as automated Pomodoro sessions, task management, distraction markers, and other smaller tools for ease of customizability.
+This product is a Pomodoro timer with the ability to easily structure, control, and automate users' productivity sessions at their will. The application is built to be intuitive, customizable, and efficient to integrate into any user’s workflows. It includes features such as:
+* Automated Pomodoro sessions
+* Task management and automation 
+* Distraction markers
+* Many other smaller tools for ease of customizability
 
-## The Pomodoro technique
+## The Pomodoro Technique
 The Pomodoro technique is a method of time management used to break the user's work sessions into smaller intervals of work immediately followed by break sessions. The idea is to make the process of working healthier and more digestable, and thus more productive for the user.
 
 This timer defaults to the standard specs of work/break sessions that are described in the Pomodoro source:
