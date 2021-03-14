@@ -61,7 +61,7 @@ class TaskItem extends HTMLElement {
   createDistractionElement() {
     const taskDistraction = this.shadowRoot.appendChild(document.createElement('p'));
     taskDistraction.className = 'distraction';
-    taskDistraction.textContent = `distraction(s): ${this.getAttribute('distraction')}`;
+    taskDistraction.textContent = `Distraction(s): ${this.getAttribute('distraction')}`;
     return taskDistraction;
   }
 
@@ -334,7 +334,7 @@ class TaskItem extends HTMLElement {
   updateTaskDistractionUI() {
     const taskDistractionHTML = this.shadowRoot.querySelector('.distraction');
     const taskDistraction = this.getAttribute('distraction');
-    taskDistractionHTML.textContent = `distraction(s): ${taskDistraction}`;
+    taskDistractionHTML.textContent = `Distraction(s): ${taskDistraction}`;
   }
 }
 
