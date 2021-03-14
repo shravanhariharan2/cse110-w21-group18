@@ -1,4 +1,4 @@
-import Constants from "../constants/Constants.js";
+import Constants from '../constants/Constants.js';
 
 /**
  * Implements a basic timer with start and end capabilities
@@ -76,10 +76,9 @@ export default class TimerController {
       timeString = `${paddedMinuteString}:${paddedSecondString}`;
     }
     const currentTitleString = this.DOM_ELEMENTS.title.innerHTML;
-    const titleTimeString =  timeString + ' - ' + currentTitleString.slice(Constants.TIME_PAD_SIZE);
+    const titleTimeString = `${timeString} - ${currentTitleString.slice(Constants.TIME_PAD_SIZE)}`;
     return titleTimeString;
   }
-
 
   /**
    * Performs a single timer counting operation

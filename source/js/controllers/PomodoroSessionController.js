@@ -267,11 +267,11 @@ export default class PomodoroSessionController {
    */
   setTitle(sessionType) {
     if (sessionType === PomodoroSessions.WORK) {
-      this.DOM_ELEMENTS.title.innerHTML = ' '.repeat(Constants.TIME_PAD_SIZE) + 'Work Session'
+      this.DOM_ELEMENTS.title.innerHTML = `${' '.repeat(Constants.TIME_PAD_SIZE)}Work Session`;
     } else if (sessionType === PomodoroSessions.SHORT_BREAK) {
-      this.DOM_ELEMENTS.title.innerHTML = ' '.repeat(Constants.TIME_PAD_SIZE) + 'Short Break'
+      this.DOM_ELEMENTS.title.innerHTML = `${' '.repeat(Constants.TIME_PAD_SIZE)}Short Break`;
     } else {
-      this.DOM_ELEMENTS.title.innerHTML = ' '.repeat(Constants.TIME_PAD_SIZE) + 'Long Break'
+      this.DOM_ELEMENTS.title.innerHTML = `${' '.repeat(Constants.TIME_PAD_SIZE)}Long Break`;
     }
   }
 
