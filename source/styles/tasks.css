@@ -1,7 +1,7 @@
 /* styling for the tasklist */
 #to-do-list-header {
   position: relative;
-  margin-top: min(30%,200px);
+  margin-top: 200px;
   width:80%;
   max-width: 550px;
   display: flex;
@@ -33,6 +33,7 @@
 /* button to add new task */
 #add-task {
   position: relative;
+  cursor: pointer;
   height: 88px;
   width: 500px;
   margin: auto;

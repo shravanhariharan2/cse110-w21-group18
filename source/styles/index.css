@@ -113,6 +113,7 @@ body {
   color: #026670;
   height: 60px;
   width: 100px;
+  cursor:pointer;
 }
 
 #start:active {
@@ -137,6 +138,7 @@ body {
   background-color: var(--main-bg-color);
   border-width: 0;
   border-color: #026670;
+  cursor: pointer;
 }
 
 .close{
