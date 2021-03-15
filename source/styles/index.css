@@ -1,14 +1,28 @@
+:root {
+  --main-bg-color: #f5eadb;
+  --main-timer-bg-color: #ffffff;
+  --main-border-color: #8e17dd;
+  --main-text-color: #000000;
+  --main-timer-bg-color: #03abee;
+  --short-break-bg-color: #FEF9C7;
+  --long-break-bg-color: #FCE181;
+  --main-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.20), 0 12px 40px 0 rgba(0, 0, 0, 0.20);
+}
+
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
 html{
-  min-width: 675px;
-  min-height: 620px;
+  background-color: var(--main-bg-color);
   top: 0;
   left:0;
   right:0;
   bottom:0;
+  overflow-y: scroll;
 }
 body {
   position: relative;
-  font-family: 'Open Sans', sans-serif;
   display: flex;
   min-width: 675px;
   min-height: 620px;
@@ -16,7 +30,6 @@ body {
   left:0;
   right:0;
   bottom:0;
-  background-color: #fffbf6;
 }
 
 #left-half {
@@ -121,7 +134,7 @@ body {
   height: 35px;
   width: 40px;
   font-size: 20px;
-  background-color: #fffbf6;
+  background-color: var(--main-bg-color);
   border-width: 0;
   border-color: #026670;
 }
@@ -140,8 +153,6 @@ body {
 
 @media all and (max-width:1300px) {
   body {
-    background-color: #fffbf6;
-    font-family: 'Open Sans', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
