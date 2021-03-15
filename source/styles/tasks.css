@@ -485,11 +485,11 @@ task-item {
   display: none;
   float: right;
   cursor: pointer;
-  width: 40px;
+  width: 45px;
   height: 35px;
   position: absolute;
   margin-top: 220px;
-  right: 1.2%;
+  right: 0.5%;
   font-size: 25px;
   background-color: var(--main-bg-color);
   border-width: 0;
