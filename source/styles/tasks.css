@@ -80,6 +80,7 @@
 #to-do-list {
   position: relative;
   margin: 15px auto;
+  margin-bottom:20px;
   width: 500px;
   text-align: center;
   display:flex;
@@ -487,7 +488,7 @@ task-item {
   width: 40px;
   height: 35px;
   position: absolute;
-  margin-top: min(30%,200px);
+  margin-top: 220px;
   right: 1.2%;
   font-size: 20px;
   background-color: var(--main-bg-color);

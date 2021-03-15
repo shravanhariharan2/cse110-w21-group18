@@ -1,23 +1,22 @@
-class InfoController {
+export default class InfoController {
   constructor() {
-
-    return instance;
+    this.DOM_ELEMENTS = {
+      infoModal: document.getElementById('info-modal'),
+    };
+    this.DOM_ELEMENTS.infoModal.style.display = 'none';
   }
 
-  /**
+   /*
    * Opens info box UI
    */
   openInfo() {
-    this.DOM_ELEMENTS.infoModal.style.display = 'block';
+    document.getElementById('info-modal').style.display = 'block';
   }
   /**
    * Closes info box UI
    */
-  closeInfo() {
-    this.DOM_ELEMENTS.infoModal.style.display = 'none';
+  closenfo() {
+    document.getElementById('info-modal').style.display = 'none';
   }
-
-  
 }
-
-export default InfoController;
+   

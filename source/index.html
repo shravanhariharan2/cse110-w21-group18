@@ -7,6 +7,9 @@
 		<link rel="stylesheet" href="styles/distraction-marker.css">
 		<link rel="stylesheet" href="styles/info.css">
 		<title id="title">      - Pomodoro Timer</title>
+		<meta charset="UTF-8">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 	<body>	
 		<div class="side-bar">
 			<div class="side-bar-icons">
@@ -151,17 +154,17 @@
 				<div>
 					<input type="button" id="start" value="Start" title="Start Pomodoro Session">
 				</div>
-				<div id="distraction-marker">
-					<div id="distraction-button">
-						<img id="distraction-icon" class="disabled" src="media/icons/thought-bubble.png"></img>
-					</div>
-				</div>
 			</div>
 		</div>
 		<div id="right-half" class="transition">
 			<header id="to-do-list-header">
 				<input type="button" id="collapse-task-list" value="&gt&gt" title="Hide the Task List">
 				<p id="list-title">Task List</p>
+				<div id="distraction-marker">
+					<div id="distraction-button">
+						<img id="distraction-icon" class="disabled" src="media/icons/thought-bubble.png"></img>
+					</div>
+				</div>
 			</header>
 			<hr id="task-line-break">
 			<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>

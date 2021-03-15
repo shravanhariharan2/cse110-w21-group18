@@ -3,7 +3,7 @@ import PomodoroSessionController from './controllers/PomodoroSessionController.j
 import SettingsController from './controllers/SettingsController.js';
 import TaskListController from './controllers/TaskListController.js';
 import TimerController from './controllers/TimerController.js';
-import InfoController from './controllers/InfoController';
+import InfoController from './controllers/InfoController.js';
 import Constants from './constants/Constants.js';
 
 const Controllers = (() => {

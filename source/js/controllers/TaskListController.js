@@ -43,12 +43,17 @@ export default class TaskListController {
     document.getElementById('right-half').style.animationDuration="1s";
     document.getElementById('right-half').style.animationName = "slideout";
     document.getElementById('right-half').style.marginLeft= "2000px";
+    
     document.getElementById('timer-box').style.animationDuration="1s";
     document.getElementById('timer-box').style.animationName = "slideRight";
-    document.getElementById('timer-box').style.left = '50%';
-    setTimeout(() => {document.getElementById('expand-task-list').style.display = 'inline';},600);
+    document.getElementById('timer-box').style.left = '68%';
+    setTimeout(() => {
+      document.getElementById('expand-task-list').style.display = 'inline';
+      document.getElementById('right-half').style.display= "none";
+    },600);
   }
   expandTaskList(){
+    document.getElementById('right-half').style.display= "flex";
     document.getElementById('right-half').style.animationDuration="1s";
     document.getElementById('right-half').style.animationName = "slidein";
     document.getElementById('right-half').style.marginLeft= "initial";
@@ -158,12 +163,15 @@ export default class TaskListController {
       this.selectedTask.styleUnselectedTask();
       this.selectedTask.onclick = null;
       this.selectedTask.style.display = 'grid';
-      if (this.selectedTask.isExpanded === false) {
-        this.selectedTask.shadowRoot.querySelector('.expand-button').click();
+      if (this.selectTask.shadowRoot) {
+        if (this.selectedTask.isExpanded === false) {
+          this.selectedTask.shadowRoot.querySelector('.expand-button').click();
+        }
+        this.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'none';
+        this.selectedTask.shadowRoot.querySelector('.edit-button').style.display = 'none';
+        this.selectedTask.shadowRoot.querySelector('.remove-button').style.display = 'none';
       }
-      this.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'none';
-      this.selectedTask.shadowRoot.querySelector('.edit-button').style.display = 'none';
-      this.selectedTask.shadowRoot.querySelector('.remove-button').style.display = 'none';
+      
     }
     this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
     this.DOM_ELEMENTS.completedList.style.display = 'none';

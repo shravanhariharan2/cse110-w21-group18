@@ -5,7 +5,7 @@
     height: 45px;
     position: absolute;
     display: inline;
-    margin-top: 90px;
+    margin-top: 10px;
     right: 1%;
   }
   
@@ -55,8 +55,6 @@
     justify-content: space-evenly;
     text-align: left;
   }
-  
- 
   
   #info-text {
     padding-top: 50px;

@@ -20,6 +20,7 @@ html{
   right:0;
   bottom:0;
   overflow-y: scroll;
+  min-width: 730px;
 }
 body {
   position: relative;

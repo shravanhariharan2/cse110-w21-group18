@@ -1,5 +1,9 @@
 #distraction-icon {
-    top: 40px;
+    position:absolute;
+    right:0;
+    top:10px;
+    height:40px;
+    width: 40px;
 }
 
 #distraction-icon.enabled {

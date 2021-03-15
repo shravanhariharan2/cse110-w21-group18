@@ -10,7 +10,7 @@ document.getElementById('completed-list').addEventListener('DOMSubtreeModified',
 document.getElementById('cancel-input').addEventListener('click', TaskList.cancelInput);
 document.getElementById('expand-completed').addEventListener('click', TaskList.expandCompletedTasks);
 document.getElementById('collapse-task-list').addEventListener('click', TaskList.collapseTaskList);
-document.getElementById('expand-task-list').addEventListener('click', this.expandTaskList);
+document.getElementById('expand-task-list').addEventListener('click', TaskList.expandTaskList);
 document.getElementById('view-all').style.display = 'none';
 document.getElementById('completed-list').style.display = 'none';
 
