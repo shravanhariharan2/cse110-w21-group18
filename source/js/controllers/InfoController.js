@@ -15,7 +15,7 @@ export default class InfoController {
   /**
    * Closes info box UI
    */
-  closenfo() {
+  closeInfo() {
     document.getElementById('info-modal').style.display = 'none';
   }
 }

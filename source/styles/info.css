@@ -28,20 +28,21 @@
     color: #3a494b;
     margin: 100px auto;
     background: #dee2e1;
-    width: 650px;
+    width: 800px;
     min-height: 600px;
     border-radius: 40px;
     text-align: center;
     z-index: 0;
-    padding: 20px 20px;;
+    padding: 20px 50px;
     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2), 0 8px 25px 0 rgba(0, 0, 0, 0.19);
   }
+
   #close-info {
     position: absolute;
     height: 20px;
     width: 20px;
-    margin-top: 0px;
-    margin-left: 300px;
+    top: 130px;
+    margin-left: 390px;
     border-radius: 40%;
     border-style: none;
     background: #e65656ef;

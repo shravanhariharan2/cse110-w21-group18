@@ -187,6 +187,7 @@ export default class PomodoroSessionController {
       this.taskList.autoSelectTask();
     }
     this.taskList.showSelectedTask();
+    this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'none';
     this.enableDistractionMarker();
     await this.timer.run();
     this.sessionNumber += 1;
@@ -288,7 +289,7 @@ export default class PomodoroSessionController {
       this.showFullTaskList();
       this.taskList.DOM_ELEMENTS.viewAll.style.display = 'inline';
       this.isFullListVisible = false;
-      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = 'Hide Remaining Tasks';
+      this.taskList.DOM_ELEMENTS.viewAll.innerHTML = 'Show Focused View';
       this.taskList.DOM_ELEMENTS.addTaskButton.after(this.taskList.DOM_ELEMENTS.viewAll);
     } else {
       this.taskList.loadTasks();
@@ -296,6 +297,7 @@ export default class PomodoroSessionController {
         this.taskList.autoSelectTask();
       }
       this.taskList.showSelectedTask();
+      this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'none';
       this.isFullListVisible = true;
       this.taskList.DOM_ELEMENTS.viewAll.innerHTML = 'View All Tasks';
       this.taskList.DOM_ELEMENTS.taskList.after(this.taskList.DOM_ELEMENTS.viewAll);
@@ -343,6 +345,7 @@ export default class PomodoroSessionController {
     this.taskList.hasActiveSession = false;
     this.isFullListVisible = false;
     this.viewAll();
+    this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'none';
     this.showFullTaskList();
     this.idleAtWorkSession();
   }
@@ -387,7 +390,6 @@ export default class PomodoroSessionController {
    */
   incrementDistraction() {
     this.numDistraction += 1;
-    console.log('hi');
     if (this.taskList.selectedTask) {
       this.taskList.selectedTask.incrementTaskDistraction();
     }

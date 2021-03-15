@@ -10,7 +10,6 @@ export default class TaskListController {
     this.completedIsExpanded = false;
     this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
     this.hasActiveSession = false;
-    this.TLCollapsed = false;
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
     this.addTask = this.addTask.bind(this);
@@ -39,6 +38,7 @@ export default class TaskListController {
       expandTaskList: document.getElementById('expand-task-list'),
     };
   }
+
   collapseTaskList(){
     document.getElementById('right-half').style.animationDuration="1s";
     document.getElementById('right-half').style.animationName = "slideout";
@@ -49,9 +49,11 @@ export default class TaskListController {
     document.getElementById('timer-box').style.left = '68%';
     setTimeout(() => {
       document.getElementById('expand-task-list').style.display = 'inline';
-      document.getElementById('right-half').style.display= "none";
+      document.getElementById('right-half').style.display = "none";
+      document.getElementById('settings-icon').style.marginTop = "17px";
     },600);
   }
+
   expandTaskList(){
     document.getElementById('right-half').style.display= "flex";
     document.getElementById('right-half').style.animationDuration="1s";
@@ -60,7 +62,8 @@ export default class TaskListController {
     document.getElementById('timer-box').style.animationDuration="1s";
     document.getElementById('timer-box').style.animationName = "slideLeft";
     document.getElementById('timer-box').style.left = '45%';
-    document.getElementById('expand-task-list').style.display = 'none';;
+    document.getElementById('expand-task-list').style.display = 'none';
+    document.getElementById('settings-icon').style.marginTop = "10px";
   }
   /**
    * Loads the tasks saved in sessionStorage back in the order that they were in previously
@@ -85,32 +88,38 @@ export default class TaskListController {
       // maximum of 1000 tasks in both lists
       const isTaskItem = (keyNum > -1000) && (keyNum < 1000) && (keyNum !== 0);
       if (isTaskItem) {
-        const taskObj = JSON.parse(sessionStorage.getItem(key));
-        if (typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
-          && typeof taskObj.progress !== 'undefined' && typeof taskObj.distraction !== 'undefined'
-          && typeof taskObj.isComplete !== 'undefined' && typeof taskObj.class !== 'undefined'
-          && typeof taskObj.id !== 'undefined' && typeof taskObj.draggable !== 'undefined') {
-          const newTask = document.createElement('task-item');
-          newTask.setAttribute('name', taskObj.name);
-          newTask.setAttribute('estimate', taskObj.estimate);
-          newTask.setAttribute('progress', taskObj.progress);
-          newTask.setAttribute('distraction', taskObj.distraction);
-          newTask.setAttribute('notes', taskObj.notes);
-          newTask.setAttribute('isComplete', taskObj.isComplete);
-          newTask.isComplete = taskObj.isComplete;
-          newTask.setAttribute('class', taskObj.class);
-          newTask.setAttribute('id', taskObj.id);
-          newTask.setAttribute('draggable', taskObj.draggable);
-          if (parseInt(key, 10) > 0) {
-            this.DOM_ELEMENTS.taskList.appendChild(newTask);
-            sessionNumTasks += 1;
-          } else {
-            this.DOM_ELEMENTS.completedList.prepend(newTask);
-            newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-            newTask.style.cursor = 'pointer';
-            sessionCompletedTasks += 1;
+        // need the try in case the session storage gets messed with
+        try{
+          const taskObj = JSON.parse(sessionStorage.getItem(key));
+          if ( typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
+            && typeof taskObj.progress !== 'undefined' && typeof taskObj.distraction !== 'undefined'
+            && typeof taskObj.isComplete !== 'undefined' && typeof taskObj.class !== 'undefined'
+            && typeof taskObj.id !== 'undefined' && typeof taskObj.draggable !== 'undefined') {
+              const newTask = document.createElement('task-item');
+              newTask.setAttribute('name', taskObj.name);
+              newTask.setAttribute('estimate', taskObj.estimate);
+              newTask.setAttribute('progress', taskObj.progress);
+              newTask.setAttribute('distraction', taskObj.distraction);
+              newTask.setAttribute('notes', taskObj.notes);
+              newTask.setAttribute('isComplete', taskObj.isComplete);
+              newTask.isComplete = taskObj.isComplete;
+              newTask.setAttribute('class', taskObj.class);
+              newTask.setAttribute('id', taskObj.id);
+              newTask.setAttribute('draggable', taskObj.draggable);
+              if (parseInt(key, 10) > 0) {
+                this.DOM_ELEMENTS.taskList.appendChild(newTask);
+                sessionNumTasks += 1;
+              } else {
+                this.DOM_ELEMENTS.completedList.prepend(newTask);
+                newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+                newTask.style.cursor = 'pointer';
+                sessionCompletedTasks += 1;
+              }
+              newTask.addEventListener('click', this.selectTask.bind(this, newTask));
           }
-          newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+        }
+        catch(error){
+          console.log(error)
         }
       }
     });
@@ -154,6 +163,7 @@ export default class TaskListController {
   showSelectedTask() {
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Current Task';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
+    this.cancelInput();
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
       element.style.display = 'none';
@@ -388,11 +398,12 @@ export default class TaskListController {
    * @param {TaskItem} taskItem task selected
    */
   selectTask(taskItem) {
-    if (!taskItem.isComplete) {
+    if (taskItem && !taskItem.isComplete) {
       if (this.selectedTask === taskItem) {
         this.selectedTask = null;
       } else {
         this.selectedTask = taskItem;
+        this.selectedID = this.selectedTask.id;
         this.selectedTask.isSelected = true;
         this.unselectOtherTasks();
       }
@@ -443,11 +454,14 @@ export default class TaskListController {
         this.selectedTask = null;
       }
     }
-    // shows the next task if it is marked as completed and is in session
-    if (this.selectedTask === null && this.hasActiveSession) {
-      if (this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
-        this.autoSelectTask();
-        this.showSelectedTask();
+    else {
+      // shows the next task if it is marked as completed and is in session
+      if (this.selectedTask === null && this.hasActiveSession) {
+        if (this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
+          this.autoSelectTask();
+          this.loadTasks();
+          this.showSelectedTask();
+        }
       }
     }
   }

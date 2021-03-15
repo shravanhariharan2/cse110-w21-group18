@@ -58,7 +58,7 @@
 #view-all {
   position: relative;
   margin: 30px auto;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   padding: 15px 25px;
   left: 5px;
   border-radius: 15px;
@@ -80,7 +80,7 @@
 #to-do-list {
   position: relative;
   margin: 15px auto;
-  margin-bottom:20px;
+  margin-bottom: 40px;
   width: 500px;
   text-align: center;
   display:flex;
@@ -490,7 +490,7 @@ task-item {
   position: absolute;
   margin-top: 220px;
   right: 1.2%;
-  font-size: 20px;
+  font-size: 25px;
   background-color: var(--main-bg-color);
   border-width: 0;
   border-color: #026670;

@@ -130,6 +130,7 @@ class TaskItem extends HTMLElement {
     inputElement.setAttribute('isComplete', this.getAttribute('isComplete'));
     inputElement.setAttribute('progress', this.getAttribute('progress'));
     inputElement.setAttribute('notes', this.getAttribute('notes'));
+    inputElement.setAttribute('distraction', this.getAttribute('distraction'));
     inputElement.setAttribute('draggable', true);
     this.after(inputElement);
     inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
@@ -161,6 +162,7 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('class', taskObj.class);
       newTask.setAttribute('id', taskObj.id);
       newTask.setAttribute('draggable', taskObj.draggable);
+      newTask.setAttribute('distraction', taskObj.distraction);
       inputElement.remove();
       // insert where it was before
       if (inputElement.id !== '1') {
@@ -180,6 +182,7 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('class', inputElement.getAttribute('class'));
       newTask.setAttribute('id', inputElement.id);
       newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
+      //newTask.setAttribute('distraction', inputElement.getAttribute('distraction'));
       inputElement.remove();
       // insert where it was before
       if (inputElement.id !== '1') {

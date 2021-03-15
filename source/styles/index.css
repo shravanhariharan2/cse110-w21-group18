@@ -20,6 +20,7 @@ html{
   right:0;
   bottom:0;
   overflow-y: scroll;
+  overflow-x: auto;
   min-width: 730px;
 }
 body {
@@ -145,11 +146,14 @@ input[type=button]:active, button:active {
   left:0;
   height: 35px;
   width: 40px;
-  font-size: 20px;
+  font-size: 25px;
   background-color: var(--main-bg-color);
   border-width: 0;
   border-color: #026670;
   cursor: pointer;
+}
+#collapse-task-list:active {
+  margin-top: 10px;
 }
 
 .close{
@@ -165,7 +169,7 @@ input[type=button]:active, button:active {
 }
 
 .side-bar {
-  width: 40px;
+  width: 45px;
   height: 100%;
   position: absolute; 
   top: 1%;
@@ -177,6 +181,7 @@ input[type=button]:active, button:active {
   height: 40px;
   display: block;
   margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 @media all and (max-width:1300px) {
@@ -190,7 +195,6 @@ input[type=button]:active, button:active {
     transform: none;
     left: auto !important;
     top: auto;
-    background: #9FEDD7;
     margin: 50px auto; 
     width: 30%;
     min-width: 550px;
