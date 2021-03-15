@@ -1,11 +1,12 @@
 import HtmlTemplates from '../constants/HtmlTemplates.js';
-import TaskList from '../services/TaskList.js';
+import { TaskStyles } from '../constants/Styles.js';
+import Controllers from '../index.js';
 
 class TaskInput extends HTMLElement {
   constructor() {
     super();
     this.isSelected = false;
-    this.taskList = new TaskList();
+    this.taskList = Controllers.taskList();
     this.onclick = () => this.toggleTaskSelection();
   }
 
@@ -53,23 +54,20 @@ class TaskInput extends HTMLElement {
    * Update UI for when selecting task
    */
   styleSelectedTask() {
-    this.shadowRoot.querySelector('.task-input').style.border = '2px solid #026670';
-    this.shadowRoot.querySelector('.task-input').style.borderRadius = '30px';
-    this.shadowRoot.querySelector('.task-input').style.background = '#9fedd7';
-    this.shadowRoot.querySelector('.task-input').style.top = '3px';
-    this.shadowRoot.querySelector('.task-input').style.boxShadow = '0px 0px';
+    this.shadowRoot.querySelector('.task-input').style.border = TaskStyles.SELECTED_TASK_BORDER;
+    this.shadowRoot.querySelector('.task-input').style.borderRadius = TaskStyles.SELECTED_TASK_BORDER_RADIUS;
+    this.shadowRoot.querySelector('.task-input').style.background = TaskStyles.SELECTED_TASK_BACKGROUND;
+    this.shadowRoot.querySelector('.task-input').style.top = TaskStyles.SELECTED_TASK_TOP_OFFSET;
+    this.shadowRoot.querySelector('.task-input').style.boxShadow = TaskStyles.NO_BOX_SHADOW;
   }
 
   /**
    * Update UI for when unselecting task
    */
   styleUnselectedTask() {
-    this.shadowRoot.querySelector('.task-input').style.background = '#fffbf6';
-    this.shadowRoot.querySelector('.task-input').style.top = '0px';
-    this.shadowRoot
-      .querySelector('.task-input')
-      .style
-      .boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
+    this.shadowRoot.querySelector('.task-input').style.background = TaskStyles.UNSELECTED_TASK_BACKGROUND;
+    this.shadowRoot.querySelector('.task-input').style.top = TaskStyles.UNSELECTED_TASK_TOP_OFFSET;
+    this.shadowRoot.querySelector('.task-input').style.boxShadow = TaskStyles.BOX_SHADOW;
   }
 }
 window.customElements.define('task-input', TaskInput);

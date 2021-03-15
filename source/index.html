@@ -5,7 +5,7 @@
 		<link rel="stylesheet" href="styles/tasks.css">
 		<link rel="stylesheet" href="styles/settings.css">
 		<link rel="stylesheet" href="styles/distraction-marker.css">
-		<title>Pomodoro Timer</title>
+		<title id="title">      - Pomodoro Timer</title>
 		<meta charset="UTF-8">
 		<link rel="preconnect" href="https://fonts.gstatic.com">
 		<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
@@ -27,7 +27,7 @@
 				</div>
 		</div>
 		<div class="side-bar">
-            <div class="side-bar-icons">
+			<div class="side-bar-icons">
 				<div id="settings">
 					<div id="settings-button">
 						<img id="settings-icon" src="media/icons/settings-gear.png"></img>
@@ -107,7 +107,7 @@
 		</div>
 		<div id="right-half">
 			<header id="to-do-list-header">
-				<p id="list-title">Task List</p>
+				<p id="list-title">Tasks</p>
 			</header>
 			<hr id="task-line-break">
 			<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
@@ -131,7 +131,7 @@
 				<input type="button" id="save-task" value="Save">
 			</form>
 			<div id="to-do-list"></div>
-			<button type="button" id="view-all">&#10133 Expand Task List</button>
+			<button type="button" id="view-all">View All Tasks</button>
 			<header id="completed-list-header">
 				<p id="completed-list-title">Completed Tasks</p>
 				<input id="expand-completed" type="image" title="Expand View" src="./media/icons/expand-icon.png">
@@ -139,11 +139,14 @@
 			<div id="completed-list"></div>
 		</div>	
 	</body>
-	<script type="module" src="js/services/PomodoroSession.js"></script>
-	<script type="module" src="js/services/Timer.js"></script>
-	<script type="module" src="js/services/TaskList.js"></script>
-	<script type="module" src="js/services/Settings.js"></script>
+	<script type="module" src="js/index.js"></script>
+	<script type="module" src="js/controllers/PomodoroSessionController.js"></script>
+	<script type="module" src="js/controllers/TimerController.js"></script>
+	<script type="module" src="js/controllers/TaskListController.js"></script>
+	<script type="module" src="js/controllers/SettingsController.js"></script>
+	<script type="module" src="js/controllers/NotificationController.js"></script>
 	<script type="module" src="js/constants/Enums.js"></script>
+	<script type="module" src="js/constants/Styles.js"></script>
 	<script type="module" src="js/scripts/index.js"></script>
 	<script type="module" src="js/scripts/tasks.js"></script>
 	<script type="module" src="js/scripts/settings.js"></script>

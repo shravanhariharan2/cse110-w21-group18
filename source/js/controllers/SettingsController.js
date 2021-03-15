@@ -1,13 +1,6 @@
-import PomodoroSession from './PomodoroSession.js';
-
-let instance = null;
-
-class Settings {
-  constructor() {
-    if (instance) return instance;
-    instance = this;
-
-    this.pomodoroSession = new PomodoroSession();
+export default class SettingsController {
+  constructor(pomodoroSession) {
+    this.pomodoroSession = pomodoroSession;
 
     this.loadSettings();
 
@@ -33,11 +26,10 @@ class Settings {
       pauseBeforeBox: document.getElementById('pause-before-breaks'),
       pauseAfterBox: document.getElementById('pause-after-breaks'),
       hideSecondsBox: document.getElementById('hide-seconds'),
+      muteAudioBox: document.getElementById('mute-audio'),
     };
 
     this.DOM_ELEMENTS.settingsModal.style.display = 'none';
-
-    return instance;
   }
 
   /**
@@ -52,6 +44,7 @@ class Settings {
     this.DOM_ELEMENTS.pauseBeforeBox.checked = this.pauseBeforeBreak;
     this.DOM_ELEMENTS.pauseAfterBox.checked = this.pauseAfterBreak;
     this.DOM_ELEMENTS.hideSecondsBox.checked = this.hideSeconds;
+    this.DOM_ELEMENTS.muteAudioBox.checked = this.muteAudio;
   }
 
   /**
@@ -84,7 +77,7 @@ class Settings {
   loadSettings() {
     this.hasLoadedIntoDOM = false;
     if (!localStorage.getItem('workSessionDuration')) {
-      Settings.setDefaultValuesInStorage();
+      SettingsController.setDefaultValuesInStorage();
     }
     this.loadStoredInputValues();
     this.hasLoadedIntoDOM = true;
@@ -101,6 +94,7 @@ class Settings {
     localStorage.setItem('pauseBeforeBreak', false);
     localStorage.setItem('pauseAfterBreak', true);
     localStorage.setItem('hideSeconds', false);
+    localStorage.setItem('muteAudio', false);
   }
 
   /**
@@ -114,6 +108,7 @@ class Settings {
     this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
     this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
     this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
+    this.muteAudio = localStorage.getItem('muteAudio') === 'true';
     this.pomodoroSession.loadTimerSettings();
   }
 
@@ -150,9 +145,15 @@ class Settings {
       this.hideSeconds = false;
     }
 
+    if (this.DOM_ELEMENTS.muteAudioBox.checked) {
+      localStorage.setItem('muteAudio', true);
+      this.muteAudio = true;
+    } else {
+      localStorage.setItem('muteAudio', false);
+      this.muteAudio = false;
+    }
+
     this.loadStoredInputValues();
     this.pomodoroSession.loadTimerSettings();
   }
 }
-
-export default Settings;

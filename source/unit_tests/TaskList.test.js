@@ -1,50 +1,54 @@
-import TaskList from '../js/services/TaskList.js';
-import HtmlMocks from './HtmlMocks.js';
+import TaskListController from '../js/controllers/TaskListController.js';
+import HTML from './HtmlMocks.js';
 
 beforeEach(() => {
   sessionStorage.clear();
-  document.body.innerHTML = HtmlMocks.TASK_LIST;
+  document.body.innerHTML = HTML;
 });
 
 test('Constructor initializes correct instance variables', () => {
-  const ListTest = new TaskList();
-  expect(ListTest.numTasks).toBe(0);
-  expect(ListTest.completedTasks).toBe(0);
-  expect(ListTest.completedIsExpanded).toBe(false);
-  expect(ListTest.hasLoadedIntoDOM).toBe(false);
+  const taskListController = new TaskListController();
+  expect(taskListController.numTasks).toBe(0);
+  expect(taskListController.completedTasks).toBe(0);
+  expect(taskListController.completedIsExpanded).toBe(false);
+  expect(taskListController.hasLoadedIntoDOM).toBe(false);
 });
 
 test('addTask() adds a new task to session storage and inserts a new <task-item/>', () => {
-  const ListTest = new TaskList();
-  jest.spyOn(ListTest.DOM_ELEMENTS.taskList, 'appendChild');
-  const taskId = ListTest.numTasks;
+  const taskListController = new TaskListController();
+  jest.spyOn(taskListController.DOM_ELEMENTS.taskList, 'appendChild');
+
+  const taskId = taskListController.numTasks;
 
   // Mock the form inputs
-  ListTest.DOM_ELEMENTS.newTaskName.value = 'Mock Task';
-  ListTest.DOM_ELEMENTS.newTaskPomos.value = '4';
-  ListTest.DOM_ELEMENTS.newTaskPomos.newTaskNotes = 'Mock Notes';
+  taskListController.DOM_ELEMENTS.newTaskName.value = 'Mock Task';
+  taskListController.DOM_ELEMENTS.newTaskPomos.value = '4';
+  taskListController.DOM_ELEMENTS.newTaskPomos.newTaskNotes = 'Mock Notes';
 
   const newTask = {
-    name: ListTest.DOM_ELEMENTS.newTaskName.value,
-    estimate: ListTest.DOM_ELEMENTS.newTaskPomos.value,
+    name: taskListController.DOM_ELEMENTS.newTaskName.value,
+    estimate: taskListController.DOM_ELEMENTS.newTaskPomos.value,
     progress: '0',
-    notes: ListTest.DOM_ELEMENTS.newTaskNotes.value,
+    distraction: '0',
+    notes: taskListController.DOM_ELEMENTS.newTaskNotes.value,
     isComplete: false,
     class: 'dropzone',
-    id: String(ListTest.numTasks),
+    id: taskListController.numTasks.toString(),
     draggable: true,
   };
 
   const newTaskHTML = document.createElement('task-item');
-  newTaskHTML.setAttribute('name', ListTest.DOM_ELEMENTS.newTaskName.value);
-  newTaskHTML.setAttribute('estimate', ListTest.DOM_ELEMENTS.newTaskPomos.value);
+  newTaskHTML.setAttribute('name', taskListController.DOM_ELEMENTS.newTaskName.value);
+  newTaskHTML.setAttribute('estimate', taskListController.DOM_ELEMENTS.newTaskPomos.value);
   newTaskHTML.setAttribute('progress', '0');
-  newTaskHTML.setAttribute('notes', ListTest.DOM_ELEMENTS.newTaskNotes.value);
+  newTaskHTML.setAttribute('distraction', '0');
+  newTaskHTML.setAttribute('notes', taskListController.DOM_ELEMENTS.newTaskNotes.value);
   newTaskHTML.setAttribute('isComplete', false);
   newTaskHTML.setAttribute('class', 'dropzone');
-  newTaskHTML.setAttribute('id', ListTest.numTasks);
+  newTaskHTML.setAttribute('id', taskListController.numTasks);
 
-  ListTest.addTask();
+  taskListController.addTask();
   expect(sessionStorage.__STORE__[taskId]).toBe(JSON.stringify(newTask));
-  expect(ListTest.DOM_ELEMENTS.taskList.appendChild).toBeCalledWith(newTaskHTML);
+  expect(Object.keys(sessionStorage.__STORE__).length).toBe(3);
+  expect(taskListController.DOM_ELEMENTS.taskList.appendChild).toBeCalledWith(newTaskHTML);
 });

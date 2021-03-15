@@ -9,14 +9,12 @@
   height: 100%;
   overflow: auto; 
   padding: 100px auto;
-  background-color: rgb(0,0,0);
   background-color: rgba(0,0,0,0.4);
 }
 
 #settings-box {
-  color: #3a494b;
   margin: 100px auto;
-  background: #dee2e1;
+  background-color: #fbf6ef;
   width: 650px;
   min-height: 600px;
   border-radius: 40px;
@@ -53,7 +51,7 @@
   height: 60px;
   width: 100px;
   margin: 0px 70px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
 }
 
 #settings-buttons input:active {
