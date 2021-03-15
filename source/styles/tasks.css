@@ -2,7 +2,8 @@
 #to-do-list-header {
   position: relative;
   margin-top: min(30%,200px);
-  width: 400px;
+  width:80%;
+  max-width: 550px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -27,6 +28,7 @@
   text-align: center;
   font-size: 40px;
   font-weight: bold;
+  width: 100%;
 }
 /* button to add new task */
 #add-task {
@@ -459,6 +461,21 @@ task-item {
   font-size: 15px;
   padding: 3px;
   display:none;
+}
+
+#expand-task-list {
+  display: none;
+  float: right;
+  cursor: pointer;
+  width: 40px;
+  height: 35px;
+  position: absolute;
+  margin-top: min(30%,200px);
+  right: 1.2%;
+  font-size: 20px;
+  background-color: #fffbf6;
+  border-width: 0;
+  border-color: #026670;
 }
 
 @media all and (max-width:1300px) {

@@ -16,6 +16,7 @@ body {
   left:0;
   right:0;
   bottom:0;
+  background-color: #fffbf6;
 }
 
 #left-half {
@@ -114,6 +115,28 @@ body {
   margin-left: 70px;
   margin-top: 5px;
 }
+#collapse-task-list {
+  position:absolute;
+  left:0;
+  height: 35px;
+  width: 40px;
+  font-size: 20px;
+  background-color: #fffbf6;
+  border-width: 0;
+  border-color: #026670;
+}
+
+.close{
+  right:-600px !important;
+  
+}
+.transition{
+-webkit-transition: right 0.3s ease-out;  /* Chrome 1-25, Safari 3.2+ */
+   -moz-transition: right 0.3s ease-out;  /* Firefox 4-15 */
+     -o-transition: right 0.3s ease-out;  /* Opera 10.50–12.00 */
+        transition: right 0.3s ease-out;  /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+
+}
 
 @media all and (max-width:1300px) {
   body {
@@ -126,10 +149,10 @@ body {
   #timer-box {
     position: relative;
     transform: none;
-    left: auto;
+    left: auto !important;
     top: auto;
     background: #9FEDD7;
-    margin: 50px auto;
+    margin: 50px auto; 
     width: 30%;
     min-width: 550px;
     max-width: 700px;
@@ -148,10 +171,51 @@ body {
     height: 50px;
     position: absolute;
     display: inline;
-    top: none;
     right: none;
   }
   #left-half { width: 100%;}
-  #right-half { width: 100%;}
+  #right-half { 
+    width: 100%;
+    margin-left: 0;
+  }
+  #expand-task-list {
+    margin-top: 555px !important;
+  }
+}
+@keyframes slideout {
+  from {
+    margin-left: 50px;
+  }
+
+  to {
+    margin-left: 1600px;
+  }
+}
+@keyframes slidein {
+  to {
+    margin-left: 50px;
+  }
+
+  from {
+    margin-left: 1600px;
+  }
+}
+@keyframes slideRight {
+  to {
+    left: 68%;
+  }
+
+  from {
+    left: 45%;
+  }
+}
+@keyframes slideLeft {
+  from {
+    left: 68%;
+  }
+
+  to {
+    left: 45%;
+  }
 }
 
