@@ -5,12 +5,11 @@ import DisplayMessages from '../constants/DisplayMessages.js';
 * Implements the NotificationService class. This class is a controller for browser
 * and audio notifications
 */
-class NotificationService {
+export default class NotificationController {
   constructor() {
     this.DOM_ELEMENTS = {
       alarm: document.getElementById('timer-alarm'),
     };
-    this.NUM_SESSIONS_BEFORE_LONG_BREAK = 4;
   }
 
   /**
@@ -19,11 +18,21 @@ class NotificationService {
   * @param {int} currentState an integer representing the state the user is in
   * @param {int} sessionNumber an integer representing the worksessions finished
   */
-  notifyUser(currentState, sessionNumber) {
-    this.DOM_ELEMENTS.alarm.play();
-    if (Notification.permission === 'granted') {
-      this.browserNotify(currentState, sessionNumber);
+  notifyUser(currentState, sessionNumber, numSessionsBeforeLongBreak) {
+    if (!NotificationController.hasAudioMuted()) {
+      this.audioNotify();
     }
+    if (Notification.permission === 'granted') {
+      NotificationController.browserNotify(currentState, sessionNumber, numSessionsBeforeLongBreak);
+    }
+  }
+
+  static hasAudioMuted() {
+    return localStorage.getItem('muteAudio') === 'true';
+  }
+
+  audioNotify() {
+    this.DOM_ELEMENTS.alarm.play();
   }
 
   /**
@@ -31,9 +40,10 @@ class NotificationService {
    * @param {int} currentState [an integer representing the state the user is in]
    * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  browserNotify(currentState, sessionNumber) {
-    const notificationTitle = NotificationService.createNotificationTitle(currentState);
-    const notificationBody = this.createNotificationBody(currentState, sessionNumber);
+  static browserNotify(currentState, sessionNumber, numSessionsBeforeLongBreak) {
+    const notificationTitle = NotificationController.createNotificationTitle(currentState);
+    const notificationBody = NotificationController
+      .createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak);
     new Notification(notificationTitle, notificationBody);
   }
 
@@ -43,7 +53,7 @@ class NotificationService {
    */
   static createNotificationTitle(currentState) {
     let notificationTitle = DisplayMessages.NOTIFICATION_HEADER;
-    if (currentState === PomodoroSessionStates.WORK_SESSION) {
+    if (currentState === PomodoroSessionStates.WORK) {
       notificationTitle += DisplayMessages.WORK_SESSION_COMPLETE;
     } else if (currentState === PomodoroSessionStates.SHORT_BREAK) {
       notificationTitle += DisplayMessages.SHORT_BREAK_COMPLETE;
@@ -58,9 +68,9 @@ class NotificationService {
    * @param {int} currentState [an integer representing the state the user is in]
    * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  createNotificationBody(currentState, sessionNumber) {
-    if (currentState === PomodoroSessionStates.WORK_SESSION) {
-      if (sessionNumber !== this.NUM_SESSIONS_BEFORE_LONG_BREAK) {
+  static createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak) {
+    if (currentState === PomodoroSessionStates.WORK) {
+      if (sessionNumber !== numSessionsBeforeLongBreak) {
         return { body: DisplayMessages.SHORT_BREAK_NEXT_NOTIFY };
       }
       return { body: DisplayMessages.LONG_BREAK_NEXT_NOTIFY };
@@ -68,5 +78,3 @@ class NotificationService {
     return { body: DisplayMessages.WORK_NEXT_NOTIFY };
   }
 }
-
-export default NotificationService;

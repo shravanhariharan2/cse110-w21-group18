@@ -1,3 +1,5 @@
+import { TaskStyles } from '../constants/Styles.js';
+
 class TaskItem extends HTMLElement {
   constructor() {
     super();
@@ -17,9 +19,13 @@ class TaskItem extends HTMLElement {
   loadDOMElements() {
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
-      this.shadowRoot.innerHTML = '<link rel=\'stylesheet\' href=\'styles/tasks.css\'>';
+      this.shadowRoot.innerHTML = `
+        <link rel='stylesheet' href='styles/tasks.css'>
+        <link rel='stylesheet' href='styles/index.css'>
+        `;
       const nameElement = this.createNameElement();
       const pomoProgressElement = this.createPomoProgressElement();
+      const distractionElement = this.createDistractionElement();
       const notesElement = this.createNotesElement();
       const expandButtonElement = this.createExpandButtonElement();
       const editButtonElement = this.createEditButtonElement();
@@ -27,10 +33,12 @@ class TaskItem extends HTMLElement {
       const checkboxElement = this.createCheckboxElement();
 
       this.shadowRoot.append(checkboxElement, nameElement, pomoProgressElement,
-        expandButtonElement, notesElement, editButtonElement, removeButtonElement);
+        expandButtonElement, notesElement, distractionElement,
+        editButtonElement, removeButtonElement);
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       this.shadowRoot.querySelector('.remove-button').style.display = 'none';
       this.shadowRoot.querySelector('.notes').style.display = 'none';
+      this.shadowRoot.querySelector('.distraction').style.display = 'none';
     }
   }
 
@@ -55,6 +63,13 @@ class TaskItem extends HTMLElement {
     return taskNotes;
   }
 
+  createDistractionElement() {
+    const taskDistraction = this.shadowRoot.appendChild(document.createElement('p'));
+    taskDistraction.className = 'distraction';
+    taskDistraction.textContent = `Distraction(s): ${this.getAttribute('distraction')}`;
+    return taskDistraction;
+  }
+
   createExpandButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
     button.className = 'expand-button';
@@ -72,35 +87,36 @@ class TaskItem extends HTMLElement {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       this.shadowRoot.querySelector('.remove-button').style.display = 'none';
       this.shadowRoot.querySelector('.notes').style.display = 'none';
+      this.shadowRoot.querySelector('.distraction').style.display = 'none';
       this.isExpanded = false;
       button.setAttribute('style', 'transform:rotate(0deg); -webkit-transform: rotate(0deg)');
       return;
     }
+    const taskGridTemplate = '"check taskName pomo" "notes notes notes" "distraction distraction distraction"';
     if (this.isComplete) {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = '"check taskName pomo" "notes notes notes" "remove remove remove"';
+      this.style.gridTemplateAreas = `'${taskGridTemplate} "remove remove remove"'`;
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '200px';
     } else {
       this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = '"check taskName pomo" "notes notes notes" "remove remove edit"';
-      this.shadowRoot.querySelector('.remove-button').style.marginLeft = '175px';
+      this.style.gridTemplateAreas = `'${taskGridTemplate} "remove remove edit"'`;
+      this.shadowRoot.querySelector('.remove-button').style.marginLeft = '145px';
     }
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
+    this.shadowRoot.querySelector('.distraction').style.display = 'inline';
+    this.shadowRoot.querySelector('.distraction').style.textAlign = 'center';
     this.isExpanded = true;
     button.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }
 
   createEditButtonElement() {
-    const button = this.shadowRoot.appendChild(document.createElement('input'));
+    const button = this.shadowRoot.appendChild(document.createElement('button'));
     button.className = 'edit-button';
-    button.type = 'image';
     button.title = 'Edit Task';
-    button.src = './media/icons/edit-icon.png';
     button.textContent = 'Edit';
     button.onclick = (event) => this.allowEditing(event);
-
     return button;
   }
 
@@ -175,11 +191,9 @@ class TaskItem extends HTMLElement {
   }
 
   createRemoveButtonElement() {
-    const button = this.shadowRoot.appendChild(document.createElement('input'));
+    const button = this.shadowRoot.appendChild(document.createElement('button'));
     button.className = 'remove-button';
     button.textContent = 'Remove';
-    button.type = 'image';
-    button.src = './media/icons/delete-icon.jpeg';
     button.title = 'Delete Task';
     button.onclick = (event) => this.removeTask(event);
     return button;
@@ -187,9 +201,9 @@ class TaskItem extends HTMLElement {
 
   removeTask(event) {
     event.stopPropagation();
-    // if (window.confirm('Delete Task?')) {
-    this.remove();
-    // }
+    if (window.confirm('Delete Task?')) {
+      this.remove();
+    }
   }
 
   createCheckboxElement() {
@@ -232,7 +246,7 @@ class TaskItem extends HTMLElement {
       taskList.appendChild(this);
       this.setAttribute('draggable', true);
       this.setAttribute('class', 'dropzone');
-      this.style.cursor = 'move';
+      this.style.cursor = 'pointer';
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       // resets it to not expanded
       if (this.isExpanded) {
@@ -274,20 +288,20 @@ class TaskItem extends HTMLElement {
    * Update UI for when selecting task
    */
   styleSelectedTask() {
-    this.style.border = '2px solid #026670';
-    this.style.borderRadius = '30px';
-    this.style.background = '#9fedd7';
-    this.style.top = '3px';
-    this.style.boxShadow = '0px 0px';
+    this.style.border = TaskStyles.SELECTED_TASK_BORDER;
+    this.style.borderRadius = TaskStyles.SELECTED_TASK_BORDER_RADIUS;
+    this.style.top = TaskStyles.SELECTED_TASK_TOP_OFFSET;
+    this.style.boxShadow = TaskStyles.NO_BOX_SHADOW;
   }
 
   /**
    * Update UI for when unselecting task
    */
   styleUnselectedTask() {
-    this.style.background = '#fffbf6';
-    this.style.top = '0px';
-    this.style.boxShadow = '0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19)';
+    this.style.border = TaskStyles.UNSELECTED_TASK_BORDER;
+    this.style.background = TaskStyles.UNSELECTED_TASK_BACKGROUND;
+    this.style.top = TaskStyles.UNSELECTED_TASK_TOP_OFFSET;
+    this.style.boxShadow = TaskStyles.BOX_SHADOW;
   }
 
   /**
@@ -309,6 +323,24 @@ class TaskItem extends HTMLElement {
 
     const taskSessionCountUI = `${taskProgress}/${taskEstimate} Pomodoros`;
     this.shadowRoot.querySelector('.pomo-progress').textContent = taskSessionCountUI;
+  }
+
+  /**
+   * Increment task distraction attribute
+   */
+  incrementTaskDistraction() {
+    const taskDistraction = this.getAttribute('distraction');
+    this.setAttribute('distraction', parseInt(taskDistraction, 10) + 1);
+    this.updateTaskDistractionUI();
+  }
+
+  /**
+   * Update the task UI when distraction is logged
+   */
+  updateTaskDistractionUI() {
+    const taskDistractionHTML = this.shadowRoot.querySelector('.distraction');
+    const taskDistraction = this.getAttribute('distraction');
+    taskDistractionHTML.textContent = `Distraction(s): ${taskDistraction}`;
   }
 }
 

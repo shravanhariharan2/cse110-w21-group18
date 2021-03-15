@@ -1,7 +1,7 @@
-import Settings from '../services/Settings.js';
+import Controllers from '../index.js';
 
-const settings = new Settings();
+const Settings = Controllers.settings();
 
-document.getElementById('settings-button').addEventListener('click', settings.openSettings);
-document.getElementById('save-button').addEventListener('click', settings.saveSettings);
-document.getElementById('cancel-button').addEventListener('click', settings.cancelInput);
+document.getElementById('settings-button').addEventListener('click', Settings.openSettings);
+document.getElementById('save-button').addEventListener('click', Settings.saveSettings);
+document.getElementById('cancel-button').addEventListener('click', Settings.cancelInput);

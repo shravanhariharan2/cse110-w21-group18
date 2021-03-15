@@ -1,13 +1,9 @@
 /**
- * Implements the TaskList class. This singleton class is a controller for the task list which
+ * Implements the TaskList class. This class is a controller for the task list which
  * holds all the task items and the to-do lists and completed lists
  */
-let instance = null; // hold singleton of TaskLIst  class
-
-class TaskList {
+export default class TaskListController {
   constructor() {
-    if (instance) return instance;
-    instance = this;
     this.numTasks = 0;
     this.selectedTask = null;
     this.completedTasks = 0;
@@ -37,19 +33,6 @@ class TaskList {
       expandCompleted: document.getElementById('expand-completed'),
       viewAll: document.getElementById('view-all'),
     };
-    this.DOM_ELEMENTS.addTaskButton.addEventListener('click', this.displayInputBox);
-    this.DOM_ELEMENTS.addNotesButton.addEventListener('click', this.addNotesToTask);
-    this.DOM_ELEMENTS.saveNewTaskButton.addEventListener('click', this.addTask);
-    this.DOM_ELEMENTS.taskList.addEventListener('DOMSubtreeModified', this.listChanged);
-    this.DOM_ELEMENTS.completedList.addEventListener('DOMSubtreeModified', this.listChanged);
-    this.DOM_ELEMENTS.cancelButton.addEventListener('click', this.cancelInput);
-    this.DOM_ELEMENTS.expandCompleted.addEventListener('click', this.expandCompletedTasks);
-    this.DOM_ELEMENTS.viewAll.style.display = 'none';
-    this.makeTasksDraggable();
-    this.hideCompletedIfNoTasksExist();
-    this.DOM_ELEMENTS.completedList.style.display = 'none';
-    this.DOM_ELEMENTS.inputBox.style.display = 'none';
-    return instance;
   }
 
   /**
@@ -74,38 +57,35 @@ class TaskList {
       const keyNum = parseInt(key, 10);
       // maximum of 1000 tasks in both lists
       const isTaskItem = (keyNum > -1000) && (keyNum < 1000) && (keyNum !== 0);
-      try{
-        if (isTaskItem) {
-          const taskObj = JSON.parse(sessionStorage.getItem(key));
-          if (typeof taskObj.name !== "undefined" && typeof taskObj.estimate !== "undefined" && 
-           typeof taskObj.progress !== "undefined" && typeof taskObj.isComplete !== "undefined" &&
-            typeof taskObj.class !== "undefined" && typeof taskObj.id !== "undefined" && typeof taskObj.draggable !== "undefined") {
-            const newTask = document.createElement('task-item');
-            newTask.setAttribute('name', taskObj.name);
-            newTask.setAttribute('estimate', taskObj.estimate);
-            newTask.setAttribute('progress', taskObj.progress);
-            newTask.setAttribute('notes', taskObj.notes);
-            newTask.setAttribute('isComplete', taskObj.isComplete);
-            newTask.isComplete = taskObj.isComplete;
-            newTask.setAttribute('class', taskObj.class);
-            newTask.setAttribute('id', taskObj.id);
-            newTask.setAttribute('draggable', taskObj.draggable);
-            newTask.setAttribute('tabindex', 10);
-            if (parseInt(key, 10) > 0) {
-              this.DOM_ELEMENTS.taskList.appendChild(newTask);
-              sessionNumTasks++;
-            } else {
-              this.DOM_ELEMENTS.completedList.prepend(newTask);
-              newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-              newTask.style.cursor = 'pointer';
-              sessionCompletedTasks++;
-            }
-            newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+      if (isTaskItem) {
+        const taskObj = JSON.parse(sessionStorage.getItem(key));
+        if (typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
+          && typeof taskObj.progress !== 'undefined' && typeof taskObj.distraction !== 'undefined'
+          && typeof taskObj.isComplete !== 'undefined' && typeof taskObj.class !== 'undefined'
+          && typeof taskObj.id !== 'undefined' && typeof taskObj.draggable !== 'undefined') {
+          const newTask = document.createElement('task-item');
+          newTask.setAttribute('name', taskObj.name);
+          newTask.setAttribute('estimate', taskObj.estimate);
+          newTask.setAttribute('progress', taskObj.progress);
+          newTask.setAttribute('distraction', taskObj.distraction);
+          newTask.setAttribute('notes', taskObj.notes);
+          newTask.setAttribute('isComplete', taskObj.isComplete);
+          newTask.isComplete = taskObj.isComplete;
+          newTask.setAttribute('class', taskObj.class);
+          newTask.setAttribute('id', taskObj.id);
+          newTask.setAttribute('tabindex', 10);
+          newTask.setAttribute('draggable', taskObj.draggable);
+          if (parseInt(key, 10) > 0) {
+            this.DOM_ELEMENTS.taskList.appendChild(newTask);
+            sessionNumTasks += 1;
+          } else {
+            this.DOM_ELEMENTS.completedList.prepend(newTask);
+            newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+            newTask.style.cursor = 'pointer';
+            sessionCompletedTasks += 1;
           }
-      }
-    }
-      catch(error){
-        console.log(error);
+          newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+        }
       }
     });
     sessionStorage.setItem('numTasks', sessionNumTasks);
@@ -180,9 +160,9 @@ class TaskList {
     sessionStorage.clear();
     sessionStorage.setItem('numTasks', this.numTasks);
     sessionStorage.setItem('completedTasks', this.completedTasks);
-    // gets rid of null items 
-    if(this.DOM_ELEMENTS.taskList.innerHTML.includes('null')) {
-      this.DOM_ELEMENTS.taskList.innerHTML = this.DOM_ELEMENTS.taskList.innerHTML.replace("null", "");
+    // gets rid of null items
+    if (this.DOM_ELEMENTS.taskList.innerHTML.includes('null')) {
+      this.DOM_ELEMENTS.taskList.innerHTML = this.DOM_ELEMENTS.taskList.innerHTML.replace('null', '');
     }
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
@@ -190,6 +170,7 @@ class TaskList {
         name: element.getAttribute('name'),
         estimate: element.getAttribute('estimate'),
         progress: element.getAttribute('progress'),
+        distraction: element.getAttribute('distraction'),
         notes: element.getAttribute('notes'),
         isComplete: false,
         class: 'dropzone',
@@ -205,6 +186,7 @@ class TaskList {
         name: element.getAttribute('name'),
         estimate: element.getAttribute('estimate'),
         progress: element.getAttribute('progress'),
+        distraction: element.getAttribute('distraction'),
         notes: element.getAttribute('notes'),
         isComplete: element.getAttribute('isComplete'),
         class: 'none',
@@ -220,7 +202,6 @@ class TaskList {
    * Cancel the input box
    */
   cancelInput() {
-    this.DOM_ELEMENTS.inputBox.style.display = 'none';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     this.resetInputBox();
   }
@@ -270,25 +251,27 @@ class TaskList {
     newTask.setAttribute('name', this.DOM_ELEMENTS.newTaskName.value);
     newTask.setAttribute('estimate', this.DOM_ELEMENTS.newTaskPomos.value);
     newTask.setAttribute('progress', '0');
+    newTask.setAttribute('distraction', '0');
     newTask.setAttribute('notes', this.DOM_ELEMENTS.newTaskNotes.value);
     newTask.setAttribute('isComplete', false);
     newTask.setAttribute('class', 'dropzone');
     newTask.setAttribute('id', this.numTasks);
     newTask.setAttribute('tabindex', 10);
-
-    this.DOM_ELEMENTS.taskList.appendChild(newTask);
-    this.DOM_ELEMENTS.inputBox.style.display = 'none';
-    this.updateStorage();
     newTask.addEventListener('click', this.selectTask.bind(this, newTask));
 
-    this.resetInputBox();
+    this.DOM_ELEMENTS.taskList.style.display = 'none';
+    this.DOM_ELEMENTS.taskList.appendChild(newTask);
     this.numTasks = this.DOM_ELEMENTS.taskList.childElementCount;
+    this.updateStorage();
+    this.resetInputBox();
+    this.DOM_ELEMENTS.taskList.style.display = 'initial';
   }
 
   /**
    * Resets the input box back to empty
    */
   resetInputBox() {
+    this.DOM_ELEMENTS.inputBox.style.display = 'none';
     this.DOM_ELEMENTS.newTaskNotes.style.display = 'none';
     this.DOM_ELEMENTS.addNotesButton.value = 'Add Notes';
     this.DOM_ELEMENTS.newTaskNotes.value = '';
@@ -444,5 +427,3 @@ class TaskList {
     }
   }
 }
-
-export default TaskList;

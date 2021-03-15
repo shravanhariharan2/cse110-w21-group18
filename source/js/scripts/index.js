@@ -1,8 +1,6 @@
-import PomodoroSession from '../services/PomodoroSession.js';
-
-const pomodoroSession = new PomodoroSession();
+import Controllers from '../index.js';
 
 document.getElementById('start').addEventListener('click', async () => {
   await Notification.requestPermission();
-  await pomodoroSession.toggleSession();
+  await Controllers.pomodoroSession().toggleSession();
 });
