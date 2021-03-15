@@ -13,6 +13,7 @@ class keyboardInteractions {
       taskList: document.getElementById('to-do-list'),
       addTaskButton: document.getElementById('add-task'),
       confirmTaskButton: document.getElementById('save-task'),
+      expansionLabel: document.getElementById('view-all'),
       inputBox: document.getElementById('task-add-input'),
       inputTextField: document.getElementById('add-task-name'),
       inputMultiField: document.getElementById('pomos'),
@@ -20,18 +21,16 @@ class keyboardInteractions {
       notesTextField: document.getElementById('add-task-description'),
       cancelInput: document.getElementById('cancel-input'),
       acceptInput: document.getElementById('save-task'),
-      expansionLabel: document.getElementById('view-all'),
     };
 
     // All keys in this have their default keyup behaviour prevented
-    this.KEYCODES = {
-        spacebar: 32, 
-        tab: 9,
-        enter: 13,
-        equals: 187,
-        minus: 189,
-        right_arrow: 39,
-        // shift: 16,
+    this.KEYS = {
+      spacebar: 'Spacebar', 
+      tab: 'Tab',
+      enter: 'Enter',
+      equals: 'Equals',
+      minus: 'Subtract',
+      right_arrow: 'ArrowRight',
     };
 
     this.MODKEY = 16;
@@ -56,7 +55,7 @@ class keyboardInteractions {
     // remove keyup actions on input elements
     document.querySelector('input').addEventListener('keyup', function (e) {
         // generate a blacklist from the values of keycodes
-        if(e.which !== this.MODKEY && Object.values(this.KEYCODES).includes(e.which)) {
+        if(e.which !== this.MODKEY && Object.values(this.KEYS).includes(e.which)) {
             e.preventDefault();
         }
     });
@@ -70,51 +69,45 @@ class keyboardInteractions {
   * @param {*} event the event object passed by an EventListener
   */
   onKeyDown(event) {
+    const taskInputElements = this.getInputElements();
+    const isInputActive = taskInputElements.includes(document.activeElement);
+    const isViewAllActive = this.DOM_ELEMENTS.expansionLabel.style.display
+      && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none';
     // mutex prevents certain operations from modifying the page when set to true
     // disable space when typing in text boxes
     let spaceMutex = false;
-    if (document.activeElement === this.DOM_ELEMENTS.inputTextField
-      || document.activeElement === this.DOM_ELEMENTS.notesTextField) {
+    if (isInputActive) {
       spaceMutex = true;
+      this.dprint('space mutex on')
     }
     // disable tab when working on tasks
     let tabMutex = false;
-    if(this.DOM_ELEMENTS.expansionLabel.style.display !== 'none' && 
-        this.DOM_ELEMENTS.expansionLabel.style.display !== undefined) {
-            tabMutex = true;
+     
+    if(isViewAllActive) {
+      tabMutex = true;
+      this.dprint('tab mutex on');
     }
 
     // check for space, tab, or enter
-    switch (event.keyCode) {
-      // space key
-      case this.KEYCODES.spacebar:
+    switch (event.key) {
+      case this.KEYS.spacebar:
         this.handleSpace(event, spaceMutex);
         break;
-      // tab key
-      case this.KEYCODES.tab:
+      case this.KEYS.tab:
         this.handleTab(event, tabMutex);
         break;
-      // enter key
-      case this.KEYCODES.enter:
+      case this.KEYS.enter:
         this.handleEnter(event, false);
         break;
-    
-      // right arrow 
-      case this.KEYCODES.right_arrow:
+      case this.KEYS.right_arrow:
         this.handleRightArrow(event, false);
+        break; 
+      case this.KEYS.minus:
+        this.handleMinus(event, false);
         break;
-
-      // handle minus 
-      case this.KEYCODES.minus:
-          this.handleMinus(event, false);
-          break;
-
-      // handle MOD KEY
       case this.MODKEY:
-          this.modDown();
-          break;
-
-      // non-cased keys
+        this.modDown();
+        break;
       default:
         if (this.kbMutex) return;
         this.dprint(`key: ${event.keyCode} is not implemented`);
@@ -141,23 +134,24 @@ class keyboardInteractions {
   */
 
   handleTab(event, mutex) {
-    // prevent default tab function
-    event.preventDefault();
-    event.stopImmediatePropagation();
     if (mutex) {
       return;
     }
+    // prevent default tab function
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    
 
     // increment if not focused on text fields
     if(this.DOM_ELEMENTS.inputBox.style.display === 'none') {
-            this.dprint("input box is none");
-            // if shift is not held down then increment, else decrement 
-            if(this.modStatus) {
-                this.decrementIdx();
-            } else {
-                this.incrementIdx();
-            }
-        }
+      this.dprint("input box is none");
+      // if shift is not held down then increment, else decrement 
+      if(this.modStatus) {
+          this.decrementIdx();
+      } else {
+          this.incrementIdx();
+      }
+    }
 
     // if the current focus is not a task then it must be the add task button
     if (this.focusIdx === 0) {
@@ -167,28 +161,39 @@ class keyboardInteractions {
       } catch (e) {
         this.dprint('No children to unclick');
       }
-        // cycle between inputs while form is active 
-        if(this.DOM_ELEMENTS.inputBox.style.display !== 'none' 
-        && this.DOM_ELEMENTS.inputBox.style.display !== undefined) {
-            if(document.activeElement === this.DOM_ELEMENTS.inputTextField) {
-                this.dprint("tab case 1");
-                this.DOM_ELEMENTS.inputMultiField.focus();
-            } else if(document.activeElement === this.DOM_ELEMENTS.inputMultiField) {
-                // if notes is focusable, then focus 
-                this.dprint("tab case 2");
-                if (this.DOM_ELEMENTS.notesTextField.style.display !== 'none') {
-                    this.DOM_ELEMENTS.notesTextField.focus();
-                } else {
-                    this.DOM_ELEMENTS.notesButton.focus();
-                }
+      // cycle between inputs while form is active 
+      const isInputActive = this.getInputElements().includes(document.activeElement);
+      if(isInputActive) {
+        switch (document.activeElement) {
+          case this.DOM_ELEMENTS.inputTextField:
+            this.DOM_ELEMENTS.inputMultiField.focus();
+            break;
+          case this.DOM_ELEMENTS.inputMultiField:
+            const isNotesInputDisplayed = this.DOM_ELEMENTS.notesTextField.style.display
+              && this.DOM_ELEMENTS.notesTextField.style.display !== 'none' 
+            if (isNotesInputDisplayed) {
+              this.DOM_ELEMENTS.notesTextField.focus();
+            } else {
+              this.DOM_ELEMENTS.notesButton.focus();
             }
-            else {
-                this.dprint("tab case default");
-                this.DOM_ELEMENTS.inputTextField.focus();
-            }
-        } else {
-            this.DOM_ELEMENTS.inputBox.focus();
+            break;
+          case this.DOM_ELEMENTS.notesButton:
+            this.DOM_ELEMENTS.cancelInput.focus();
+            break;
+          case this.DOM_ELEMENTS.notesTextField:
+            this.DOM_ELEMENTS.notesButton.focus();
+            break;
+          case this.DOM_ELEMENTS.cancelInput:
+            this.DOM_ELEMENTS.acceptInput.focus();
+            break;
+          case this.DOM_ELEMENTS.acceptInput:
+            this.DOM_ELEMENTS.inputTextField.focus();
+            break;
+          default:
         }
+      } else {
+          this.DOM_ELEMENTS.inputBox.focus();
+      }
     } else {
       // collapse add task form if possible
       this.DOM_ELEMENTS.cancelInput.click();
@@ -319,6 +324,18 @@ class keyboardInteractions {
       } else {
         this.focusIdx = 0;
       }
+  }
+
+  getInputElements() {
+    return [
+      this.DOM_ELEMENTS.inputBox, 
+      this.DOM_ELEMENTS.inputMultiField, 
+      this.DOM_ELEMENTS.inputTextField,
+      this.DOM_ELEMENTS.cancelInput,
+      this.DOM_ELEMENTS.acceptInput,
+      this.DOM_ELEMENTS.notesButton,
+      this.DOM_ELEMENTS.notesTextField,
+    ];
   }
 
   /**
