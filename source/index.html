@@ -7,107 +7,7 @@
 		<link rel="stylesheet" href="styles/distraction-marker.css">
 		<link rel="stylesheet" href="styles/info.css">
 		<title id="title">      - Pomodoro Timer</title>
-	<body>
-		<div id="settings" title="Open Settings">
-			<div id="settings-button">
-				<img id="settings-icon" src="media/icons/settings-gear.png"></img>
-			</div>
-			<div id="settings-modal">
-				<div id="settings-box">
-					<p id="settings-text">Settings</p>
-					<form id="settings-container">
-						<label class="c1" for="pomo-duration-select" style="word-wrap:break-word">
-							Pomodoro Duration
-							<select class="c2" name="pomo-duration-select" id="pomo-duration-select">
-								<option value="20">20 min</option>
-								<option value="25">25 min</option>
-								<option value="30">30 min</option>
-								<option value="35">35 min</option>
-								<option value="40">40 min</option>
-								<option value="45">45 min</option>
-							</select>
-						</label>
-						<label class="c1" for="short-duration-select" style="word-wrap:break-word">	
-							Short Break Duration
-							<select class="c2" name="short-duration-select" id="short-duration-select">
-								<option value="3">3 min</option>
-								<option value="5">5 min</option>
-								<option value="7">7 min</option>
-								<option value="10">10 min</option>
-							</select>
-						</label>
-						<label class="c1" for="long-duration-select" style="word-wrap:break-word">
-							Long Break Duration
-							<select class="c2" name="long-duration-select" id="long-duration-select">
-								<option value="15">15 min</option>
-								<option value="20">20 min</option>
-								<option value="25">25 min</option>
-								<option value="30">30 min</option>
-								<option value="35">35 min</option>
-								<option value="40">40 min</option>
-								<option value="45">45 min</option>
-							</select>
-						</label>
-						<label class="c1" for="long-pomo-select" style="word-wrap:break-word">
-							Pomodoros Before Long Break
-							<select class="c2" name="long-pomo-select" id="long-pomo-select">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-								<option value="6">6</option>
-								<option value="7">7</option>
-								<option value="8">8</option>
-							</select>
-						</label>
-						<label class="c1" for="pause-before-breaks">
-							<input id="pause-before-breaks" type="checkbox"> Pause timer at start of break
-						</label>
-						<label class="c1" for="pause-after-breaks">
-							<input id="pause-after-breaks" type="checkbox"> Pause timer at start of new work session
-						</label>
-						<label class="c1" for="hide-seconds">
-							<input id="hide-seconds" type="checkbox">Hide seconds on timer before 1 minute
-						</label>
-					</form>
-					<div id="settings-buttons">
-						<input type="button" id="cancel-button" value="Cancel">
-						<input type="button" id="save-button" value="Save">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="info">
-			<div id="info-button" title="Learn More">
-				<img id="info-icon" src="media/icons/info-icon.png"></img>
-			</div>
-			<div id="info-modal">
-				<div id="info-box">
-					<input type="button" id="close-info" value="X">
-					<h1>Product Info</h1>
-					<p id="product-info">
-						This product is a Pomodoro timer with the ability to easily structure, control, and automate users' productivity sessions at their will. The application is built to be intuitive, customizable, and efficient to integrate into any user’s workflows. It includes features such as:
-						<ul>
-							<li>Automated Pomodoro sessions</li>
-							<li>Task management and automation </li>
-							<li>Distraction markers</li>
-							<li>Many other smaller tools for ease of customizability</li>
-						</ul> 
-					</p>
-					<h2>The Pomodoro Technique</h2>
-					<p id="pomodoro-info">
-						The Pomodoro technique is a method of time management used to break the user's work sessions into smaller intervals of work immediately followed by break sessions. The idea is to make the process of working healthier and more digestable, and thus more productive for the user.
-						<ul>
-							<li>25 minutes of work</li>
-							<li>5 minutes of break</li>
-							<li>Distraction markers</li>
-							<li>After 4 work sessions, a longer, 30 minute break</li>
-						</ul> 
-						<p>These exact numbers can be customized by the user in the settings popup on the top-right corner of the screen.</p>
-					</p>
-					<h2>Pomodoro Sessions</h2>
-					<p id="sessions-info">
+	<body>	
 		<div class="side-bar">
 			<div class="side-bar-icons">
 				<div id="settings">
@@ -180,6 +80,77 @@
 						</div>
 					</div>
 				</div>
+				<div id="info">
+					<div id="info-button" title="Learn More">
+						<img id="info-icon" src="media/icons/info-icon.png"></img>
+					</div>
+					<div id="info-modal">
+						<div id="info-box">
+							<input type="button" id="close-info" value="X">
+							<h1>Product Info</h1>
+								<p id="product-info">
+								This product is a Pomodoro timer with the ability to easily structure, control, and automate users' productivity sessions at their will. The application is built to be intuitive, customizable, and efficient to integrate into any user’s workflows. It includes features such as:
+									<ul>
+										<li>Automated Pomodoro sessions</li>
+										<li>Task management and automation </li>
+										<li>Distraction markers</li>
+										<li>Many other smaller tools for ease of customizability</li>
+									</ul> 
+								</p>
+							<h2>The Pomodoro Technique</h2>
+							<p id="pomodoro-info">
+								The Pomodoro technique is a method of time management used to break the user's work sessions into smaller intervals of work immediately followed by break sessions. The idea is to make the process of working healthier and more digestable, and thus more productive for the user.
+								<ul>
+									<li>25 minutes of work</li>
+									<li>5 minutes of break</li>
+									<li>Distraction markers</li>
+									<li>After 4 work sessions, a longer, 30 minute break</li>
+								</ul> 
+								<p>These exact numbers can be customized by the user in the settings popup on the top-right corner of the screen.</p>
+							</p>
+							<h2>Pomodoro Sessions</h2>
+							<p id="sessions-info">
+								In this app, Pomodoro sessions are automated, in that immediately after 25 minutes of work, 5 minutes of break time is started. This automation allows the user to not worry about interacting with the application and instead give more focus to the work that they are doing and the time they have remaining. 
+								<br><br>
+								Note that this automation can be enabled/disabled in the settings.
+							</p>
+							<h2>Tasks</h2>
+							<p id="task-info">
+								This app also supports the management of tasks as an embedded to-do list that is integraded into the Pomodoro technique itself.
+								<br><br> 
+								The user can add, edit, and remove tasks on the right side of the screen, and can select tasks that they want to work on for a session to bring that task to focus. 
+								<br>
+								<video src="media/videos/make-task-ex.mp4" id="make-task-ex" width="400px" loop="true" autoplay="true"></video>
+								<br>
+								The task mechanism automatically keeps track of how many sessions (i.e. how many 25 minute intervals) have been worked on for each task. This allows users to keep track of their expected vs. actual number of sessions before completion of any tasks they work on. A task's session count only if a work session has been exhausted on that task's selection.
+							</p>
+							<h2>Distraction Markers</h2>
+							<p id="distraction-info">
+								The option to keep track of the number of distractions encountered during a session/task is provided via the distraction marker functionality. One of the principles of the Pomodoro technique is noting down distractions when one is encountered to help the user gauge their overall attention level over time.
+								<br><br> 
+								During a work session, if a user gets distracted for any reason, they can click the thought-bubble icon on the top-right corner of the screen to increment the distraction count for the current task. Distraction counts are reset after completion of a task, and are stored within each task card for every task completed.
+							</p>
+							<h2>Settings</h2>
+							<p id="settings-info">
+								As mentioned earlier, there are a few settings that the user can customize within the settings pane on the top-right corner of the screen. These include the lengths of sessions, the number of sessions before long breaks, and other boolean options for the timer and notifications.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<input type="button" id="expand-task-list" value='&lt&lt' title="Expand the Task List">
+		<div id="left-half">
+			<div id="timer-box">
+				<div id ="session-type">
+					<div id="pomo">Pomodoro</div>
+					<div id="short-break">Short Break</div>
+					<div id="long-break">Long Break</div>
+				</div>
+				<div id="time"></div>
+				<div>
+					<input type="button" id="start" value="Start" title="Start Pomodoro Session">
+				</div>
 				<div id="distraction-marker">
 					<div id="distraction-button">
 						<img id="distraction-icon" class="disabled" src="media/icons/thought-bubble.png"></img>
@@ -187,23 +158,23 @@
 				</div>
 			</div>
 		</div>
-	<script type="module" src="js/constants/Enums.js"></script>
-	<script type="module" src="js/scripts/index.js"></script>
-	<script type="module" src="js/scripts/tasks.js"></script>
-	<script type="module" src="js/scripts/settings.js"></script>
-	<script type="module" src="js/scripts/info.js"></script>
-	<script type="module" src="js/components/TaskItem.js"></script>
-	<script type="module" src="js/components/TaskInput.js"></script>
-</html>
-	<script type="module" src="js/index.js"></script>
-	<script type="module" src="js/controllers/PomodoroSessionController.js"></script>
-	<script type="module" src="js/controllers/TimerController.js"></script>
-	<script type="module" src="js/controllers/TaskListController.js"></script>
-	<script type="module" src="js/controllers/SettingsController.js"></script>
-	<script type="module" src="js/controllers/NotificationController.js"></script>
-
-	<script type="module" src="js/scripts/index.js"></script>info
-	<script type="module" src="js/controllers/NotificationController.js"></script>Info					<option value="5">5 (2hr 05min)</option>
+		<div id="right-half" class="transition">
+			<header id="to-do-list-header">
+				<input type="button" id="collapse-task-list" value="&gt&gt" title="Hide the Task List">
+				<p id="list-title">Task List</p>
+			</header>
+			<hr id="task-line-break">
+			<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
+			<form id="task-add-input">
+				<input type="text" id="add-task-name" placeholder="Task Name" autocomplete="off">
+				<p id="expected">Expected Pomodoros:</p>
+				<img src="./media/icons/clock.jpg" id="clock-clip-art">
+				<select name="pomos" id="pomos">
+					<option value="1">1 (25 min)</option>
+					<option value="2">2 (50 min)</option>
+					<option value="3">3 (1hr 15min)</option>
+					<option value="4">4 (1hr 40min)</option>
+					<option value="5">5 (2hr 05min)</option>
 					<option value="6">6 (2hr 30min)</option>
 					<option value="7">7 (2hr 55min)</option>
 					<option value="8">8 (3hr 20min)</option>

@@ -10,6 +10,7 @@ export default class TaskListController {
     this.completedIsExpanded = false;
     this.hasLoadedIntoDOM = false; // make sure nothing else runs while loading
     this.hasActiveSession = false;
+    this.TLCollapsed = false;
     this.displayInputBox = this.displayInputBox.bind(this);
     this.addNotesToTask = this.addNotesToTask.bind(this);
     this.addTask = this.addTask.bind(this);
@@ -17,6 +18,8 @@ export default class TaskListController {
     this.cancelInput = this.cancelInput.bind(this);
     this.loadTasks = this.loadTasks.bind(this);
     this.expandCompletedTasks = this.expandCompletedTasks.bind(this);
+    this.collapseTaskList = this.collapseTaskList.bind(this);
+    this.expandTaskList = this.expandTaskList.bind(this);
     this.DOM_ELEMENTS = {
       taskListTitle: document.getElementById('list-title'),
       addTaskButton: document.getElementById('add-task'),
@@ -32,9 +35,28 @@ export default class TaskListController {
       completedListTitle: document.getElementById('completed-list-header'),
       expandCompleted: document.getElementById('expand-completed'),
       viewAll: document.getElementById('view-all'),
+      collapseTaskList: document.getElementById('collapse-task-list'),
+      expandTaskList: document.getElementById('expand-task-list'),
     };
   }
-
+  collapseTaskList(){
+    document.getElementById('right-half').style.animationDuration="1s";
+    document.getElementById('right-half').style.animationName = "slideout";
+    document.getElementById('right-half').style.marginLeft= "2000px";
+    document.getElementById('timer-box').style.animationDuration="1s";
+    document.getElementById('timer-box').style.animationName = "slideRight";
+    document.getElementById('timer-box').style.left = '68%';
+    setTimeout(() => {document.getElementById('expand-task-list').style.display = 'inline';},600);
+  }
+  expandTaskList(){
+    document.getElementById('right-half').style.animationDuration="1s";
+    document.getElementById('right-half').style.animationName = "slidein";
+    document.getElementById('right-half').style.marginLeft= "initial";
+    document.getElementById('timer-box').style.animationDuration="1s";
+    document.getElementById('timer-box').style.animationName = "slideLeft";
+    document.getElementById('timer-box').style.left = '45%';
+    document.getElementById('expand-task-list').style.display = 'none';;
+  }
   /**
    * Loads the tasks saved in sessionStorage back in the order that they were in previously
    */
@@ -147,9 +169,6 @@ export default class TaskListController {
     this.DOM_ELEMENTS.completedList.style.display = 'none';
     this.DOM_ELEMENTS.viewAll.style.display = 'inline';
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    if (width > 1300) {
-      this.DOM_ELEMENTS.taskListTitle.style.marginTop = '30%';
-    }
   }
 
   /**

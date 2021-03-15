@@ -1,6 +1,6 @@
-import Info from '../services/Info.js';
+import Controllers from '../index.js';
 
-const info = new Info();
+const info = Controllers.info();
 
 document.getElementById('info-button').addEventListener('click', info.openInfo);
 document.getElementById('close-info').addEventListener('click', info.closeInfo);
