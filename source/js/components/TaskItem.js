@@ -177,6 +177,7 @@ class TaskItem extends HTMLElement {
     newTask.setAttribute('name', taskObj.name);
     newTask.setAttribute('estimate', taskObj.estimate);
     newTask.setAttribute('progress', taskObj.progress);
+    newTask.setAttribute('distraction', taskObj.distraction);
     newTask.setAttribute('notes', taskObj.notes);
     newTask.setAttribute('isComplete', taskObj.isComplete);
     newTask.setAttribute('class', taskObj.class);
@@ -197,6 +198,7 @@ class TaskItem extends HTMLElement {
     newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
     newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
     newTask.setAttribute('progress', inputElement.getAttribute('progress'));
+    newTask.setAttribute('distraction', inputElement.getAttribute('distraction'));
     newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
     newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
     newTask.setAttribute('class', inputElement.getAttribute('class'));
