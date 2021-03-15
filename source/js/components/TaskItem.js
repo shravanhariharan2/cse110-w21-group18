@@ -122,12 +122,6 @@ class TaskItem extends HTMLElement {
 
   allowEditing(event) {
     event.stopPropagation();
-    const inputElement = this.createAndStyleEditInputElement();
-    this.remove();
-    TaskItem.addEventListenersToEditInput(inputElement);
-  }
-
-  createAndStyleEditInputElement() {
     const inputElement = document.createElement('task-input');
     inputElement.setAttribute('class', 'task-input dropzone');
     inputElement.id = this.id;
@@ -135,10 +129,8 @@ class TaskItem extends HTMLElement {
     inputElement.setAttribute('estimate', this.getAttribute('estimate'));
     inputElement.setAttribute('isComplete', this.getAttribute('isComplete'));
     inputElement.setAttribute('progress', this.getAttribute('progress'));
-    inputElement.setAttribute('distraction', this.getAttribute('distraction'));
     inputElement.setAttribute('notes', this.getAttribute('notes'));
     inputElement.setAttribute('draggable', true);
-
     this.after(inputElement);
     inputElement.shadowRoot.querySelector('.add-task-name').value = this.shadowRoot.querySelector('.name').innerText;
     inputElement.shadowRoot.querySelector('.pomos').value = this.getAttribute('estimate');
@@ -156,61 +148,46 @@ class TaskItem extends HTMLElement {
       inputElement.isSelected = true;
       inputElement.styleSelectedTask();
     }
-    return inputElement;
-  }
-
-  static addEventListenersToEditInput(inputElement) {
-    inputElement
-      .shadowRoot
-      .querySelector('.cancel-input')
-      .addEventListener('click', (ev) => TaskItem.cancelEditInput(inputElement, ev));
-    inputElement
-      .shadowRoot
-      .querySelector('.save-task')
-      .addEventListener('click', (ev) => TaskItem.saveEditInput(inputElement, ev));
-  }
-
-  static cancelEditInput(inputElement, event) {
-    event.stopPropagation();
-    const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
-    const newTask = document.createElement('task-item');
-    newTask.setAttribute('name', taskObj.name);
-    newTask.setAttribute('estimate', taskObj.estimate);
-    newTask.setAttribute('progress', taskObj.progress);
-    newTask.setAttribute('distraction', taskObj.distraction);
-    newTask.setAttribute('notes', taskObj.notes);
-    newTask.setAttribute('isComplete', taskObj.isComplete);
-    newTask.setAttribute('class', taskObj.class);
-    newTask.setAttribute('id', taskObj.id);
-    newTask.setAttribute('draggable', taskObj.draggable);
-    inputElement.remove();
-    // insert where it was before
-    if (inputElement.id !== '1') {
-      document.getElementById(inputElement.id - 1).before(newTask);
-    } else {
-      document.getElementById('to-do-list').appendChild(newTask);
-    }
-  }
-
-  static saveEditInput(inputElement, event) {
-    event.stopPropagation();
-    const newTask = document.createElement('task-item');
-    newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
-    newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
-    newTask.setAttribute('progress', inputElement.getAttribute('progress'));
-    newTask.setAttribute('distraction', inputElement.getAttribute('distraction'));
-    newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
-    newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
-    newTask.setAttribute('class', inputElement.getAttribute('class'));
-    newTask.setAttribute('id', inputElement.id);
-    newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
-    inputElement.remove();
-    // insert where it was before
-    if (inputElement.id !== '1') {
-      document.getElementById(inputElement.id - 1).before(newTask);
-    } else {
-      document.getElementById('to-do-list').appendChild(newTask);
-    }
+    this.remove();
+    inputElement.shadowRoot.querySelector('.cancel-input').addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      const taskObj = JSON.parse(sessionStorage.getItem(inputElement.id));
+      const newTask = document.createElement('task-item');
+      newTask.setAttribute('name', taskObj.name);
+      newTask.setAttribute('estimate', taskObj.estimate);
+      newTask.setAttribute('progress', taskObj.progress);
+      newTask.setAttribute('notes', taskObj.notes);
+      newTask.setAttribute('isComplete', taskObj.isComplete);
+      newTask.setAttribute('class', taskObj.class);
+      newTask.setAttribute('id', taskObj.id);
+      newTask.setAttribute('draggable', taskObj.draggable);
+      inputElement.remove();
+      // insert where it was before
+      if (inputElement.id !== '1') {
+        document.getElementById(inputElement.id - 1).before(newTask);
+      } else {
+        document.getElementById('to-do-list').appendChild(newTask);
+      }
+    });
+    inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const newTask = document.createElement('task-item');
+      newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
+      newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
+      newTask.setAttribute('progress', inputElement.getAttribute('progress'));
+      newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
+      newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
+      newTask.setAttribute('class', inputElement.getAttribute('class'));
+      newTask.setAttribute('id', inputElement.id);
+      newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
+      inputElement.remove();
+      // insert where it was before
+      if (inputElement.id !== '1') {
+        document.getElementById(inputElement.id - 1).before(newTask);
+      } else {
+        document.getElementById('to-do-list').appendChild(newTask);
+      }
+    });
   }
 
   createRemoveButtonElement() {
