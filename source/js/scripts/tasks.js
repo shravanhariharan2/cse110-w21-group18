@@ -9,6 +9,8 @@ document.getElementById('to-do-list').addEventListener('DOMSubtreeModified', Tas
 document.getElementById('completed-list').addEventListener('DOMSubtreeModified', TaskList.listChanged);
 document.getElementById('cancel-input').addEventListener('click', TaskList.cancelInput);
 document.getElementById('expand-completed').addEventListener('click', TaskList.expandCompletedTasks);
+document.getElementById('collapse-task-list').addEventListener('click', TaskList.collapseTaskList);
+document.getElementById('expand-task-list').addEventListener('click', this.expandTaskList);
 document.getElementById('view-all').style.display = 'none';
 document.getElementById('completed-list').style.display = 'none';
 
