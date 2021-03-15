@@ -24,6 +24,7 @@ html{
   overflow-y: scroll;
 }
 body {
+  background-color: #fffbf6;
   position: relative;
   display: flex;
   min-width: 675px;
@@ -143,6 +144,20 @@ input[type=button]:active, button:active {
   margin-top: 5px;
 }
 
+.side-bar {
+  width: 50px;
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.side-bar-icons img {
+  width: 50px;
+  height: 50px;
+  padding-bottom: 20%;
+}
+
 @media all and (max-width:1300px) {
   body {
     background-color: #FFFFFF;
@@ -168,16 +183,6 @@ input[type=button]:active, button:active {
     flex-direction: column;
     justify-content: space-evenly;
     box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
-  }
-  #settings-icon {
-    float: right;
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    display: inline;
-    top: none;
-    right: none;
   }
   #left-half { width: 100%;}
   #right-half { width: 100%;}

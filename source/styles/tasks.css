@@ -258,6 +258,7 @@ task-item {
   grid-template-areas:
     ' check taskName pomo'
     ' notes notes notes'
+    ' distraction distraction distraction'
     ' remove remove edit';
   padding: 20px 20px 10px;
   grid-gap: 5px;
@@ -362,12 +363,18 @@ task-item {
   margin-left:0;
   width: 100px;
 }
-.notes{
+.notes {
   width: 300px;
   grid-area: notes;
   text-align: left;
   white-space: pre-wrap;
   margin-left: 52px;
+  overflow-wrap: break-word;
+}
+.distraction {
+  grid-area: distraction;
+  text-align: left;
+  white-space: pre-wrap;
   overflow-wrap: break-word;
 }
 

@@ -1,0 +1,15 @@
+#distraction-icon.enabled {
+    filter: drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.2));
+}
+
+#distraction-icon.enabled:hover {
+    cursor: pointer;
+}
+
+#distraction-icon.disabled {
+    display: none;
+}
+
+#distraction-icon:active {
+    filter: none;
+}

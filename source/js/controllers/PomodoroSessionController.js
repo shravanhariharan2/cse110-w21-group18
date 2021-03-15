@@ -13,6 +13,7 @@ export default class PomodoroSessionController {
     this.notifications = notifications;
 
     this.sessionNumber = 0;
+    this.numDistraction = 0;
     this.isFullListVisible = true;
 
     this.currentSession = PomodoroSessions.WORK;
@@ -26,6 +27,7 @@ export default class PomodoroSessionController {
       workSession: document.getElementById('pomo'),
       button: document.getElementById('start'),
       taskListTitle: document.getElementById('list-title'),
+      distraction: document.getElementById('distraction-icon'),
     };
 
     if (this.taskList.DOM_ELEMENTS.viewAll) {
@@ -103,6 +105,7 @@ export default class PomodoroSessionController {
       await this.performPomodoroSession();
     } else {
       this.resetToWorkSession();
+      this.disableDistractionMarker();
     }
   }
 
@@ -113,6 +116,7 @@ export default class PomodoroSessionController {
    * @returns void
    */
   async performPomodoroSession() {
+    this.numDistraction = 0;
     if (this.currentSession === PomodoroSessions.WORK) {
       await this.performWorkSession();
       if (this.isIdle) return;
@@ -183,6 +187,7 @@ export default class PomodoroSessionController {
       this.taskList.autoSelectTask();
     }
     this.taskList.showSelectedTask();
+    this.enableDistractionMarker();
     await this.timer.run();
     this.sessionNumber += 1;
     this.updateTaskList();
@@ -358,6 +363,33 @@ export default class PomodoroSessionController {
     if (this.taskList.selectedTask) {
       this.taskList.updateSelectedTaskSessionCount();
       this.taskList.updateStorage();
+    }
+  }
+
+  /**
+   * Disable the distraction marker to log distractions
+   */
+  disableDistractionMarker() {
+    this.DOM_ELEMENTS.distraction.onclick = () => null;
+    this.DOM_ELEMENTS.distraction.className = 'disabled';
+  }
+
+  /**
+   * Enable the distraction marker to log distractions
+   */
+  enableDistractionMarker() {
+    this.DOM_ELEMENTS.distraction.onclick = () => this.incrementDistraction();
+    this.DOM_ELEMENTS.distraction.className = 'enabled';
+  }
+
+  /**
+   * Increment distractions for the session and selected task
+   */
+  incrementDistraction() {
+    this.numDistraction += 1;
+
+    if (this.taskList.selectedTask) {
+      this.taskList.selectedTask.incrementTaskDistraction();
     }
   }
 }
