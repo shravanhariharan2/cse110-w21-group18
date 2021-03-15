@@ -22,6 +22,7 @@ class PomodoroSession {
     this.notifications = new NotificationService();
     this.settings = new Settings();
     this.sessionNumber = 0;
+    this.numDistraction = 0;
     this.isFullListVisible = true;
 
     this.currentSession = PomodoroSessions.WORK;
@@ -34,6 +35,7 @@ class PomodoroSession {
       workSession: document.getElementById('pomo'),
       button: document.getElementById('start'),
       taskListTitle: document.getElementById('list-title'),
+      distraction: document.getElementById('distraction-icon'),
     };
 
     this.DOM_ELEMENTS.button.addEventListener('click', this.toggleSession);
@@ -116,6 +118,7 @@ class PomodoroSession {
     } else {
       try {
         this.resetToWorkSession();
+        this.disableDistractionMarker();
       } catch (error) {
         console.log(error);
       }
@@ -129,6 +132,7 @@ class PomodoroSession {
    * @returns void
    */
   async performPomodoroSession() {
+    this.numDistraction = 0;
     if (this.currentSession === PomodoroSessions.WORK) {
       await this.performWorkSession();
       if (this.isIdle) return;
@@ -199,6 +203,7 @@ class PomodoroSession {
       this.taskList.autoSelectTask();
     }
     this.taskList.showSelectedTask();
+    this.enableDistractionMarker();
     await this.timer.run();
     this.sessionNumber += 1;
     this.updateTaskList();
@@ -359,6 +364,33 @@ class PomodoroSession {
     if (this.taskList.selectedTask) {
       this.taskList.updateSelectedTaskSessionCount();
       this.taskList.updateStorage();
+    }
+  }
+
+  /**
+   * Disable the distraction marker to log distractions
+   */
+  disableDistractionMarker() {
+    this.DOM_ELEMENTS.distraction.onclick = () => null;
+    this.DOM_ELEMENTS.distraction.className = 'disabled';
+  }
+
+  /**
+   * Enable the distraction marker to log distractions
+   */
+  enableDistractionMarker() {
+    this.DOM_ELEMENTS.distraction.onclick = () => this.incrementDistraction();
+    this.DOM_ELEMENTS.distraction.className = 'enabled';
+  }
+
+  /**
+   * Increment distractions for the session and selected task
+   */
+  incrementDistraction() {
+    this.numDistraction += 1;
+
+    if (this.taskList.selectedTask) {
+      this.taskList.selectedTask.incrementTaskDistraction();
     }
   }
 }

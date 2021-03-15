@@ -20,6 +20,7 @@ class TaskItem extends HTMLElement {
       this.shadowRoot.innerHTML = '<link rel=\'stylesheet\' href=\'styles/tasks.css\'>';
       const nameElement = this.createNameElement();
       const pomoProgressElement = this.createPomoProgressElement();
+      const distractionElement = this.createDistractionElement();
       const notesElement = this.createNotesElement();
       const expandButtonElement = this.createExpandButtonElement();
       const editButtonElement = this.createEditButtonElement();
@@ -27,10 +28,12 @@ class TaskItem extends HTMLElement {
       const checkboxElement = this.createCheckboxElement();
 
       this.shadowRoot.append(checkboxElement, nameElement, pomoProgressElement,
-        expandButtonElement, notesElement, editButtonElement, removeButtonElement);
+        expandButtonElement, notesElement, distractionElement,
+        editButtonElement, removeButtonElement);
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       this.shadowRoot.querySelector('.remove-button').style.display = 'none';
       this.shadowRoot.querySelector('.notes').style.display = 'none';
+      this.shadowRoot.querySelector('.distraction').style.display = 'none';
     }
   }
 
@@ -55,6 +58,13 @@ class TaskItem extends HTMLElement {
     return taskNotes;
   }
 
+  createDistractionElement() {
+    const taskDistraction = this.shadowRoot.appendChild(document.createElement('p'));
+    taskDistraction.className = 'distraction';
+    taskDistraction.textContent = `Distraction(s): ${this.getAttribute('distraction')}`;
+    return taskDistraction;
+  }
+
   createExpandButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
     button.className = 'expand-button';
@@ -72,22 +82,26 @@ class TaskItem extends HTMLElement {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       this.shadowRoot.querySelector('.remove-button').style.display = 'none';
       this.shadowRoot.querySelector('.notes').style.display = 'none';
+      this.shadowRoot.querySelector('.distraction').style.display = 'none';
       this.isExpanded = false;
       button.setAttribute('style', 'transform:rotate(0deg); -webkit-transform: rotate(0deg)');
       return;
     }
+    const taskGridTemplate = '"check taskName pomo" "notes notes notes" "distraction distraction distraction"';
     if (this.isComplete) {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = '"check taskName pomo" "notes notes notes" "remove remove remove"';
+      this.style.gridTemplateAreas = `'${taskGridTemplate} "remove remove remove"'`;
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '200px';
     } else {
       this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
       this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = '"check taskName pomo" "notes notes notes" "remove remove edit"';
+      this.style.gridTemplateAreas = `'${taskGridTemplate} "remove remove edit"'`;
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '175px';
     }
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
+    this.shadowRoot.querySelector('.distraction').style.display = 'inline';
+    this.shadowRoot.querySelector('.distraction').style.textAlign = 'center';
     this.isExpanded = true;
     button.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }
@@ -113,6 +127,7 @@ class TaskItem extends HTMLElement {
     inputElement.setAttribute('estimate', this.getAttribute('estimate'));
     inputElement.setAttribute('isComplete', this.getAttribute('isComplete'));
     inputElement.setAttribute('progress', this.getAttribute('progress'));
+    inputElement.setAttribute('distraction', this.getAttribute('distraction'));
     inputElement.setAttribute('notes', this.getAttribute('notes'));
     inputElement.setAttribute('draggable', true);
     this.after(inputElement);
@@ -140,6 +155,7 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('name', taskObj.name);
       newTask.setAttribute('estimate', taskObj.estimate);
       newTask.setAttribute('progress', taskObj.progress);
+      newTask.setAttribute('distraction', taskObj.distraction);
       newTask.setAttribute('notes', taskObj.notes);
       newTask.setAttribute('isComplete', taskObj.isComplete);
       newTask.setAttribute('class', taskObj.class);
@@ -159,6 +175,7 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('name', inputElement.shadowRoot.querySelector('.add-task-name').value);
       newTask.setAttribute('estimate', inputElement.shadowRoot.querySelector('.pomos').value);
       newTask.setAttribute('progress', inputElement.getAttribute('progress'));
+      newTask.setAttribute('distraction', inputElement.getAttribute('distraction'));
       newTask.setAttribute('notes', inputElement.shadowRoot.querySelector('.add-task-description').value);
       newTask.setAttribute('isComplete', inputElement.getAttribute('isComplete'));
       newTask.setAttribute('class', inputElement.getAttribute('class'));
@@ -309,6 +326,24 @@ class TaskItem extends HTMLElement {
 
     const taskSessionCountUI = `${taskProgress}/${taskEstimate} Pomodoros`;
     this.shadowRoot.querySelector('.pomo-progress').textContent = taskSessionCountUI;
+  }
+
+  /**
+   * Increment task distraction attribute
+   */
+  incrementTaskDistraction() {
+    const taskDistraction = this.getAttribute('distraction');
+    this.setAttribute('distraction', parseInt(taskDistraction, 10) + 1);
+    this.updateTaskDistractionUI();
+  }
+
+  /**
+   * Update the task UI when distraction is logged
+   */
+  updateTaskDistractionUI() {
+    const taskDistractionHTML = this.shadowRoot.querySelector('.distraction');
+    const taskDistraction = this.getAttribute('distraction');
+    taskDistractionHTML.textContent = `Distraction(s): ${taskDistraction}`;
   }
 }
 
