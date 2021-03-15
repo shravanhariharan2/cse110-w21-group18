@@ -1,9 +1,9 @@
 import TaskListController from '../js/controllers/TaskListController.js';
-import HtmlMocks from './HtmlMocks.js';
+import HTML from './HtmlMocks.js';
 
 beforeEach(() => {
   sessionStorage.clear();
-  document.body.innerHTML = HtmlMocks.TASK_LIST;
+  document.body.innerHTML = HTML;
 });
 
 test('Constructor initializes correct instance variables', () => {
@@ -29,6 +29,7 @@ test('addTask() adds a new task to session storage and inserts a new <task-item/
     name: taskListController.DOM_ELEMENTS.newTaskName.value,
     estimate: taskListController.DOM_ELEMENTS.newTaskPomos.value,
     progress: '0',
+    distraction: '0',
     notes: taskListController.DOM_ELEMENTS.newTaskNotes.value,
     isComplete: false,
     class: 'dropzone',
@@ -40,6 +41,7 @@ test('addTask() adds a new task to session storage and inserts a new <task-item/
   newTaskHTML.setAttribute('name', taskListController.DOM_ELEMENTS.newTaskName.value);
   newTaskHTML.setAttribute('estimate', taskListController.DOM_ELEMENTS.newTaskPomos.value);
   newTaskHTML.setAttribute('progress', '0');
+  newTaskHTML.setAttribute('distraction', '0');
   newTaskHTML.setAttribute('notes', taskListController.DOM_ELEMENTS.newTaskNotes.value);
   newTaskHTML.setAttribute('isComplete', false);
   newTaskHTML.setAttribute('class', 'dropzone');

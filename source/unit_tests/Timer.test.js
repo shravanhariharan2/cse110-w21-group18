@@ -1,7 +1,8 @@
 import TimerController from '../js/controllers/TimerController.js';
+import HTML from './HtmlMocks.js';
 
 // Set up the HTML
-document.body.innerHTML = '<div id="time"></div>';
+document.body.innerHTML = HTML;
 
 test('Constructor initializes the correct instance variables', () => {
   const timerController = new TimerController(1);

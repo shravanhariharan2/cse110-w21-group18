@@ -1,6 +1,6 @@
 import PomodoroSessionController from '../js/controllers/PomodoroSessionController.js';
 import PomodoroSessionStates from '../js/constants/Enums.js';
-import HtmlMocks from './HtmlMocks.js';
+import HTML from './HtmlMocks.js';
 import TimerController from '../js/controllers/TimerController.js';
 import TaskListController from '../js/controllers/TaskListController.js';
 import NotificationController from '../js/controllers/NotificationController.js';
@@ -10,7 +10,7 @@ const MS_IN_WORK_SESSION = 25 * 60 * 1000;
 const MS_IN_SHORT_BREAK = 5 * 60 * 1000;
 const MS_IN_LONG_BREAK = 30 * 60 * 1000;
 
-document.body.innerHTML = HtmlMocks.SETTINGS + HtmlMocks.TIMER + HtmlMocks.TASK_LIST;
+document.body.innerHTML = HTML;
 
 const playAudio = jest.fn();
 window.HTMLMediaElement.prototype.play = () => playAudio();

@@ -1,10 +1,10 @@
 import PomodoroSessionStates from '../js/constants/Enums.js';
 import DisplayMessages from '../js/constants/DisplayMessages.js';
-import HtmlMocks from './HtmlMocks.js';
+import HTML from './HtmlMocks.js';
 import NotificationController from '../js/controllers/NotificationController.js';
 
 // Set up the HTML
-document.body.innerHTML = HtmlMocks.AUDIO;
+document.body.innerHTML = HTML;
 
 test('notifyUser() plays an audio notification', () => {
   const notificationTest = new NotificationController();
