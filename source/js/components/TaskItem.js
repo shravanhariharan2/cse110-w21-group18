@@ -182,7 +182,7 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('class', inputElement.getAttribute('class'));
       newTask.setAttribute('id', inputElement.id);
       newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
-      //newTask.setAttribute('distraction', inputElement.getAttribute('distraction'));
+      // newTask.setAttribute('distraction', inputElement.getAttribute('distraction'));
       inputElement.remove();
       // insert where it was before
       if (inputElement.id !== '1') {

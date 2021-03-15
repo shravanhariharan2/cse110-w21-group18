@@ -36,35 +36,11 @@ export default class TaskListController {
       viewAll: document.getElementById('view-all'),
       collapseTaskList: document.getElementById('collapse-task-list'),
       expandTaskList: document.getElementById('expand-task-list'),
+      rightHalf: document.getElementById('right-half'),
+      timerBox: document.getElementById('timer-box'),
     };
   }
 
-  collapseTaskList(){
-    document.getElementById('right-half').style.animationDuration="1s";
-    document.getElementById('right-half').style.animationName = "slideout";
-    document.getElementById('right-half').style.marginLeft= "2000px";
-    
-    document.getElementById('timer-box').style.animationDuration="1s";
-    document.getElementById('timer-box').style.animationName = "slideRight";
-    document.getElementById('timer-box').style.left = '68%';
-    setTimeout(() => {
-      document.getElementById('expand-task-list').style.display = 'inline';
-      document.getElementById('right-half').style.display = "none";
-      document.getElementById('settings-icon').style.marginTop = "17px";
-    },600);
-  }
-
-  expandTaskList(){
-    document.getElementById('right-half').style.display= "flex";
-    document.getElementById('right-half').style.animationDuration="1s";
-    document.getElementById('right-half').style.animationName = "slidein";
-    document.getElementById('right-half').style.marginLeft= "initial";
-    document.getElementById('timer-box').style.animationDuration="1s";
-    document.getElementById('timer-box').style.animationName = "slideLeft";
-    document.getElementById('timer-box').style.left = '45%';
-    document.getElementById('expand-task-list').style.display = 'none';
-    document.getElementById('settings-icon').style.marginTop = "10px";
-  }
   /**
    * Loads the tasks saved in sessionStorage back in the order that they were in previously
    */
@@ -89,37 +65,36 @@ export default class TaskListController {
       const isTaskItem = (keyNum > -1000) && (keyNum < 1000) && (keyNum !== 0);
       if (isTaskItem) {
         // need the try in case the session storage gets messed with
-        try{
+        try {
           const taskObj = JSON.parse(sessionStorage.getItem(key));
-          if ( typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
+          if (typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
             && typeof taskObj.progress !== 'undefined' && typeof taskObj.distraction !== 'undefined'
             && typeof taskObj.isComplete !== 'undefined' && typeof taskObj.class !== 'undefined'
             && typeof taskObj.id !== 'undefined' && typeof taskObj.draggable !== 'undefined') {
-              const newTask = document.createElement('task-item');
-              newTask.setAttribute('name', taskObj.name);
-              newTask.setAttribute('estimate', taskObj.estimate);
-              newTask.setAttribute('progress', taskObj.progress);
-              newTask.setAttribute('distraction', taskObj.distraction);
-              newTask.setAttribute('notes', taskObj.notes);
-              newTask.setAttribute('isComplete', taskObj.isComplete);
-              newTask.isComplete = taskObj.isComplete;
-              newTask.setAttribute('class', taskObj.class);
-              newTask.setAttribute('id', taskObj.id);
-              newTask.setAttribute('draggable', taskObj.draggable);
-              if (parseInt(key, 10) > 0) {
-                this.DOM_ELEMENTS.taskList.appendChild(newTask);
-                sessionNumTasks += 1;
-              } else {
-                this.DOM_ELEMENTS.completedList.prepend(newTask);
-                newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-                newTask.style.cursor = 'pointer';
-                sessionCompletedTasks += 1;
-              }
-              newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+            const newTask = document.createElement('task-item');
+            newTask.setAttribute('name', taskObj.name);
+            newTask.setAttribute('estimate', taskObj.estimate);
+            newTask.setAttribute('progress', taskObj.progress);
+            newTask.setAttribute('distraction', taskObj.distraction);
+            newTask.setAttribute('notes', taskObj.notes);
+            newTask.setAttribute('isComplete', taskObj.isComplete);
+            newTask.isComplete = taskObj.isComplete;
+            newTask.setAttribute('class', taskObj.class);
+            newTask.setAttribute('id', taskObj.id);
+            newTask.setAttribute('draggable', taskObj.draggable);
+            if (parseInt(key, 10) > 0) {
+              this.DOM_ELEMENTS.taskList.appendChild(newTask);
+              sessionNumTasks += 1;
+            } else {
+              this.DOM_ELEMENTS.completedList.prepend(newTask);
+              newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
+              newTask.style.cursor = 'pointer';
+              sessionCompletedTasks += 1;
+            }
+            newTask.addEventListener('click', this.selectTask.bind(this, newTask));
           }
-        }
-        catch(error){
-          console.log(error)
+        } catch (error) {
+          console.log(error);
         }
       }
     });
@@ -181,12 +156,10 @@ export default class TaskListController {
         this.selectedTask.shadowRoot.querySelector('.edit-button').style.display = 'none';
         this.selectedTask.shadowRoot.querySelector('.remove-button').style.display = 'none';
       }
-      
     }
     this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
     this.DOM_ELEMENTS.completedList.style.display = 'none';
     this.DOM_ELEMENTS.viewAll.style.display = 'inline';
-    const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
   }
 
   /**
@@ -375,6 +348,42 @@ export default class TaskListController {
   }
 
   /**
+   * Collapses the TaskList to the right side of the screen w/ animation
+   */
+  collapseTaskList() {
+    // move task list
+    this.DOM_ELEMENTS.rightHalf.style.animationDuration = '1s';
+    this.DOM_ELEMENTS.rightHalf.style.animationName = 'slideout';
+    this.DOM_ELEMENTS.rightHalf.style.marginLeft = '2000px';
+    // move timer to center
+    this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
+    this.DOM_ELEMENTS.timerBox.style.animationName = 'slideRight';
+    this.DOM_ELEMENTS.timerBox.style.left = '68%';
+    // change style of others after animations
+    setTimeout(() => {
+      this.DOM_ELEMENTS.expandTaskList.style.display = 'inline';
+      this.DOM_ELEMENTS.rightHalf.style.display = 'none';
+      document.getElementById('settings-icon').style.marginTop = '17px';
+    }, 600);
+  }
+
+  /**
+   * Expands the task list from the right side of the screen w/ animation
+   */
+  expandTaskList() {
+    this.DOM_ELEMENTS.rightHalf.style.display = 'flex';
+    this.DOM_ELEMENTS.rightHalf.style.animationDuration = '1s';
+    this.DOM_ELEMENTS.rightHalf.style.animationName = 'slidein';
+    this.DOM_ELEMENTS.rightHalf.style.marginLeft = 'initial';
+    this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
+    this.DOM_ELEMENTS.timerBox.style.animationName = 'slideLeft';
+    // reset styles
+    this.DOM_ELEMENTS.timerBox.style.left = '45%';
+    this.DOM_ELEMENTS.expandTaskList.style.display = 'none';
+    document.getElementById('settings-icon').style.marginTop = '10px';
+  }
+
+  /**
    * Expand the list of completed tasks
   */
   expandCompletedTasks() {
@@ -453,16 +462,12 @@ export default class TaskListController {
         this.selectedTask.markTaskAsUnSelected();
         this.selectedTask = null;
       }
-    }
-    else {
+    } else if (this.selectedTask === null && this.hasActiveSession
+      && this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
       // shows the next task if it is marked as completed and is in session
-      if (this.selectedTask === null && this.hasActiveSession) {
-        if (this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
-          this.autoSelectTask();
-          this.loadTasks();
-          this.showSelectedTask();
-        }
-      }
+      this.autoSelectTask();
+      this.loadTasks();
+      this.showSelectedTask();
     }
   }
 }

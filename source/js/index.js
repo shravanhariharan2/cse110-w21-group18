@@ -38,9 +38,9 @@ const Controllers = (() => {
       return taskListController;
     },
     info() {
-      if(!infoController) infoController = new InfoController();
+      if (!infoController) infoController = new InfoController();
       return infoController;
-    }
+    },
   };
 })();
 

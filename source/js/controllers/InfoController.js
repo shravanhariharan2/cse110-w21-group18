@@ -1,22 +1,24 @@
 export default class InfoController {
   constructor() {
+    this.openInfo = this.openInfo.bind(this);
+    this.closeInfo = this.closeInfo.bind(this);
     this.DOM_ELEMENTS = {
       infoModal: document.getElementById('info-modal'),
     };
     this.DOM_ELEMENTS.infoModal.style.display = 'none';
   }
 
-   /*
+  /*
    * Opens info box UI
    */
   openInfo() {
-    document.getElementById('info-modal').style.display = 'block';
+    this.DOM_ELEMENTS.infoModal.style.display = 'block';
   }
+
   /**
    * Closes info box UI
    */
   closeInfo() {
-    document.getElementById('info-modal').style.display = 'none';
+    this.DOM_ELEMENTS.infoModal.style.display = 'none';
   }
 }
-   
