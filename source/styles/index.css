@@ -123,6 +123,7 @@ input[type=button]:active, button:active {
   color: var(--main-text-color);
   height: 60px;
   width: 100px;
+  cursor:pointer;
 }
 
 #start:active {
@@ -147,6 +148,7 @@ input[type=button]:active, button:active {
   background-color: var(--main-bg-color);
   border-width: 0;
   border-color: #026670;
+  cursor: pointer;
 }
 
 .close{

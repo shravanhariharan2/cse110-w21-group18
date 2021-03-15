@@ -45,7 +45,7 @@ export default class TaskListController {
     document.getElementById('right-half').style.marginLeft= "2000px";
     document.getElementById('timer-box').style.animationDuration="1s";
     document.getElementById('timer-box').style.animationName = "slideRight";
-    document.getElementById('timer-box').style.left = '68%';
+    document.getElementById('timer-box').style.left = '50%';
     setTimeout(() => {document.getElementById('expand-task-list').style.display = 'inline';},600);
   }
   expandTaskList(){

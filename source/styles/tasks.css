@@ -31,6 +31,7 @@
 /* button to add new task */
 #add-task {
   position: relative;
+  cursor: pointer;
   height: 88px;
   width: 300px;
   margin: auto;
