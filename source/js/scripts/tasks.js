@@ -11,6 +11,7 @@ document.getElementById('cancel-input').addEventListener('click', TaskList.cance
 document.getElementById('expand-completed').addEventListener('click', TaskList.expandCompletedTasks);
 document.getElementById('view-all').style.display = 'none';
 document.getElementById('completed-list').style.display = 'none';
+document.getElementById('delete-completed-list').style.display = 'none';
 
 document.addEventListener('DOMContentLoaded', TaskList.loadTasks);
 

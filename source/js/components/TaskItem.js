@@ -224,7 +224,11 @@ class TaskItem extends HTMLElement {
 
   removeTask(event) {
     event.stopPropagation();
-    if (window.confirm('Delete Task?')) {
+    if (localStorage.getItem('hideAlerts') === 'false') {
+      if (window.confirm('Delete Task?')) {
+        this.remove();
+      }
+    } else {
       this.remove();
     }
   }
