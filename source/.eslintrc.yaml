@@ -27,5 +27,7 @@ rules:
     - warn
   no-underscore-dangle:
     - warn
-  import/no-cycle:
-    - warn # TODO: remove this after singleton refactor
+  no-mixed-operators:
+    - off
+  no-case-declarations:
+    - warn
