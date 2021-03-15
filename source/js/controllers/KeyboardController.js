@@ -7,7 +7,7 @@
 */
 export default class KeyboardController {
   constructor() {
-    this.DEBUG = true;
+    this.DEBUG = false;
     this.DOM_ELEMENTS = {
       timerButton: document.getElementById('start'),
       taskList: document.getElementById('to-do-list'),
@@ -32,7 +32,6 @@ export default class KeyboardController {
       minus: '-',
       right_arrow: 'ArrowRight',
       shift: 'Shift',
-      distraction: 'd',
     };
 
     this.modStatus = false;
@@ -107,9 +106,6 @@ export default class KeyboardController {
         break;
       case this.KEYS.shift:
         this.modDown();
-        break;
-      case this.KEYS.distraction:
-        this.handleDistraction();
         break;
       default:
         if (this.kbMutex) return;
@@ -226,12 +222,10 @@ export default class KeyboardController {
       const isInSession = this.DOM_ELEMENTS.expansionLabel.style.display
         && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none'
         && this.DOM_ELEMENTS.expansionLabel.innerHTML === 'View All Tasks';
+      if (isInSession) return;
       const isAddTaskFormHidden = !this.DOM_ELEMENTS.inputBox.style.display
         || this.DOM_ELEMENTS.inputBox.style.display === 'none';
-      const isFormOpenable = !isInSession && isAddTaskFormHidden;
-      if (isInSession) {
-
-      } else if (isFormOpenable) {
+      if (isAddTaskFormHidden) {
         this.DOM_ELEMENTS.addTaskButton.click();
         this.DOM_ELEMENTS.inputTextField.focus();
       } else if (document.activeElement === this.DOM_ELEMENTS.notesButton) {
