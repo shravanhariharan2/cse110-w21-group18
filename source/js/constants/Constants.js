@@ -1,5 +1,5 @@
 const Constants = {
-  TIMER_CLOCK_SPEED: 1,
+  TIMER_CLOCK_SPEED: 1000,
   TIME_PAD_SIZE: 8,
 };
 

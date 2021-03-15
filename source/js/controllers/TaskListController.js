@@ -57,18 +57,17 @@ export default class TaskListController {
       const keyNum = parseInt(key, 10);
       // maximum of 1000 tasks in both lists
       const isTaskItem = (keyNum > -1000) && (keyNum < 1000) && (keyNum !== 0);
-<<<<<<< HEAD:source/js/controllers/TaskListController.js
       if (isTaskItem) {
         const taskObj = JSON.parse(sessionStorage.getItem(key));
-        const hasNoNullFields = typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
-          && typeof taskObj.progress !== 'undefined' && typeof taskObj.isComplete !== 'undefined'
-          && typeof taskObj.class !== 'undefined' && typeof taskObj.id !== 'undefined'
-          && typeof taskObj.draggable !== 'undefined';
-        if (hasNoNullFields) {
+        if (typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
+          && typeof taskObj.progress !== 'undefined' && typeof taskObj.distraction !== 'undefined'
+          && typeof taskObj.isComplete !== 'undefined' && typeof taskObj.class !== 'undefined'
+          && typeof taskObj.id !== 'undefined' && typeof taskObj.draggable !== 'undefined') {
           const newTask = document.createElement('task-item');
           newTask.setAttribute('name', taskObj.name);
           newTask.setAttribute('estimate', taskObj.estimate);
           newTask.setAttribute('progress', taskObj.progress);
+          newTask.setAttribute('distraction', taskObj.distraction);
           newTask.setAttribute('notes', taskObj.notes);
           newTask.setAttribute('isComplete', taskObj.isComplete);
           newTask.isComplete = taskObj.isComplete;
@@ -86,40 +85,6 @@ export default class TaskListController {
           }
           newTask.addEventListener('click', this.selectTask.bind(this, newTask));
         }
-=======
-      try {
-        if (isTaskItem) {
-          const taskObj = JSON.parse(sessionStorage.getItem(key));
-          if (typeof taskObj.name !== 'undefined' && typeof taskObj.estimate !== 'undefined'
-           && typeof taskObj.progress !== 'undefined' && typeof taskObj.distraction !== 'undefined'
-           && typeof taskObj.isComplete !== 'undefined' && typeof taskObj.class !== 'undefined'
-           && typeof taskObj.id !== 'undefined' && typeof taskObj.draggable !== 'undefined') {
-            const newTask = document.createElement('task-item');
-            newTask.setAttribute('name', taskObj.name);
-            newTask.setAttribute('estimate', taskObj.estimate);
-            newTask.setAttribute('progress', taskObj.progress);
-            newTask.setAttribute('distraction', taskObj.distraction);
-            newTask.setAttribute('notes', taskObj.notes);
-            newTask.setAttribute('isComplete', taskObj.isComplete);
-            newTask.isComplete = taskObj.isComplete;
-            newTask.setAttribute('class', taskObj.class);
-            newTask.setAttribute('id', taskObj.id);
-            newTask.setAttribute('draggable', taskObj.draggable);
-            if (parseInt(key, 10) > 0) {
-              this.DOM_ELEMENTS.taskList.appendChild(newTask);
-              sessionNumTasks += 1;
-            } else {
-              this.DOM_ELEMENTS.completedList.prepend(newTask);
-              newTask.shadowRoot.querySelector('.checkbox').checked = taskObj.isComplete;
-              newTask.style.cursor = 'pointer';
-              sessionCompletedTasks += 1;
-            }
-            newTask.addEventListener('click', this.selectTask.bind(this, newTask));
-          }
-        }
-      } catch (error) {
-        console.log(error);
->>>>>>> main:source/js/services/TaskList.js
       }
     });
     sessionStorage.setItem('numTasks', sessionNumTasks);

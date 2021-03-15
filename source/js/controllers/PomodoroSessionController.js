@@ -387,7 +387,7 @@ export default class PomodoroSessionController {
    */
   incrementDistraction() {
     this.numDistraction += 1;
-
+    console.log('hi')
     if (this.taskList.selectedTask) {
       this.taskList.selectedTask.incrementTaskDistraction();
     }
