@@ -103,9 +103,9 @@
 			<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
 			<form id="task-add-input" tabindex="10" onSubmit="return false;">
 				<input type="text" id="add-task-name" tabindex="10" placeholder="Task Name">
-				<p id="expected" tabindex="10">Expected Pomodoros:</p>
+				<p id="expected" >Expected Pomodoros:</p>
 				<img src="./media/icons/clock.jpg" id="clock-clip-art">
-				<select name="pomos" id="pomos">
+				<select name="pomos" id="pomos" tabindex="10">
 					<option value="1">1 (25 min)</option>
 					<option value="2">2 (50 min)</option>
 					<option value="3">3 (1hr 15min)</option>
@@ -116,8 +116,8 @@
 					<option value="8">8 (3hr 20min)</option>
 				</select>
 				<input type="button" id="cancel-input" value="Cancel" title="Cancel Input"></input>
-				<input type="button" id="add-notes" value="Add Notes">
-				<textarea id="add-task-description" placeholder="Add Notes"></textarea>
+				<input type="button" id="add-notes" tabindex="10" value="Add Notes">
+				<textarea id="add-task-description" tabindex="10" placeholder="Add Notes"></textarea>
 				<input type="button" id="save-task" value="Save">
 			</form>
 			<div id="to-do-list"></div>
