@@ -104,12 +104,8 @@ export default class PomodoroSessionController {
     if (this.isIdle) {
       this.stopIdling();
       await this.performPomodoroSession();
-    } else if (localStorage.getItem('hideAlerts') === 'false') {
-      if (window.confirm('End Session?')) {
-        this.resetToWorkSession();
-        this.disableDistractionMarker();
-      }
     } else {
+      if (localStorage.getItem('hideAlerts') === 'false' && !window.confirm('End Session?')) return;
       this.resetToWorkSession();
       this.disableDistractionMarker();
     }

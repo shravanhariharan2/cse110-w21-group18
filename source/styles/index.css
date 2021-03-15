@@ -107,7 +107,7 @@ input[type=button]:active, button:active {
 }
 
 /* start button */
-#start {
+#start[value=Start] {
   text-align: center;
   font-size: 20px;
   position: relative;
@@ -115,6 +115,23 @@ input[type=button]:active, button:active {
   border-color: var(--main-text-color);
   border-radius: 5px;
   background-color: #c9e0d7;
+  border-style: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+  outline: none;
+  color: var(--main-text-color);
+  height: 60px;
+  width: 100px;
+}
+
+/* stop button */
+#start[value=Stop] {
+  text-align: center;
+  font-size: 20px;
+  position: relative;
+  top: -3px;
+  border-color: var(--main-text-color);
+  border-radius: 5px;
+  background-color: #e9a77e;
   border-style: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
   outline: none;

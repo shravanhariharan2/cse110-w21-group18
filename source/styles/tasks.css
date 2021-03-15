@@ -36,7 +36,7 @@
   margin-bottom: 15px;
   left: 7.5px;
   color: black;
-  background-color: #d6a281;
+  background-color: #e9a77e;
   font-size: 25px;
   font-weight: 600;
   display: block;
@@ -62,7 +62,7 @@
   background-color: #c2d4ff;
   border-style: none;
   font-size: 20px;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22)
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
 }
 
 #view-all:hover {
@@ -120,7 +120,7 @@
   margin-top: 5px;
 }
 #add-task-name:focus {
-  border-color: #d6a281;
+  border-color: #e9a77e;
   outline: none;
   background-color: #FFFFFF;
 }
@@ -148,7 +148,7 @@
 }
 
 #pomos:focus {
-  border-color: #d6a281;
+  border-color: #e9a77e;
   outline: none;
 }
 
@@ -193,7 +193,7 @@
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
-#delete-task {
+#clear-task {
   grid-area: cancel;
   position: relative;
   width: 70px;
@@ -240,7 +240,7 @@
 }
 
 #add-task-description:focus {
-  border-color: #d6a281;
+  border-color: #e9a77e;
   outline: none;
 }
 /* style for each task-item */
@@ -434,21 +434,22 @@ task-item {
   font-weight: bold;
 }
 
-#delete-completed-list {
+#clear-completed-list {
   position: relative;
   padding: 15px 25px;
   left: 194px;
   border-radius: 15px;
-  background-color: #c2d4ff;
+  background-color: #e2915b;
   border-style: none;
   font-size: 20px;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
 }
 
-#delete-completed-list:focus {
+#clear-completed-list:focus {
   outline: none;
 }
-#delete-completed-list:active {
+
+#clear-completed-list:active {
   box-shadow: 0 1px #cfbd79;
   transform: translateY(4px);
 }
