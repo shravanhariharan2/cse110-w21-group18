@@ -226,6 +226,7 @@ export default class PomodoroSessionController {
   idle() {
     this.isIdle = true;
     this.DOM_ELEMENTS.button.setAttribute('value', 'Start');
+    this.DOM_ELEMENTS.button.title = 'Start Pomodoro Session';
   }
 
   /**
@@ -234,6 +235,7 @@ export default class PomodoroSessionController {
   stopIdling() {
     this.isIdle = false;
     this.DOM_ELEMENTS.button.setAttribute('value', 'Stop');
+    this.DOM_ELEMENTS.button.title = 'End Pomodoro Session';
   }
 
   /**

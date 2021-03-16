@@ -277,10 +277,10 @@ task-item:focus {
 }
 
 .expand-button {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   margin-right: 0;
-  margin-left: 440px;
+  margin-left: 455px;
   margin-top: 30px;
   position: absolute;
 }
@@ -465,10 +465,10 @@ task-item:focus {
 }
 
 #expand-completed {
-    width: 20px;
-    height: 20px;
+    width: 28px;
+    height: 28px;
     left: 350px;
-    top: 33px;
+    top: 30px;
     position: absolute;
 }
 #expand-completed:focus {

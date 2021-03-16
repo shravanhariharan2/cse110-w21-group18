@@ -1,9 +1,15 @@
 #distraction-icon {
     position:absolute;
-    right:0;
-    top:10px;
-    height:40px;
+    right: 10px;
+    top: 10px;
+    height: 40px;
     width: 40px;
+}
+#distraction-icon:active {
+    height: 45px;
+    width: 45px;
+    right:7.5px;
+    top: 7.5px;
 }
 
 #distraction-icon.enabled {
