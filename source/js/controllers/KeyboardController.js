@@ -50,7 +50,7 @@ export default class KeyboardController {
     document.addEventListener('keydown', this.onKeyDown, false);
 
     // remove keyup actions on input elements
-    document.querySelector('input').addEventListener('keyup', function (e) {
+    document.querySelector('input').addEventListener('keyup', (e) => {
       // generate a blacklist from the values of keycodes
       if (e.key !== this.KEYS.shift && Object.values(this.KEYS).includes(e.key)) {
         e.preventDefault();
@@ -68,39 +68,33 @@ export default class KeyboardController {
   * @param {*} event the event object passed by an EventListener
   */
   onKeyDown(event) {
-    const taskInputElements = this.getInputElements();
-    const isInputActive = taskInputElements.includes(document.activeElement);
-    // mutex prevents certain operations from modifying the page when set to true
-    // disable space when typing in text boxes
-    let spaceMutex = false;
-    if (isInputActive) {
-      spaceMutex = true;
-    }
-    // disable tab when viewing single task during work session
-    let tabMutex = false;
+    console.log(`focus index: ${this.focusIdx}`);
 
+<<<<<<< HEAD
     if (this.isTimerInSession()) {
       tabMutex = true;
     }
     // check for space, tab, or enter
+=======
+>>>>>>> main
     switch (event.key) {
       case this.KEYS.spacebar:
-        this.handleSpace(event, spaceMutex);
+        this.handleSpace();
         break;
       case this.KEYS.tab:
-        this.handleTab(event, tabMutex);
+        this.handleTab(event);
         break;
       case this.KEYS.enter:
-        this.handleEnter(event, false);
+        this.handleEnter(event);
         break;
       case this.KEYS.right_arrow:
-        this.handleRightArrow(event, false);
+        this.handleRightArrow(event);
         break;
       case this.KEYS.expand1:
-        this.handleExpand(event, false);
+        this.handleExpand(event);
         break;
       case this.KEYS.expand2:
-        this.handleExpand(event, false);
+        this.handleExpand(event);
         break;
       case this.KEYS.shift:
         this.modDown();
@@ -111,13 +105,12 @@ export default class KeyboardController {
 
   /**
   * handles the space keypress, is restricted when editing text fields
-  * @param {event} event the event object passed by an EventListener
-  * @param {*} mutex a boolean used to restrict/negate function flow
   */
-  handleSpace(event, mutex) {
-    if (mutex) {
-      return;
-    }
+  handleSpace() {
+    const taskInputElements = this.getInputElements();
+    const isInputActive = taskInputElements.includes(document.activeElement);
+    if (isInputActive) return;
+
     this.DOM_ELEMENTS.timerButton.click();
   }
 
@@ -127,14 +120,13 @@ export default class KeyboardController {
   * @param {*} mutex a boolean used to restrict/negate function flow
   */
 
-  handleTab(event, mutex) {
+  handleTab(event) {
     // prevent default tab function
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    if (mutex) {
-      return;
-    }
+    const cantBeTabbed = this.isTimerInSession() || document.activeElement === document.querySelector('task-input');
+    if (cantBeTabbed) return;
 
     // increment if not focused on text fields
     const isFocusedOnInput = this.DOM_ELEMENTS.inputBox.style.display
@@ -202,8 +194,9 @@ export default class KeyboardController {
   * @param {event} event the event object passed by an EventListener
   * @param {*} mutex a boolean used to restrict/negate function flow
   */
-  handleEnter(event, mutex) {
-    if (mutex) return;
+  handleEnter(event) {
+    const isInEditInput = document.activeElement === document.querySelector('task-input');
+    if (isInEditInput) return;
 
     event.preventDefault();
     // handle enter on <add-task-button>
@@ -235,8 +228,7 @@ export default class KeyboardController {
     }
   }
 
-  handleRightArrow(event, mutex) {
-    if (mutex) return;
+  handleRightArrow(event) {
     if (this.focusIdx !== 0 || (this.focusIdx === 0 && this.isTimerInSession())) {
       event.preventDefault();
 
@@ -257,8 +249,7 @@ export default class KeyboardController {
     }
   }
 
-  handleExpand(event, mutex) {
-    if (mutex) return;
+  handleExpand(event) {
     // click the expansion label if shown
     if (this.DOM_ELEMENTS.expansionLabel.style.display && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none') {
       event.preventDefault();
@@ -329,6 +320,7 @@ export default class KeyboardController {
       this.DOM_ELEMENTS.acceptInput,
       this.DOM_ELEMENTS.notesButton,
       this.DOM_ELEMENTS.notesTextField,
+      document.querySelector('task-input'),
     ];
   }
 
