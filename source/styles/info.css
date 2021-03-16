@@ -76,6 +76,14 @@
   }
 
   #make-task-ex {
-      display:block;
-      margin: auto;
+    display:block;
+    margin: auto;
+  }
+  #select-task-ex {
+    display:block;
+    margin: auto;
+  }
+  #distractions-ex {
+    display:block;
+    margin: auto;
   }
