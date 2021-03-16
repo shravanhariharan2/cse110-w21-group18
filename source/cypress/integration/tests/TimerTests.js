@@ -3,7 +3,7 @@ describe('Timer Tests', () => {
   const MS_IN_SHORT_BREAK = 5 * 60 * 1000;
   const MS_IN_LONG_BREAK = 30 * 60 * 1000;
 
-  const workSessionBackgroundStyle = 'rgb(159, 237, 215)';
+  const workSessionBackgroundStyle = 'rgb(255, 255, 255)';
   const shortBreakBackgroundStyle = 'rgb(254, 249, 199)';
   const longBreakBackgroundStyle = 'rgb(252, 225, 129)';
 
