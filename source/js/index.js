@@ -3,6 +3,7 @@ import PomodoroSessionController from './controllers/PomodoroSessionController.j
 import SettingsController from './controllers/SettingsController.js';
 import TaskListController from './controllers/TaskListController.js';
 import TimerController from './controllers/TimerController.js';
+import KeyboardController from './controllers/KeyboardController.js';
 import Constants from './constants/Constants.js';
 
 const Controllers = (() => {
@@ -11,6 +12,7 @@ const Controllers = (() => {
   let settingsController;
   let taskListController;
   let timerController;
+  let keyboardController;
 
   return {
     timer() {
@@ -34,6 +36,10 @@ const Controllers = (() => {
     taskList() {
       if (!taskListController) taskListController = new TaskListController();
       return taskListController;
+    },
+    keyboard() {
+      if (!keyboardController) keyboardController = new KeyboardController();
+      return keyboardController;
     },
   };
 })();

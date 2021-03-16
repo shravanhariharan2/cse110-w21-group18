@@ -219,11 +219,8 @@
   height: 35px;
   margin-bottom: 10px;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
 
-}
-#add-notes:focus {
-  outline: none;
-}
 /* add notes area */
 #add-task-description {
   grid-area: notes;
@@ -264,6 +261,10 @@ task-item {
   grid-gap: 5px;
   background-color: #FFFFFF;
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
+}
+
+task-item:focus {
+  outline: none;
 }
 
 .expand-button {

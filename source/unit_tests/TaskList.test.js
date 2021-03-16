@@ -46,6 +46,7 @@ test('addTask() adds a new task to session storage and inserts a new <task-item/
   newTaskHTML.setAttribute('isComplete', false);
   newTaskHTML.setAttribute('class', 'dropzone');
   newTaskHTML.setAttribute('id', taskListController.numTasks);
+  newTaskHTML.setAttribute('tabIndex', '10');
 
   taskListController.addTask();
   expect(sessionStorage.__STORE__[taskId]).toBe(JSON.stringify(newTask));

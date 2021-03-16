@@ -77,6 +77,7 @@ export default class TaskListController {
           newTask.isComplete = taskObj.isComplete;
           newTask.setAttribute('class', taskObj.class);
           newTask.setAttribute('id', taskObj.id);
+          newTask.setAttribute('tabindex', 10);
           newTask.setAttribute('draggable', taskObj.draggable);
           if (parseInt(key, 10) > 0) {
             this.DOM_ELEMENTS.taskList.appendChild(newTask);
@@ -235,6 +236,7 @@ export default class TaskListController {
   displayInputBox() {
     this.DOM_ELEMENTS.inputBox.style.display = 'grid';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
+    this.DOM_ELEMENTS.newTaskName.focus();
   }
 
   /**
@@ -264,6 +266,7 @@ export default class TaskListController {
     newTask.setAttribute('isComplete', false);
     newTask.setAttribute('class', 'dropzone');
     newTask.setAttribute('id', this.numTasks);
+    newTask.setAttribute('tabindex', 10);
     newTask.addEventListener('click', this.selectTask.bind(this, newTask));
 
     this.DOM_ELEMENTS.taskList.style.display = 'none';
