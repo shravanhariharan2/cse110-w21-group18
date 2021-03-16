@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/TaskInput.js - Documentation</title>
+    <title>controllers/TimerController.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/TaskInput.js</h1>
+    <h1 class="page-title">controllers/TimerController.js</h1>
     
 
     
@@ -39,79 +39,136 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import HtmlTemplates from '../constants/HtmlTemplates.js';
-import { TaskStyles } from '../constants/Styles.js';
-import Controllers from '../index.js';
+            <pre class="prettyprint source linenums"><code>import Constants from '../constants/Constants.js';
 
-class TaskInput extends HTMLElement {
-  constructor() {
-    super();
-    this.isSelected = false;
-    this.taskList = Controllers.taskList();
-    this.onclick = () => this.toggleTaskSelection();
+/**
+ * Implements a basic timer with start and end capabilities
+ */
+export default class TimerController {
+  constructor(clockSpeed) {
+    this.minutes = 0;
+    this.seconds = 0;
+    this.timeInterval = null;
+    this.isRunning = false;
+    this.clockSpeed = clockSpeed;
+    this.loadHideSecondsBoolean();
+
+    this.DOM_ELEMENTS = {
+      time: document.getElementById('time'),
+      title: document.getElementById('title'),
+    };
+
+    // bind functions to instance
+    this.step = this.step.bind(this);
+    this.stop = this.stop.bind(this);
+    this.run = this.run.bind(this);
+    this.updateTimeUI = this.updateTimeUI.bind(this);
   }
 
-  connectedCallback() {
-    this.loadDOMElements();
-  }
-
-  loadDOMElements() {
-    if (!this.shadowRoot) {
-      this.attachShadow({ mode: 'open' });
-      this.class = 'task-input dropzone';
-      this.shadowRoot.innerHTML = HtmlTemplates.TASK_INPUT;
-    }
+  loadHideSecondsBoolean() {
+    this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
   }
 
   /**
-   * Select/unselect task
+   * Sets the amount of time left on the timer
+   * @param {int} t [the time to set in minutes]
    */
-  toggleTaskSelection() {
-    if (this.isSelected) {
-      this.markTaskAsUnSelected();
+  setTime(timeInMinutes) {
+    this.minutes = timeInMinutes;
+    this.seconds = 0;
+    this.updateTimeUI();
+  }
+
+  updateTimeUI() {
+    this.updateTimerTime();
+    this.updateTitleTime();
+  }
+
+  /**
+   * Re-renders the timer time display
+   */
+  updateTimerTime() {
+    this.DOM_ELEMENTS.time.innerHTML = this.getTimerTimeString();
+  }
+
+  updateTitleTime() {
+    this.DOM_ELEMENTS.title.innerHTML = this.getTitleTimeString();
+  }
+
+  getTimerTimeString() {
+    const paddedMinuteString = this.minutes.toString().padStart(2, '0');
+    const paddedSecondString = this.seconds.toString().padStart(2, '0');
+    let timeString;
+    if (this.hideSeconds &amp;&amp; this.minutes > 0) {
+      timeString = `${paddedMinuteString} m`;
     } else {
-      this.markTaskAsSelected();
+      timeString = `${paddedMinuteString} : ${paddedSecondString}`;
     }
+    return timeString;
+  }
+
+  getTitleTimeString() {
+    const paddedMinuteString = this.minutes.toString().padStart(2, '0');
+    const paddedSecondString = this.seconds.toString().padStart(2, '0');
+    let timeString;
+    if (this.hideSeconds &amp;&amp; this.minutes > 0) {
+      timeString = `${paddedMinuteString}m`;
+    } else {
+      timeString = `${paddedMinuteString}:${paddedSecondString}`;
+    }
+    const currentTitleString = this.DOM_ELEMENTS.title.innerHTML;
+    const titleTimeString = `${timeString} - ${currentTitleString.slice(Constants.TIME_PAD_SIZE)}`;
+    return titleTimeString;
   }
 
   /**
-   * Set isSelected instance variable to true and update UI
+   * Performs a single timer counting operation
    */
-  markTaskAsSelected() {
-    this.styleSelectedTask();
-    this.taskList.selectTask(this);
-    this.isSelected = true;
+  step(resolve) {
+    if (this.seconds &lt;= 0) {
+      this.minutes -= 1;
+      this.seconds = 60;
+      if (this.minutes &lt; 0) {
+        this.stop();
+        resolve();
+      }
+    }
+    this.seconds -= 1;
+    this.updateTimeUI();
   }
 
   /**
-   * Set isSelected instance variable to false and update UI
+   * Runs the timer
    */
-  markTaskAsUnSelected() {
-    this.isSelected = false;
-    this.styleUnselectedTask();
+  async run() {
+    this.prepareTimerForStart();
+    const self = this;
+    return new Promise((resolve) => {
+      this.timeInterval = setInterval(() => {
+        self.step(resolve);
+      }, self.clockSpeed);
+    });
   }
 
   /**
-   * Update UI for when selecting task
+   * Preps the timer to start by setting initial time and re-rendering DOM
    */
-  styleSelectedTask() {
-    this.shadowRoot.querySelector('.task-input').style.border = TaskStyles.SELECTED_TASK_BORDER;
-    this.shadowRoot.querySelector('.task-input').style.borderRadius = TaskStyles.SELECTED_TASK_BORDER_RADIUS;
-    this.shadowRoot.querySelector('.task-input').style.background = TaskStyles.SELECTED_TASK_BACKGROUND;
-    this.shadowRoot.querySelector('.task-input').style.top = TaskStyles.SELECTED_TASK_TOP_OFFSET;
-    this.shadowRoot.querySelector('.task-input').style.boxShadow = TaskStyles.NO_BOX_SHADOW;
+  prepareTimerForStart() {
+    this.isRunning = true;
+    this.minutes -= 1;
+    this.seconds = 59;
+    this.updateTimeUI();
   }
 
   /**
-   * Update UI for when unselecting task
+   * Stops the timer completely
    */
-  styleUnselectedTask() {
-    this.shadowRoot.querySelector('.task-input').style.background = TaskStyles.UNSELECTED_TASK_BACKGROUND;
-    this.shadowRoot.querySelector('.task-input').style.top = TaskStyles.UNSELECTED_TASK_TOP_OFFSET;
-    this.shadowRoot.querySelector('.task-input').style.boxShadow = TaskStyles.BOX_SHADOW;
+  stop() {
+    this.isRunning = false;
+    clearInterval(this.timeInterval);
+    this.updateTimeUI();
   }
 }
-window.customElements.define('task-input', TaskInput);
 </code></pre>
         </article>
     </section>

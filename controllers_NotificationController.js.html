@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>components/TaskInput.js - Documentation</title>
+    <title>controllers/NotificationController.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">components/TaskInput.js</h1>
+    <h1 class="page-title">controllers/NotificationController.js</h1>
     
 
     
@@ -39,79 +39,86 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import HtmlTemplates from '../constants/HtmlTemplates.js';
-import { TaskStyles } from '../constants/Styles.js';
-import Controllers from '../index.js';
+            <pre class="prettyprint source linenums"><code>import PomodoroSessionStates from '../constants/Enums.js';
+import DisplayMessages from '../constants/DisplayMessages.js';
 
-class TaskInput extends HTMLElement {
+/**
+* Implements the NotificationService class. This class is a controller for browser
+* and audio notifications
+*/
+export default class NotificationController {
   constructor() {
-    super();
-    this.isSelected = false;
-    this.taskList = Controllers.taskList();
-    this.onclick = () => this.toggleTaskSelection();
-  }
-
-  connectedCallback() {
-    this.loadDOMElements();
-  }
-
-  loadDOMElements() {
-    if (!this.shadowRoot) {
-      this.attachShadow({ mode: 'open' });
-      this.class = 'task-input dropzone';
-      this.shadowRoot.innerHTML = HtmlTemplates.TASK_INPUT;
-    }
+    this.DOM_ELEMENTS = {
+      alarm: document.getElementById('timer-alarm'),
+    };
   }
 
   /**
-   * Select/unselect task
+  * Notifies the user of session end through audio and browser (if allowed)
+  * notifications
+  * @param {int} currentState an integer representing the state the user is in
+  * @param {int} sessionNumber an integer representing the worksessions finished
+  */
+  notifyUser(currentState, sessionNumber, numSessionsBeforeLongBreak) {
+    if (!NotificationController.hasAudioMuted()) {
+      this.audioNotify();
+    }
+    if (Notification.permission === 'granted') {
+      NotificationController.browserNotify(currentState, sessionNumber, numSessionsBeforeLongBreak);
+    }
+  }
+
+  static hasAudioMuted() {
+    return localStorage.getItem('muteAudio') === 'true';
+  }
+
+  audioNotify() {
+    this.DOM_ELEMENTS.alarm.play();
+  }
+
+  /**
+   * Creates a browser notification depending on next session
+   * @param {int} currentState [an integer representing the state the user is in]
+   * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  toggleTaskSelection() {
-    if (this.isSelected) {
-      this.markTaskAsUnSelected();
+  static browserNotify(currentState, sessionNumber, numSessionsBeforeLongBreak) {
+    const notificationTitle = NotificationController.createNotificationTitle(currentState);
+    const notificationBody = NotificationController
+      .createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak);
+    new Notification(notificationTitle, notificationBody);
+  }
+
+  /**
+   * Creates the title for browser notification
+   * @param {int} currentState [an integer representing the state the user is in]
+   */
+  static createNotificationTitle(currentState) {
+    let notificationTitle = DisplayMessages.NOTIFICATION_HEADER;
+    if (currentState === PomodoroSessionStates.WORK) {
+      notificationTitle += DisplayMessages.WORK_SESSION_COMPLETE;
+    } else if (currentState === PomodoroSessionStates.SHORT_BREAK) {
+      notificationTitle += DisplayMessages.SHORT_BREAK_COMPLETE;
     } else {
-      this.markTaskAsSelected();
+      notificationTitle += DisplayMessages.LONG_BREAK_COMPLETE;
     }
+    return notificationTitle;
   }
 
   /**
-   * Set isSelected instance variable to true and update UI
+   * Creates the body for browser notification
+   * @param {int} currentState [an integer representing the state the user is in]
+   * @param {int} sessionNumber [an integer representing the worksessions finished]
    */
-  markTaskAsSelected() {
-    this.styleSelectedTask();
-    this.taskList.selectTask(this);
-    this.isSelected = true;
-  }
-
-  /**
-   * Set isSelected instance variable to false and update UI
-   */
-  markTaskAsUnSelected() {
-    this.isSelected = false;
-    this.styleUnselectedTask();
-  }
-
-  /**
-   * Update UI for when selecting task
-   */
-  styleSelectedTask() {
-    this.shadowRoot.querySelector('.task-input').style.border = TaskStyles.SELECTED_TASK_BORDER;
-    this.shadowRoot.querySelector('.task-input').style.borderRadius = TaskStyles.SELECTED_TASK_BORDER_RADIUS;
-    this.shadowRoot.querySelector('.task-input').style.background = TaskStyles.SELECTED_TASK_BACKGROUND;
-    this.shadowRoot.querySelector('.task-input').style.top = TaskStyles.SELECTED_TASK_TOP_OFFSET;
-    this.shadowRoot.querySelector('.task-input').style.boxShadow = TaskStyles.NO_BOX_SHADOW;
-  }
-
-  /**
-   * Update UI for when unselecting task
-   */
-  styleUnselectedTask() {
-    this.shadowRoot.querySelector('.task-input').style.background = TaskStyles.UNSELECTED_TASK_BACKGROUND;
-    this.shadowRoot.querySelector('.task-input').style.top = TaskStyles.UNSELECTED_TASK_TOP_OFFSET;
-    this.shadowRoot.querySelector('.task-input').style.boxShadow = TaskStyles.BOX_SHADOW;
+  static createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak) {
+    if (currentState === PomodoroSessionStates.WORK) {
+      if (sessionNumber !== numSessionsBeforeLongBreak) {
+        return { body: DisplayMessages.SHORT_BREAK_NEXT_NOTIFY };
+      }
+      return { body: DisplayMessages.LONG_BREAK_NEXT_NOTIFY };
+    }
+    return { body: DisplayMessages.WORK_NEXT_NOTIFY };
   }
 }
-window.customElements.define('task-input', TaskInput);
 </code></pre>
         </article>
     </section>
