@@ -17,7 +17,6 @@ class TaskItem extends HTMLElement {
   }
 
   loadDOMElements() {
-    console.log(this.shadowRoot);
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
       this.shadowRoot.innerHTML = `
