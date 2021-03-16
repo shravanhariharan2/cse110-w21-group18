@@ -7,7 +7,7 @@
 */
 export default class KeyboardController {
   constructor() {
-    this.DEBUG = false;
+    this.DEBUG = true;
     this.DOM_ELEMENTS = {
       timerButton: document.getElementById('start'),
       taskList: document.getElementById('to-do-list'),
@@ -29,7 +29,8 @@ export default class KeyboardController {
       tab: 'Tab',
       enter: 'Enter',
       equals: 'Equals',
-      minus: '-',
+      expand1: '=',
+      expand2: '+',
       right_arrow: 'ArrowRight',
       shift: 'Shift',
     };
@@ -69,24 +70,19 @@ export default class KeyboardController {
   onKeyDown(event) {
     const taskInputElements = this.getInputElements();
     const isInputActive = taskInputElements.includes(document.activeElement);
-    const isInSession = this.DOM_ELEMENTS.expansionLabel.style.display
-      && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none'
-      && this.DOM_ELEMENTS.expansionLabel.innerHTML === 'View All Tasks';
     // mutex prevents certain operations from modifying the page when set to true
     // disable space when typing in text boxes
     let spaceMutex = false;
     if (isInputActive) {
       spaceMutex = true;
-      this.dprint('space mutex on');
     }
     // disable tab when viewing single task during work session
     let tabMutex = false;
 
-    if (isInSession) {
+    if (this.isTimerInSession()) {
       tabMutex = true;
-      this.dprint('tab mutex on');
     }
-
+    console.log('focus index:' + this.focusIdx);
     // check for space, tab, or enter
     switch (event.key) {
       case this.KEYS.spacebar:
@@ -101,15 +97,17 @@ export default class KeyboardController {
       case this.KEYS.right_arrow:
         this.handleRightArrow(event, false);
         break;
-      case this.KEYS.minus:
-        this.handleMinus(event, false);
+      case this.KEYS.expand1:
+        this.handleExpand(event, false);
+        break;
+      case this.KEYS.expand2:
+        this.handleExpand(event, false);
         break;
       case this.KEYS.shift:
         this.modDown();
         break;
       default:
         if (this.kbMutex) return;
-        this.dprint(`key: ${event.keyCode} is not implemented`);
     }
   }
 
@@ -123,7 +121,6 @@ export default class KeyboardController {
       return;
     }
     this.DOM_ELEMENTS.timerButton.click();
-    this.dprint('Enter pressed');
   }
 
   /**
@@ -142,8 +139,9 @@ export default class KeyboardController {
     }
 
     // increment if not focused on text fields
-    if (!this.DOM_ELEMENTS.inputBox.style.display || this.DOM_ELEMENTS.inputBox.style.display === 'none') {
-      this.dprint('input box is none');
+    const isFocusedOnInput = this.DOM_ELEMENTS.inputBox.style.display
+      && this.DOM_ELEMENTS.inputBox.style.display !== 'none';
+    if (!isFocusedOnInput) {
       // if shift is not held down then increment, else decrement
       if (this.modStatus) {
         this.decrementIdx();
@@ -154,15 +152,15 @@ export default class KeyboardController {
 
     // if the current focus is not a task then it must be the add task button
     if (this.focusIdx === 0) {
-      // unclick the last task (so it's not highlighted)
-      try {
-        this.unclickItems();
-      } catch (e) {
-        this.dprint('No children to unclick');
-      }
-      // cycle between inputs while form is active
       const isInputActive = this.getInputElements().includes(document.activeElement);
-      if (isInputActive) {
+      if(!isInputActive) {
+        try {
+          this.unclickItems();
+        } catch (e) {
+          this.dprint('No children to unclick');
+        }
+        this.DOM_ELEMENTS.inputBox.focus();
+      } else {
         switch (document.activeElement) {
           case this.DOM_ELEMENTS.inputTextField:
             this.DOM_ELEMENTS.inputMultiField.focus();
@@ -190,15 +188,12 @@ export default class KeyboardController {
             break;
           default:
         }
-      } else {
-        this.DOM_ELEMENTS.inputBox.focus();
-      }
+      } 
     } else {
       // collapse add task form if possible
       this.DOM_ELEMENTS.cancelInput.click();
 
       // focus on the current task and highlight it
-      console.log(this.modStatus);
       this.DOM_ELEMENTS.taskList.children[this.focusIdx - 1].focus();
       document.activeElement.click();
     }
@@ -210,19 +205,13 @@ export default class KeyboardController {
   * @param {*} mutex a boolean used to restrict/negate function flow
   */
   handleEnter(event, mutex) {
-    this.dprint(`focused idx: ${this.focusIdx}\n`
-      + `event key: ${event.keyCode}`);
     if (mutex) return;
 
     event.preventDefault();
     // handle enter on <add-task-button>
     if (this.focusIdx === 0) {
-      this.dprint(`form display value: ${this.DOM_ELEMENTS.inputBox.style.display}`);
       // If the form is not open then open it
-      const isInSession = this.DOM_ELEMENTS.expansionLabel.style.display
-        && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none'
-        && this.DOM_ELEMENTS.expansionLabel.innerHTML === 'View All Tasks';
-      if (isInSession) return;
+      if (this.isTimerInSession()) return;
       const isAddTaskFormHidden = !this.DOM_ELEMENTS.inputBox.style.display
         || this.DOM_ELEMENTS.inputBox.style.display === 'none';
       if (isAddTaskFormHidden) {
@@ -249,24 +238,31 @@ export default class KeyboardController {
   }
 
   handleRightArrow(event, mutex) {
-    if (mutex) {
-      return;
-    }
-    if (this.focusIdx !== 0) {
+    if (mutex) return;
+    if (this.focusIdx !== 0 || (this.focusIdx === 0 && this.isTimerInSession())) {
       event.preventDefault();
-      const shadow = this.DOM_ELEMENTS.taskList.children[this.focusIdx - 1].shadowRoot;
+      
+      let shadow;
+      if(this.focusIdx === 0) {
+        shadow = this.DOM_ELEMENTS.taskList.children[0].shadowRoot;
+      } else {
+        shadow = this.DOM_ELEMENTS.taskList.children[this.focusIdx - 1].shadowRoot;
+      }
+      
       const childNodes = Array.from(shadow.children);
       this.dprint(`shadowChildren: ${childNodes}`);
-      // checkbox is the 2nd child
+      // checkbox is the 3rd child
       childNodes[2].click();
+      if (this.DOM_ELEMENTS.taskList.children.length === 0 || this.DOM_ELEMENTS.taskList.children.length === 1) {
+        this.focusIdx = this.DOM_ELEMENTS.taskList.children.length;
+      }
     }
   }
 
-  handleMinus(event, mutex) {
-    if (mutex) {
-      return;
-    }
+  handleExpand(event, mutex) {
+    if (mutex) return;
     // click the expansion label if shown
+    console.log('hi')
     if (this.DOM_ELEMENTS.expansionLabel.style.display && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none') {
       event.preventDefault();
       this.DOM_ELEMENTS.expansionLabel.click();
@@ -337,6 +333,12 @@ export default class KeyboardController {
       this.DOM_ELEMENTS.notesButton,
       this.DOM_ELEMENTS.notesTextField,
     ];
+  }
+
+  isTimerInSession() {
+    return this.DOM_ELEMENTS.expansionLabel.style.display
+      && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none'
+      && this.DOM_ELEMENTS.expansionLabel.innerHTML === 'View All Tasks';
   }
 
   /**

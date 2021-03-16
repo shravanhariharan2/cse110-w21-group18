@@ -236,6 +236,7 @@ export default class TaskListController {
   displayInputBox() {
     this.DOM_ELEMENTS.inputBox.style.display = 'grid';
     this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
+    this.DOM_ELEMENTS.newTaskName.focus();
   }
 
   /**
