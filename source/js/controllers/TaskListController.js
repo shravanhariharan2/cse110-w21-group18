@@ -376,7 +376,7 @@ export default class TaskListController {
     // move timer to center
     this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
     this.DOM_ELEMENTS.timerBox.style.animationName = 'slideRight';
-    
+
     // change style of others after animations
     setTimeout(() => {
       this.DOM_ELEMENTS.timerBox.id = 'timer-box-center';
