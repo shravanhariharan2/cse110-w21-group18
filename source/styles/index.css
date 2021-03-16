@@ -171,6 +171,7 @@ input[type=button]:active, button:active {
   height: 35px;
   width: 40px;
   font-size: 25px;
+  font-weight: bold;
   background-color: var(--main-bg-color);
   border-width: 0;
   border-color: #026670;

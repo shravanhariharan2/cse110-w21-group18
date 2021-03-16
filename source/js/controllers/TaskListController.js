@@ -85,6 +85,7 @@ export default class TaskListController {
             newTask.isComplete = taskObj.isComplete;
             newTask.setAttribute('class', taskObj.class);
             newTask.setAttribute('id', taskObj.id);
+            newTask.setAttribute('tabindex', 10);
             newTask.setAttribute('draggable', taskObj.draggable);
             if (parseInt(key, 10) > 0) {
               this.DOM_ELEMENTS.taskList.appendChild(newTask);

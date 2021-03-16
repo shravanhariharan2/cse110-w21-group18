@@ -82,7 +82,6 @@ export default class KeyboardController {
     if (this.isTimerInSession()) {
       tabMutex = true;
     }
-    // console.log(`focus index:${this.focusIdx}`);
     // check for space, tab, or enter
     switch (event.key) {
       case this.KEYS.spacebar:
@@ -261,7 +260,6 @@ export default class KeyboardController {
   handleExpand(event, mutex) {
     if (mutex) return;
     // click the expansion label if shown
-    // console.log('hi');
     if (this.DOM_ELEMENTS.expansionLabel.style.display && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none') {
       event.preventDefault();
       this.DOM_ELEMENTS.expansionLabel.click();
