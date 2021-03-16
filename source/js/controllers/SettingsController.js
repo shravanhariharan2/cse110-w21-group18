@@ -169,25 +169,26 @@ export default class SettingsController {
     this.pomodoroSession.loadTimerSettings();
     this.updateInputTaskValues();
   }
+
   /**
    * Change the increment values of time in the expected pomodoros
    * in the input box
    */
-  updateInputTaskValues(){
+  updateInputTaskValues() {
     if (localStorage.getItem('workSessionDuration')) {
       const workSessionTime = parseInt(localStorage.getItem('workSessionDuration'), 10);
-      let options = document.getElementById('pomos').options;
-      for (let i = 1 ; i<=8; i+=1) {
-        let opt = options[i-1];
-        let hrs = ~~((i*workSessionTime)/60);
+      const { options } = document.getElementById('pomos');
+      for (let i = 1; i <= 8; i += 1) {
+        const opt = options[i - 1];
+        let hrs = ~~((i * workSessionTime) / 60);
         if (hrs !== 0) {
-          hrs = `${~~((i*workSessionTime)/60)} hr`;
+          hrs = `${~~((i * workSessionTime) / 60)} hr`;
         } else {
           hrs = ``;
         }
-        let mins = (i*workSessionTime)%60;
+        let mins = (i * workSessionTime) % 60;
         if (mins > 0) {
-          mins= `${(i*workSessionTime)%60} mins`;
+          mins = `${(i * workSessionTime) % 60} mins`;
           opt.text = ` ${i}  (${hrs} ${mins})`;
           if (hrs === '') {
             opt.text = ` ${i}  (${mins})`;
@@ -195,8 +196,7 @@ export default class SettingsController {
         } else {
           opt.text = ` ${i}  (${hrs})`;
         }
-          
-        
+
         opt.value = `${i}`;
       }
     }
