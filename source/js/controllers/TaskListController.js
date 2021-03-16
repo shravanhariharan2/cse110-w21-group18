@@ -133,6 +133,12 @@ export default class TaskListController {
       this.deselectTaskIfComplete();
       this.updateStorage();
       this.hideCompletedIfNoTasksExist();
+      if (this.numTasks === 0) {
+        document.getElementById('distraction-button').style.display = "none";
+      }
+      else {
+        document.getElementById('distraction-button').style.display = "block";
+      }
     }
   }
 

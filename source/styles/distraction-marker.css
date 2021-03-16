@@ -3,13 +3,14 @@
     right: 10px;
     top: 10px;
     height: 40px;
-    width: 40px;
+    width: 43px;
 }
 #distraction-icon:active {
     height: 45px;
     width: 45px;
     right:7.5px;
     top: 7.5px;
+    filter: none;
 }
 
 #distraction-icon.enabled {
@@ -24,6 +25,3 @@
     display: none;
 }
 
-#distraction-icon:active {
-    filter: none;
-}

@@ -197,7 +197,6 @@ export default class SettingsController {
         } else {
           opt.text = ` ${i}  (${hrs})`;
         }
-        opt.value = `${i}`;
       }
     }
   }
