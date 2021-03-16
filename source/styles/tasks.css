@@ -36,7 +36,7 @@
   margin-bottom: 15px;
   left: 7.5px;
   color: black;
-  background-color: #eaffa3;
+  background-color: #e9a77e;
   font-size: 25px;
   font-weight: 600;
   display: block;
@@ -59,10 +59,10 @@
   padding: 15px 25px;
   left: 5px;
   border-radius: 15px;
-  background-color: #c6fb94;
+  background-color: #c2d4ff;
   border-style: none;
   font-size: 20px;
-  box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 24px 0 rgba(0, 0, 0, 0.22)
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
 }
 
 #view-all:hover {
@@ -120,7 +120,7 @@
   margin-top: 5px;
 }
 #add-task-name:focus {
-  border-color: #208FF3;
+  border-color: #e9a77e;
   outline: none;
   background-color: #FFFFFF;
 }
@@ -148,7 +148,7 @@
 }
 
 #pomos:focus {
-  border-color: #208FF3;
+  border-color: #e9a77e;
   outline: none;
 }
 
@@ -193,7 +193,7 @@
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
 }
 
-#delete-task {
+#clear-task {
   grid-area: cancel;
   position: relative;
   width: 70px;
@@ -214,7 +214,7 @@
   grid-area: add;
   border-width: 2px;
   border-radius: 5px;
-  background-color: #eaffa3;
+  background-color: #c2d4ff;
   border-style: none;
   height: 35px;
   margin-bottom: 10px;
@@ -240,7 +240,7 @@
 }
 
 #add-task-description:focus {
-  border-color: #208FF3;
+  border-color: #e9a77e;
   outline: none;
 }
 /* style for each task-item */
@@ -427,13 +427,34 @@ task-item {
   justify-content: space-evenly;
 }
 
-  #completed-list-title {
-    margin: 20px auto;
-    text-align: center;
-    font-size: 30px;
-    font-weight: bold;
-  }
- #expand-completed {
+#completed-list-title {
+  margin: 20px auto;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#clear-completed-list {
+  position: relative;
+  padding: 15px 25px;
+  left: 194px;
+  border-radius: 15px;
+  background-color: #e2915b;
+  border-style: none;
+  font-size: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+}
+
+#clear-completed-list:focus {
+  outline: none;
+}
+
+#clear-completed-list:active {
+  box-shadow: 0 1px #cfbd79;
+  transform: translateY(4px);
+}
+
+#expand-completed {
     width: 20px;
     height: 20px;
     left: 350px;

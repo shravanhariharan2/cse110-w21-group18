@@ -1,9 +1,7 @@
 :root {
-  --main-bg-color: #f5eadb;
-  --main-timer-bg-color: #ffffff;
+  --main-bg-color: #c9e0d7;
   --main-border-color: #8e17dd;
   --main-text-color: #000000;
-  --main-timer-bg-color: #03abee;
   --short-break-bg-color: #FEF9C7;
   --long-break-bg-color: #FCE181;
   --main-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.20), 0 12px 40px 0 rgba(0, 0, 0, 0.20);
@@ -109,15 +107,32 @@ input[type=button]:active, button:active {
 }
 
 /* start button */
-#start {
+#start[value=Start] {
   text-align: center;
   font-size: 20px;
   position: relative;
   top: -3px;
   border-color: var(--main-text-color);
   border-radius: 5px;
-  background-color: var(--main-bg-color);
-  border-style: solid;
+  background-color: #c9e0d7;
+  border-style: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
+  outline: none;
+  color: var(--main-text-color);
+  height: 60px;
+  width: 100px;
+}
+
+/* stop button */
+#start[value=Stop] {
+  text-align: center;
+  font-size: 20px;
+  position: relative;
+  top: -3px;
+  border-color: var(--main-text-color);
+  border-radius: 5px;
+  background-color: #e9a77e;
+  border-style: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.19), 0 4px 8px 0 rgba(0, 0, 0, 0.19);
   outline: none;
   color: var(--main-text-color);
@@ -126,7 +141,7 @@ input[type=button]:active, button:active {
 }
 
 #start:active {
-  border-style: inset;
+  border-style: none;
   top: 2px;
   box-shadow: 0px 0px;
 }
@@ -156,7 +171,7 @@ input[type=button]:active, button:active {
 
 @media all and (max-width:1300px) {
   body {
-    background-color: #FFFFFF;
+    background-color: var(--main-bg-color);
     font-family: 'Open Sans', sans-serif;
     display: flex;
     flex-direction: column;
@@ -167,7 +182,7 @@ input[type=button]:active, button:active {
     transform: none;
     left: auto;
     top: auto;
-    background: #9FEDD7;
+    background: #ffffff;
     margin: 50px auto;
     width: 30%;
     min-width: 550px;

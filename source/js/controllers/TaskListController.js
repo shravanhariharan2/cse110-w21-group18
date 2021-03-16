@@ -14,6 +14,7 @@ export default class TaskListController {
     this.addNotesToTask = this.addNotesToTask.bind(this);
     this.addTask = this.addTask.bind(this);
     this.listChanged = this.listChanged.bind(this);
+    this.clearCompletedList = this.clearCompletedList.bind(this);
     this.cancelInput = this.cancelInput.bind(this);
     this.loadTasks = this.loadTasks.bind(this);
     this.expandCompletedTasks = this.expandCompletedTasks.bind(this);
@@ -29,10 +30,13 @@ export default class TaskListController {
       saveNewTaskButton: document.getElementById('save-task'),
       cancelButton: document.getElementById('cancel-input'),
       completedList: document.getElementById('completed-list'),
+      clearCompletedList: document.getElementById('clear-completed-list'),
       completedListTitle: document.getElementById('completed-list-header'),
       expandCompleted: document.getElementById('expand-completed'),
       viewAll: document.getElementById('view-all'),
     };
+
+    this.DOM_ELEMENTS.clearCompletedList.addEventListener('click', this.clearCompletedList.bind(this));
   }
 
   /**
@@ -145,6 +149,7 @@ export default class TaskListController {
     }
     this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
     this.DOM_ELEMENTS.completedList.style.display = 'none';
+    this.DOM_ELEMENTS.clearCompletedList.style.display = 'none';
     this.DOM_ELEMENTS.viewAll.style.display = 'inline';
     const width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     if (width > 1300) {
@@ -206,7 +211,7 @@ export default class TaskListController {
   }
 
   /**
-   * Hides the Completed task list if there are no completed tasks
+   * Hides the Completed task list (and clear all button) if there are no completed tasks
    */
   hideCompletedIfNoTasksExist() {
     // only if its not in current task view
@@ -214,8 +219,12 @@ export default class TaskListController {
       const hasCompletedTasks = sessionStorage.getItem('completedTasks') !== '0';
       if (hasCompletedTasks) {
         this.DOM_ELEMENTS.completedListTitle.style.display = 'flex';
+        if (this.completedIsExpanded) {
+          this.DOM_ELEMENTS.clearCompletedList.style.display = 'inline';
+        }
       } else {
         this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
+        this.DOM_ELEMENTS.clearCompletedList.style.display = 'none';
       }
     }
   }
@@ -344,12 +353,14 @@ export default class TaskListController {
     this.DOM_ELEMENTS.expandCompleted.style.tranform = 'rotate(180deg)';
     if (this.completedIsExpanded) {
       this.completedIsExpanded = false;
+      this.DOM_ELEMENTS.clearCompletedList.style.display = 'none';
       this.DOM_ELEMENTS.completedList.style.display = 'none';
       this.DOM_ELEMENTS.completedList.style.marginRight = '35px';
       this.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(0deg); -webkit-transform: rotate(0deg)';
       return;
     }
     this.completedIsExpanded = true;
+    this.DOM_ELEMENTS.clearCompletedList.style.display = 'inline';
     this.DOM_ELEMENTS.completedList.style.display = 'inline';
     this.DOM_ELEMENTS.completedList.style.marginRight = '40px';
     this.DOM_ELEMENTS.expandCompleted.style = 'transform:rotate(180deg); -webkit-transform: rotate(180deg)';
@@ -423,5 +434,16 @@ export default class TaskListController {
         this.showSelectedTask();
       }
     }
+  }
+
+  /**
+   * Clear completed list
+   */
+  clearCompletedList() {
+    if (localStorage.getItem('hideAlerts') === 'false' && !window.confirm('Clear Completed Tasks?')) return;
+    const CLChildren = Array.from(this.DOM_ELEMENTS.completedList.children);
+    CLChildren.forEach((element) => {
+      element.remove();
+    });
   }
 }
