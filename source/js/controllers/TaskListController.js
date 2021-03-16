@@ -40,6 +40,7 @@ export default class TaskListController {
       expandTaskList: document.getElementById('expand-task-list'),
       rightHalf: document.getElementById('right-half'),
       timerBox: document.getElementById('timer-box'),
+      leftHalf: document.getElementById('left-half'),
     };
 
     this.DOM_ELEMENTS.clearCompletedList.addEventListener('click', this.clearCompletedList.bind(this));
@@ -375,9 +376,11 @@ export default class TaskListController {
     // move timer to center
     this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
     this.DOM_ELEMENTS.timerBox.style.animationName = 'slideRight';
-    this.DOM_ELEMENTS.timerBox.style.left = '68%';
+    
     // change style of others after animations
     setTimeout(() => {
+      this.DOM_ELEMENTS.timerBox.id = 'timer-box-center';
+      this.DOM_ELEMENTS.leftHalf.style.width = '100%';
       this.DOM_ELEMENTS.expandTaskList.style.display = 'inline';
       this.DOM_ELEMENTS.rightHalf.style.display = 'none';
       document.getElementById('settings-icon').style.marginTop = '17px';
@@ -395,7 +398,8 @@ export default class TaskListController {
     this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
     this.DOM_ELEMENTS.timerBox.style.animationName = 'slideLeft';
     // reset styles
-    this.DOM_ELEMENTS.timerBox.style.left = '45%';
+    this.DOM_ELEMENTS.timerBox.id = 'timer-box';
+    this.DOM_ELEMENTS.leftHalf.style.width = '50%';
     this.DOM_ELEMENTS.expandTaskList.style.display = 'none';
     document.getElementById('settings-icon').style.marginTop = '10px';
   }
