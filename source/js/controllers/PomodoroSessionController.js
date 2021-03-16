@@ -352,6 +352,7 @@ export default class PomodoroSessionController {
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'none';
     this.showFullTaskList();
     this.idleAtWorkSession();
+    this.DOM_ELEMENTS.title.innerHTML = "Café Pomo";
   }
 
   /**

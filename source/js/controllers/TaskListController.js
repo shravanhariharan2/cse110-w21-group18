@@ -135,8 +135,7 @@ export default class TaskListController {
       this.hideCompletedIfNoTasksExist();
       if (this.numTasks === 0) {
         document.getElementById('distraction-button').style.display = "none";
-      }
-      else {
+      } else {
         document.getElementById('distraction-button').style.display = "block";
       }
     }

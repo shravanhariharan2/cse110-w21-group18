@@ -526,9 +526,3 @@ task-item:focus {
   border-width: 0;
   border-color: #026670;
 }
-
-@media all and (max-width:1300px) {
-#to-do-list-header {
-  margin-top: 50px;
-}
-}
