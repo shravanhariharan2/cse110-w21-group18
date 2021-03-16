@@ -110,6 +110,11 @@
   box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
   display: none;
 }
+
+#task-add-input:focus {
+  outline: none;
+}
+
 /* name input */
 #add-task-name{
   grid-area: name;
