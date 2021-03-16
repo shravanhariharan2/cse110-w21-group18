@@ -13,6 +13,7 @@ document.getElementById('collapse-task-list').addEventListener('click', TaskList
 document.getElementById('expand-task-list').addEventListener('click', TaskList.expandTaskList);
 document.getElementById('view-all').style.display = 'none';
 document.getElementById('completed-list').style.display = 'none';
+document.getElementById('clear-completed-list').style.display = 'none';
 
 document.addEventListener('DOMContentLoaded', TaskList.loadTasks);
 

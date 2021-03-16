@@ -4,6 +4,7 @@ import SettingsController from './controllers/SettingsController.js';
 import TaskListController from './controllers/TaskListController.js';
 import TimerController from './controllers/TimerController.js';
 import InfoController from './controllers/InfoController.js';
+import KeyboardController from './controllers/KeyboardController.js';
 import Constants from './constants/Constants.js';
 
 const Controllers = (() => {
@@ -13,6 +14,7 @@ const Controllers = (() => {
   let taskListController;
   let timerController;
   let infoController;
+  let keyboardController;
 
   return {
     timer() {
@@ -40,6 +42,10 @@ const Controllers = (() => {
     info() {
       if (!infoController) infoController = new InfoController();
       return infoController;
+    },
+    keyboard() {
+      if (!keyboardController) keyboardController = new KeyboardController();
+      return keyboardController;
     },
   };
 })();

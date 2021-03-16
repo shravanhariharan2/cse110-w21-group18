@@ -75,6 +75,12 @@
 								<label class="c1" for="hide-seconds">
 									<input id="hide-seconds" type="checkbox">Hide seconds on timer before 1 minute
 								</label>
+								<label class="c1" for="mute-audio">
+									<input id="mute-audio" type="checkbox">Mute audio notifications
+								</label>
+								<label class="c1" for="hide-alerts">
+									<input id="hide-alerts" type="checkbox">Hide confirmation alerts
+								</label>
 							</form>
 							<div id="settings-buttons">
 								<input type="button" id="cancel-button" value="Cancel">
@@ -168,11 +174,11 @@
 			</header>
 			<hr id="task-line-break">
 			<input type="button" id="add-task" value="Add Task" title="Add Tasks"></input>
-			<form id="task-add-input">
-				<input type="text" id="add-task-name" placeholder="Task Name" autocomplete="off">
-				<p id="expected">Expected Pomodoros:</p>
+			<form id="task-add-input" tabindex="10" onSubmit="return false;">
+				<input type="text" id="add-task-name" tabindex="10" placeholder="Task Name">
+				<p id="expected" >Expected Pomodoros:</p>
 				<img src="./media/icons/clock.jpg" id="clock-clip-art">
-				<select name="pomos" id="pomos">
+				<select name="pomos" id="pomos" tabindex="10">
 					<option value="1">1 (25 min)</option>
 					<option value="2">2 (50 min)</option>
 					<option value="3">3 (1hr 15min)</option>
@@ -182,9 +188,9 @@
 					<option value="7">7 (2hr 55min)</option>
 					<option value="8">8 (3hr 20min)</option>
 				</select>
-				<textarea id="add-task-description" placeholder="Add Notes"></textarea>
-				<input type="button" id="add-notes" value="Add Notes">
 				<input type="button" id="cancel-input" value="Cancel" title="Cancel Input"></input>
+				<input type="button" id="add-notes" tabindex="10" value="Add Notes">
+				<textarea id="add-task-description" tabindex="10" placeholder="Add Notes"></textarea>
 				<input type="button" id="save-task" value="Save">
 			</form>
 			<div id="to-do-list"></div>
@@ -193,7 +199,10 @@
 				<p id="completed-list-title">Completed Tasks</p>
 				<input id="expand-completed" type="image" title="Expand View" src="./media/icons/expand-icon.png">
 			</header>
-			<div id="completed-list"></div>
+			<div id ="completed-list-box">
+				<input type="button" id="clear-completed-list" value="Clear All" title="Clear All"></input>
+				<div id="completed-list"></div>
+			</div>
 		</div>	
 	</body>
 	<script type="module" src="js/index.js"></script>
@@ -210,6 +219,7 @@
 	<script type="module" src="js/scripts/tasks.js"></script>
 	<script type="module" src="js/scripts/settings.js"></script>
 	<script type="module" src="js/scripts/info.js"></script>
+	<script type="module" src="js/scripts/keyboard.js"></script>
 	<script type="module" src="js/components/TaskItem.js"></script>
 	<script type="module" src="js/components/TaskInput.js"></script>
 </html>

@@ -40,11 +40,12 @@
 
   #close-info {
     position: relative;
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 25px;
     top: 10px;
+    font-size: 17px;
     margin-left: 99%;
-    border-radius: 40%;
+    border-radius: 25%;
     border-style: none;
     background: #e65656ef;
     color:white;

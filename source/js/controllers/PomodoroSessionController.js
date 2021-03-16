@@ -47,6 +47,7 @@ export default class PomodoroSessionController {
     this.pauseBeforeBreak = localStorage.getItem('pauseBeforeBreak') === 'true';
     this.pauseAfterBreak = localStorage.getItem('pauseAfterBreak') === 'true';
     this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
+    this.hideAlerts = localStorage.getItem('hideAlerts') === 'true';
     this.timer.loadHideSecondsBoolean();
     if (this.isIdle) {
       this.setTime(this.currentSession);
@@ -104,6 +105,7 @@ export default class PomodoroSessionController {
       this.stopIdling();
       await this.performPomodoroSession();
     } else {
+      if (localStorage.getItem('hideAlerts') === 'false' && !window.confirm('End Session?')) return;
       this.resetToWorkSession();
       this.disableDistractionMarker();
     }

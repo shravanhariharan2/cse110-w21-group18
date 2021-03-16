@@ -215,9 +215,8 @@ class TaskItem extends HTMLElement {
 
   removeTask(event) {
     event.stopPropagation();
-    if (window.confirm('Delete Task?')) {
-      this.remove();
-    }
+    if (localStorage.getItem('hideAlerts') === 'false' && !window.confirm('Delete Task?')) return;
+    this.remove();
   }
 
   createCheckboxElement() {

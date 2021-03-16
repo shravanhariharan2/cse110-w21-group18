@@ -91,6 +91,9 @@ const HTML = `
                   <label class="c1" for="hide-seconds">
                     <input id="hide-seconds" type="checkbox">Hide seconds on timer before 1 minute
                   </label>
+                  <label class="c1" for="hide-alerts">
+                    <input id="hide-alerts" type="checkbox">Hide confirmation alerts
+                  </label>
                 </form>
                 <div id="settings-buttons">
                   <input type="button" id="cancel-button" value="Cancel">
@@ -137,7 +140,10 @@ const HTML = `
           <p id="completed-list-title">Completed Tasks</p>
           <input id="expand-completed" type="image" title="Expand View" src="./media/icons/expand-icon.png">
         </header>
-        <div id="completed-list"></div>
+        <div id ="completed-list-box">
+          <input type="button" id="clear-completed-list" value="Clear All" title="Clear All"></input>
+          <div id="completed-list"></div>
+        </div>
       </div>
     </body>
   </html>
