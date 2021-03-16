@@ -277,7 +277,6 @@ export default class TaskListController {
     newTask.setAttribute('id', this.numTasks);
     newTask.setAttribute('tabindex', 10);
     newTask.addEventListener('click', this.selectTask.bind(this, newTask));
-    newTask.markTaskAsUnSelected();
 
     this.DOM_ELEMENTS.taskList.style.display = 'none';
     this.DOM_ELEMENTS.taskList.appendChild(newTask);

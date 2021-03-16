@@ -10,6 +10,7 @@ class TaskItem extends HTMLElement {
     this.isSelected = false;
 
     this.onclick = () => this.toggleTaskSelection();
+    this.taskList = document.getElementById('to-do-list');
   }
 
   connectedCallback() {
@@ -174,7 +175,7 @@ class TaskItem extends HTMLElement {
       if (inputElement.id !== '1') {
         document.getElementById(inputElement.id - 1).before(newTask);
       } else {
-        document.getElementById('to-do-list').appendChild(newTask);
+        this.taskList.appendChild(newTask);
       }
     });
     inputElement.shadowRoot.querySelector('.save-task').addEventListener('click', (e) => {
@@ -199,7 +200,7 @@ class TaskItem extends HTMLElement {
       if (inputElement.id !== '1') {
         document.getElementById(inputElement.id - 1).before(newTask);
       } else {
-        document.getElementById('to-do-list').appendChild(newTask);
+        this.taskList.appendChild(newTask);
       }
     });
   }
@@ -237,7 +238,6 @@ class TaskItem extends HTMLElement {
     event.stopPropagation();
     const task = document.getElementById(taskId);
     const checkedElement = task.shadowRoot.querySelector('.checkbox');
-    const taskList = document.getElementById('to-do-list');
     const checkedList = document.getElementById('completed-list');
     if (checkedElement.checked === true) {
       if (this.isSelected) {
@@ -256,7 +256,7 @@ class TaskItem extends HTMLElement {
       this.onclick = () => this.toggleTaskSelection();
       this.setAttribute('isComplete', 'false');
       checkboxLabel.title = 'Mark as Done';
-      taskList.appendChild(this);
+      this.taskList.appendChild(this);
       this.setAttribute('draggable', true);
       this.setAttribute('class', 'dropzone');
       this.style.cursor = 'pointer';
@@ -285,7 +285,7 @@ class TaskItem extends HTMLElement {
    * Unselect the other tasks that is not the selectedElement
    */
   unselectOtherTasks(selectedElement) {
-    const children = Array.from(document.getElementById('to-do-list').children);
+    const children = Array.from(this.taskList.children);
     children.forEach((element) => {
       if (selectedElement !== element) {
         if (element.isSelected) {
