@@ -168,7 +168,6 @@ class TaskItem extends HTMLElement {
       if (inputElement.isSelected) {
         newTask.styleSelectedTask();
         TaskList.selectTask(newTask);
-        
       }
       inputElement.remove();
       // insert where it was before

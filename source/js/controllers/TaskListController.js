@@ -463,12 +463,11 @@ export default class TaskListController {
         this.selectedTask.markTaskAsUnSelected();
         this.selectedTask = null;
       }
-    } else if ( this.hasActiveSession && this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
+    } else if (this.hasActiveSession && this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
       // shows the next task if it is marked as completed and is in session
       this.autoSelectTask();
       if (this.selectedTask) {
         this.showSelectedTask();
-
       }
     }
   }
