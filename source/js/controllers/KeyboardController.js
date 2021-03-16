@@ -70,13 +70,6 @@ export default class KeyboardController {
   onKeyDown(event) {
     console.log(`focus index: ${this.focusIdx}`);
 
-<<<<<<< HEAD
-    if (this.isTimerInSession()) {
-      tabMutex = true;
-    }
-    // check for space, tab, or enter
-=======
->>>>>>> main
     switch (event.key) {
       case this.KEYS.spacebar:
         this.handleSpace();
