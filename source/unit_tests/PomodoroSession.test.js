@@ -68,6 +68,7 @@ test('Session resets to zero and timer idles after a long break', async () => {
 
 test('Stop resets the timer to the work session', () => {
   jest.useFakeTimers();
+  window.confirm = () => true;
   const pomoTest = getNewPomodoroInstance();
   // Start the timer
   pomoTest.toggleSession();
