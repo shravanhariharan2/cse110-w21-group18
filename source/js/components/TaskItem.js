@@ -1,4 +1,5 @@
 import { TaskStyles } from '../constants/Styles.js';
+import TaskList from '../scripts/tasks.js';
 
 class TaskItem extends HTMLElement {
   constructor() {
@@ -163,6 +164,12 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('id', taskObj.id);
       newTask.setAttribute('draggable', taskObj.draggable);
       newTask.setAttribute('distraction', taskObj.distraction);
+      newTask.addEventListener('click', TaskList.selectTask.bind(TaskList, newTask));
+      if (inputElement.isSelected) {
+        newTask.styleSelectedTask();
+        TaskList.selectTask(newTask);
+        
+      }
       inputElement.remove();
       // insert where it was before
       if (inputElement.id !== '1') {
@@ -182,7 +189,12 @@ class TaskItem extends HTMLElement {
       newTask.setAttribute('class', inputElement.getAttribute('class'));
       newTask.setAttribute('id', inputElement.id);
       newTask.setAttribute('draggable', inputElement.getAttribute('draggable'));
-      // newTask.setAttribute('distraction', inputElement.getAttribute('distraction'));
+      newTask.setAttribute('distraction', inputElement.getAttribute('distraction'));
+      newTask.addEventListener('click', TaskList.selectTask.bind(TaskList, newTask));
+      if (inputElement.isSelected) {
+        TaskList.selectTask(newTask);
+        newTask.styleSelectedTask();
+      }
       inputElement.remove();
       // insert where it was before
       if (inputElement.id !== '1') {
@@ -269,6 +281,20 @@ class TaskItem extends HTMLElement {
         this.markTaskAsSelected();
       }
     }
+  }
+
+  /**
+   * Unselect the other tasks that is not the selectedElement
+   */
+  unselectOtherTasks(selectedElement) {
+    const children = Array.from(document.getElementById('to-do-list').children);
+    children.forEach((element) => {
+      if (selectedElement !== element) {
+        if (element.isSelected) {
+          element.toggleTaskSelection();
+        }
+      }
+    });
   }
 
   /**

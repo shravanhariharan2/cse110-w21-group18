@@ -65,6 +65,7 @@ class TaskInput extends HTMLElement {
    * Update UI for when unselecting task
    */
   styleUnselectedTask() {
+    this.shadowRoot.querySelector('.task-input').style.border = TaskStyles.UNSELECTED_TASK_BORDER;
     this.shadowRoot.querySelector('.task-input').style.background = TaskStyles.UNSELECTED_TASK_BACKGROUND;
     this.shadowRoot.querySelector('.task-input').style.top = TaskStyles.UNSELECTED_TASK_TOP_OFFSET;
     this.shadowRoot.querySelector('.task-input').style.boxShadow = TaskStyles.BOX_SHADOW;

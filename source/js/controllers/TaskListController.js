@@ -137,7 +137,6 @@ export default class TaskListController {
    */
   showSelectedTask() {
     this.DOM_ELEMENTS.taskListTitle.innerText = 'Current Task';
-    this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
     this.cancelInput();
     const TLChildren = Array.from(this.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
@@ -148,7 +147,7 @@ export default class TaskListController {
       this.selectedTask.styleUnselectedTask();
       this.selectedTask.onclick = null;
       this.selectedTask.style.display = 'grid';
-      if (this.selectTask.shadowRoot) {
+      if (this.selectedTask.shadowRoot) {
         if (this.selectedTask.isExpanded === false) {
           this.selectedTask.shadowRoot.querySelector('.expand-button').click();
         }
@@ -160,6 +159,7 @@ export default class TaskListController {
     this.DOM_ELEMENTS.completedListTitle.style.display = 'none';
     this.DOM_ELEMENTS.completedList.style.display = 'none';
     this.DOM_ELEMENTS.viewAll.style.display = 'inline';
+    this.DOM_ELEMENTS.addTaskButton.style.display = 'none';
   }
 
   /**
@@ -266,6 +266,7 @@ export default class TaskListController {
     newTask.setAttribute('class', 'dropzone');
     newTask.setAttribute('id', this.numTasks);
     newTask.addEventListener('click', this.selectTask.bind(this, newTask));
+    newTask.markTaskAsUnSelected();
 
     this.DOM_ELEMENTS.taskList.style.display = 'none';
     this.DOM_ELEMENTS.taskList.appendChild(newTask);
@@ -462,12 +463,13 @@ export default class TaskListController {
         this.selectedTask.markTaskAsUnSelected();
         this.selectedTask = null;
       }
-    } else if (this.selectedTask === null && this.hasActiveSession
-      && this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
+    } else if ( this.hasActiveSession && this.DOM_ELEMENTS.addTaskButton.style.display === 'none') {
       // shows the next task if it is marked as completed and is in session
       this.autoSelectTask();
-      this.loadTasks();
-      this.showSelectedTask();
+      if (this.selectedTask) {
+        this.showSelectedTask();
+
+      }
     }
   }
 }

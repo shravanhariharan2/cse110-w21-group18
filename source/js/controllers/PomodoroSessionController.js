@@ -315,19 +315,19 @@ export default class PomodoroSessionController {
     TLChildren.forEach((element) => {
       element.style.display = 'grid';
       element.onclick = () => element.toggleTaskSelection();
-      if (this.taskList.selectedTask !== null) {
-        this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
-        if (this.taskList.selectedTask.isExpanded === true) {
-          this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
-        }
-      }
+      element.styleUnselectedTask();
     });
     const CLChildren = Array.from(this.taskList.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
       element.style.display = 'grid';
     });
+    this.taskList.loadTasks();
     if (this.taskList.selectedTask) {
       this.taskList.selectedTask.styleSelectedTask();
+      this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').style.display = 'block';
+      if (this.taskList.selectedTask.isExpanded === true) {
+        this.taskList.selectedTask.shadowRoot.querySelector('.expand-button').click();
+      }
     }
     this.taskList.DOM_ELEMENTS.completedListTitle.style.display = 'inline';
     if (this.taskList.completedIsExpanded) {
@@ -392,6 +392,7 @@ export default class PomodoroSessionController {
     this.numDistraction += 1;
     if (this.taskList.selectedTask) {
       this.taskList.selectedTask.incrementTaskDistraction();
+      this.taskList.updateStorage();
     }
   }
 }

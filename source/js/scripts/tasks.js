@@ -18,3 +18,5 @@ document.addEventListener('DOMContentLoaded', TaskList.loadTasks);
 
 TaskList.makeTasksDraggable();
 TaskList.hideCompletedIfNoTasksExist();
+
+export default TaskList;
