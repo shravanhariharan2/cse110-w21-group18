@@ -82,7 +82,7 @@ export default class KeyboardController {
     if (this.isTimerInSession()) {
       tabMutex = true;
     }
-    console.log('focus index:' + this.focusIdx);
+    console.log(`focus index:${this.focusIdx}`);
     // check for space, tab, or enter
     switch (event.key) {
       case this.KEYS.spacebar:
@@ -107,7 +107,6 @@ export default class KeyboardController {
         this.modDown();
         break;
       default:
-        if (this.kbMutex) return;
     }
   }
 
@@ -153,7 +152,7 @@ export default class KeyboardController {
     // if the current focus is not a task then it must be the add task button
     if (this.focusIdx === 0) {
       const isInputActive = this.getInputElements().includes(document.activeElement);
-      if(!isInputActive) {
+      if (!isInputActive) {
         try {
           this.unclickItems();
         } catch (e) {
@@ -188,7 +187,7 @@ export default class KeyboardController {
             break;
           default:
         }
-      } 
+      }
     } else {
       // collapse add task form if possible
       this.DOM_ELEMENTS.cancelInput.click();
@@ -241,14 +240,14 @@ export default class KeyboardController {
     if (mutex) return;
     if (this.focusIdx !== 0 || (this.focusIdx === 0 && this.isTimerInSession())) {
       event.preventDefault();
-      
+
       let shadow;
-      if(this.focusIdx === 0) {
+      if (this.focusIdx === 0) {
         shadow = this.DOM_ELEMENTS.taskList.children[0].shadowRoot;
       } else {
         shadow = this.DOM_ELEMENTS.taskList.children[this.focusIdx - 1].shadowRoot;
       }
-      
+
       const childNodes = Array.from(shadow.children);
       this.dprint(`shadowChildren: ${childNodes}`);
       // checkbox is the 3rd child
@@ -262,7 +261,7 @@ export default class KeyboardController {
   handleExpand(event, mutex) {
     if (mutex) return;
     // click the expansion label if shown
-    console.log('hi')
+    console.log('hi');
     if (this.DOM_ELEMENTS.expansionLabel.style.display && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none') {
       event.preventDefault();
       this.DOM_ELEMENTS.expansionLabel.click();
