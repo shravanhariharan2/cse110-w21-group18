@@ -364,6 +364,7 @@ class TaskListController {
       element.id = -elementPosition - 1;
     });
   }
+
   /**
    * Detects mobile screens
    */
@@ -384,7 +385,7 @@ class TaskListController {
     this.DOM_ELEMENTS.rightHalf.style.animationDuration = '1s';
     this.DOM_ELEMENTS.rightHalf.style.animationName = 'slideout';
     this.DOM_ELEMENTS.rightHalf.style.marginLeft = '2000px';
-  
+
     // change style of others after animations
     setTimeout(() => {
       this.DOM_ELEMENTS.timerBox.id = 'timer-box-center';
@@ -403,7 +404,7 @@ class TaskListController {
     this.DOM_ELEMENTS.rightHalf.style.animationDuration = '1s';
     this.DOM_ELEMENTS.rightHalf.style.animationName = 'slidein';
     this.DOM_ELEMENTS.rightHalf.style.marginLeft = 'initial';
-    
+
     if (!this.isMobile()) {
       this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
       this.DOM_ELEMENTS.timerBox.style.animationName = 'slideLeft';
