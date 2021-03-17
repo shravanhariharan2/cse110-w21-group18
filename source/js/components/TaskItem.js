@@ -129,18 +129,18 @@ class TaskItem extends HTMLElement {
     const taskGridTemplate = '"check taskName pomo" "notes notes notes" "distraction distraction distraction"';
     if (this.isComplete) {
       this.shadowRoot.querySelector('.edit-button').style.display = 'none';
-      this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = `'${taskGridTemplate} "remove remove remove"'`;
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '200px';
+      this.style.gridTemplateAreas = `'${taskGridTemplate} "remove remove remove"'`;
+      this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
     } else {
       this.shadowRoot.querySelector('.edit-button').style.display = 'inline';
-      this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
-      this.style.gridTemplateAreas = `'${taskGridTemplate} "remove remove edit"'`;
       this.shadowRoot.querySelector('.remove-button').style.marginLeft = '145px';
+      this.style.gridTemplateAreas = `'${taskGridTemplate} "remove remove edit"'`;
+      this.shadowRoot.querySelector('.remove-button').style.display = 'inline';
     }
     this.shadowRoot.querySelector('.notes').style.display = 'inline';
-    this.shadowRoot.querySelector('.distraction').style.display = 'inline';
     this.shadowRoot.querySelector('.distraction').style.textAlign = 'center';
+    this.shadowRoot.querySelector('.distraction').style.display = 'inline';
     this.isExpanded = true;
     button.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }

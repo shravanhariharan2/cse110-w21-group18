@@ -12,7 +12,7 @@ class InfoController {
     this.DOM_ELEMENTS.infoModal.style.display = 'none';
   }
 
-  /*
+  /** 
    * Opens info box UI
    */
   openInfo() {

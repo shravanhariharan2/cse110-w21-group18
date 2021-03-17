@@ -318,9 +318,9 @@ class PomodoroSessionController {
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'block';
     const TLChildren = Array.from(this.taskList.DOM_ELEMENTS.taskList.children);
     TLChildren.forEach((element) => {
-      element.style.display = 'grid';
       element.onclick = () => element.toggleTaskSelection();
       element.styleUnselectedTask();
+      element.style.display = 'grid';
     });
     const CLChildren = Array.from(this.taskList.DOM_ELEMENTS.completedList.children);
     CLChildren.forEach((element) => {
