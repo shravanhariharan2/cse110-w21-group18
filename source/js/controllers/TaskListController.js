@@ -2,7 +2,7 @@
  * Implements the TaskList class. This class is a controller for the task list which
  * holds all the task items and the to-do lists and completed lists
  */
-export default class TaskListController {
+class TaskListController {
   constructor() {
     this.numTasks = 0;
     this.selectedTask = null;
@@ -505,3 +505,5 @@ export default class TaskListController {
     });
   }
 }
+
+export default TaskListController;

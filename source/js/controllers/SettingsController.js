@@ -1,4 +1,4 @@
-export default class SettingsController {
+class SettingsController {
   constructor(pomodoroSession) {
     this.pomodoroSession = pomodoroSession;
 
@@ -183,3 +183,5 @@ export default class SettingsController {
     }
   }
 }
+
+export default SettingsController;

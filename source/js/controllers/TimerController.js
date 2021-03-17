@@ -1,7 +1,7 @@
 /**
  * Implements a basic timer with start and end capabilities
  */
-export default class TimerController {
+class TimerController {
   constructor(clockSpeed) {
     this.minutes = 0;
     this.seconds = 0;
@@ -147,3 +147,5 @@ export default class TimerController {
     this.updateTimeUI();
   }
 }
+
+export default TimerController;

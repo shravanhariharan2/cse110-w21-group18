@@ -7,7 +7,7 @@
 *  - right arrow: mark current task as completed
 *  - +/=: expand/hide task list during work session
 */
-export default class KeyboardController {
+class KeyboardController {
   constructor() {
     this.DEBUG = true;
     this.DOM_ELEMENTS = {
@@ -356,3 +356,5 @@ export default class KeyboardController {
     }
   }
 }
+
+export default KeyboardController;

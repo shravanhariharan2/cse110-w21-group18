@@ -6,7 +6,7 @@ import { TimerStyles } from '../constants/Styles.js';
  * Implements the PomodoroSessionController class. This class is a controller for the timer
  * object which keeps track of pomodoro session durations
  */
-export default class PomodoroSessionController {
+class PomodoroSessionController {
   constructor(timer, taskList, notifications) {
     this.timer = timer;
     this.taskList = taskList;
@@ -402,3 +402,5 @@ export default class PomodoroSessionController {
     }
   }
 }
+
+export default PomodoroSessionController;
