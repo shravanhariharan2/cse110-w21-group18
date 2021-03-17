@@ -399,12 +399,8 @@ class TaskListController {
     this.DOM_ELEMENTS.rightHalf.style.animationName = 'slidein';
     this.DOM_ELEMENTS.rightHalf.style.marginLeft = 'initial';
 
-<<<<<<< HEAD
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (!isMobile) {
-=======
-    if (!this.isMobile()) {
->>>>>>> 95eaf952fb263a24a9ee8ad6c4ab6f0aba341e77
       this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
       this.DOM_ELEMENTS.timerBox.style.animationName = 'slideLeft';
     }
