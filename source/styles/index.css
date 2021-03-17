@@ -256,7 +256,7 @@ input[type=button]:active, button:active {
     box-shadow: 0 12px 24px 0 rgba(0, 0, 0, 0.22), 0 12px 40px 0 rgba(0, 0, 0, 0.22);
   }
   #left-half {
-    width: 100% !important;
+    width: 100%;
   }
   #right-half {
     width: 100%;
