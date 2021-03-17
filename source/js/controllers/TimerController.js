@@ -31,7 +31,7 @@ export default class TimerController {
 
   /**
    * Sets the amount of time left on the timer
-   * @param {int} t [the time to set in minutes]
+   * @param {number} t [the time to set in minutes]
    */
   setTime(timeInMinutes) {
     this.minutes = timeInMinutes;
@@ -100,6 +100,7 @@ export default class TimerController {
 
   /**
    * Performs a single timer counting operation
+   * @param {Promise} resolve the promise to be resolved when the timer finishes
    */
   step(resolve) {
     if (this.seconds <= 0) {
