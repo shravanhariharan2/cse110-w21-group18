@@ -1,3 +1,7 @@
+/**
+ * Serves as a controller for serving the functionality of
+ * opening and closing the info popup
+ */
 export default class InfoController {
   constructor() {
     this.openInfo = this.openInfo.bind(this);
