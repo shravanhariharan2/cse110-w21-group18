@@ -15,8 +15,8 @@ export default class NotificationController {
   /**
   * Notifies the user of session end through audio and browser (if allowed)
   * notifications
-  * @param {int} currentState an integer representing the state the user is in
-  * @param {int} sessionNumber an integer representing the worksessions finished
+  * @param {number} currentState an integer representing the state the user is in
+  * @param {number} sessionNumber an integer representing the worksessions finished
   */
   notifyUser(currentState, sessionNumber, numSessionsBeforeLongBreak) {
     if (!NotificationController.hasAudioMuted()) {
@@ -27,18 +27,27 @@ export default class NotificationController {
     }
   }
 
+  /**
+   * Checks if the user has set the option for muting audio
+   * @returns {boolean}
+   */
   static hasAudioMuted() {
     return localStorage.getItem('muteAudio') === 'true';
   }
 
+  /**
+   * Notifies the user via audio sound
+   */
   audioNotify() {
     this.DOM_ELEMENTS.alarm.play();
   }
 
   /**
    * Creates a browser notification depending on next session
-   * @param {int} currentState [an integer representing the state the user is in]
-   * @param {int} sessionNumber [an integer representing the worksessions finished]
+   * @param {number} currentState an integer representing the state the user is in
+   * @param {number} sessionNumber an integer representing the work sessions finished
+   * @param {number} numSessionsBeforeLongBreak an integer representing the number of work sessions
+   * before a long break
    */
   static browserNotify(currentState, sessionNumber, numSessionsBeforeLongBreak) {
     const notificationTitle = NotificationController.createNotificationTitle(currentState);
@@ -49,7 +58,7 @@ export default class NotificationController {
 
   /**
    * Creates the title for browser notification
-   * @param {int} currentState [an integer representing the state the user is in]
+   * @param {number} currentState [an integer representing the state the user is in]
    */
   static createNotificationTitle(currentState) {
     let notificationTitle = DisplayMessages.NOTIFICATION_HEADER;
@@ -65,8 +74,10 @@ export default class NotificationController {
 
   /**
    * Creates the body for browser notification
-   * @param {int} currentState [an integer representing the state the user is in]
-   * @param {int} sessionNumber [an integer representing the worksessions finished]
+   * @param {number} currentState an integer representing the state the user is in
+   * @param {number} sessionNumber an integer representing the worksessions finished
+   * @param {number} numSessionsBeforeLongBreak an integer representing the number of work sessions
+   * before a long break
    */
   static createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak) {
     if (currentState === PomodoroSessionStates.WORK) {

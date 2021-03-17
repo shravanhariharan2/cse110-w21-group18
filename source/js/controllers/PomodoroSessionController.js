@@ -115,7 +115,7 @@ export default class PomodoroSessionController {
    * Performs a pomodoro session based on the current session type. If the session
    * is a work session, it will perform the work session and idle if needed, otherwise
    * performing either the short or long break sessions
-   * @returns void
+   * @returns {void}
    */
   async performPomodoroSession() {
     this.numDistraction = 0;

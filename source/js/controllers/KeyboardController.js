@@ -235,7 +235,7 @@ export default class KeyboardController {
 
       const childNodes = Array.from(shadow.children);
       this.dprint(`shadowChildren: ${childNodes}`);
-      
+
       // checkbox is the 3rd child
       childNodes[2].click();
       if (this.DOM_ELEMENTS.taskList.children.length === 0 || this.DOM_ELEMENTS.taskList.children.length === 1) {
@@ -321,7 +321,7 @@ export default class KeyboardController {
 
   /**
    * Gets all HTML elements that are used inside a task list input
-   * @returns List of all Elements that are used in task inputs
+   * @returns {Element[]}
    */
   getInputElements() {
     return [
@@ -338,7 +338,7 @@ export default class KeyboardController {
 
   /**
    * Checks if the timer is currently running
-   * @returns True if the timer is in session else false
+   * @returns {boolean}
    */
   isTimerInSession() {
     return this.DOM_ELEMENTS.expansionLabel.style.display
