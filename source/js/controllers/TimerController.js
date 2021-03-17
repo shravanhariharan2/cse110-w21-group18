@@ -1,5 +1,3 @@
-import Constants from '../constants/Constants.js';
-
 /**
  * Implements a basic timer with start and end capabilities
  */
@@ -24,6 +22,9 @@ export default class TimerController {
     this.updateTimeUI = this.updateTimeUI.bind(this);
   }
 
+  /**
+   * Loads the hideSeconds boolean from storage into instance
+   */
   loadHideSecondsBoolean() {
     this.hideSeconds = localStorage.getItem('hideSeconds') === 'true';
   }
@@ -38,6 +39,9 @@ export default class TimerController {
     this.updateTimeUI();
   }
 
+  /**
+   * Updates the timer time in all locations where the time is displayed
+   */
   updateTimeUI() {
     this.updateTimerTime();
     this.updateTitleTime();
@@ -50,10 +54,17 @@ export default class TimerController {
     this.DOM_ELEMENTS.time.innerHTML = this.getTimerTimeString();
   }
 
+  /**
+   * Re-renders the title time display
+   */
   updateTitleTime() {
     this.DOM_ELEMENTS.title.innerHTML = this.getTitleTimeString();
   }
 
+  /**
+   * Gets a padded string representing the current time and the settings the user has specified
+   * @returns {string} the padded time
+   */
   getTimerTimeString() {
     const paddedMinuteString = this.minutes.toString().padStart(2, '0');
     const paddedSecondString = this.seconds.toString().padStart(2, '0');
@@ -66,17 +77,24 @@ export default class TimerController {
     return timeString;
   }
 
+  /**
+   * Gets a padded string representing the current time to be displayed on the title
+   * based on the settings the user has specified
+   * @returns {string} the padded time
+   */
   getTitleTimeString() {
     const paddedMinuteString = this.minutes.toString().padStart(2, '0');
     const paddedSecondString = this.seconds.toString().padStart(2, '0');
     let timeString;
-    if (this.hideSeconds && this.minutes > 0) {
+    const isShorthandTime = this.hideSeconds && this.minutes > 0;
+    if (isShorthandTime) {
       timeString = `${paddedMinuteString}m`;
     } else {
       timeString = `${paddedMinuteString}:${paddedSecondString}`;
     }
-    const currentTitleString = this.DOM_ELEMENTS.title.innerHTML;
-    const titleTimeString = `${timeString} - ${currentTitleString.slice(Constants.TIME_PAD_SIZE)}`;
+    const currentTitleArr = this.DOM_ELEMENTS.title.innerHTML.split(' ');
+    const titleWords = currentTitleArr.slice(currentTitleArr.length - 2);
+    const titleTimeString = `${timeString} - ${titleWords[0]} ${titleWords[1]}`;
     return titleTimeString;
   }
 
