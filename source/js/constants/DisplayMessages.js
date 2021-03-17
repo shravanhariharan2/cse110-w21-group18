@@ -1,5 +1,5 @@
 const DisplayMessages = {
-  NOTIFICATION_HEADER: 'Pomodoro Timer - ',
+  NOTIFICATION_HEADER: 'Café Pomo - ',
 
   WORK_SESSION_COMPLETE: 'Work session complete.',
   SHORT_BREAK_COMPLETE: 'Short break complete.',
