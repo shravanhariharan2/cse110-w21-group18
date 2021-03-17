@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>TaskInput - Documentation</title>
+    <title>TimerController - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">TaskInput</h1>
+    <h1 class="page-title">TimerController</h1>
     
 
     
@@ -42,10 +42,10 @@
 <header>
     
         <h2>
-        TaskInput
+        TimerController
         </h2>
         
-            <div class="class-description">HTML web component for the task input UI to be displayed inside the task list</div>
+            <div class="class-description">Implements a basic timer with start and end capabilities</div>
         
     
 </header>
@@ -60,7 +60,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="TaskInput"><span class="type-signature"></span>new TaskInput<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TimerController"><span class="type-signature"></span>new TimerController<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -99,7 +99,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line9">line 9</a>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line5">line 5</a>
     </li></ul></dd>
     
 
@@ -157,14 +157,14 @@
 
     
 
-    <h4 class="name" id="markTaskAsSelected"><span class="type-signature"></span>markTaskAsSelected<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="getTimerTimeString"><span class="type-signature"></span>getTimerTimeString<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
 
     
 
 
 
 <div class="description">
-    Set isSelected instance variable to true and update UI
+    Gets a padded string representing the current time and the settings the user has specified
 </div>
 
 
@@ -200,7 +200,224 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line42">line 42</a>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>string</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    the padded time
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="getTitleTimeString"><span class="type-signature"></span>getTitleTimeString<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Gets a padded string representing the current time to be displayed on the title
+based on the settings the user has specified
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line85">line 85</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>string</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    the padded time
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="loadHideSecondsBoolean"><span class="type-signature"></span>loadHideSecondsBoolean<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Loads the hideSeconds boolean from storage into instance
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -240,14 +457,14 @@
 
     
 
-    <h4 class="name" id="markTaskAsUnSelected"><span class="type-signature"></span>markTaskAsUnSelected<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="prepareTimerForStart"><span class="type-signature"></span>prepareTimerForStart<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Set isSelected instance variable to false and update UI
+    Preps the timer to start by setting initial time and re-rendering DOM
 </div>
 
 
@@ -283,7 +500,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line51">line 51</a>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -323,14 +540,14 @@
 
     
 
-    <h4 class="name" id="styleSelectedTask"><span class="type-signature"></span>styleSelectedTask<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="run"><span class="type-signature">(async) </span>run<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Update UI for when selecting task
+    Runs the timer
 </div>
 
 
@@ -366,7 +583,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line59">line 59</a>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line121">line 121</a>
     </li></ul></dd>
     
 
@@ -406,14 +623,14 @@
 
     
 
-    <h4 class="name" id="styleUnselectedTask"><span class="type-signature"></span>styleUnselectedTask<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="setTime"><span class="type-signature"></span>setTime<span class="signature">(t)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Update UI for when unselecting task
+    Sets the amount of time left on the timer
 </div>
 
 
@@ -449,7 +666,277 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line70">line 70</a>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>t</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>number</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                [the time to set in minutes]
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="step"><span class="type-signature"></span>step<span class="signature">(resolve)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Performs a single timer counting operation
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line105">line 105</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>resolve</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Promise</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                the promise to be resolved when the timer finishes
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="stop"><span class="type-signature"></span>stop<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Stops the timer completely
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line144">line 144</a>
     </li></ul></dd>
     
 
@@ -489,14 +976,14 @@
 
     
 
-    <h4 class="name" id="toggleTaskSelection"><span class="type-signature"></span>toggleTaskSelection<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateTimerTime"><span class="type-signature"></span>updateTimerTime<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Select/unselect task
+    Re-renders the timer time display
 </div>
 
 
@@ -532,7 +1019,173 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line31">line 31</a>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="updateTimeUI"><span class="type-signature"></span>updateTimeUI<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Updates the timer time in all locations where the time is displayed
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="updateTitleTime"><span class="type-signature"></span>updateTitleTime<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Re-renders the title time display
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line60">line 60</a>
     </li></ul></dd>
     
 

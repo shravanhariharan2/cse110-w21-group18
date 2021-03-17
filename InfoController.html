@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>TaskInput - Documentation</title>
+    <title>InfoController - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">TaskInput</h1>
+    <h1 class="page-title">InfoController</h1>
     
 
     
@@ -42,10 +42,11 @@
 <header>
     
         <h2>
-        TaskInput
+        InfoController
         </h2>
         
-            <div class="class-description">HTML web component for the task input UI to be displayed inside the task list</div>
+            <div class="class-description">Serves as a controller for serving the functionality of
+opening and closing the info popup</div>
         
     
 </header>
@@ -60,7 +61,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="TaskInput"><span class="type-signature"></span>new TaskInput<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="InfoController"><span class="type-signature"></span>new InfoController<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -99,7 +100,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line9">line 9</a>
+        <a href="controllers_InfoController.js.html">controllers/InfoController.js</a>, <a href="controllers_InfoController.js.html#line6">line 6</a>
     </li></ul></dd>
     
 
@@ -157,14 +158,14 @@
 
     
 
-    <h4 class="name" id="markTaskAsSelected"><span class="type-signature"></span>markTaskAsSelected<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="closeInfo"><span class="type-signature"></span>closeInfo<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Set isSelected instance variable to true and update UI
+    Closes info box UI
 </div>
 
 
@@ -200,339 +201,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line42">line 42</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="markTaskAsUnSelected"><span class="type-signature"></span>markTaskAsUnSelected<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Set isSelected instance variable to false and update UI
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line51">line 51</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="styleSelectedTask"><span class="type-signature"></span>styleSelectedTask<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Update UI for when selecting task
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line59">line 59</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="styleUnselectedTask"><span class="type-signature"></span>styleUnselectedTask<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Update UI for when unselecting task
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line70">line 70</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="toggleTaskSelection"><span class="type-signature"></span>toggleTaskSelection<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    Select/unselect task
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line31">line 31</a>
+        <a href="controllers_InfoController.js.html">controllers/InfoController.js</a>, <a href="controllers_InfoController.js.html#line25">line 25</a>
     </li></ul></dd>
     
 

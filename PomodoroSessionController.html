@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>TaskInput - Documentation</title>
+    <title>PomodoroSessionController - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">TaskInput</h1>
+    <h1 class="page-title">PomodoroSessionController</h1>
     
 
     
@@ -42,10 +42,11 @@
 <header>
     
         <h2>
-        TaskInput
+        PomodoroSessionController
         </h2>
         
-            <div class="class-description">HTML web component for the task input UI to be displayed inside the task list</div>
+            <div class="class-description">Implements the PomodoroSessionController class. This class is a controller for the timer
+object which keeps track of pomodoro session durations</div>
         
     
 </header>
@@ -60,7 +61,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="TaskInput"><span class="type-signature"></span>new TaskInput<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="PomodoroSessionController"><span class="type-signature"></span>new PomodoroSessionController<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -99,7 +100,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line9">line 9</a>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -157,14 +158,14 @@
 
     
 
-    <h4 class="name" id="markTaskAsSelected"><span class="type-signature"></span>markTaskAsSelected<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="disableDistractionMarker"><span class="type-signature"></span>disableDistractionMarker<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Set isSelected instance variable to true and update UI
+    Disable the distraction marker to log distractions
 </div>
 
 
@@ -200,7 +201,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line42">line 42</a>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line381">line 381</a>
     </li></ul></dd>
     
 
@@ -240,14 +241,14 @@
 
     
 
-    <h4 class="name" id="markTaskAsUnSelected"><span class="type-signature"></span>markTaskAsUnSelected<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="enableDistractionMarker"><span class="type-signature"></span>enableDistractionMarker<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Set isSelected instance variable to false and update UI
+    Enable the distraction marker to log distractions
 </div>
 
 
@@ -283,7 +284,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line51">line 51</a>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line389">line 389</a>
     </li></ul></dd>
     
 
@@ -323,14 +324,14 @@
 
     
 
-    <h4 class="name" id="styleSelectedTask"><span class="type-signature"></span>styleSelectedTask<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="idle"><span class="type-signature"></span>idle<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Update UI for when selecting task
+    Sets the timer state to idle and changes the button to 'Start'
 </div>
 
 
@@ -366,7 +367,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line59">line 59</a>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line227">line 227</a>
     </li></ul></dd>
     
 
@@ -406,14 +407,15 @@
 
     
 
-    <h4 class="name" id="styleUnselectedTask"><span class="type-signature"></span>styleUnselectedTask<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="idleAtWorkSession"><span class="type-signature"></span>idleAtWorkSession<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Update UI for when unselecting task
+    Sets the session state to idle. The session type will be on work session and
+the timer will be idle at the starting time
 </div>
 
 
@@ -449,7 +451,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line70">line 70</a>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line363">line 363</a>
     </li></ul></dd>
     
 
@@ -489,14 +491,14 @@
 
     
 
-    <h4 class="name" id="toggleTaskSelection"><span class="type-signature"></span>toggleTaskSelection<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="incrementDistraction"><span class="type-signature"></span>incrementDistraction<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    Select/unselect task
+    Increment distractions for the session and selected task
 </div>
 
 
@@ -532,7 +534,2068 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="components_TaskInput.js.html">components/TaskInput.js</a>, <a href="components_TaskInput.js.html#line31">line 31</a>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line397">line 397</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="loadTimerSettings"><span class="type-signature"></span>loadTimerSettings<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Loads the session config from browser storage
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="performLongBreakSession"><span class="type-signature">(async) </span>performLongBreakSession<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Performs a long break session. This routine runs the timer until completion,
+where it then sets the session to work, and idles if requested by the user
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line168">line 168</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="performPomodoroSession"><span class="type-signature">(async) </span>performPomodoroSession<span class="signature">()</span><span class="type-signature"> &rarr; {void}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Performs a pomodoro session based on the current session type. If the session
+is a work session, it will perform the work session and idle if needed, otherwise
+performing either the short or long break sessions
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>void</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="performShortBreakSession"><span class="type-signature">(async) </span>performShortBreakSession<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Performs a short break session. This routine runs the timer until completion,
+where it then sets the session to work, and idles if requested by the user
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line154">line 154</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="performWorkSession"><span class="type-signature">(async) </span>performWorkSession<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Performs a work session. This routine runs the timer until completion,
+where it then sets the session to either short or long break depending
+on session count, and idles if requested by the user
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line138">line 138</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="resetToWorkSession"><span class="type-signature"></span>resetToWorkSession<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Resets the timer to the starting work session state
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line348">line 348</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="runLongBreak"><span class="type-signature">(async) </span>runLongBreak<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Runs a long break session, resetting the session count after completion
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line215">line 215</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="runShortBreak"><span class="type-signature">(async) </span>runShortBreak<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Runs a short break session
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line204">line 204</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="runWorkSession"><span class="type-signature">(async) </span>runWorkSession<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Runs a work session, incrementing the session count after completion
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line181">line 181</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="setSession"><span class="type-signature"></span>setSession<span class="signature">(sessionType)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Sets the session type of the timer and restyles timer
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line256">line 256</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sessionType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>number</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                The type of session to set
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="setSessionTimeAndTitle"><span class="type-signature"></span>setSessionTimeAndTitle<span class="signature">(sessionType)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Sets the timer UI style and time based on session type
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line246">line 246</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sessionType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>number</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                The type of session to set
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="setTime"><span class="type-signature"></span>setTime<span class="signature">(sessionType)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Sets the timer time based on the session type
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line265">line 265</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sessionType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>number</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                The type of session to set the timer to
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="setTitle"><span class="type-signature"></span>setTitle<span class="signature">(sessionType)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Sets the title text based on session type
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line279">line 279</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sessionType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>number</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                The type of session to be displayed on the title
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="showFullTaskList"><span class="type-signature"></span>showFullTaskList<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Displays full taskList
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line315">line 315</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="stopIdling"><span class="type-signature"></span>stopIdling<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Sets the timer state to active and changes the button to 'Stop'
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line236">line 236</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="styleTimerForLongBreak"><span class="type-signature"></span>styleTimerForLongBreak<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Styles the timer for long break session
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line93">line 93</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="styleTimerForShortBreak"><span class="type-signature"></span>styleTimerForShortBreak<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Styles the timer for short break session
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line83">line 83</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="styleTimerForWorkSession"><span class="type-signature"></span>styleTimerForWorkSession<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Styles the timer for work session
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line73">line 73</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="styleTimerUI"><span class="type-signature"></span>styleTimerUI<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Re-renders the timer DOM elements and styles
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line60">line 60</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="toggleSession"><span class="type-signature">(async) </span>toggleSession<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Links the timer button to the functionality
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="updateTaskList"><span class="type-signature"></span>updateTaskList<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Update the task-list if not empty
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line371">line 371</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="viewAll"><span class="type-signature"></span>viewAll<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Shows the full task list by button
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line292">line 292</a>
     </li></ul></dd>
     
 
