@@ -12,12 +12,12 @@
 }
 #page-title {
   position: absolute;
-  font-size: 120px;
+  font-size: 130px;
   font-weight: bold;
   text-align: center;
   width: 100%;
   -webkit-text-stroke-width: 0.5px;
-  -webkit-text-stroke-color: #e9a77ef1;
+  -webkit-text-stroke-color: #cf8950f1;
   color: #e9a77e00;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   margin-top: 50px;
@@ -176,6 +176,7 @@ input[type=button]:active, button:active {
   border-width: 0;
   border-color: #026670;
   cursor: pointer;
+  text-align: center;
 }
 #collapse-task-list:active {
   margin-top: 10px;
@@ -215,7 +216,7 @@ input[type=button]:active, button:active {
   top: auto;
   background: #ffffff;
   margin: 50px auto;
-  margin-top: 180px;
+  margin-top: 200px;
   width: 30%;
   min-width: 550px;
   max-width: 700px;
@@ -305,4 +306,3 @@ input[type=button]:active, button:active {
     left: 45%;
   }
 }
-
