@@ -53,6 +53,7 @@ export default class NotificationController {
     const notificationTitle = NotificationController.createNotificationTitle(currentState);
     const notificationBody = NotificationController
       .createNotificationBody(currentState, sessionNumber, numSessionsBeforeLongBreak);
+    notificationBody.icon = './media/icons/cafe-icon.png';
     new Notification(notificationTitle, notificationBody);
   }
 

@@ -192,6 +192,7 @@ export default class PomodoroSessionController {
     this.taskList.DOM_ELEMENTS.addTaskButton.style.display = 'none';
     this.enableDistractionMarker();
     await this.timer.run();
+    this.disableDistractionMarker();
     this.sessionNumber += 1;
     this.updateTaskList();
     this.notifications.notifyUser(this.currentSession, this.sessionNumber);
@@ -215,9 +216,9 @@ export default class PomodoroSessionController {
     this.setSessionTimeAndTitle(PomodoroSessions.LONG_BREAK);
     this.taskList.hasActiveSession = false;
     this.showFullTaskList();
+    this.sessionNumber = 0;
     await this.timer.run();
     this.notifications.notifyUser(this.currentSession, this.sessionNumber);
-    this.sessionNumber = 0;
   }
 
   /**
