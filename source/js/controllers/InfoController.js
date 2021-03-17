@@ -28,4 +28,3 @@ class InfoController {
 }
 
 export default InfoController;
- 
