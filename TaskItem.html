@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>exports - Documentation</title>
+    <title>TaskItem - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">exports</h1>
+    <h1 class="page-title">TaskItem</h1>
     
 
     
@@ -42,11 +42,10 @@
 <header>
     
         <h2>
-        exports
+        TaskItem
         </h2>
         
-            <div class="class-description">Serves as a controller for serving the functionality of
-opening and closing the info popup</div>
+            <div class="class-description">HTML web component for a task item to be displayed inside the task list</div>
         
     
 </header>
@@ -61,7 +60,7 @@ opening and closing the info popup</div>
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="TaskItem"><span class="type-signature"></span>new TaskItem<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -100,7 +99,7 @@ opening and closing the info popup</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_InfoController.js.html">controllers/InfoController.js</a>, <a href="controllers_InfoController.js.html#line6">line 6</a>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -150,50 +149,1341 @@ opening and closing the info popup</div>
     
 
     
+        <h3 class="subsection-title">Methods</h3>
 
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        exports
-        </h2>
         
-            <div class="class-description">This class initializes EventListeners that handles specific key presses.
-Keys Currently Bound:
- - enter: interact with tasks or addTask button
- - tab: loop through the list of tasks and the add task button
- - space: start/end the timer (restricted when editing text fields)
- - right arrow: mark current task as completed
- - +/=: expand/hide task list during work session</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
+            
 <div class="section-method">
 
     
-    <h2>Constructor</h2>
+
+    <h4 class="name" id="allowEditing"><span class="type-signature"></span>allowEditing<span class="signature">(event)</span><span class="type-signature"></span></h4>
+
     
 
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">()</span><span class="type-signature"></span></h4>
+
+
+<div class="description">
+    Allows a task to be edited onclick
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line165">line 165</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Event</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                the onclick event for editing a taks
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="createCheckboxElement"><span class="type-signature"></span>createCheckboxElement<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Creates the checkbox element for task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line276">line 276</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    the checkbox element
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="createDistractionElement"><span class="type-signature"></span>createDistractionElement<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Creates the distraction count element for task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    the element for the task distraction count
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="createEditButtonElement"><span class="type-signature"></span>createEditButtonElement<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Creates the edit button element for task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line152">line 152</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    the element for the task distraction count
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="createExpandButtonElement"><span class="type-signature"></span>createExpandButtonElement<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Creates the expand button element for task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line101">line 101</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    the expand button element
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="createNameElement"><span class="type-signature"></span>createNameElement<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Creates the name element for task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line57">line 57</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    the element for the task name
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="createNotesElement"><span class="type-signature"></span>createNotesElement<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Creates the notes element for task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    the element for the task notes
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="createPomoProgressElement"><span class="type-signature"></span>createPomoProgressElement<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Creates the progress/estimate element for task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    the element for the task progress
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="createRemoveButtonElement"><span class="type-signature"></span>createRemoveButtonElement<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Creates the remove button element for task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line252">line 252</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    the remove button element
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="displayButtons"><span class="type-signature"></span>displayButtons<span class="signature">(button, event)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Displays the buttons of the task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line117">line 117</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>button</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>HTMLElement</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                the expand button to be displayed
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Event</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                the event triggered when clicking expand
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    void
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="incrementTaskDistraction"><span class="type-signature"></span>incrementTaskDistraction<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Increment task distraction attribute
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line417">line 417</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="incrementTaskProgressCount"><span class="type-signature"></span>incrementTaskProgressCount<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Increments the progress count of the task item
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line396">line 396</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="loadDOMElements"><span class="type-signature"></span>loadDOMElements<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Loads all dependent DOM elements into the shadow DOM
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="markTaskAsComplete"><span class="type-signature"></span>markTaskAsComplete<span class="signature">(taskId, checkboxLabel, event)</span><span class="type-signature"></span></h4>
 
     
 
@@ -232,7 +1522,7 @@ Keys Currently Bound:
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_KeyboardController.js.html">controllers/KeyboardController.js</a>, <a href="controllers_KeyboardController.js.html#line11">line 11</a>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line296">line 296</a>
     </li></ul></dd>
     
 
@@ -251,6 +1541,110 @@ Keys Currently Bound:
 
 
 
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>taskId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>number</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                the id of the current task
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>checkboxLabel</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>HTMLLabelElement</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                the checkbox element
+                
+            </td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Event</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                the onclick event
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
 
 
 
@@ -266,65 +1660,21 @@ Keys Currently Bound:
 
 
 </div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        exports
-        </h2>
         
-            <div class="class-description">Implements the NotificationService class. This class is a controller for browser
-and audio notifications</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
+            
 <div class="section-method">
 
     
-    <h2>Constructor</h2>
-    
 
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="markTaskAsSelected"><span class="type-signature"></span>markTaskAsSelected<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    Set isSelected instance variable to true and update UI
+</div>
 
 
 
@@ -359,7 +1709,7 @@ and audio notifications</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_NotificationController.js.html">controllers/NotificationController.js</a>, <a href="controllers_NotificationController.js.html#line9">line 9</a>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line360">line 360</a>
     </li></ul></dd>
     
 
@@ -393,65 +1743,21 @@ and audio notifications</div>
 
 
 </div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        exports
-        </h2>
         
-            <div class="class-description">Implements the PomodoroSessionController class. This class is a controller for the timer
-object which keeps track of pomodoro session durations</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
+            
 <div class="section-method">
 
     
-    <h2>Constructor</h2>
-    
 
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="markTaskAsUnSelected"><span class="type-signature"></span>markTaskAsUnSelected<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    Set isSelected instance variable to false and update UI
+</div>
 
 
 
@@ -486,7 +1792,7 @@ object which keeps track of pomodoro session durations</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_PomodoroSessionController.js.html">controllers/PomodoroSessionController.js</a>, <a href="controllers_PomodoroSessionController.js.html#line10">line 10</a>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line368">line 368</a>
     </li></ul></dd>
     
 
@@ -520,65 +1826,21 @@ object which keeps track of pomodoro session durations</div>
 
 
 </div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        exports
-        </h2>
         
-            <div class="class-description">Implements the TaskList class. This class is a controller for the task list which
-holds all the task items and the to-do lists and completed lists</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
+            
 <div class="section-method">
 
     
-    <h2>Constructor</h2>
-    
 
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="removeTask"><span class="type-signature"></span>removeTask<span class="signature">(event)</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    Removes the current task item from the DOM
+</div>
 
 
 
@@ -613,7 +1875,7 @@ holds all the task items and the to-do lists and completed lists</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_TaskListController.js.html">controllers/TaskListController.js</a>, <a href="controllers_TaskListController.js.html#line6">line 6</a>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line266">line 266</a>
     </li></ul></dd>
     
 
@@ -632,6 +1894,56 @@ holds all the task items and the to-do lists and completed lists</div>
 
 
 
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>event</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>Event</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                the onclick event
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -643,68 +1955,40 @@ holds all the task items and the to-do lists and completed lists</div>
 
 
 
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    void
+</div>
+
+    
+</div>
 
 
 
 </div>
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>
-        exports
-        </h2>
         
-            <div class="class-description">Implements a basic timer with start and end capabilities</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
+            
 <div class="section-method">
 
     
-    <h2>Constructor</h2>
-    
 
-    <h4 class="name" id="exports"><span class="type-signature"></span>new exports<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="styleSelectedTask"><span class="type-signature"></span>styleSelectedTask<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    Update UI for when selecting task
+</div>
 
 
 
@@ -739,7 +2023,7 @@ holds all the task items and the to-do lists and completed lists</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_TimerController.js.html">controllers/TimerController.js</a>, <a href="controllers_TimerController.js.html#line5">line 5</a>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line376">line 376</a>
     </li></ul></dd>
     
 
@@ -773,21 +2057,423 @@ holds all the task items and the to-do lists and completed lists</div>
 
 
 </div>
-    
-    </div>
+        
+            
+<div class="section-method">
 
     
 
+    <h4 class="name" id="styleUnselectedTask"><span class="type-signature"></span>styleUnselectedTask<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Update UI for when unselecting task
+</div>
+
+
+
+
+
+<dl class="details">
+
     
 
     
 
-     
+    
+
+    
 
     
 
     
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line386">line 386</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="toggleTaskSelection"><span class="type-signature"></span>toggleTaskSelection<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Select/unselect task
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line333">line 333</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="unselectOtherTasks"><span class="type-signature"></span>unselectOtherTasks<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Unselect the other tasks that is not the selectedElement
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line346">line 346</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="updateTaskDistractionUI"><span class="type-signature"></span>updateTaskDistractionUI<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Update the task UI when distraction is logged
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line426">line 426</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="updateTaskProgressUI"><span class="type-signature"></span>updateTaskProgressUI<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Updates the UI count of the task
+Updates the UI location of the task (move to completed if done)
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_TaskItem.js.html">components/TaskItem.js</a>, <a href="components_TaskItem.js.html#line406">line 406</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
     
 
     
