@@ -1,6 +1,9 @@
 import { TaskStyles } from '../constants/Styles.js';
 import TaskList from '../scripts/tasks.js';
 
+/**
+ * HTML web component for a task item to be displayed inside the task list
+ */
 class TaskItem extends HTMLElement {
   constructor() {
     super();
@@ -18,6 +21,9 @@ class TaskItem extends HTMLElement {
     this.loadDOMElements();
   }
 
+  /**
+   * Loads all dependent DOM elements into the shadow DOM
+   */
   loadDOMElements() {
     if (!this.shadowRoot) {
       this.attachShadow({ mode: 'open' });
@@ -44,6 +50,10 @@ class TaskItem extends HTMLElement {
     }
   }
 
+  /**
+   * Creates the name element for task item
+   * @returns the element for the task name
+   */
   createNameElement() {
     const taskName = this.shadowRoot.appendChild(document.createElement('p'));
     taskName.className = 'name';
@@ -51,6 +61,10 @@ class TaskItem extends HTMLElement {
     return taskName;
   }
 
+  /**
+   * Creates the progress/estimate element for task item
+   * @returns the element for the task progress
+   */
   createPomoProgressElement() {
     const taskEstimate = this.shadowRoot.appendChild(document.createElement('p'));
     taskEstimate.className = 'pomo-progress';
@@ -58,6 +72,10 @@ class TaskItem extends HTMLElement {
     return taskEstimate;
   }
 
+  /**
+   * Creates the notes element for task item
+   * @returns the element for the task notes
+   */
   createNotesElement() {
     const taskNotes = this.shadowRoot.appendChild(document.createElement('p'));
     taskNotes.className = 'notes';
@@ -65,6 +83,10 @@ class TaskItem extends HTMLElement {
     return taskNotes;
   }
 
+  /**
+   * Creates the distraction count element for task item
+   * @returns the element for the task distraction count
+   */
   createDistractionElement() {
     const taskDistraction = this.shadowRoot.appendChild(document.createElement('p'));
     taskDistraction.className = 'distraction';
@@ -72,6 +94,10 @@ class TaskItem extends HTMLElement {
     return taskDistraction;
   }
 
+  /**
+   * Creates the expand button element for task item
+   * @returns the expand button element
+   */
   createExpandButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('input'));
     button.className = 'expand-button';
@@ -82,6 +108,12 @@ class TaskItem extends HTMLElement {
     return button;
   }
 
+  /**
+   * Displays the buttons of the task item
+   * @param {HTMLElement} button the expand button to be displayed
+   * @param {Event} event the event triggered when clicking expand
+   * @returns void
+   */
   displayButtons(button, event) {
     event.stopPropagation();
     this.shadowRoot.querySelector('.expand-button').style.tranform = 'rotate(180deg)';
@@ -113,6 +145,10 @@ class TaskItem extends HTMLElement {
     button.setAttribute('style', 'transform:rotate(180deg); -webkit-transform: rotate(180deg)');
   }
 
+  /**
+   * Creates the edit button element for task item
+   * @returns the element for the task distraction count
+   */
   createEditButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('button'));
     button.className = 'edit-button';
@@ -122,6 +158,10 @@ class TaskItem extends HTMLElement {
     return button;
   }
 
+  /**
+   * Allows a task to be edited onclick
+   * @param {Event} event the onclick event for editing a taks
+   */
   allowEditing(event) {
     event.stopPropagation();
     const inputElement = document.createElement('task-input');
@@ -205,6 +245,10 @@ class TaskItem extends HTMLElement {
     });
   }
 
+  /**
+   * Creates the remove button element for task item
+   * @returns the remove button element
+   */
   createRemoveButtonElement() {
     const button = this.shadowRoot.appendChild(document.createElement('button'));
     button.className = 'remove-button';
@@ -214,12 +258,21 @@ class TaskItem extends HTMLElement {
     return button;
   }
 
+  /**
+   * Removes the current task item from the DOM
+   * @param {Event} event the onclick event
+   * @returns void
+   */
   removeTask(event) {
     event.stopPropagation();
     if (localStorage.getItem('hideAlerts') === 'false' && !window.confirm('Delete Task?')) return;
     this.remove();
   }
 
+  /**
+   * Creates the checkbox element for task item
+   * @returns the checkbox element
+   */
   createCheckboxElement() {
     const checkboxLabel = this.shadowRoot.appendChild(document.createElement('label'));
     checkboxLabel.className = 'task-checkbox';
@@ -234,6 +287,12 @@ class TaskItem extends HTMLElement {
     return checkboxLabel;
   }
 
+  /**
+   *
+   * @param {number} taskId the id of the current task
+   * @param {HTMLLabelElement} checkboxLabel the checkbox element
+   * @param {Event} event the onclick event
+   */
   markTaskAsComplete(taskId, checkboxLabel, event) {
     event.stopPropagation();
     const task = document.getElementById(taskId);

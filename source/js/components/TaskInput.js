@@ -2,6 +2,9 @@ import HtmlTemplates from '../constants/HtmlTemplates.js';
 import { TaskStyles } from '../constants/Styles.js';
 import Controllers from '../index.js';
 
+/**
+ * HTML web component for the task input UI to be displayed inside the task list
+ */
 class TaskInput extends HTMLElement {
   constructor() {
     super();
