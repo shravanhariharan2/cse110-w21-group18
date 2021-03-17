@@ -126,49 +126,31 @@ export default class SettingsController {
     localStorage.setItem('shortBreakDuration', this.DOM_ELEMENTS.shortBreakDrop.value);
     localStorage.setItem('longBreakDuration', this.DOM_ELEMENTS.longBreakDrop.value);
     localStorage.setItem('numSessionsBeforeLongBreak', this.DOM_ELEMENTS.pomBeforeBreakDrop.value);
-    if (this.DOM_ELEMENTS.pauseBeforeBox.checked) {
-      localStorage.setItem('pauseBeforeBreak', true);
-      this.pauseBeforeBreak = true;
-    } else {
-      localStorage.setItem('pauseBeforeBreak', false);
-      this.pauseBeforeBreak = false;
-    }
 
-    if (this.DOM_ELEMENTS.pauseAfterBox.checked) {
-      localStorage.setItem('pauseAfterBreak', true);
-      this.pauseAfterBreak = true;
-    } else {
-      localStorage.setItem('pauseAfterBreak', false);
-      this.pauseAfterBreak = false;
-    }
-
-    if (this.DOM_ELEMENTS.hideSecondsBox.checked) {
-      localStorage.setItem('hideSeconds', true);
-      this.hideSeconds = true;
-    } else {
-      localStorage.setItem('hideSeconds', false);
-      this.hideSeconds = false;
-    }
-
-    if (this.DOM_ELEMENTS.muteAudioBox.checked) {
-      localStorage.setItem('muteAudio', true);
-      this.muteAudio = true;
-    } else {
-      localStorage.setItem('muteAudio', false);
-      this.muteAudio = false;
-    }
-
-    if (this.DOM_ELEMENTS.hideAlertsBox.checked) {
-      localStorage.setItem('hideAlerts', true);
-      this.hideAlerts = true;
-    } else {
-      localStorage.setItem('hideAlerts', false);
-      this.hideAlerts = false;
-    }
+    this.storeBooleanValue(this.DOM_ELEMENTS.pauseBeforeBox, 'pauseBeforeBreak');
+    this.storeBooleanValue(this.DOM_ELEMENTS.pauseAfterBox, 'pauseAfterBreak');
+    this.storeBooleanValue(this.DOM_ELEMENTS.hideSecondsBox, 'hideSeconds');
+    this.storeBooleanValue(this.DOM_ELEMENTS.muteAudioBox, 'muteAudio');
+    this.storeBooleanValue(this.DOM_ELEMENTS.hideAlertsBox, 'hideAlerts');
 
     this.loadStoredInputValues();
     this.pomodoroSession.loadTimerSettings();
     this.updateInputTaskValues();
+  }
+
+  /**
+   * Stores a boolean value based on the boolean input of the HTML element
+   * @param {HTMLElement} element the html element to read the boolean from
+   * @param {boolean} booleanName the name of the boolean in storage
+   */
+  storeBooleanValue(element, booleanName) {
+    if (element.checked) {
+      localStorage.setItem(booleanName, true);
+      this[booleanName] = true;
+    } else {
+      localStorage.setItem(booleanName, false);
+      this[booleanName] = false;
+    }
   }
 
   /**
