@@ -4,6 +4,8 @@
 *  - enter: interact with tasks or addTask button
 *  - tab: loop through the list of tasks and the add task button
 *  - space: start/end the timer (restricted when editing text fields)
+*  - right arrow: mark current task as completed
+*  - +/=: expand/hide task list during work session
 */
 export default class KeyboardController {
   constructor() {
@@ -68,8 +70,6 @@ export default class KeyboardController {
   * @param {*} event the event object passed by an EventListener
   */
   onKeyDown(event) {
-    console.log(`focus index: ${this.focusIdx}`);
-
     switch (event.key) {
       case this.KEYS.spacebar:
         this.handleSpace();
@@ -97,7 +97,7 @@ export default class KeyboardController {
   }
 
   /**
-  * handles the space keypress, is restricted when editing text fields
+  * Handles the space keypress, is restricted when editing text fields
   */
   handleSpace() {
     const taskInputElements = this.getInputElements();
@@ -108,11 +108,9 @@ export default class KeyboardController {
   }
 
   /**
-  * handles the tab keypress
+  * Handles the tab keypress
   * @param {event} event the event object passed by an EventListener
-  * @param {*} mutex a boolean used to restrict/negate function flow
   */
-
   handleTab(event) {
     // prevent default tab function
     event.preventDefault();
@@ -183,9 +181,8 @@ export default class KeyboardController {
   }
 
   /**
-  * handles the enter keypress
+  * Handles the enter keypress
   * @param {event} event the event object passed by an EventListener
-  * @param {*} mutex a boolean used to restrict/negate function flow
   */
   handleEnter(event) {
     const isInEditInput = document.activeElement === document.querySelector('task-input');
@@ -221,6 +218,10 @@ export default class KeyboardController {
     }
   }
 
+  /**
+  * Handles the right arrow keypress
+  * @param {event} event the event object passed by an EventListener
+  */
   handleRightArrow(event) {
     if (this.focusIdx !== 0 || (this.focusIdx === 0 && this.isTimerInSession())) {
       event.preventDefault();
@@ -234,6 +235,7 @@ export default class KeyboardController {
 
       const childNodes = Array.from(shadow.children);
       this.dprint(`shadowChildren: ${childNodes}`);
+      
       // checkbox is the 3rd child
       childNodes[2].click();
       if (this.DOM_ELEMENTS.taskList.children.length === 0 || this.DOM_ELEMENTS.taskList.children.length === 1) {
@@ -242,6 +244,10 @@ export default class KeyboardController {
     }
   }
 
+  /**
+  * Handles the +/= keypress
+  * @param {event} event the event object passed by an EventListener
+  */
   handleExpand(event) {
     // click the expansion label if shown
     if (this.DOM_ELEMENTS.expansionLabel.style.display && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none') {
@@ -250,10 +256,16 @@ export default class KeyboardController {
     }
   }
 
+  /**
+   * Updates the mod status when the shift key is pressed down
+   */
   modDown() {
     this.modStatus = true;
   }
 
+  /**
+   * Updates the mod status when the shift key is not used
+   */
   modUp() {
     this.modStatus = false;
   }
@@ -277,9 +289,8 @@ export default class KeyboardController {
   }
 
   /**
-  * updates the index (in case of mouse selection) then increments the index
-  * idx = 0 is mapped to adding a task
-  * idx > 0 is mapped to tasks in order
+  * Updates the index (in case of mouse selection) then increments the index
+  * of the element currently in focus
   */
   incrementIdx() {
     // TODO: update idx from mouse click (BLOCKAGE!!! No good way to track tasks)
@@ -292,6 +303,10 @@ export default class KeyboardController {
     }
   }
 
+  /**
+  * Updates the index (in case of mouse selection) then decrements the index
+  * of the element currently in focus
+  */
   decrementIdx() {
     // javascript does not implement circular modulo
     if (this.DOM_ELEMENTS.taskList.children.length > 0) {
@@ -304,6 +319,10 @@ export default class KeyboardController {
     }
   }
 
+  /**
+   * Gets all HTML elements that are used inside a task list input
+   * @returns List of all Elements that are used in task inputs
+   */
   getInputElements() {
     return [
       this.DOM_ELEMENTS.inputBox,
@@ -317,6 +336,10 @@ export default class KeyboardController {
     ];
   }
 
+  /**
+   * Checks if the timer is currently running
+   * @returns True if the timer is in session else false
+   */
   isTimerInSession() {
     return this.DOM_ELEMENTS.expansionLabel.style.display
       && this.DOM_ELEMENTS.expansionLabel.style.display !== 'none'
