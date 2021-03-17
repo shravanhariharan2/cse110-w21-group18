@@ -364,18 +364,13 @@ class TaskListController {
       element.id = -elementPosition - 1;
     });
   }
-  /**
-   * Detects mobile screens
-   */
-  isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  }
 
   /**
    * Collapses the TaskList to the right side of the screen w/ animation
    */
   collapseTaskList() {
-    if (!this.isMobile()) {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
       // move timer to center
       this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
       this.DOM_ELEMENTS.timerBox.style.animationName = 'slideRight';
@@ -403,8 +398,9 @@ class TaskListController {
     this.DOM_ELEMENTS.rightHalf.style.animationDuration = '1s';
     this.DOM_ELEMENTS.rightHalf.style.animationName = 'slidein';
     this.DOM_ELEMENTS.rightHalf.style.marginLeft = 'initial';
-    
-    if (!this.isMobile()) {
+
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
       this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
       this.DOM_ELEMENTS.timerBox.style.animationName = 'slideLeft';
     }
