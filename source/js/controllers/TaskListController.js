@@ -369,13 +369,16 @@ class TaskListController {
    * Collapses the TaskList to the right side of the screen w/ animation
    */
   collapseTaskList() {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      // move timer to center
+      this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
+      this.DOM_ELEMENTS.timerBox.style.animationName = 'slideRight';
+    }
     // move task list
     this.DOM_ELEMENTS.rightHalf.style.animationDuration = '1s';
     this.DOM_ELEMENTS.rightHalf.style.animationName = 'slideout';
     this.DOM_ELEMENTS.rightHalf.style.marginLeft = '2000px';
-    // move timer to center
-    this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
-    this.DOM_ELEMENTS.timerBox.style.animationName = 'slideRight';
 
     // change style of others after animations
     setTimeout(() => {
@@ -395,8 +398,12 @@ class TaskListController {
     this.DOM_ELEMENTS.rightHalf.style.animationDuration = '1s';
     this.DOM_ELEMENTS.rightHalf.style.animationName = 'slidein';
     this.DOM_ELEMENTS.rightHalf.style.marginLeft = 'initial';
-    this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
-    this.DOM_ELEMENTS.timerBox.style.animationName = 'slideLeft';
+
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (!isMobile) {
+      this.DOM_ELEMENTS.timerBox.style.animationDuration = '1s';
+      this.DOM_ELEMENTS.timerBox.style.animationName = 'slideLeft';
+    }
     // reset styles
     this.DOM_ELEMENTS.timerBox.id = 'timer-box';
     this.DOM_ELEMENTS.leftHalf.style.width = '50%';
