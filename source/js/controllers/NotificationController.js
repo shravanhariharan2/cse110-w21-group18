@@ -39,7 +39,9 @@ class NotificationController {
    * Notifies the user via audio sound
    */
   audioNotify() {
-    this.DOM_ELEMENTS.alarm.play();
+    if (this.DOM_ELEMENTS.alarm) {
+      this.DOM_ELEMENTS.alarm.play();
+    }
   }
 
   /**
