@@ -186,7 +186,8 @@ class KeyboardController {
   */
   handleEnter(event) {
     const isInEditInput = document.activeElement === document.querySelector('task-input');
-    if (isInEditInput) return;
+    const isInNotesInput = document.activeElement === this.DOM_ELEMENTS.notesTextField;
+    if (isInEditInput || isInNotesInput) return;
 
     event.preventDefault();
     // handle enter on <add-task-button>
