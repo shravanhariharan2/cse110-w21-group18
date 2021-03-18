@@ -43,6 +43,7 @@ body {
 
 input[type=button], button {
   cursor: pointer;
+  -webkit-appearance: none;
 }
 
 input[type=button]:active, button:active {
